@@ -1,0 +1,82 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Tags (also known as “chips”) are compact elements that allow users to enter information, make selections, filter content, or trigger actions. They’re similar to badges, but are more commonly used in inputs to allow users to select multiple items at once."
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "title":{
+            "description":"Title content",
+            "defaultValue":"Kundu",
+            "isRequired":true
+        },
+
+        "description":{
+            "description":"Description",
+            "type":"string",
+            "defaultValue":"",
+            "isRequired":true
+        },
+
+        "__wrapperDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "element":"div"
+            }
+        },
+
+        "wrapperDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "__titleDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{}
+        },
+
+        "titleDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "__descriptionDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "attrs":{},
+                "dataAttrs":{}
+            }
+        },
+
+        "descriptionDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "__descriptionMoreLess":{
+            "type":"object",
+            "defaultValue":{}
+        },
+
+        "descriptionMoreLess":{
+            "type":"object",
+            "defaultValue":{}
+        }
+    }
+}

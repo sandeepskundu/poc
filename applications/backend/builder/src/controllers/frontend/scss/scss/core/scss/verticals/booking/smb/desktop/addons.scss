@@ -1,0 +1,58 @@
+.addons-contents {
+  .stick {
+    top: rem(0);
+  }
+  .meals-layout-wrpr, .seats-layout-wrpr, .baggage-layout-wrpr {
+    .stick {
+      top: rem(80);
+    }
+  }
+}
+
+
+.meal-no-data{
+  margin: rem(87) auto;
+  .meal-filter-img{
+    max-width: rem(188);
+    margin: auto;
+  
+    & > img{
+      width: rem(188);
+    }
+  }
+  .reset-filter{
+    padding: rem(12) rem(30);
+    line-height: 1;
+    border: rem(1) solid #222;
+    border-radius: rem(27);
+
+    &:active {
+      scale: 0.9;
+      color: #222;
+      background: #f3f3f3;
+    }
+  }
+}
+
+.flight-checkout.addons-page {
+  .main-header {
+      margin-bottom: 0;
+      &.sticky {
+        position: relative;
+      }
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)){
+  .meal-no-data{
+    margin: rem(50) rem(40);
+    .meal-filter-img{
+      max-width: rem(176);
+      margin: auto;
+    
+      & > img{
+        width: rem(176);
+      }
+    }
+  }  
+}

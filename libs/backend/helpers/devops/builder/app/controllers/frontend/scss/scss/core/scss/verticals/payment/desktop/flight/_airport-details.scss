@@ -1,0 +1,20 @@
+.flight-airports{
+    position:relative;
+    .depart{
+        width:50%;
+        padding-right:rem(60);
+        display:inline-block;
+    }
+    .arrival{
+        width:50%;
+        padding-left:rem(60);
+        display:inline-block;
+    }
+    .duration{
+        top:rem(6);
+        left:50%;
+        width:rem(80);
+        position:absolute;
+        margin-left:-#{rem(40)};
+    }
+}

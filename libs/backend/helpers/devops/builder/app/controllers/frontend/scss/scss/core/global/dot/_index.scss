@@ -1,0 +1,39 @@
+$has-dot:has-component('dot');
+
+@if $has-dot != '' {
+    $dot-prefix:get-component-prefix('dot');
+
+    @if $dot-prefix != '' {
+        .#{$dot-prefix}{
+            width:rem(6);
+            height:rem(6);
+            @extend .bdr-round;
+            display:inline-block;
+
+            &.sz-sm {
+                width:rem(2);
+                height:rem(2);
+            }
+
+            &.sz-md {
+                width:rem(4);
+                height:rem(4);
+            }
+
+            &.sz-lg {
+                width:rem(8);
+                height:rem(8);
+            }
+
+            &.sz-xl {
+                width:rem(10);
+                height:rem(10);
+            }
+            
+            &.sz-xxl {
+                width:rem(12);
+                height:rem(12);
+            }
+        }
+    }
+}

@@ -1,0 +1,58 @@
+module.exports = {
+    callback: {
+        description:"Callback functions",
+        type:"nested",
+        ___:{
+            nested:{
+                onClick:{
+                    type:'function'
+                }
+            }
+        }
+    },
+    config:{
+       type:'predefined',
+        description:"Default button",
+        ___:{
+            predefined:{
+                from:'statics',
+                mapping:'ds.configs',
+                overwirte:{
+                    icon:null,
+                    type:null,
+                    dataAttrIconConfig:{
+                        dvalue:false,
+                        type:'boolean'
+                    },
+                    svg:{
+                        type:'nested',
+                        ___:{
+                            nested:{
+                                src:{
+                                    type:'string'
+                                },
+                                style:{
+                                    dvalue:{},
+                                    type:'object'
+                                },
+                                size:{
+                                    type:'string',
+                                    dvalue:'24px'
+                                }
+                            }
+                        }
+                    },
+                    markup:{
+                        ___:{
+                            nested:{
+                                element:{
+                                    dvalue:'span'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

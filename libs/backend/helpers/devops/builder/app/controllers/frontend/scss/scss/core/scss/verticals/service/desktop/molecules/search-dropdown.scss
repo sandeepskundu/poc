@@ -1,0 +1,38 @@
+.search-dropdown-wrapper {
+  .input-wrapper {
+    .search-input {
+      color: $color-014;
+      font-family: 'Roboto', sans-serif;
+      padding: rem(21) rem(15) rem(10);
+    }
+
+    .input-icon-holder {
+      top: 46%;
+      right: rem(8);
+    }
+
+    &.no-floating {
+      .input {
+        font-family: 'Roboto', sans-serif;
+      }
+    }
+  }
+
+  .data-list {
+    max-height: rem(425);
+    padding: rem(20) 0 0;
+
+    .error-text {
+      font-size: rem(14);
+      color: $color-007;
+      margin: 0 0 rem(20) rem(24);
+    }
+  }
+
+  .popup-box-body {
+    top: 100%;
+    margin: rem(10) 0 0;
+    width: rem(400);
+    overflow: auto;
+  }
+}

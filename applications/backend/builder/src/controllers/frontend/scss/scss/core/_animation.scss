@@ -1,0 +1,12 @@
+@include animation('transition', 0.3s, 'ease-in-out');
+@include animation('bs-holder', 0.4s, 'ease-in-out');
+@include animation('anim', 0.2s, 'linear');
+@include animation('anim-slide', 0.3s, 'ease-in-out');
+
+.fade-in, .fade-out{
+    opacity:0;
+    transition:opacity 0.4s ease-in-out;
+    -o-transition:opacity 0.4s ease-in-out;
+    -webkit-transition:opacity 0.4s ease-in-out;
+    -moz-transition:opacity 0.4s ease-in-out;
+}

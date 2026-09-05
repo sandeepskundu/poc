@@ -1,0 +1,17 @@
+$has-card-box:has-component('card-box');
+
+@if $has-card-box != '' {
+    $card-box-prefix:get-component-prefix('card-box');
+
+    @if $card-box-prefix != '' {
+        .#{$card-box-prefix}{
+            background:transparent;
+            border:1px solid transparent;
+            @include aio-border-radius(rem(6),rem(6),rem(6),rem(6));
+
+            &.empty{
+                border:none;
+            }
+        }
+    }
+}

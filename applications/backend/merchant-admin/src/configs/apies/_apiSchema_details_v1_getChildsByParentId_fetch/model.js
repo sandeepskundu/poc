@@ -1,0 +1,43 @@
+module.exports = {
+    "valuemap":{
+        "parentId":{
+            "valuemap":{
+                "map":"id",
+                "from":"params"
+            }
+        }
+    },
+
+    "schema":{
+        "appId":true,
+        "type":true,
+        "parentId":true
+    },
+
+    "query":{
+        "hidden":{
+            "userId":false,
+            "merchantId":true
+        },
+        "runtime":{
+            "enable":true,
+            "configs":{
+                "query":{
+                    "0":{
+                        "cloumn":"parentId",
+                        "value":{
+                            "from":"params",
+                            "map":"id"
+                        },
+                        "operation":{
+                            "eq":{
+                                "enable":true,
+                                "opType":"eq"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

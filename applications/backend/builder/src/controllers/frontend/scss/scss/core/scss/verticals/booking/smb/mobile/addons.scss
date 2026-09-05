@@ -1,0 +1,73 @@
+.addons-wrpr {
+  .fare-confirmation {
+    #priceDetails {
+      display: inline-block;
+    }
+    .fs-detail {
+      float: right;
+    }
+    .fare-breakup-holder {
+      padding: 0;
+    }
+    .full {
+      .breakup-list {
+        padding: 0 rem(18);
+      }
+    }
+    .breakup-list {
+      li {
+        padding: rem(7) 0;
+      }
+
+      .m-fafare {
+        margin-top: rem(15);
+        padding: rem(15) 0;
+        font-size: rem(20);
+        border-top: 1px solid #d5d5d9;
+        border-bottom: 1px solid #d5d5d9;
+      }
+
+      .m-ffare:first-child {
+        padding-top: rem(15);
+        border-top: 1px solid #d5d5d9;
+      }
+    }
+  }
+  .cobrandBg {
+    background-image: linear-gradient(to right bottom, #ffeef6, #fbeef9, #f6eefc, #f1effe, #ebf0ff);
+  }
+
+  .scroll-tab-container {
+    margin-left: rem(-18);
+    margin-right: rem(-18);
+    top: rem(57);
+  }
+
+  .m-hide {
+    display: none;
+  }
+
+  .adl-footer {
+    z-index: 998;
+  }
+
+  .stick-tabs {
+    top: 0;
+  }
+
+  .tab-holder .tab-item {
+    padding: rem(16) rem(13);
+  }
+}
+
+.addons-toast {
+  .toast-content {
+    text-align: center;
+  }
+}
+
+.addons-header-wrpr {
+  .top-stick {
+    position: static;
+  }
+}

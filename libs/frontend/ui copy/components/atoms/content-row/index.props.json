@@ -1,0 +1,110 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Tags (also known as “chips”) are compact elements that allow users to enter information, make selections, filter center, or trigger actions. They’re similar to badges, but are more commonly used in inputs to allow users to select multiple items at once."
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "callbacks": {
+            "description":"Callback methods",
+            "type":"object",
+            "defaultValue":{
+                "onBlur":null,
+                "onClick":null,
+                "onFocus":null,
+                "onKeyUp":null,
+                "dsTheme":null,
+                "onKeyDown":null,
+                "onDragStart":null,
+                "onMouseDown":null,
+                "onPointerUp":null,
+                "onPointerDown":null,
+                "onPointerEnter":null,
+                "onPointerLeave":null,
+                "beforeRender":null
+            }
+        },
+        "childs": {
+            "description":"Ds theme",
+            "type":"object",
+            "defaultValue":{
+                "start":"",
+                "before":"",
+                "after":"",
+                "end":"",
+                "center":""
+            }
+        },
+        "dsTheme": {
+            "description":"Ds theme",
+            "type":"object",
+            "defaultValue":{
+                "wrapper":{
+                    "color":"",
+                    "className":"",
+                    "background":"",
+                    "font__d__size":""
+                },
+                "center":{
+                    "background":""
+                },
+                "start":{
+                    "background":""
+                },
+                "before":{
+                    "background":""
+                },
+                "after":{
+                    "background":""
+                },
+                "end":{
+                    "background":""
+                }
+            }
+        },
+
+        "config": {
+            "description":"Ds theme",
+            "type":"object",
+            "defaultValue":{
+                "wrapper":{
+                    "markup":{
+                        "element":"div"
+                    }
+                },
+                "center":{
+                    "markup":{
+                        "element":"div"
+                    }
+                },
+                "start":{
+                    "markup":{
+                        "element":"div"
+                    }
+                },
+                "before":{
+                    "markup":{
+                        "element":"div"
+                    }
+                },
+                "after":{
+                    "markup":{
+                        "element":"div"
+                    }
+                },
+                "end":{
+                    "markup":{
+                        "element":"div"
+                    }
+                }
+            }
+        }
+    }
+}

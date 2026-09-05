@@ -1,0 +1,133 @@
+.collapsible-label{
+    cursor: pointer;
+    position:relative;
+    padding:rem(33) rem(48) rem(32) rem(24);
+    &.has-label-icon{
+        padding-left:rem(64);
+    }
+    .collapsible-label-icon{
+        top:47%;
+        left:rem(24);
+        width:rem(22);
+        height:rem(24);
+        position:absolute;
+        margin:-#{rem(10)} 0 0;
+    }
+
+    .collapsible-label-arrow{
+        top:50%;
+        right:rem(24);
+        width:rem(22);
+        height:rem(24);
+        position:absolute;
+        margin:-#{rem(10)} 0 0;
+    }
+}
+
+.collapsible-content {
+  visibility: hidden;
+  padding:0 rem(24) rem(0) rem(24);
+  transition: all .5s ease;  
+  -moz-transition: .5s ease;
+  -webkit-transition: .5s ease;
+  -o-transition: .5s ease;
+  max-height: 0;
+}
+
+.collapsible-list{
+    border-bottom:1px solid $color-021;
+    &:last-child{
+        border-bottom:none;
+    }
+    &.active{
+        .collapsible-label{
+            @extend .fm-rb;
+
+            .collapsible-label-arrow{
+                right:rem(30);
+                @include adl-rotate(-180)
+            }
+        }
+        .collapsible-content{
+          visibility: visible;
+          max-height:1000px;
+          transition: all .5s ease;  
+          -moz-transition: .5s ease;
+          -webkit-transition: .5s ease;
+          -o-transition: .5s ease;
+          padding:0 rem(24) rem(40) rem(24);
+        }
+    }
+    &.disabled{
+        opacity:0.5;
+        pointer-events: none;
+        .collapsible-label{
+            cursor: default;
+            &:hover {
+                background-color: #fff;
+            }
+        }
+        .collapsible-content{ 
+            opacity: 0;
+        }
+    }
+}
+
+.collapsible-wrapper.small{
+    .collapsible-label{
+        font-size:rem(16);
+        line-height:rem(24);
+        padding:rem(30) rem(48) rem(30) rem(16);
+        &.has-label-icon{
+            padding-left:rem(34);
+        }
+        .collapsible-label-icon{
+            left:rem(0);
+            width:rem(18);
+            height:rem(18);
+            margin:-#{rem(9)} 0 0;
+            top: 50%;
+        }
+
+        .collapsible-label-arrow{
+            right:rem(-8);
+        }
+    }
+    .collapsible-list.active{
+        .collapsible-label .collapsible-label-arrow{
+            right:rem(1);
+        }
+    }
+    .collapsible-content{
+        padding:0 rem(16) rem(16);
+    }
+}
+
+.collapsible-wrapper.xxsmall{
+    .collapsible-label{
+        font-size:rem(16);
+        line-height:rem(16);
+        padding:rem(12) rem(24);
+        &.has-label-icon{
+            padding-left:rem(58);
+        }
+        .collapsible-label-icon{
+            left:rem(24);
+            width:rem(18);
+            height:rem(18);
+            margin:-#{rem(6)} 0 0;
+        }
+
+        .collapsible-label-arrow{
+            right:rem(10);
+        }
+    }
+    .collapsible-list.active{
+        .collapsible-label .collapsible-label-arrow{
+            right:rem(18);
+        }
+    }
+    .collapsible-content{
+        padding:0 rem(16) rem(16);
+    }
+}

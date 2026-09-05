@@ -1,0 +1,24 @@
+.adl-payment{
+    padding: 0 0 rem(50);
+}
+
+.payment-left{
+    width:66.66666667%;
+    padding-right:rem(12);
+}
+
+.payment-right{
+    width:33.33333333%;
+    padding-left:rem(18);
+
+    .transit-visa{
+        margin-bottom: rem(40);
+    }
+    .terminal-change{
+        margin-bottom: rem(10);
+    }
+}
+
+.custom-grid{
+    flex: 0 0 44%;
+}

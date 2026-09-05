@@ -1,0 +1,152 @@
+.progress-steps {
+  width: max-content;
+  margin: 0 auto;
+  margin-bottom: rem(30);
+  display: flex;
+  align-items: center;
+  height: rem(70);
+  justify-content: space-between;
+  .dots {
+    position: relative;
+    span {
+      display: block;
+      margin-top: rem(10);
+      font-size: rem(13);
+      color: $color-027;
+    }
+    &::after,
+    &::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    &::after {
+      width: rem(165);
+      border-top: dashed rem(1) $color-031;
+      content: " ";
+    }
+    &::before {
+      width: rem(16);
+      height: rem(16);
+      border-radius: 50%;
+      background-color: $color-028;
+      border: rem(2) solid $color-fff;
+      content: " ";
+      top: rem(-8);
+      left: rem(9);
+      z-index: 1;
+    }
+    &:first-child {
+      padding-right: rem(100);
+      &::after {
+        left: rem(12);
+      }
+    }
+    &:nth-child(2) {
+      padding-right: rem(100);
+      &::before {
+        left: 0;
+      }
+      span {
+        margin-left: rem(-40);
+      }
+    }
+    &:last-child {
+      padding: 0;
+      &::after {
+        display: none;
+      }
+      span {
+        margin-left: rem(-10);
+      }
+    }
+    &.active {
+      &::before {
+        background-color: $color-029;
+        border-color: $color-029;
+      }
+      &::after {
+        border-top: rem(1) solid $color-029;
+      }
+    }
+    &.focus {
+      &::before {
+        background-color: $color-fff;
+        border: rem(2) solid $color-029;
+      }
+    }
+  }
+}
+.flightDeatils {
+  display: flex;
+  .baggagePolicy {
+    display: none;
+  }
+  .applyCoupon-mobile {
+    display: none;
+  }
+}
+.travellerDetails {
+  display: flex;
+}
+.content-right {
+  padding-left: rem(15);
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(500)) {
+  .progress-steps {
+    .dots:first-child {
+      padding-right: rem(84);
+    }
+    .dots:nth-child(2) {
+      padding-right: rem(84);
+    }
+    .dots::after {
+      width: rem(160);
+    }
+  }
+  .flightDeatils {
+    display: block;
+    .baggagePolicy {
+      display: block;
+      .policy {
+        margin: 0 rem(-16);
+        border: none;
+        border-radius: 0;
+        border-top: rem(8) solid $color-010;
+        border-bottom: rem(8) solid $color-010;
+        .policy_link {
+          padding: rem(24) rem(16);
+          strong {
+            font-size: rem(18);
+            line-height: rem(24);
+            color: $color-011;
+          }
+        }
+      }
+    }
+    .applyCoupon-mobile {
+      display: block;
+      .coupons {
+        margin: 0 rem(-16);
+        border: none;
+        border-radius: 0;
+        border-bottom: rem(8) solid $color-010;
+        .coupons_link {
+          padding: rem(24) rem(16);
+          strong {
+            font-size: rem(18);
+            line-height: rem(24);
+            color: $color-011;
+          }
+        }
+      }
+    }
+  }
+  .travellerDetails {
+    display: block;
+  }
+  .content-right {
+    padding: 0;
+  }
+}

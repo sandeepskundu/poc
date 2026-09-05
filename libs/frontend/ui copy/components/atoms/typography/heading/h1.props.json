@@ -1,0 +1,34 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Badges help highlight important information, such as notifications or new and unread messages. They’re primarily used for communicating secondary or additional information to text."
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "config":{
+            "description":"Heading - H1",
+            "type":"object",
+            "defaultValue":{
+                "content":"",
+                "markup":{
+                    "element":"h1"
+                },
+                "ds":{
+                    "css":{
+                        "class":{
+                            "fontsize":"xxl"
+                        }
+                    }
+                }
+            },
+            "isRequired":false
+        }
+    }
+}

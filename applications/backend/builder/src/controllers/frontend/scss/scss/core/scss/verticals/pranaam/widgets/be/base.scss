@@ -1,0 +1,165 @@
+.pranaam{
+    .adlw{
+        .fl-be-wrpr {
+            background: $color-fff;
+            min-height: rem(86);
+            @include adl-border-radius(50px, 50px, 50px, 50px);
+        }
+        .pranaam-travel{
+            width: 23%;
+            .travel-type{
+                flex: 0 0 50%;
+                padding-left: rem(10);
+                &:hover {
+                    background: $color-052;
+                    border-radius: 3.125rem 0rem 0rem 3.125rem;
+                }
+            }
+            .sector{
+                flex: 0 0 50%;
+                &:hover {
+                    background: $color-052;
+                }
+            }
+            &:after{
+                top: 50%;
+                right: 0;
+                width: 1px;
+                content: '';
+                height: rem(30);
+                position: absolute;
+                background: $color-021;
+                margin-top: -#{rem(15)};
+            }
+        }
+        .modify-pranaam-inputs{
+            width: 77%;
+            .date-input{
+                width: 15.6%;
+                &:hover {
+                    background: $color-052;
+                }
+                .input-date-cal{
+                    .react-datepicker{
+                        display: flex;
+                        width: rem(330);
+                        .react-datepicker__month-container{
+                            flex: 0 0 100%;
+                        }
+                    }
+                }
+            }
+            .org-dest{
+                flex: 0 0 38%;
+                max-height: rem(86);
+                .org-dest-input{
+                    width: 48%;
+                    max-height: rem(86);
+                    padding: 0;
+                }
+                .ai-arrow{
+                    width: 4%;
+                }
+                .popup-label{
+                    &:hover {
+                        background: $color-052;
+                    }
+                }
+                  
+            }
+            .flight-input{
+                width: 15.6%;
+                &:after{
+                    top: 50%;
+                    right: 0;
+                    width: 1px;
+                    content: '';
+                    height: rem(30);
+                    position: absolute;
+                    background: $color-021;
+                    margin-top: -#{rem(15)};
+                }
+                &:hover {
+                    background: $color-052;
+                }
+            }
+            .porter-pax-list{
+                width: 14.6%;
+                .popup-label{
+                    max-height: rem(86);
+                }
+                &:hover {
+                    background: $color-052;
+                }
+            }
+            .search-button{
+                cursor: pointer;
+                width: 16%;
+            }
+
+        }
+        .blank-holder .blank.round:after {
+            border-radius: rem(25);
+        }
+        .sb-wrpr{
+            .sb-lable{
+                height: rem(86);
+                padding: rem(41) rem(20) rem(20) rem(20);
+                &.blank-holder{
+                    padding-top: rem(36);
+                }
+            }
+            &.has-selected .placeholder{
+                top: rem(24);
+                padding-left: rem(20);
+            }
+            .placeholder{
+                top: rem(31);
+                padding-left: rem(20);
+            }
+            .sb-icon-holder{
+                display: none;
+            }
+            .sb-opt-wrpr{
+                padding: rem(10) 0;
+            }
+        }
+        .input-wrapper{
+            height: rem(86);
+            &.filled{
+                input{
+                    padding-top: rem(36);
+                }
+            }
+            .input{
+                height: inherit;
+                padding: rem(42) rem(20) rem(20) rem(20);
+                line-height: normal;
+                &.blank-holder{
+                    padding-top: rem(36);
+                }
+            }
+            .placholder{
+                top: rem(22);
+                padding-left: rem(20);
+                font-size: rem(12);
+            }
+        }
+        .pax-counter-holder{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.25rem 0 0 0;
+            padding: 0;
+            min-height: rem(37);
+            .pax-info{
+                font-size: rem(12);
+                color: #666;
+            }
+            .pax-counter{
+                width: rem(103) !important;
+                position: relative;
+            }
+        }
+    }
+}

@@ -1,0 +1,184 @@
+@import "adl-sass-theme";
+.adlw {
+  @import "adl-sass-verticals/service/mobile";
+  @import "adl-sass-partials/optional/airline-logos/both";
+  @import "adl-sass-verticals/service/flightService/flightInfo";
+}
+.check-status-wrapper {
+  background: $color-fff;
+  padding: rem(12);
+  display: flex;
+  flex-wrap: wrap;
+  & > li {
+    margin-bottom: rem(20);
+    padding: 0 rem(10);
+    .btn {
+      max-width: rem(269);
+    }
+  }
+  .sb-opt-wrpr {
+    padding: rem(10) 0;
+    z-index: 198;
+    li:hover {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .sb-option {
+      margin-bottom: 0 !important;
+      &:first-child {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+      &:last-child {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      &.selected {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .sb-o-ih {
+        top: rem(16) !important;
+      }
+    }
+  }
+  .check-status-airport {
+    width: 35%;
+    .sb-lable {
+      &:hover {
+        border-color: $color-015;
+      }
+    }
+    .popup-box-body {
+      min-width: rem(420);
+      z-index: 198;
+      margin: rem(10) 0 0;
+      .check-status-data-list {
+        max-height: rem(425);
+        padding: rem(20) 0 0;
+        .no-data-text {
+          font-size: rem(14);
+          color: $color-007;
+          margin: 0 0 rem(20) rem(24);
+        }
+      }
+    }
+  }
+  .check-status-trip {
+    width: 33%;
+    .sb-lable {
+      &:hover {
+        border-color: $color-015;
+      }
+    }
+  }
+  .check-status-date {
+    width: 32%;
+    .sb-lable {
+      &:hover {
+        border-color: $color-015;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .check-status-wrapper {
+    & > li {
+      padding: 0;
+      .btn {
+        max-width: 100% !important;
+      }
+      &.check-status-date {
+        & + .check-status-airport {
+          margin-bottom: rem(40);
+        }
+      }
+    }
+    .check-status-airport {
+      padding: rem(6) rem(15);
+      width: 100% !important;
+      border: rem(1) solid $color-076;
+      border-radius: rem(8);
+      .fids-airport-wrapper {
+        .city-title {
+          font-size: rem(14);
+          margin-bottom: 0;
+        }
+        .city-label {
+          font-size: rem(16);
+        }
+      }
+      .popup-box-body {
+        min-width: auto;
+        .check-status-data-list {
+          .detailsList {
+            padding: rem(10) rem(12);
+            .airlineDetails {
+              width: 40%;
+            }
+            .placeDetails {
+              width: 48%;
+            }
+            .time {
+              width: 12%;
+            }
+          }
+        }
+      }
+    }
+    .search-field {
+      padding: rem(17) rem(15);
+      .fids-search-wrapper {
+        p {
+          margin-bottom: 0;
+        }
+        .bs-holder {
+          .bs-inner {
+            .check-status-data-list {
+              .no-data-text {
+                font-size: rem(14);
+                color: $color-007;
+                margin: 0 0 rem(20) rem(24);
+              }
+            }
+          }
+        }
+      }
+    }
+    .check-status-trip {
+      padding: rem(6) rem(15);
+      width: 100% !important;
+      border: rem(1) solid $color-076;
+      border-radius: rem(8);
+      .fids-type-wrapper {
+        .type-title {
+          font-size: rem(14);
+          margin-bottom: 0;
+        }
+        .type-label {
+          font-size: rem(16);
+        }
+      }
+    }
+    .search-btn {
+      border: none;
+      padding: 0;
+    }
+    .check-status-date {
+      padding: rem(6) rem(15);
+      width: 100% !important;
+      border: rem(1) solid $color-076;
+      border-radius: rem(8);
+      .fids-date-wrapper {
+        .date-title {
+          font-size: rem(14);
+          margin-bottom: 0;
+        }
+        .date-label {
+          font-size: rem(16);
+        }
+      }
+    }
+  }
+}

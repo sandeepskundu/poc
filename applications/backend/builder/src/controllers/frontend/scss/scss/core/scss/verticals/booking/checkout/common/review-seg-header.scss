@@ -1,0 +1,349 @@
+.r-org-dest-header {
+  padding: rem(18);
+  background-color: $color-010;
+  border-radius: 8px;
+  .options {
+    .dates-revised-size {
+      font-size: 12px;
+    }
+    li {
+      font-size: rem(14);
+      position: relative;
+      padding: 0 0 0 12px;
+      display: inline-block;
+      &::before {
+        top: 50%;
+        left: rem(4);
+        content: '';
+        width: rem(4);
+        height: rem(4);
+        margin-top: -2px;
+        display: block;
+        position: absolute;
+        background-color: $color-014;
+        @include adl-border-radius(rem(2), rem(2), rem(2), rem(2));
+      }
+      &:first-child {
+        padding-left: rem(7);
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
+  .org-dest-date {
+    li:nth-child(2) {
+      position: relative;
+      bottom: 10%;
+    }
+  }
+}
+.step-desc {
+  position: absolute;
+  top: 22px;
+  right: 16px;
+}
+.status-label-wrapper {
+  border: 1px solid $color-052;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.border-segment ~ .border-segment {
+  display: none;
+}
+
+.benefits-box {
+  border: 1px solid $color-021;
+  border-radius: 6px;
+}
+.master-card-banner {
+  border-radius: 8px;
+  width: 100%;
+}
+
+/*Insurance and Zero-cancellation starts*/
+.insRs-banner {
+  background-color: #f4f9ff;
+  border-radius: rem(4);
+  width: 100%;
+}
+.brand-image {
+  width: rem(40);
+  height: rem(45);
+}
+
+.brand-image-slide {
+  width: rem(23);
+}
+/*Insurance and Zero-cancellation ends*/
+
+/*Review Revamp*/
+
+.flight-seg {
+  .review-airline-details {
+    & > li {
+      position: relative;
+      padding-right: rem(14);
+      &:after {
+        position: absolute;
+        content: '';
+        width: rem(4);
+        height: rem(4);
+        border-radius: 50%;
+        background-color: $color-013;
+        top: rem(5);
+        right: rem(6);
+      }
+      &:first-child,
+      &:last-child {
+        padding-right: 0;
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.seg-org {
+  .org-dest-date {
+    li {
+      font-size: rem(20);
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+  .optionsReview {
+    margin-top: rem(3);
+    color: $color-014;
+    &:before {
+      background-color: $color-013;
+    }
+  }
+}
+
+.layover-Details {
+  width: 70%;
+  position: relative;
+  margin: rem(40) auto;
+  .line {
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: rem(1);
+    position: absolute;
+    background: $color-035;
+  }
+  .layover-info {
+    z-index: 99;
+    position: relative;
+    display: inline-block;
+    background: $color-fff;
+    padding: rem(10) rem(80);
+    border: 1px solid $color-035;
+    border-radius: rem(30);
+    -webkit-border-radius: rem(30);
+    -moz-border-radius: rem(30);
+  }
+}
+
+.optionsReview li {
+  font-size: 0.875rem;
+  position: relative;
+  padding: 0 0 0 12px;
+  display: inline-block;
+  &:first-child::before {
+    display: none;
+  }
+  &:before {
+    top: 50%;
+    left: rem(4);
+    content: '';
+    width: rem(4);
+    height: rem(4);
+    margin-top: -2px;
+    display: block;
+    position: absolute;
+    background-color: $color-013;
+    border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+    -webkit-border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+    -moz-border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+  }
+}
+
+.connect-bar {
+  .connect-dash {
+    position: absolute;
+    border: 1px dashed #999;
+    border-left: none;
+    height: rem(52);
+    left: rem(-20);
+    top: rem(0);
+    &:before,
+    &:after {
+      content: '';
+      width: rem(12);
+      height: rem(12);
+      border: 1px solid #999;
+      border-radius: 50px;
+      display: block;
+      position: absolute;
+    }
+    &:before {
+      left: rem(-5);
+      top: calc(rem(31) - 100%);
+    }
+    &:after {
+      bottom: calc(rem(31) - 100%);
+      left: rem(-5.5);
+    }
+  }
+}
+
+.separatorReview {
+  height: rem(1);
+  background-color: $color-021;
+  margin: 40px 0;
+}
+
+.tagReview {
+  margin-left: auto;
+}
+
+.layoverDetails {
+  width: 70%;
+  position: relative;
+  margin: 40px auto;
+  .line {
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 0.0625rem;
+    position: absolute;
+    background: #eaeaea;
+  }
+  .layover-info {
+    z-index: 99;
+    position: relative;
+    display: inline-block;
+    background: #fff;
+    padding: 0.625rem 2.5rem;
+    border: 1px solid #eaeaea;
+    border-radius: 1.875rem 1.875rem 1.875rem 1.875rem;
+    -webkit-border-radius: 1.875rem 1.875rem 1.875rem 1.875rem;
+    -moz-border-radius: 1.875rem 1.875rem 1.875rem 1.875rem;
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .layoverDetails {
+    width: 100%;
+    .layover-info {
+      padding: rem(8) rem(16);
+      width: rem(266);
+    }
+  }
+
+  .separatorReview {
+    height: rem(8);
+    background-color: $color-010;
+    margin: 40px 0;
+  }
+
+  .flight-checkout-holder {
+    .tooltip-box-holder-m.dayPlus {
+      .tooltip-content {
+        z-index: 99;
+      }
+      .tp-dayPlus {
+        border-bottom: 1px dashed $color-078;
+      }
+    }
+  }
+
+  .connect-bar {
+    position: absolute;
+    top: 0;
+    .connect-dash {
+      display: block;
+      position: relative;
+      border: 1px dashed $color-013;
+      border-left: none;
+      height: rem(60);
+      top: rem(33);
+      left: rem(-23);
+      &:before,
+      &:after {
+        content: '';
+        width: rem(18);
+        height: rem(18);
+        border: 1.5px solid $color-013;
+        border-radius: 50px;
+        display: block;
+        position: absolute;
+        left: rem(-9);
+      }
+      &:before {
+        top: rem(-30);
+      }
+      &:after {
+        bottom: rem(-30);
+      }
+    }
+  }
+
+  // .connect-bar {
+  //   .connect-dash {
+  //     position: absolute;
+  //     border: 1px dashed $color-013;
+  //     border-left: none;
+  //     height: rem(65.5);
+  //     left: rem(9);
+  //     top: rem(29.5);
+  //     &:before,
+  //     &:after {
+  //       content: '';
+  //       width: rem(18);
+  //       height: rem(18);
+  //       border: 1px solid $color-013;
+  //       border-radius: 50px;
+  //       display: block;
+  //       position: absolute;
+  //     }
+  //     &:before {
+  //       left: calc(100% - rem(8));
+  //       top: calc(rem(36) - 100%);
+  //       margin-bottom: rem(10);
+  //     }
+
+  //     &:after {
+  //       bottom: calc(rem(36) - 100%);
+  //       left: calc(100% - rem(8));
+  //       margin-top: rem(10);
+  //     }
+  //   }
+  // }
+
+  .seg-org {
+    .org-dest-date {
+      & > li {
+        font-size: rem(22);
+      }
+    }
+    .optionsReview {
+      margin-top: rem(11);
+      & > li {
+        font-size: rem(15);
+        padding: 0 rem(5) 0 rem(16);
+      }
+    }
+  }
+  // .tagReview {
+  //     position: absolute;
+  //     right: 20px;
+  //     top: 86px;
+  // }
+}
+/*Review Revamp*/

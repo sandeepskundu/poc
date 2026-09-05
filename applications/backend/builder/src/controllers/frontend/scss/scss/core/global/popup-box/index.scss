@@ -1,0 +1,47 @@
+.pop-wrpr{
+    position:relative;
+    .pop-actn-inpt{
+        width:0;
+        height:0;
+        opacity:0;
+        position: absolute;
+        visibility: hidden;
+    }
+}
+
+.pop-lbl{
+    position:relative;
+}
+
+.pop-body{
+    height:0;
+    width:0;
+    z-index:999;
+    overflow:hidden;
+    position:absolute;
+    left:-#{rem(9999999)};
+    top:-#{rem(9999999)};
+}
+
+.pop-wrpr.active .pop-body,
+.pop-wrpr.hver-open:hover .pop-body,
+.pop-wrpr .pop-actn-inpt:checked ~ .pop-body{
+    left:0;
+    top:100%;
+    min-width:100%;
+    overflow:auto;
+    width: inherit;
+    height: inherit;
+    min-height:rem(10);
+    max-height:rem(320);
+
+    &.aln-right{
+        right:0;
+        left:inherit;
+    }
+
+    &.aln-bottom{
+        bottom:0;
+        top:inherit;
+    }
+}

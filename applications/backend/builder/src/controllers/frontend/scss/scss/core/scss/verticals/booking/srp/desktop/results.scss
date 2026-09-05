@@ -1,0 +1,474 @@
+.fare-carsouel-holder {
+  padding: rem(10) 0 0;
+  border-bottom: 1px solid $color-039;
+
+  .fare-carsouel {
+    cursor: pointer;
+    color: $color-014;
+    text-align: center;
+    position: relative;
+    padding: rem(10) rem(10);
+    height: rem(58);
+
+    .fare-date,
+    .fare-price {
+      margin: 0;
+      font-size: rem(14);
+    }
+
+    .fare-date {
+      color: $color-014;
+    }
+
+    .fare-price {
+      color: $color-015;
+      margin-top: rem(4);
+      font-family: $font-family-rm;
+    }
+
+    &:active {
+      background-color: $color-052;
+    }
+
+    &.active {
+      color: $color-047;
+
+      &::after {
+        left: 0;
+        bottom: 0;
+        content: '';
+        width: 100%;
+        height: rem(2);
+        position: absolute;
+        background: $color-047;
+      }
+
+      border-color: $color-047;
+
+      .fare-date,
+      .fare-price {
+        color: $color-047;
+      }
+    }
+  }
+}
+
+.result-wrapper {
+  width: 80%;
+  padding: rem(30) 0 0 rem(20);
+
+  &.ptc-results {
+    .page-not-found-srp {
+      .img-container {
+        height: auto;
+        width: rem(202);
+      }
+    }
+
+    .no-result.card-box-empty {
+      padding: rem(20) 0 rem(4) 0;
+      height: auto;
+    }
+  }
+
+  &.oneway {
+    padding-bottom: rem(50);
+  }
+
+  .result-set {
+    &:last-child {
+      margin-bottom: rem(60);
+    }
+  }
+
+  .slick-slider {
+    .slick-slide {
+      padding-right: rem(10);
+    }
+
+    .slick-list {
+      .slick-track {
+        .slick-next {
+          right: rem(15);
+        }
+      }
+    }
+  }
+
+  .round-trip {
+    padding-bottom: 0;
+  }
+}
+
+.result-details {
+  .book-now {
+    &.btn-ht {
+      height: rem(58);
+      position: relative;
+    }
+    .offer-srp {
+      position: absolute;
+      top: rem(46);
+      right: 0;
+    }
+  }
+}
+
+.round-trip {
+  padding-bottom: rem(115);
+
+  .result-list {
+    width: 50%;
+
+    &:first-child {
+      padding-right: rem(10);
+    }
+
+    &:last-child {
+      padding-left: rem(10);
+    }
+  }
+}
+
+.ptc-fare-banner {
+  min-height: 47px;
+}
+
+.result-header {
+  margin-bottom: rem(18);
+}
+
+.result-item {
+  padding: rem(20) rem(16);
+  border-bottom: 1px solid $color-021;
+
+  &:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  &.selected {
+    background: $color-040;
+  }
+}
+
+.result-item.blank-shimmmer {
+  padding: rem(0) rem(0) rem(20) rem(0);
+}
+
+.srp-carousel {
+  .srp-banner {
+    display: flex !important;
+    // width: rem(320);
+    height: rem(60);
+    margin: 0 rem(10) 0 0;
+    padding: rem(12);
+    border-radius: rem(8);
+    align-items: center;
+    border: rem(1) solid $color-094;
+    background-color: $color-094;
+
+    .srp-img {
+      max-width: rem(40);
+      margin-bottom: rem(6);
+      .rewards-img {
+        height: 22px;
+      }
+    }
+
+    &:hover {
+      border-color: $color-096;
+    }
+
+    &.rewards {
+      &:hover {
+        border-color: $color-094;
+      }
+    }
+  }
+}
+
+.srp-offer-content {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #e2e2e2;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  img {
+    max-width: 1.5rem;
+    max-height: 1.5rem;
+  }
+  .coupon-code {
+    padding: 0.3125rem 0.625rem;
+    border: 1px dashed #666;
+    border-radius: 0.25rem;
+  }
+  .promo-tnc-breakup {
+    margin-top: 0.75rem;
+    background-color: #f8f8f8;
+    border-radius: 0.625rem;
+    padding: 1.25rem 1.25rem;
+  }
+  .promo-tnc {
+    margin-bottom: 10px;
+  }
+}
+@media only screen and (min-width: 1025px) {
+  .result-item-desktop:hover {
+    background: $color-040;
+  }
+}
+
+.result-details {
+  .info-txt {
+    color: $color-014;
+    font-size: rem(12);
+    margin: rem(5) 0 0;
+  }
+
+  li {
+    &.airline {
+      width: 20.8%;
+      min-height: rem(28);
+      position: relative;
+      padding-left: rem(44);
+
+      .al-holder {
+        top: 0;
+        left: 0;
+        width: 28px;
+        height: 28px;
+        position: absolute;
+      }
+    }
+
+    &.depart {
+      width: 18.48%;
+    }
+
+    &.arrival {
+      width: 17.58%;
+    }
+
+    &.duration {
+      width: 17.47%;
+    }
+
+    &.price {
+      width: 10.1%;
+      color: $color-015;
+    }
+
+    &.ptc-price {
+      width: 14.1%;
+      color: $color-015;
+      text-align: right;
+    }
+
+    &.book-now {
+      width: 10.1%;
+    }
+  }
+}
+
+.srt,
+.how {
+  display: none;
+}
+
+.round-trip .result-item {
+  cursor: pointer;
+
+  &.selected {
+    cursor: default;
+  }
+}
+
+.round-trip .result-details {
+  .hrt {
+    display: none;
+  }
+
+  .srt {
+    display: flex;
+  }
+
+  li {
+    &.airline {
+      width: 21.07%;
+      padding-left: 0;
+      padding-top: rem(30);
+
+      .al-holder {
+        top: 0;
+        left: 0;
+        width: 28px;
+        height: 28px;
+        position: absolute;
+      }
+    }
+
+    &.depart {
+      width: 37.24%;
+    }
+
+    &.duration {
+      width: 27.86%;
+    }
+
+    &.price {
+      width: 13.82%;
+    }
+
+    &.ptc-price {
+      width: 35.82%;
+    }
+  }
+}
+
+.result-details.sorting {
+  color: $color-009;
+  font-size: rem(12);
+  margin: rem(20) 0;
+  background: $color-010;
+  padding: rem(14) rem(20);
+  @include adl-border-radius(#{rem(6)}, #{rem(6)}, #{rem(6)}, #{rem(6)});
+
+  li.airline {
+    padding-top: 0;
+    min-height: auto;
+  }
+
+  .sort-label {
+    position: relative;
+    padding-right: rem(18);
+    display: inline-block;
+  }
+
+  .sort-icon {
+    right: -2px;
+    top: 50%;
+    position: absolute;
+    margin: -#{rem(8)} 0 0;
+    color: $color-009;
+  }
+}
+
+.layovers li {
+  position: relative;
+  display: inline-block;
+  // padding-right: rem(18);
+
+  // &::after {
+  //   top: 3px;
+  //   width: 9px;
+  //   height: 7px;
+  //   right: 4px;
+  //   font-size: rem(7);
+  //   content: '\E825';
+  //   position: absolute;
+  //   font-family: 'fontello', sans-serif;
+  // }
+
+  // &:last-child {
+  //   padding-right: 0;
+
+  //   &::after {
+  //     display: none;
+  //   }
+  // }
+
+  .layover-arrow {
+    position: relative;
+    bottom: 1px;
+  }
+
+  &:last-child {
+    .layover-arrow {
+      display: none;
+    }
+  }
+}
+
+.booknow-inc {
+  justify-content: normal;
+}
+
+.ai-hide {
+  .sb-icon-holder {
+    i {
+      display: none !important;
+    }
+  }
+}
+
+.seatsTp-box-holder {
+  padding: 0;
+  position: relative;
+  display: inline-block;
+
+  .seatsTp-content {
+    z-index: 999;
+    display: none;
+    padding: rem(4) rem(11);
+    letter-spacing: rem(0.12);
+    margin-top: rem(8);
+    position: absolute;
+    color: $color-fff;
+    background: $color-032;
+    width: max-content;
+    @include adl-border-radius(rem(8), rem(8), rem(8), rem(8));
+  }
+
+  .seatsTp-content.pos-btm {
+    right: 50%;
+    top: 100%;
+    transform: translate(50%, 0);
+
+    &:before {
+      width: 0;
+      height: 0;
+      content: '';
+      top: -14px;
+      right: 50%;
+      transform: translate(50%, 0);
+      margin-top: rem(8);
+      position: absolute;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid $color-032;
+    }
+  }
+
+  .seatsTp-content.pos-tp {
+    right: 50%;
+    top: -50%;
+    transform: translate(50%, -100%);
+
+    &:after {
+      width: 0;
+      height: 0;
+      content: '';
+      bottom: -14px;
+      right: 50%;
+      transform: translateX(50%);
+      margin-bottom: rem(8);
+      position: absolute;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid $color-032;
+    }
+  }
+
+  &:hover {
+    .seatsTp-content {
+      opacity: 1;
+      display: block;
+    }
+  }
+}

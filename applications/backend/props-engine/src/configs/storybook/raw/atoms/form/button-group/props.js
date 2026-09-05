@@ -1,0 +1,261 @@
+const content = () => {
+    return {
+        dvalue:'',
+        type:"any",
+        description:""
+    }
+}
+
+const func = () => {
+    return {
+        dvalue:null,
+        type:'function'
+    }
+}
+
+const icon = () => {
+    return {
+        ___:{
+            compProps:{
+                overwirte:{
+                    config:{
+                        ___:{
+                            predefined:{
+                                overwirte:{
+                                    icon:{
+                                        ___:{
+                                            nested:{
+                                                name:{
+                                                    dvalue:''
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+const icons = () => {
+    return {
+        ___:{
+            nested:{
+                left:icon(),
+                right:icon()
+            }
+        }
+    }
+}
+
+const button = () => {
+    return {
+        description:"",
+        type:"nested",
+        ___:{
+            nested:{
+                button:{
+                    type:'compProps',
+                    description:"",
+                    ___:{
+                        asroot:true,
+                        compProps:{
+                            from:'statics',
+                            mapping:'raw/atoms/form/button',
+                            overwirte:{
+                                button:{
+                                    ___:{
+                                        predefined:{
+                                            overwirte:{
+                                                ds:{
+                                                    ___:{
+                                                        nested:{
+                                                            predefined:{
+                                                                ___:{
+                                                                    predefined:{
+                                                                        overwirte:{
+                                                                            size:{
+                                                                                dvalue:'sm'
+                                                                            },
+                                                                            theme:{
+                                                                                dvalue:'001'
+                                                                            },
+                                                                            background:{}
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            css:{
+                                                                ___:{
+                                                                    nested:{
+                                                                        class:{
+                                                                            ___:{
+                                                                                nested:{
+                                                                                    shadow:{
+                                                                                        dvalue:'sm'
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                icons:icons()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+const wrapper = (elm) => {
+    return {
+        type:'predefined',
+        description:'The configuration supports design system–driven customization for button groups wrapper element. Properties such as size, shape, border, background color, and typography can be configured through the design system, ensuring visual consistency, accessibility, and alignment with application design standards across different themes and use cases.',
+        ___:{
+            predefined:{
+                from:'statics',
+                mapping:'ds.configs',
+                overwirte:{
+                    markup:{
+                        ___:{
+                            nested:{
+                                element:null
+                            }
+                        }
+                    },
+                    ds:{
+                        ___:{
+                            nested:{
+                                predefined:{
+                                    ___:{
+                                        predefined:{
+                                            overwirte:{
+                                                color:{},
+                                                background:{}
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+module.exports = {
+    list:{
+        dvalue:{},
+        type:'object',
+        description:'List is the prop that defines the buttons shown in the button group. It accepts an object as array of button configurations, so you can pass individual button props for each item in the group.',
+    },
+    wrapper:wrapper(),
+    callback:{
+        description:"A callback function is a function passed from a parent component to a child component through props, allowing the child component to execute logic in the parent when a specific event occurs.",
+        type:"nested",
+        ___:{
+            nested:{
+                onBlur:func(),
+                onFocus:func(),
+                onPress:func(),
+                onClick:func(),
+                onPressUp:func(),
+                onPressEnd:func(),
+                onPressStart:func(),
+                onPressChange:func()
+            }
+        }
+    },
+    theme:{
+        description:"The theme prop controls the visual appearance of buttons across different states within the button group. It allows you to define styling variations for states such as default, active and disabled, ensuring a consistent and customizable look and feel throughout the component. Use this prop to align the button group's appearance with your application's design system or branding guidelines.",
+        type:"nested",
+        ___:{
+            nested:{
+                active:button(),
+                disabled:button(),
+                default:{
+                    description:"",
+                    type:"nested",
+                    ___:{
+                        nested:{
+                            button:{
+                                type:'compProps',
+                                description:"",
+                                ___:{
+                                    asroot:true,
+                                    compProps:{
+                                        from:'statics',
+                                        mapping:'raw/atoms/form/button',
+                                        overwirte:{
+                                            icons:icons(),
+                                            button:{
+                                                ___:{
+                                                    predefined:{
+                                                        overwirte:{
+                                                            ds:{
+                                                                ___:{
+                                                                    nested:{
+                                                                        predefined:{
+                                                                            ___:{
+                                                                                predefined:{
+                                                                                    overwirte:{
+                                                                                        size:{
+                                                                                            dvalue:'sm'
+                                                                                        },
+                                                                                        theme:{
+                                                                                            dvalue:'001'
+                                                                                        },
+                                                                                        background:{}
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        css:{
+                                                                            ___:{
+                                                                                nested:{
+                                                                                    class:{
+                                                                                        ___:{
+                                                                                            nested:{
+                                                                                                shadow:{
+                                                                                                    dvalue:'sm'
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

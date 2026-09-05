@@ -1,0 +1,58 @@
+.exit-sep {
+  height: rem(1);
+  position: relative;
+  background-color: $color-013;
+  &.before {
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      background: $color-013;
+      height: rem(7);
+      width: rem(1);
+      top: rem(-3);
+    }
+  }
+  &.after {
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      background: $color-013;
+      height: rem(7);
+      width: rem(1);
+      top: rem(-3);
+    }
+  }
+}
+
+.exit-label {
+  position: absolute;
+  &.top {
+    top: 0;
+    left: 0;
+  }
+  &.bottom {
+    bottom: 0;
+    left: 0;
+  }
+  &.left {
+    top: 0;
+    left: rem(-50);
+  }
+  &.right {
+    top: 0;
+    right: rem(-50);
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .exit-label {
+    &.left {
+      transform: rotate(-90deg);
+    }
+    &.right {
+      transform: rotate(90deg);
+    }
+  }
+}

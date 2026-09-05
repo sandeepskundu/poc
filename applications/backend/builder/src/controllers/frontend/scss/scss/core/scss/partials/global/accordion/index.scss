@@ -1,0 +1,34 @@
+.accordion {
+  border-color: $color-021;
+  &:not(.active):hover {
+    background-color: $color-008;
+  }
+  &:not(.active):active {
+    background-color: $color-008;
+  }
+
+  &.blank-holder {
+    &:not(.active):hover {
+      background-color: transparent;
+    }
+  }
+
+  .accordion-label {
+    i {
+      right: rem(20);
+    }
+  }
+  .info {
+    background-color: $color-010;
+    border-radius: rem(6);
+  }
+  .accordion-content {
+    li {
+      p {
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}

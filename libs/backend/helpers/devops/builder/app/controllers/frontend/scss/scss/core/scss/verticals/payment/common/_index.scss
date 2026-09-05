@@ -1,0 +1,15 @@
+@import './rewards';
+@import './wait.popup';
+@import './upi-logo-list';
+@import 'adl-sass-partials/optional/stepper';
+@import "adl-sass-partials/optional/airline-logos/both";
+
+.payment-logo-holder{
+    min-width:190px;
+    margin-left:16px;
+    i{
+        &::before{
+            font-size:rem(36);
+        }
+    }
+}

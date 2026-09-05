@@ -1,0 +1,448 @@
+@import 'adl-sass-partials/optional/airline-logos/both';
+
+.porter-wg-container {
+  padding: rem(30);
+  border-radius: rem(8);
+  box-shadow: 0 rem(1) rem(18) 0 rgba(0, 0, 0, 0.05);
+  border: solid rem(1) $color-091;
+}
+
+.wg-org-dest {
+  position: relative;
+  border: rem(1) solid $color-017;
+  border-radius: rem(8) rem(8) rem(8) rem(8);
+  -webkit-border-radius: rem(8) rem(8) rem(8) rem(8);
+  cursor: pointer;
+
+  &::before {
+    top: 20%;
+    left: 48%;
+    height: 60%;
+    content: '';
+    width: rem(1);
+    position: absolute;
+    background: $color-017;
+  }
+
+  &.has-error {
+    border-color: $input-error-border-color;
+  }
+
+  &:hover {
+    border-color: $color-015;
+  }
+
+  .disabled-input {
+    .input-wrapper {
+      input[type='text']:disabled {
+        color: $color-013;
+      }
+    }
+  }
+}
+
+.wg-org-dest-m {
+  position: relative;
+  border: rem(1) solid $color-017;
+  border-radius: rem(8) rem(8) rem(8) rem(8);
+  -webkit-border-radius: rem(8) rem(8) rem(8) rem(8);
+  cursor: pointer;
+
+  &.has-error {
+    border-color: $input-error-border-color;
+  }
+
+  &:hover {
+    border-color: $color-015;
+  }
+
+  .disabled-input {
+    .input-wrapper {
+      input[type='text']:disabled {
+        color: $color-013;
+      }
+    }
+  }
+}
+
+.bottomSeatOff.input-wrapper:hover {
+  border-color: #ced4da;
+}
+
+.vat.title-arrow {
+  right: 16px;
+  position: absolute;
+  top: 22px;
+}
+
+.vat.calender-icon {
+  right: rem(16) !important;
+}
+
+.adlw {
+  .porter-input {
+    .sb-opt-wrpr {
+      width: rem(208);
+      padding: rem(10) 0;
+
+      .sb-option {
+        &:first-child,
+        &:last-child {
+          border-radius: 0;
+        }
+      }
+    }
+
+    .wg-org-dest {
+      .disabled-input {
+        .placholder {
+          color: $color-093;
+        }
+      }
+    }
+
+    .placeholder {
+      opacity: 1;
+      background: transparent;
+    }
+
+    &.porter-org-dest {
+      .input-wrapper {
+        min-height: rem(58);
+      }
+    }
+
+    .input-wrapper.has-left-icon .input-icon-holder {
+      left: 18px;
+    }
+
+    .input-wrapper .input-icon-holder {
+      top: 54%;
+    }
+
+    .ao-list {
+      li {
+        padding: rem(12) rem(20);
+      }
+    }
+  }
+
+  .porter-travel-select {
+    .sb-opt-wrpr {
+      width: rem(208);
+      padding: rem(10) 0;
+
+      .sb-option {
+        &:first-child,
+        &:last-child {
+          border-radius: 0;
+        }
+      }
+    }
+
+    .bs-common .bs-header {
+      padding: rem(18) rem(20) rem(10);
+    }
+  }
+
+  .fb-popup-box{
+    &.popup-wrpr{
+      .popup-box-body {
+        min-width: 360px !important;
+        min-height: auto !important;
+        margin-top: rem(10);
+      }
+    }
+  }
+
+  .airport-options {
+    .ao-hding {
+      font-size: rem(10);
+    }
+  }
+}
+
+.porter-input-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  > li {
+    padding: 0 0 rem(24) 0;
+  }
+
+  .porter-input {
+    width: 33.3%;
+
+    &.porter-gutter {
+      width: 66.6%;
+    }
+
+    &.porter-org-dest {
+      width: 66.6%;
+
+      .org-holder {
+        line-height: rem(44);
+      }
+
+      .has-error {
+        border-color: $input-error-border-color;
+      }
+    }
+
+    .sb-lable {
+      max-height: rem(60) !important;
+
+      &:hover {
+        border: 1px solid $color-015;
+      }
+
+      &.no-border {
+        border: none;
+      }
+    }
+
+    .sb-wrpr {
+      &.list {
+        margin-bottom: 0;
+      }
+
+      .input {
+        cursor: pointer;
+      }
+
+      .sb-opt-wrpr {
+        .sb-option {
+          margin-bottom: 0 !important;
+        }
+      }
+
+      i {
+        vertical-align: top;
+      }
+    }
+  }
+}
+
+.serviceDetail .list li {
+  margin-bottom: 0px !important;
+}
+
+.porter-travel {
+  position: relative;
+  left: -8px;
+
+  .porter-travel-select {
+    &:first-child {
+      margin-right: rem(40);
+    }
+
+    &.blank {
+      width: 10%;
+      margin-right: rem(30);
+    }
+
+    .sb-wrpr {
+      &.list {
+        margin-bottom: 0;
+      }
+    }
+
+    .pt-label {
+      width: fit-content;
+      padding: rem(5) rem(8);
+
+      &:hover {
+        background-color: $color-092;
+        border-radius: rem(15);
+      }
+    }
+  }
+}
+
+.airport-options {
+  cursor: default;
+  padding: rem(20) 0 0;
+  max-height: 420px;
+
+  .no-result {
+    font-size: rem(12);
+    color: $color-007;
+    padding: rem(10) rem(24);
+  }
+}
+
+.ao-hding {
+  font-size: rem(10);
+  position: relative;
+  line-height: rem(16);
+  padding: 0 rem(25) 0 rem(50);
+  color: $flight-be-airport-option-type-color;
+
+  .ao-hding-ih {
+    top: 0;
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+    left: rem(25);
+    position: absolute;
+  }
+}
+
+.ao-list {
+  padding: rem(10) 0 rem(10);
+
+  li {
+    cursor: pointer;
+    padding: rem(12) rem(24);
+  }
+
+  .ao-city {
+    position: relative;
+    padding-right: rem(30);
+
+    .ao-code {
+      top: 0;
+      right: 0;
+      width: rem(30);
+      position: absolute;
+    }
+  }
+
+  .ao-name {
+    font-size: rem(12);
+    margin: rem(5) 0 0;
+    color: $color-014;
+  }
+
+  .full {
+    &:hover {
+      background: #f3f3f3;
+    }
+  }
+}
+
+.full.arrivalDepartureHighlight {
+  background: #eef4fb;
+
+  &:hover {
+    background: #eef4fb;
+
+    p {
+      span {
+        background: transparent;
+      }
+
+      background: transparent;
+    }
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .porter-input-list {
+    > li {
+      padding: 0 0 rem(20) 0;
+    }
+
+    .porter-input {
+      width: 100%;
+
+      &.porter-org-dest {
+        width: 100%;
+      }
+
+      &.porter-gutter {
+        display: none;
+      }
+    }
+
+    .full,
+    .mr-b20 {
+      .porter-input {
+        width: 50%;
+
+        &.porter-org-dest {
+          width: 100%;
+        }
+
+        &.porter-gutter {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .porter-travel {
+    .porter-travel-select {
+      width: 50%;
+
+      &.blank {
+        width: 45%;
+        margin-right: rem(30);
+      }
+
+      .pt-label {
+        width: fit-content;
+        padding: rem(5) rem(8);
+
+        &:hover {
+          background-color: $color-092;
+          border-radius: rem(15);
+        }
+      }
+    }
+  }
+
+  .adlw {
+    .porter-input {
+      .bs-h-icon {
+        margin-top: rem(10);
+      }
+
+      .isd-search {
+        padding-top: rem(4);
+      }
+
+      .bs-common {
+        .bs-header {
+          padding: rem(18) rem(20) rem(10);
+
+          p {
+            margin: rem(16) rem(0);
+          }
+        }
+
+        .input-wrapper {
+          min-height: rem(44);
+        }
+      }
+
+      .ao-hding {
+        padding: rem(20) rem(25) 0 rem(40);
+        padding-top: rem(20);
+        padding-bottom: rem(6);
+        font-size: rem(12);
+
+        .ao-hding-ih {
+          top: 19px;
+          left: 18px;
+        }
+      }
+
+      .ao-list .ao-city {
+        font-size: rem(16);
+        font-family: $font-family-rm;
+      }
+
+      .ao-list {
+        .ao-name {
+          font-size: rem(12);
+          margin: 0;
+        }
+      }
+    }
+
+    .input {
+      z-index: 0;
+    }
+  }
+}

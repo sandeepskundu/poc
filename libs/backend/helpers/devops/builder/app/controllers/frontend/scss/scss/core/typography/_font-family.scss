@@ -1,0 +1,16 @@
+@each $path, $list in $fonts-families {
+    @each $name, $family in $list {
+        $font-type: map-get($family, 'type');
+        $font-weight: map-get($family, 'weight');
+        @include aio-font-face($font-type, normal, normal, $path, $name);
+    }
+}
+
+@each $path, $list in $fonts-families {
+    @each $name, $family in $list {
+        $font-type: map-get($family, 'type');
+        .fm-#{$name}{
+            font-family:#{$path}-#{$name};
+        }
+    }
+}

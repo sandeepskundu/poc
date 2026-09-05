@@ -1,0 +1,22 @@
+@each $font-class, $font-values in $fonts-size {
+    $tracking:map-get($font-values, 'tracking');
+    $font-size:map-get($font-values, 'font-size');
+    $line-height:map-get($font-values, 'line-height');
+
+    .#{$font-class}{
+
+        @if $font-size != null {
+            font-size:rem($font-size);
+        }
+
+        @if $line-height != null {
+            line-height:rem($line-height);
+        }
+
+        @if $tracking != null {
+            letter-spacing:#{$tracking};
+        }
+        
+    }
+
+}

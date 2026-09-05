@@ -1,0 +1,1 @@
+exports.props = require('./props');

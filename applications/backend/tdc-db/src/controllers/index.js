@@ -1,0 +1,1 @@
+exports.collections = require('./collections');

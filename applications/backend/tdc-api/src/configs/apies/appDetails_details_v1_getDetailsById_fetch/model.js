@@ -1,0 +1,61 @@
+module.exports = {
+
+    "response":{
+        "exclude":{
+            "enable":true,
+            "kies":{
+                "ts":true
+            }
+        }
+    },
+
+    "signature":{
+        "creation":{
+            "enable":true,
+            "nodes":{
+                "_id":{
+                    "enable":true,
+                    "valueType":"objectId"
+                },
+                "_userId":{
+                    "enable":false,
+                    "valueType":"objectId"
+                },
+                "_mapId":{
+                    "enable":false,
+                    "valueType":"objectId"
+                },
+                "_merchantId":{
+                    "enable":true,
+                    "valueType":"objectId"
+                }
+            }
+        }
+    },
+
+    "query":{
+        "hidden":{
+            "merchantId":true
+        },
+        "runtime":{
+            "enable":true,
+            "configs":{
+                "query":{
+                    "0":{
+                        "cloumn":"_id",
+                        "value":{
+                            "from":"params",
+                            "map":"id"
+                        },
+                        "operation":{
+                            "eq":{
+                                "enable":true,
+                                "opType":"eq"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }                   
+}

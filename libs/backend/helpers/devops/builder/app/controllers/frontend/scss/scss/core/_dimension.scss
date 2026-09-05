@@ -1,0 +1,23 @@
+@if variable-exists(dimensions) {
+    $dimensions-list:map-get($dimensions, 'list');
+
+    @if $dimensions-list != null {
+        @each $dimension in $dimensions-list {
+            .mh-#{$dimension}{
+                min-height:rem($dimension);
+            }
+
+            .mw-#{$dimension}{
+                min-width:rem($dimension);
+            }
+
+            .h-#{$dimension}{
+                height:rem($dimension);
+            }
+
+            .w-#{$dimension}{
+                width:rem($dimension);
+            }
+        }
+    }
+}

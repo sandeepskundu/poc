@@ -1,0 +1,106 @@
+.change-and-cancellation {
+  > :nth-last-child(1) {
+    &.price-details {
+      .right-content {
+        background-color: $color-125;
+        &:after {
+          background-color: $color-007;
+        }
+      }
+    }
+  }
+  > :nth-last-child(2) {
+    &.price-details {
+      .right-content {
+        background-color: $color-124;
+        &:after {
+          background-color: $color-121;
+        }
+      }
+    }
+  }
+  > :nth-last-child(3) {
+    &.price-details {
+      .right-content {
+        background-color: $color-123;
+        &:after {
+          background-color: $color-122;
+        }
+      }
+    }
+  }
+  > :nth-last-child(4) {
+    &.price-details {
+      .right-content {
+        background-color: $color-126;
+        &:after {
+          background-color: $color-051;
+        }
+      }
+    }
+  }
+  .price-details {
+    .right-content {
+      min-width: rem(115);
+      &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: rem(5);
+        border-radius: rem(4);
+      }
+      .bs-header {
+        text-align: left;
+        padding-bottom: rem(8);
+      }
+    }
+  }
+}
+.cancel-date-holder {
+  .seg-change {
+    padding-top: rem(20);
+    padding-bottom: rem(20);
+
+    &:first-child {
+      padding-top: rem(25);
+    }
+  }
+}
+.baggage-holder {
+  .seg-baggage {
+    padding-top: rem(20);
+    padding-bottom: rem(20);
+    &:first-child {
+      padding-top: rem(25);
+    }
+  }
+  .baggage-table {
+    .tab-row {
+      border-bottom: solid 1px $color-087;
+    }
+    > :last-child {
+      .tab-row {
+        border: none;
+      }
+    }
+    .pax {
+      width: 25%;
+    }
+    .checkin {
+      width: 47%;
+    }
+    .cabin {
+      width: 28%;
+    }
+  }
+}
+
+.optionsReview {
+  li {
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}

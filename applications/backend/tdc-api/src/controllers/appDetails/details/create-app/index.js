@@ -1,0 +1,1 @@
+exports.byType = require('./by-type');

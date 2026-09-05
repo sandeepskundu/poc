@@ -1,0 +1,1 @@
+exports.getByMapId = require('./getByMapId')

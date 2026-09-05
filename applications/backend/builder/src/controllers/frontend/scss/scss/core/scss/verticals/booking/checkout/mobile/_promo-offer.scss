@@ -1,0 +1,246 @@
+.offer-tag {
+  position: relative;
+  padding: rem(6) rem(10);
+  border: 1px solid $color-002;
+  @include adl-border-radius(rem(4), rem(4), rem(4), rem(4));
+
+  .offer-code {
+    position: relative;
+    padding-left: rem(10);
+
+    &::after,
+    &::before {
+      content: '';
+      left: 0;
+    }
+  }
+
+  .offer-img {
+    width: rem(20);
+    height: rem(20);
+  }
+}
+
+.disabled-apply {
+  cursor: default;
+  text-decoration: underline;
+}
+
+.disabled-code {
+  position: absolute;
+  right: rem(16);
+  top: rem(22);
+  z-index: 99;
+  color: $color-019;
+  font-weight: 500;
+  cursor: default;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.apply-code {
+  position: absolute;
+  right: rem(16);
+  top: rem(22);
+  z-index: 99;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.code-input {
+  .input-holder {
+    .input-wrapper {
+      .input {
+        padding: rem(26) rem(100) rem(10) rem(16);
+      }
+    }
+  }
+
+  .input-wrapper {
+    .input-icon-holder {
+      right: 15%;
+      margin-top: rem(5);
+    }
+  }
+}
+
+.offer-content {
+  padding: rem(20) 0;
+  border-bottom: 1px solid $color-021;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.offer-tag-top {
+  position: absolute;
+  transform-origin: center;
+  left: rem(32);
+  top: -1px;
+}
+
+.offer-tag-top:before {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  box-sizing: border-box;
+  width: rem(10);
+  height: rem(10);
+  border: rem(5) solid transparent;
+  top: -1px;
+  border-top: rem(5) solid #fff;
+  z-index: 1;
+}
+
+.offer-tag-top:after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  box-sizing: border-box;
+  width: rem(10);
+  height: rem(10);
+  border: rem(5) solid transparent;
+  top: 0;
+  border-top: rem(5) solid #0d67ca;
+}
+
+.offer-tag-bottom {
+  bottom: -1px;
+  left: rem(32);
+  position: absolute;
+}
+
+.offer-tag-bottom:before {
+  bottom: 0;
+  content: ' ';
+  position: absolute;
+  left: 0;
+  box-sizing: border-box;
+  width: rem(10);
+  height: rem(10);
+  border: rem(5) solid transparent;
+  border-bottom: rem(5) solid #0d67ca;
+}
+
+.offer-tag-bottom:after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  box-sizing: border-box;
+  width: rem(10);
+  height: rem(10);
+  border: rem(5) solid transparent;
+  bottom: -1px;
+  border-bottom: rem(5) solid #fff;
+}
+
+.no-coupon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .coupon-not-found {
+    width: rem(200);
+  }
+}
+
+.choose-from-below {
+  color: $color-014;
+}
+
+.slides-container {
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  flex-wrap: nowrap;
+  display: flex;
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+
+  .slide {
+    display: inline-block;
+    flex-basis: 110px;
+    padding-right: 16px;
+    padding-left: 16px;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+}
+
+/*************************************************/
+
+.promo-btm-v2{
+  .offer-tag {
+    position: static;
+    padding: 0;
+    border: none;
+  
+    .offer-code {
+      position: static;
+      padding: rem(5) rem(10);
+      border: 1px dashed $color-014;
+      border-radius: rem(4);
+    }
+  
+    .offer-img {
+      width: rem(20);
+      height: rem(20);
+    }
+  }
+
+  .offer-content {
+    padding: rem(20) rem(24);
+  
+    border: 1px solid $color-021;
+    border-radius: rem(16);
+    margin-bottom: rem(24);
+  
+    &.review-coupon-selected{
+      border: 1px solid $color-029;
+      box-shadow: 0 -1px 5px 0 rgba(73, 210, 178, 0.57);
+    }
+  
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .promo-tnc-breakup{
+    margin-top: rem(12);
+    background-color: $color-010;
+    border-radius: rem(10); 
+    padding: rem(20) rem(20);  
+  }
+
+  .promo-tnc{
+    margin-bottom: 10px;
+    .dot{
+      background-color: $color-013;
+    }
+  }
+}
+
+.review-promo-label{
+  .tagIcon{
+    transform: rotate(90deg);
+  }
+  .coupon-list{
+    &.more-coupon .coupon-desc:last-child{
+      border-bottom: 1px solid $color-021 !important;
+    }
+    .coupon-desc{
+      padding-bottom: rem(20);
+      margin-bottom: rem(20);
+      border-bottom: 1px solid $color-021;
+      &:last-child{
+        border-bottom: none;
+      }
+    }
+  }
+}

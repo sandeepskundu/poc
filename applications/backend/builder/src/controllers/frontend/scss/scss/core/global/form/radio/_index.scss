@@ -1,0 +1,55 @@
+.rdio-wrpr {
+    position:relative;
+    display:inline-block;
+}
+
+.rdio-inpt,
+.rdio-wrpr,
+.rdio-wrpr input {
+    width:rem(18);
+    height:rem(18);
+}
+
+.rdio-wrpr input{
+    top:0;
+    left:0;
+    opacity:0;
+}
+
+.rdio-lbl.disabled{
+    opacity:0.8;
+    cursor:default;
+}
+
+.rdio-inpt,
+.rdio-inpt::after{
+    @include aio-border-radius(#{rem(18)}, #{rem(18)}, #{rem(18)}, #{rem(18)});
+}
+
+.rdio-inpt{
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    cursor:pointer;
+    position:absolute;
+
+    &::after{
+        opacity:0;
+        content:"";
+        top:rem(5);
+        left:rem(5);
+        width:rem(8);
+        height:rem(8);
+        position:absolute;
+        @extend .transition;
+    }
+}
+
+.rdio-wrpr.disabled .rdio-inpt{
+    cursor:default;
+}
+
+.rdio-wrpr input:checked + .inpt:after{
+    opacity:1;
+}

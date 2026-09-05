@@ -1,0 +1,132 @@
+.adlw .cb-widget {
+
+    .fl-be-wrpr {
+
+        .date-input {
+            padding-bottom: rem(15);
+
+            .input-wrapper {
+                min-height: rem(60);
+            }
+
+            .input {
+                padding: rem(18) rem(20) 0 rem(20) !important;
+            }
+
+            .placholder {
+                top: rem(10) !important;
+            }
+        }
+
+        .trip-type {
+            min-width: 15%;
+        }
+
+        .org-dest {
+            min-width: 45%;
+
+            .input-wrapper .filled {
+                .placholder {
+                    top: rem(22);
+                    padding-left: rem(20);
+                }
+            }
+
+            .input-wrapper {
+                .placholder {
+                    top: rem(22);
+                    padding-left: rem(20);
+                }
+                label{
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .search {
+            min-width: 20%;
+        }
+
+        .date-input-cal{
+            position:relative;
+            min-width: rem(317);
+            .react-datepicker{
+                .react-datepicker__month-container{
+                    flex: 0 0 100%;
+                }
+            }
+        }
+
+
+        .time-list {
+
+            position: absolute;
+            width: rem(318);
+            top: rem(170);
+
+            .active {
+                .popup-box-body {
+                    min-width: rem(40) !important;
+                }
+            }
+            .input-wrapper{
+                min-height: rem(58);
+            }
+            .popup-label {
+                max-height: rem(60);
+            }
+
+            .input {
+                padding: rem(18) rem(20) 0 rem(20) !important;
+            }
+
+            .placholder {
+                top: rem(10) !important;
+            }
+        }
+
+        .pax{
+            flex: 0 0 20%;
+            .popup-box-body{
+                min-height: rem(315) !important;
+                .closePopup{
+                    position: absolute;
+                    top: rem(217);
+                    right: rem(10);
+                }
+            }
+            .time-list{
+                .popup-box-body {
+                    display: none;
+                }
+                .active{
+                    .popup-box-body{
+                        display: inline-block;
+                        max-height: rem(80);
+                    }
+                }
+            }
+
+            .tlist{
+                .popup-box-body{
+                    min-height: rem(465) !important;
+                }
+                .time-list-box{
+                    .popup-box-body{
+                        min-height: rem(200) !important;
+                    }
+                }
+            }
+            .dt-heading{
+                line-height: 1.5;
+            }
+        }
+
+        .date-input .popup-label,
+        .time-list .popup-label {
+            border: 1px solid $color-014;
+            border-radius: rem(10);
+        }
+
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "request": {
+        "auth": {},
+        "body": {},
+        "methods": {
+            "post": {}
+        }
+    },
+    "validation": {
+        "headers": {},
+        "cookies": {},
+        "body": {},
+        "query": {},
+        "params": {}
+    }
+}

@@ -1,0 +1,20 @@
+.adl-title-name-holder{
+    position:relative;
+    border:1px solid $color-017;
+    @include adl-border-radius(rem(8), rem(8), rem(8), rem(8));
+    &:before{
+        top:20%;
+        left:30%;
+        height:60%;
+        content:'';
+        width:rem(1);
+        position: absolute;
+        background: $color-017;
+    }
+    &.has-error{
+        border-color:$color-007;
+    }
+    &:hover{
+        border-color:$input-border-focus-color;
+    }
+}

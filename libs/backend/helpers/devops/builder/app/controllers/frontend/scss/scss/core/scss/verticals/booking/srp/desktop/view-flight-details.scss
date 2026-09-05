@@ -1,0 +1,128 @@
+@import 'adl-sass-verticals/booking/checkout/common';
+
+.view-flight-details-popup .model-content-holder {
+  width: rem(832);
+  overflow: hidden;
+}
+
+.vfd-content {
+  height: inherit;
+  position: relative;
+  padding: rem(115) 0 rem(85);
+}
+
+.vfd-body {
+  clear: both;
+  overflow: auto;
+  max-height: calc(100vh - 246px);
+
+  .review-details {
+    &:first-child {
+      padding-top: rem(24);
+    }
+  }
+
+  .r-org-dest-header {
+    .org-dest-date {
+      li:nth-child(2) {
+        position: relative;
+        bottom: 10%;
+      }
+    }
+  }
+
+  .review-flight-details {
+    .airport-details {
+      width: 85.48%;
+    }
+  }
+
+  .vfd-baggage-detail {
+    border-bottom: 1px solid $color-035;
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  .vfd-seg-container {
+    padding-top: rem(24);
+
+    .vfd-seg {
+      margin-bottom: rem(48);
+    }
+  }
+
+  .ds-none {
+    display: none;
+  }
+}
+
+.vfd-footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+  position: absolute;
+  border-top: rem(1) solid $color-058;
+}
+
+.vfd-header {
+  top: 0px;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  position: absolute;
+
+  .pd-40,
+  .pd-bn {
+    .ai-close {
+      width: rem(40);
+      height: rem(40);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: -10px;
+      opacity: 0.85;
+
+      &:hover {
+        background: $color-052;
+        border: 1px solid $color-052;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .tab-holder {
+    display: flex;
+    background-color: $color-fff;
+
+    .tab-item {
+      padding: rem(16) rem(32);
+      color: $color-020;
+
+      &.active {
+        color: $color-020;
+      }
+
+      &:not(.active):hover {
+        color: $color-015;
+        background-color: $color-052;
+      }
+    }
+  }
+
+  .ai-close {
+    width: rem(40);
+    height: rem(40);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: $color-052;
+      border: 1px solid $color-052;
+      border-radius: 50%;
+    }
+  }
+}

@@ -1,0 +1,558 @@
+.fare-carsouel,
+.fare-carsouel-blank {
+  cursor: pointer;
+  color: $color-013;
+  text-align: center;
+  padding: rem(6) rem(10);
+  border: 1px solid $color-014;
+  @include adl-border-radius(rem(33), rem(33), rem(33), rem(33));
+
+  &.active {
+    font-weight: 500;
+    color: $color-015;
+    border: 2px solid $color-011;
+    background-color: $color-052;
+
+    .fare-date {
+      font-family: $font-family-rm;
+    }
+
+    .fare-date,
+    .fare-price {
+      color: $color-011;
+    }
+  }
+
+  .fare-date,
+  .fare-price {
+    font-size: rem(13);
+    margin: 0;
+    color: $color-014;
+  }
+
+  .fare-price {
+    margin-top: 3px;
+  }
+}
+
+.new-srp-filter {
+  .fare-carsouel,
+  .fare-carsouel-blank {
+    border: none;
+    padding: rem(12) rem(10) rem(10) rem(10);
+    background-color: transparent;
+    border-radius: 0;
+    height: rem(57);
+    &.active {
+      border-bottom: 2px solid $color-020;
+      font-family: $font-family-rb;
+    }
+  }
+  .fare-carsouel-holder {
+    border-bottom: 1px solid #ddd;
+  }
+  .result-details-wrapper.sorting {
+    top: 168px;
+  }
+}
+
+.no-result {
+  padding-top: rem(20);
+  padding-bottom: rem(10);
+}
+
+.nr-heading {
+  margin: 0 0 rem(5);
+}
+
+.nr-message {
+  color: $color-014;
+  margin: 0 0 rem(5);
+}
+
+.search-results {
+  padding-bottom: rem(80);
+
+  &.round-trip {
+    padding-bottom: rem(150);
+    overflow: hidden;
+    height: calc(100vh - 200px);
+
+    &.ptc {
+      height: max-content;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+.search-results.ptc {
+  padding-bottom: rem(0);
+}
+
+.round-trip {
+  .result-details-wrapper.sorting {
+    top: -1px;
+    padding: rem(4) rem(20) rem(8) rem(20);
+  }
+
+  .result-details.blank-holder {
+    margin: rem(4) 0 0 0;
+  }
+
+  .result-list-holder {
+    width: 50%;
+    padding: 0;
+    border-left: 1px solid $color-021;
+    overflow: auto;
+    height: calc(100vh - 200px);
+    padding-bottom: rem(105);
+
+    &:first-child {
+      border: none;
+    }
+  }
+
+  .result-list-holder.ptc {
+    width: 50%;
+    padding: 0;
+    border-left: 1px solid $color-021;
+    overflow: auto;
+    height: max-content;
+    padding-bottom: rem(0);
+  }
+
+  .result-list-holder.ptc-results {
+    padding-bottom: rem(0);
+  }
+}
+
+.result-details {
+  min-height: rem(70);
+  position: relative;
+  border-bottom: 1px solid $color-021;
+  padding: rem(14) rem(14);
+
+  li {
+    display: inline-block;
+  }
+
+  &.selected {
+    background: rgba($color: $color-024, $alpha: 0.07);
+  }
+
+  .light-text {
+    font-size: rem(12);
+    color: $color-014;
+  }
+
+  .timing {
+    margin: 0 0 rem(4);
+  }
+
+  .price {
+    margin: rem(2) 0 0;
+  }
+}
+
+.oneway .result-details-wrapper {
+  padding: 0;
+  border-bottom: 1px solid $color-021;
+  width: 95%;
+  margin: auto;
+  // &:last-child {
+  //   margin-bottom: rem(32);
+  // }
+}
+
+.oneway {
+  .result-list-holder {
+    .offer-srp {
+      margin-left: auto;
+    }
+  }
+  .result-details {
+    display: flex;
+    border-bottom: none;
+
+    &:active {
+      background: $color-052;
+    }
+
+    .price {
+      &.cont-ht {
+        height: rem(64);
+        position: relative;
+      }
+      .offer-srp {
+        position: absolute;
+        top: rem(48);
+        right: 0;
+      }
+    }
+  }
+}
+
+.oneway .airline-logo {
+  width: 33.33%;
+}
+
+.oneway .duration {
+  width: 46.93%;
+  margin-top: rem(2);
+}
+
+.oneway .airline-logo.ptc {
+  width: 23.33%;
+}
+
+.oneway .duration.ptc {
+  width: 36.93%;
+  margin-top: rem(2);
+}
+
+.oneway .price.ptc {
+  width: 40.74%;
+  text-align: right;
+}
+
+.oneway .price {
+  width: 19.74%;
+  text-align: right;
+}
+
+.oneway .timing {
+  margin: 0 0 rem(8);
+}
+
+.round-trip .result-details {
+  padding-left: rem(70);
+
+  &:active {
+    background: $color-052;
+  }
+
+  .mv-r {
+    display: flex;
+  }
+
+  .mv-l {
+    right: 5%;
+    position: relative;
+    display: flex;
+  }
+}
+
+.round-trip .duration,
+.round-trip .price {
+  width: 100%;
+}
+
+.round-trip .airline-logo {
+  top: rem(14);
+  left: rem(14);
+  width: rem(56);
+  min-width: rem(56);
+  position: absolute;
+}
+
+.ptcSorting {
+  position: sticky;
+  top: 153px;
+  z-index: 9;
+}
+
+.oneway.intbar {
+  position: sticky;
+  top: 63px;
+  z-index: 9;
+}
+
+.round-trip.ptcSorting {
+  position: sticky;
+  top: 78px;
+  z-index: 9;
+}
+
+.oneway.ptcSorting {
+  .airline-logo {
+    width: 23.33%;
+  }
+
+  .duration {
+    width: 36.93%;
+  }
+
+  .price {
+    width: 40.74%;
+  }
+}
+
+.result-details-wrapper {
+  &.sorting {
+    background: $color-010;
+    padding: rem(11) rem(16) rem(11) rem(16);
+    position: sticky;
+    top: 153px;
+    z-index: 9;
+
+    .result-details {
+      border: none;
+      min-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      color: $color-014;
+      font-size: rem(14);
+      line-height: rem(16);
+    }
+
+    .srp-org-dest {
+      font-size: rem(14);
+      font-family: $font-family-rm;
+    }
+  }
+
+  &.transparent.sorting {
+    background-color: $color-fff;
+    border-top: none;
+    border-bottom: 1px solid $color-021;
+
+    .srp-org-dest {
+      font-size: rem(16);
+      font-family: $font-family-rb;
+      color: $color-015;
+    }
+  }
+}
+
+.new-srp-height.search-results {
+  &.oneway {
+    padding-bottom: rem(48);
+  }
+  &.round-trip {
+    height: calc(100vh - 245px);
+    .result-list-holder {
+      height: calc(100vh - 245px);
+    }
+  }
+}
+
+.round-trip {
+  .result-details-wrapper.sorting {
+    padding: rem(4) rem(20) rem(8) rem(20);
+  }
+
+  .result-details.blank-holder {
+    margin: rem(4) 0 0 0;
+  }
+}
+
+.special-fare-banner {
+  z-index: 1;
+  background-color: $color-fff;
+
+  &.banner-sticky {
+    position: sticky;
+    top: rem(200);
+  }
+
+  &.banner-stick {
+    position: sticky;
+    top: rem(102);
+  }
+}
+
+.result-details-wrapper.sorting.intbar {
+  top: 63px;
+}
+
+.round-trip .result-details-wrapper.sorting .result-details {
+  padding: 0;
+
+  li {
+    width: 41%;
+
+    &.airline-logo {
+      top: 0;
+      left: 0;
+      width: 18%;
+      min-width: 18%;
+      position: relative;
+    }
+  }
+
+  .price {
+    text-align: right;
+  }
+}
+
+.filter-toast {
+  left: 50%;
+  bottom: rem(20);
+  position: fixed;
+  color: $color-fff;
+  font-size: rem(14);
+  line-height: rem(18);
+  padding: rem(12) rem(20) rem(12) rem(14);
+  background: $color-020;
+  @include adl-transform(-50%, 0);
+  @include adl-border-radius(rem(50), rem(50), rem(50), rem(50));
+
+  .filters-count {
+    width: rem(18);
+    height: rem(18);
+    font-size: rem(12);
+    color: $color-032;
+    text-align: center;
+    line-height: rem(18);
+    background: $color-fff;
+    display: inline-block;
+    margin-left: rem(8);
+    @include adl-border-radius(rem(50), rem(50), rem(50), rem(50));
+  }
+}
+
+.round-trip .filter-toast {
+  bottom: rem(90);
+}
+
+.sort-w {
+  width: 100% !important;
+}
+
+.rec-slider-container {
+  margin: 0 !important;
+}
+
+.fare-carsouel-blank {
+  border: none;
+}
+
+.fare-carsouel-holder {
+  .scroll-tab-container {
+    margin-left: 0;
+  }
+}
+
+.rec-pagination {
+  margin-top: 0 !important;
+}
+
+.page-not-found-srp {
+  img {
+    width: 180px;
+    margin-left: -14px;
+  }
+}
+
+.layovers li {
+  position: relative;
+  display: inline-block;
+
+  &.nearby {
+    padding: rem(2) rem(4);
+  }
+
+  .layover-arrow {
+    position: relative;
+    bottom: 1px;
+  }
+
+  &:last-child {
+    .layover-arrow {
+      display: none;
+    }
+  }
+}
+
+.srp-banner-m {
+  display: flex !important;
+  width: rem(160);
+  height: rem(72);
+  border-radius: rem(10);
+  border: none;
+  background-color: $color-094;
+  padding: rem(12);
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: rem(10);
+
+  .lottie-style {
+    width: rem(28);
+  }
+
+  .reward-icon {
+    // width: rem(46);
+    height: 20px;
+  }
+  .mcarouse-offer-text {
+    width: calc(100% - 20px);
+  }
+
+  &.banner-w {
+    width: 97%;
+    height: auto;
+
+    ul {
+      &:first-child {
+        align-items: center;
+      }
+    }
+  }
+
+  &.banner-w-2 {
+    width: fit-content;
+  }
+}
+
+.offer-container {
+  &a,
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+.fare-bdr {
+  border: 1px solid $color-021;
+}
+
+.offer-tag {
+  .coupon-code {
+    padding: rem(5) rem(10);
+    border: 1px dashed #666;
+    border-radius: 0.25rem;
+  }
+  img {
+    max-height: rem(24);
+    max-width: rem(24);
+  }
+}
+
+.b-top {
+  border-top: 1px solid #ddd;
+}
+
+.promo-tnc-breakup {
+  .promo-tnc-list {
+    li {
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: rem(14);
+      }
+    }
+  }
+}
+
+.srp-offer-container {
+  .bs-holder {
+    z-index: 9999;
+    .bs-h-icon {
+      margin-bottom: 0;
+    }
+  }
+}

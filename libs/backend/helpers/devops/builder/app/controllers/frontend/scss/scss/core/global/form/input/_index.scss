@@ -1,0 +1,140 @@
+.inpt-lbl {
+    z-index:1;
+    left:rem(6);
+    height:rem(1);
+    top:-#{rem(1)};
+    line-height:100%;
+    position:absolute;
+    background-color:#fff;
+    padding:0 rem(10) 0 rem(6);
+
+    .astrik {
+        height:rem(8);
+        width:rem(10);
+        top:-#{rem(2)};
+        position:absolute;
+    }
+
+    .inpt-lbl-txt{
+        top:50%;
+        position:relative;
+        transform: translateY(-50%);
+    }
+}
+
+.inpt-wrpr {
+    @extend .bdr-6;
+    position:relative;
+    display:inline-flex;
+    border:1px solid transparent;
+
+    .inpt-lbl {
+        font-size:rem(14);
+    }
+
+    .input{
+        z-index:1;
+        resize:none;
+        outline:none;
+        color:inherit;
+        @extend .pd-r14;
+        @extend .pd-l14;
+        @extend .pd-tb10;
+        position:relative;
+        background-color:transparent;
+    }
+
+    &.has-left-icon{
+        .input {
+            @extend .pd-l4;
+        }
+    }
+
+    &.sz-sm {
+        .inpt-lbl {
+            @extend .txt-12;
+        }
+
+        .input{
+            @extend .pd-tb8;
+        }
+    }
+
+    &.sz-md {}
+
+    &.sz-lg {
+        .inpt-lbl {
+            @extend .txt-16;
+        }
+
+        .input{
+            @extend .pd-tb12;
+        }
+    }
+
+    &.sz-xl {
+        .inpt-lbl {
+            @extend .txt-16;
+        }
+
+        .input{
+            @extend .pd-tb14;
+        }
+    }
+
+    &.sz-xxl {
+        .inpt-lbl {
+            @extend .txt-16;
+        }
+
+        .input{
+            @extend .pd-tb14;
+        }
+    }
+
+    &.has-prefix{
+        @extend .bdr-rln;
+    }
+
+    &.has-suffix{
+        @extend .bdr-rrn;
+    }
+}
+
+.inpt-autocomplete{
+    position:relative;
+    .inpt-opts{
+        z-index:10;
+        min-width:100%;
+        position:absolute;
+        &.pos-top{
+            left:0;
+            bottom:100%;
+            margin-bottom:rem(16);
+        }
+
+        &.pos-bottom{
+            left:0;
+            top:100%;
+            margin-top:rem(16);
+        }
+
+        &.pos-left{
+            top:0;
+            right:100%;
+            margin-right:rem(16);
+        }
+
+        &.pos-right{
+            top:0;
+            left:100%;
+            margin-left:rem(16);
+        }
+
+        .list-box{
+            clear:both;
+            overflow:auto;
+            max-height:rem(250);
+        }
+    }
+}

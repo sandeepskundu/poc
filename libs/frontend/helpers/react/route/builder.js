@@ -1,0 +1,218 @@
+const json = require('./../../json');
+const constants = require('./../../constants');
+const useragent = require('./../../user-agent');
+
+const mapPath = (prefix, p) => {
+    let path = prefix;
+
+    if(p){
+        path = (path+'/'+p);
+    }
+
+    return path;
+}
+
+const doMap = (rval, cate, arg, view) => {
+    for(let a in arg){
+        if(a != 'childs'){
+            let p = mapPath(cate, a);
+            let item = json.copy(arg[a]);
+                item.category = cate;
+                item.device = view;
+                rval[p] = item;
+        }else{
+            for(let b in arg.childs){
+                let p = mapPath(cate, b);
+                let item = json.copy(arg.childs[b]);
+                    item.device = view;
+                    item.category = cate;
+                    rval[p] = item;
+            }
+        }
+    }
+    return rval;
+}
+
+const getCategory = (arg) => {
+    let map = {};
+    let view = useragent.getView();
+    for(let a in arg){
+        let item = arg[a];
+        if(item){
+            let route = (item.desktop?item.desktop:{});
+            let vr = (item[view]?item[view]:{});
+                vr = doMap({}, a, vr, view);
+                map = doMap(map, a, route, 'desktop');
+                map = json.merge(map, vr);
+        }
+    }
+
+    return map;
+}
+
+const getPath = (arg) => {
+    let path = [];
+    let flow = _siteProps_.flow;
+        path.push(_siteProps_.appProps.pathPrefix);
+
+    if(flow){
+        if(flow.language && flow.language.mapped){
+            path.push(flow.language.name)
+        }
+
+        if(flow.bundle && flow.bundle.mapped){
+            path.push(flow.bundle.name)
+        }
+    }
+
+    path.push(arg.category);
+
+    if(arg.path){
+        path.push(arg.path);
+    }
+
+    path = path.join('/');
+
+    return path.replace(/\/\/+/g, '/');
+}
+
+const getViewPath = (arg) => {
+    let path = ['.'];
+        path.push(arg.category);
+        path.push('views');
+        path.push(arg.device);
+        path.push(arg.view);
+        path.push('index.jsx');
+        path = path.join('/')
+
+    return path.replace(/\/\/+/g, '/');
+}
+
+const getConf = (arg) => {
+    return {
+        page:(arg.name),
+        view:(arg.device),
+        category:(arg.category)
+    }
+}
+
+const getParamsMap = (arg) => {
+    let rval = {
+        pIndex:{},
+        pProps:{
+
+        },
+        path:{
+            base:'',
+            params:'',
+            withParams:''
+        }
+    };
+    let path = arg.path.split('/:');
+        rval.path.base = path[0];
+        rval.path.params = path[0];
+        rval.path.withParams = path[0];
+
+    if(path.length > 1){
+        path.splice(0, 1);
+        for(let a in path){
+            let pname = path[a];
+            let dname = (pname.replace(/\?/g, ''))
+                rval.pIndex[a] = dname;
+                rval.path.params = (rval.path.params+`/#P${a}P#`);
+                rval.path.withParams = (rval.path.withParams+`/:_${dname}_:`);
+                rval.pProps[dname] = {
+                    optional:(pname.endsWith('?'))
+                }
+        }
+    }else{
+        rval.params = false;
+    }
+
+    return rval;
+}
+
+const stage = () => {
+    let rval = {
+        fresh:false,
+        pageChanged:true
+    };
+
+    if(!window.modules){
+        rval.fresh = true;
+    }
+
+    return rval;
+}   
+
+const parseRoute = (rval, arg) => {
+    let item = {
+        prop:getConf(arg),
+        path:getPath(arg),
+        view:getViewPath(arg)
+    };
+
+    item.stage = stage();
+    item.route = getParamsMap(item);
+    constants.route.set(item);
+
+    rval.push(item);
+
+    return rval;
+}
+
+const getRouteMap = (arg) => {
+    let rval = [];
+
+    for(let a in arg){
+        rval = parseRoute(rval, arg[a]);
+    };
+
+    return rval;
+}
+
+const getDefaults = (arg) => {
+    let route = getCategory({
+        home:arg.home || {}
+    });
+
+    const hr = getRouteMap(route);
+    const home = hr[0] || false;
+    const prefix = json.val(_siteProps_, 'appProps.pathPrefix', '');
+
+    if(home){
+        hr.push({...home, ...{path:`${prefix}/`}});
+        hr.push({...home, ...{path:`/`}});
+    }
+
+    return hr;
+}
+
+const excludeDefaults = (arg) => {
+    arg = arg || {};
+    delete arg.home;
+    delete arg['404'];
+    return arg;
+}
+
+const init = (arg) => {
+    let homeRoutes = getDefaults(arg);
+    let routes = excludeDefaults(arg);
+    let route = getCategory(routes);
+    let rval = getRouteMap(route);
+        rval = rval.concat(homeRoutes);
+
+    return rval;
+}
+
+exports.init = init;
+exports.stage = stage;
+exports.doMap = doMap;
+exports.mapPath = mapPath;
+exports.getConf = getConf;
+exports.getPath = getPath;
+exports.getCategory = getCategory;
+exports.parseRoute = parseRoute;
+exports.getViewPath = getViewPath;
+exports.getRouteMap = getRouteMap;
+exports.getParamsMap = getParamsMap;

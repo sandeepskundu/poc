@@ -1,0 +1,37 @@
+module.exports = {
+    "data":{
+        "heading":"Typography",
+        "description":"Our design system leverages a purposeful set of typographic styles. We’ve stress-tested this typographic scale across dozens of projects to make sure it’s robust enough to use across (almost) any project, while remaining as accessible as possible for everyone.",
+        "fonts":{
+            "0":{
+                "code":"rg",
+                "family":"inter",
+                "type":"regular",
+                "weight":400
+            },
+            "1":{
+                "code":"md",
+                "family":"inter",
+                "type":"medium",
+                "weight":500
+            },
+            "2":{
+                "code":"sb",
+                "family":"inter",
+                "type":"semibold",
+                "weight":600
+            },
+            "3":{
+                "code":"bd",
+                "family":"inter",
+                "type":"bold",
+                "weight":700
+            },
+            "4":{
+                "code":"ico",
+                "family":"icons",
+                "type":"svgtofont"
+            },
+        }
+    }
+}

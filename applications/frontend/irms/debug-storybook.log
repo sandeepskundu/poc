@@ -1,0 +1,37 @@
+[23:36:00.384] [INFO] storybook v10.3.5
+[23:36:02.396] [DEBUG] Getting package.json info for /Users/30057943/Documents/workspace/poc/mtt/applications/frontend/irms/package.json...
+[23:36:02.400] [WARN] You are currently using Storybook [1m10.3.5[22m but you have packages which are incompatible with it:
+
+- @storybook/addon-essentials@8.6.14 which depends on 8.6.14
+ Repo: https://github.com/storybookjs/storybook/tree/next/code/addons/essentials
+- @storybook/addon-interactions@7.6.24 which depends on 7.6.24
+ Repo: https://github.com/storybookjs/storybook/tree/next/code/addons/interactions
+- @storybook/blocks@8.6.14 which depends on ^8.6.14
+ Repo: https://github.com/storybookjs/storybook/tree/next/code/lib/blocks
+- @storybook/test@7.6.24 which depends on 7.6.24
+ Repo: https://github.com/storybookjs/storybook/tree/next/code/lib/test
+
+Please consider updating your packages or contacting the maintainers for compatibility details.
+
+For more details on compatibility guidance, see:
+https://github.com/storybookjs/storybook/issues/32836
+[23:36:03.857] [INFO] Starting...
+[23:36:04.296] [ERROR] [38;2;241;97;97mError: Build failed with 6 errors:
+.storybook/manager.js:1:23: ERROR: Could not resolve "@storybook/manager-api"
+.storybook/theme.js:1:23: ERROR: Could not resolve "@storybook/theming/create"
+node_modules/@storybook/addon-interactions/dist/manager.js:3:81: ERROR: Could not resolve "@storybook/manager-api"
+node_modules/@storybook/addon-interactions/dist/manager.js:4:133: ERROR: Could not resolve "@storybook/components"
+node_modules/@storybook/addon-interactions/dist/manager.js:8:59: ERROR: Could not resolve "@storybook/theming"
+...[39m
+    at failureErrorWithLog (./node_modules/esbuild/lib/main.js:1748:15)
+    at ./node_modules/esbuild/lib/main.js:1207:25
+    at runOnEndCallbacks (./node_modules/esbuild/lib/main.js:1588:45)
+    at buildResponseToResult (./node_modules/esbuild/lib/main.js:1205:7)
+    at ./node_modules/esbuild/lib/main.js:1232:16
+    at responseCallbacks.<computed> (./node_modules/esbuild/lib/main.js:884:9)
+    at handleIncomingPacket (./node_modules/esbuild/lib/main.js:939:12)
+    at Socket.readFromStdout (./node_modules/esbuild/lib/main.js:862:7)
+    at Socket.emit (node:events:509:20)
+    at addChunk (node:internal/streams/readable:564:12)
+[23:36:04.298] [WARN] Broken build, fix the error above.
+You may need to refresh the browser.

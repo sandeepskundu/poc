@@ -1,0 +1,35 @@
+.fids-date-wrapper {
+  .bs-header {
+    padding: rem(30) rem(16) 0;
+    .bs-h-icon {
+      margin-bottom: rem(18);
+    }
+  }
+  .date-title {
+    color: $color-014;
+    letter-spacing: rem(0.19);
+    margin-bottom: rem(5);
+  }
+  .date-label {
+    color: $color-015;
+    font-size: rem(22);
+    letter-spacing: rem(0.27);
+    margin-bottom: 0;
+  }
+  li {
+    padding: rem(16);
+    span {
+      color: $color-015;
+    }
+  }
+  .tickIcon {
+    position: relative;
+    right: rem(9);
+  }
+  .bs-inner {
+    padding: 0 0 rem(14) 0;
+    .selected {
+      background-color: $color-040;
+    }
+  }
+}

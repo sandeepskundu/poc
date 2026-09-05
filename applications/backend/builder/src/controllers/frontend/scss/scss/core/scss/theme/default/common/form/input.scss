@@ -1,0 +1,14 @@
+$input-border-color:$color-076;
+$input-border-focus-color:$color-015;
+$input-placeholder-color:$color-014;
+$input-error-text-color:$color-007;
+$input-error-border-color:$color-007;
+
+
+$inputs-map:(
+    '000':(
+      text:$color-050,
+      border:$color-049,
+      background:$color-049
+    )
+);

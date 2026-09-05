@@ -1,0 +1,33 @@
+.v-center {
+    top: 50%;
+    @include aio-transform(-50%, -50%);
+}
+
+.h-center {
+    left: 50%;
+    @include aio-transform(-50%, -50%);
+}
+
+.w-center{
+    top:50%;
+    left:50%;
+    @include aio-transform(-50%, -50%);
+}
+
+$has-center-box:has-component('center-box');
+
+@if $has-center-box != '' {
+    $center-box-prefix:get-component-prefix('center-box');
+    @if $center-box-prefix != '' {
+        .#{$center-box-prefix} {
+            top:50%;
+            left:50%;
+            max-width:96vw;
+            max-height:96vh;
+            min-width:rem(320);
+            position:absolute;
+            display:inline-block;
+            @include aio-transform(-50%, -50%);
+        }
+    }
+}

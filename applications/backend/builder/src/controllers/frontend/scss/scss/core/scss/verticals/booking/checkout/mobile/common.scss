@@ -1,0 +1,23 @@
+.flight-checkout-holder{
+    padding:0;
+    .options {
+        li:first-child {
+            padding-left: 0;
+        }
+    }
+}
+
+.flight-checkout-left{
+    width:73%;
+    padding-right:rem(15);
+}
+
+.flight-checkout-right{
+    width:27%;
+    padding-left:rem(15);
+}
+
+.checkout-heading{
+    line-height:rem(32);
+    margin-bottom:rem(20);
+}

@@ -1,0 +1,103 @@
+.confirmation-box{
+    margin-top:rem(30);
+    position: relative;
+    border-radius:rem(12);
+    background-color:$color-fff;
+    border:solid rem(2) $color-029;
+    padding:rem(32) rem(32) rem(32) rem(100);
+    box-shadow:-2px -1px 5px 0 rgba(73, 210, 178, 0.57);
+
+    .info-icon-holder{
+        top:rem(32);
+        left:rem(32);
+        display:block;
+        width:rem(44);
+        height:rem(44);
+        position: absolute;
+        background:$color-029;
+        @include adl-border-radius(50%, 50%, 50%, 50%);
+    }
+
+    &.empty{
+        border-color:$color-035;
+        box-shadow:none;
+        .info-icon-holder{
+            background: $color-035;
+        }
+    }
+
+    &.warn{
+        border-color:$color-038;
+        box-shadow:-2px -1px 5px 0 rgba($color: $color-038, $alpha: 0.57);
+        .info-icon-holder{
+            background:$color-038;
+        }   
+    }
+
+    &.error{
+        border-color:$color-007;
+        box-shadow:-2px -1px 5px 0 rgba($color: $color-007, $alpha: 0.57);
+        .info-icon-holder{
+            background:$color-007;
+        }   
+    }
+}
+
+.confirm-status-list{
+    display:block;
+    padding:rem(24) 0;
+    margin:rem(24) 0 0;
+    border-top:1px solid $color-035;
+    border-bottom:1px solid $color-035;
+    li{
+        display:inline-block;
+        padding-right:rem(50);
+    }
+
+    .status-label{
+        font-size:rem(12);
+    }
+
+    .status-info{
+        padding:rem(6) 0 0;
+    }
+}
+
+.confirm-actions{
+    margin:rem(24) 0 0;
+    li{
+        display:inline-block;
+        padding-right:rem(16);
+    }
+}
+
+.confirmation-flight-list{
+    margin-top:rem(90);
+}
+
+.confirmation-holder{
+    .details-seg{
+        width: 80%;
+    }
+}
+
+.loyalty-banner {
+    background: $color-059;
+    margin: 30px auto 0;
+    border-radius:rem(4);
+
+    .loyalty-banner-img {
+        height: rem(20);
+        width: rem(20);
+        display: inline-block;
+        vertical-align: top;
+        margin-right: rem(8);
+        margin-top: -4px;
+        margin-left: rem(9);  
+    }
+    .lottie-style {
+        max-width: rem(40);
+        margin-top: -2px;
+        margin-left: 4px;
+      }
+  }

@@ -1,0 +1,122 @@
+@import 'adl-sass-theme';
+.switch-wrpr,
+.custom-switch-wrpr {
+  display: inline-block;
+  position: relative;
+  width: rem(30);
+  height: rem(18);
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider,
+  .veg-slider,
+  .nonveg-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $color-013;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+
+    &::before {
+      position: absolute;
+      content: '';
+      height: rem(15);
+      width: rem(15);
+      left: rem(2);
+      bottom: rem(1.5);
+      background-color: $color-fff;
+      -webkit-transition: 0.2s;
+      transition: 0.2s;
+    }
+  }
+
+  .veg-slider,
+  .nonveg-slider {
+    border-radius: rem(20);
+    background-color: $color-028;
+
+    &::before {
+      display: flex;
+      justify-content: center;
+      height: rem(18);
+      width: rem(18);
+      left: 0;
+      bottom: rem(-3);
+      border-radius: rem(2.8);
+    }
+  }
+
+  .veg-slider {
+    &::before {
+      content: url(adl-img('flight/addons/switch-veg.svg'));
+      height: rem(18);
+      width: rem(18);
+    }
+  }
+
+  .nonveg-slider {
+    &::before {
+      content: url(adl-img('flight/addons/switch-nonveg.svg'));
+      height: rem(18);
+      width: rem(18);
+    }
+  }
+
+  .slider.round {
+    border-radius: rem(34);
+
+    &::before {
+      border-radius: 50%;
+    }
+  }
+
+  input:checked + .slider {
+    background-color: $color-000;
+  }
+
+  input:checked + .veg-slider {
+    background-color: $color-109;
+  }
+
+  input:checked + .nonveg-slider {
+    background-color: $color-110;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 rem(1) $color-000;
+  }
+
+  input:focus + .veg-slider {
+    box-shadow: 0 0 rem(1) $color-109;
+  }
+
+  input:focus + .nonveg-slider {
+    box-shadow: 0 0 rem(1) $color-110;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(rem(11));
+    -ms-transform: translateX(rem(11));
+    -webkit-transform: translateX(rem(11));
+  }
+
+  input:checked + .veg-slider:before,
+  input:checked + .nonveg-slider:before {
+    transform: translateX(rem(21));
+    -ms-transform: translateX(rem(21));
+    -webkit-transform: translateX(rem(21));
+  }
+}
+
+.custom-switch-wrpr {
+  width: rem(38);
+  height: rem(11);
+}

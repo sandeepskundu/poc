@@ -1,0 +1,57 @@
+.fids-back-to-top {
+  .back-To-Top {
+    position: fixed;
+    top: auto;
+    transform: none;
+    bottom: rem(30);
+    z-index: 100;
+    right: 2%;
+    cursor: pointer;
+
+    .inner {
+      background-color: $color-060;
+      border-radius: 4rem;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      height: 3rem;
+      min-width: 3rem;
+      padding: 0 0.5rem;
+
+      i {
+        width: 1rem;
+        fill: $color-015;
+        display: inline-block;
+        transition: margin 250ms ease-in-out;
+      }
+
+      span {
+        max-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        transition: max-width 250ms ease;
+        transform-origin: left;
+        clip: initial;
+        font-size: 0.75rem;
+      }
+
+      &:hover {
+        padding-right: 1.2rem;
+
+        i {
+          margin: 0 0.3125rem;
+        }
+
+        span {
+          max-width: rem(200);
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .fids-back-to-top {
+    display: none;
+  }
+}

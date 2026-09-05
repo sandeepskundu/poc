@@ -1,0 +1,16 @@
+@each $name, $value in $color-names{
+    .txt-#{$name},
+    .htxt-#{$name}:hover{
+        color:$value;
+    }
+
+    .bg-#{$name},
+    .hbg-#{$name}:hover{
+        background:$value;
+    }
+
+    .bdr-#{$name},
+    .hbdr-#{$name}:hover{
+        border-color:$value;
+    }
+}

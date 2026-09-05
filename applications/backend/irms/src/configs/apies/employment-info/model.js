@@ -1,0 +1,156 @@
+const schema = {
+    "bu":true,
+    "bv":true,
+    "type":true,
+    "mapId":true,
+    "status":true,
+    "manager":true,
+    "empCode":true,
+    "employer":true,
+    "workMode":true,
+    "location":true,
+    "employedBy":true,
+    "department":true,
+    "designation":true,
+    "empCodeHash":true
+}
+
+const update = () => {
+    return {...schema}
+}
+
+module.exports = {
+    response:{
+        exclude:{
+            enable:true,
+            kies:{
+                ts:true
+            }
+        },
+        transform:{
+            enable:true,
+            kies:{
+                _id:"id"
+            }
+        }
+    },
+    valuemap: {
+        rootParentId:{
+            valuemap: {
+                map:"runtimeUtils.merchantRootHash",
+                from:"appConfig"
+            }
+        }
+    },
+
+    md5Hash:{
+        empCodeHash:{
+            nodes:{
+                0:{
+                    map:"runtimeUtils.merchantRootHash",
+                    from:"appConfig"
+                },
+                2:{
+                    map:"empCode",
+                    from:"body-item"
+                }
+            }
+        }
+    },
+
+    schema:{
+        default:schema,
+        update:update()
+    },
+
+    signature:{
+        merge:{
+            enable:true
+        },
+        creation:{
+            enable:true,
+            nodes:{
+                _id:{
+                    enable:true,
+                    valueType:"objectId"
+                },
+                _merchantId:{
+                    enable:true,
+                    valueType:"objectId"
+                }
+            }
+        }
+    },
+
+    query:{
+        byId:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"_id",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        byMapId:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"mapId",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+    },
+
+    validation:{
+        errors:{
+            nameHashId:{
+                mapTo:'name',
+                messages:{
+                    11000:'Duplicate'
+                }
+            },
+            typeHash:{
+                mapTo:'type',
+                messages:{
+                    11000:'Duplicate'
+                }
+            },
+            codeHash:{
+                mapTo:'code',
+                messages:{
+                    11000:'Duplicate'
+                }
+            }
+        }
+    },
+
+    values:{}
+}

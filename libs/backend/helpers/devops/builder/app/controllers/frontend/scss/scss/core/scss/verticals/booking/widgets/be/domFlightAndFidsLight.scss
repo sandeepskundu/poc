@@ -1,0 +1,18 @@
+@import 'adl-sass-theme';
+@import 'adl-sass-utils';
+
+@include adl-max-screen(768) {
+  .adlw.dom-flight-and-fids.light-wrpr {
+    .adl-fui {
+      .adlw {
+        .fbh {
+          background-color: $color-fff;
+        }
+      }
+
+      .check-status-wrapper {
+        background-color: $color-fff;
+      }
+    }
+  }
+}

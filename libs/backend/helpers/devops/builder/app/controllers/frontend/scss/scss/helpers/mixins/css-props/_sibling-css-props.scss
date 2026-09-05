@@ -1,0 +1,117 @@
+@function random-class(){
+    @return random(11) + 4
+}
+
+@mixin get-states-attrs-one($props, $config){
+    $state:map-get($config, 'state');
+    $class:map-get($config, 'class');
+    $selector:map-get($config, 'selector');
+    $random:'rc#{random(95)+4}';
+        
+    @if $class != null {
+
+        @if $selector != null {
+            //&.#{$random},
+            &.#{$class} #{$selector} {
+                @content;
+            }
+        }@else {
+            &.#{$class}{
+                @content;
+            }
+        }
+    }
+
+    @if $state != null {
+        @if $class != null {
+            @if $selector != null {
+                &:#{$state} #{$selector} {
+                   //@extend .#{$random};
+                   @content;
+                }
+            } @else {
+                &:#{$state}{
+                    @extend .#{$class}
+                }
+            }
+        } @else {
+            @if $selector != null {
+                &:#{$state} #{$selector} {
+                    @content;
+                }
+            } @else {
+                &:#{$state}{
+                    @content;
+                }
+            }
+            
+        }
+    }
+}
+
+@mixin compile-css-props-one($props-list, $state-config:''){
+    @if $state-config != '' {
+        @include get-states-attrs-one($props-list, $state-config){
+            @include set-cssOrState-props-one($props-list);
+        }
+    }@else {
+        @include set-cssOrState-props-one($props-list);
+    }
+}
+
+@mixin set-cssOrState-props-one($props, $state-config:()){
+    @each $props-name, $props-list in $props {
+        $is-state:map-get($state-config, $props-name);
+        @if $is-state != null {
+            @include compile-css-props-one($props-list, $is-state);
+        } @else {
+            #{$props-name}:#{$props-list};
+        }
+    }
+}
+
+@mixin compile-accordion-size($props:'', $state-config:()){
+    @if $props != '' {
+        @each $props-name, $props-values in $props {
+            $is-state:map-get($state-config, $props-name);
+            @if $is-state != null {
+                @include get-states-attrs-one($props-list, $state-config){
+                    @include set-cssOrState-props-one($props-values, $state-config); 
+                }
+            } @else {
+                .#{$props-name}{
+                    @include set-cssOrState-props-one($props-values, $state-config); 
+                }
+            }
+        }
+    }
+}
+
+@mixin compile-class-size($sizes:'', $class-prefix:'', $states:()){
+    @if $sizes != '' {
+        @include compile-accordion-size(map-get($sizes, "default"), $states);
+        @each $size, $size-values in $sizes {
+            @if $size != default {
+                @if $class-prefix != ''{
+                    &.#{$class-prefix}-#{$size}{
+                        @include compile-accordion-size(map-get($sizes, $size), $states);
+                    }
+                } @else {
+                    &.#{$size}{
+                        @include compile-accordion-size(map-get($sizes, $size), $states);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@mixin create-siblings-base($sizes:'', $themes:'', $states:(), $size-prefix:'', $theme-prefix:'theme'){
+    @if $exclude-theme-from-compile != null {
+        @content;
+        @include compile-class-size($sizes, $size-prefix, $states);
+    } @else {
+        @include compile-class-size($themes, $theme-prefix, $states);
+    } 
+}

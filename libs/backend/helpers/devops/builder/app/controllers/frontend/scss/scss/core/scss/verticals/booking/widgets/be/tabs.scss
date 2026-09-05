@@ -1,0 +1,215 @@
+.adlw .flw-tabs {
+  margin-bottom: rem(24);
+  margin-left: rem(18);
+
+  .widget-tabs {
+    &.new-tag {
+      padding-right: rem(44);
+    }
+  }
+
+  li {
+    cursor: pointer;
+    font-size: rem(15);
+    margin: 0 rem(18);
+    position: relative;
+    padding-bottom: rem(10);
+    color: $color-fff;
+
+    .new {
+      padding: 3px 6px;
+      position: absolute;
+      top: rem(3);
+      right: 0;
+      text-align: center;
+      line-height: normal;
+      background-color: $color-078;
+      cursor: default;
+      margin-left: rem(8);
+      border-radius: rem(10);
+    }
+
+    &::after {
+      left: 50%;
+      top: 100%;
+      content: '';
+      height: rem(2);
+      width: rem(20);
+      position: absolute;
+      background: $color-fff;
+      margin: -#{rem(3)} 0 0 -#{rem(11)};
+      display: none;
+    }
+
+    &:hover {
+      color: $color-056;
+      .new {
+        color: $color-fff;
+      }
+    }
+
+    &.active {
+      cursor: pointer;
+      color: $color-fff;
+      font-family: $font-family-rb;
+
+      &::after {
+        left: 50%;
+        top: 100%;
+        content: '';
+        height: rem(2);
+        width: rem(20);
+        position: absolute;
+        background: $color-fff;
+        margin: -#{rem(3)} 0 0 -#{rem(11)};
+        display: block;
+        border-radius: rem(3);
+      }
+    }
+  }
+}
+
+.adlw {
+  .weather-wrapper {
+    margin-right: rem(36);
+
+    .weather-widget {
+      cursor: pointer;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      color: $color-fff;
+
+      .oval {
+        display: inline-block;
+        width: rem(4);
+        height: rem(4);
+        border-radius: rem(4);
+        margin: 0 rem(10);
+        background-color: $color-fff;
+      }
+
+      .out-icon {
+        width: rem(20);
+        height: rem(20);
+      }
+    }
+
+    .current-weather {
+      max-width: rem(60);
+      max-height: rem(60);
+    }
+
+    .forcastList {
+      li {
+        margin-right: rem(28);
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .listIcon {
+        max-width: rem(30);
+        max-height: rem(30);
+        margin: rem(10) auto;
+      }
+    }
+  }
+
+  .fids-be-wrpr {
+    .sb-icon-holder {
+      display: none;
+    }
+
+    .ai-calendar {
+      display: none;
+    }
+  }
+}
+
+.fl-be-wrpr {
+  .trip-type {
+    &:hover {
+      background: $color-052;
+      border-radius: rem(50) rem(0) rem(0) rem(50);
+    }
+  }
+
+  .org-dest-input {
+    &:hover {
+      background: $color-052;
+      border-radius: rem(0);
+    }
+
+    &.focussed {
+      background: $color-018;
+      border-radius: rem(0);
+    }
+  }
+
+  .pax {
+    &:hover {
+      background: $color-052;
+      border-radius: rem(0);
+    }
+  }
+}
+
+.fids-be-wrpr {
+  .fids-airport {
+    &:hover {
+      background: $color-052;
+      border-radius: rem(50) rem(0) rem(0) rem(50);
+    }
+  }
+
+  .fids-type,
+  .fids-date,
+  .fids-flight {
+    &:hover {
+      background: $color-052;
+      border-radius: rem(0);
+    }
+  }
+}
+
+.datepicker-date {
+  span:hover {
+    background: $color-052;
+  }
+}
+
+.react-datepicker__day--disabled {
+  .datepicker-date {
+    span:hover {
+      background: transparent;
+    }
+  }
+}
+
+.adlw-swap {
+  height: 40px !important;
+  width: 40px !important;
+  align-items: center;
+  padding-top: 11px;
+  border-radius: 50px;
+  padding-left: 13px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background: #f3f3f3;
+  }
+}
+
+.swapEffect {
+  transform: rotate(-180deg);
+  display: inline-block !important;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.arrivalDepartureHighlight {
+  background: #eef4fb;
+}

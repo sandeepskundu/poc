@@ -1,0 +1,54 @@
+$checkbox-map:(
+  
+'000':(
+    checkbox-bg:$color-fff,
+    checkbox-bdr:$color-058,
+    checkbox-tick-color:$color-fff,
+
+	  checkbox-lable-color:$color-015,
+    checkbox-checked-bg:$color-011,
+    checkbox-checked-bdr:$color-011,
+    checkbox-checked-tick-color:$color-fff,
+
+    toggle-border-color:$color-020,
+    toggle-background-color:$color-fff,
+    toggle-switch-bg-color:$color-020,
+
+   
+    radio-bg-color:$color-fff,
+    radio-lable-color:$color-014,
+    radio-border-color:$color-016,
+    radio-hover-bdr-color:$color-016,
+    radio-active-bg-color:$color-011,
+    radio-active-bdr-color:$color-011,
+    radio-active-lable-color:$color-011
+	),
+  '001': (
+    checkbox-bg:$color-fff,
+    checkbox-bdr:$color-058,
+    checkbox-tick-color:$color-fff,
+
+	  checkbox-lable-color:$color-015,
+    checkbox-checked-bg:$color-011,
+    checkbox-checked-bdr:$color-011,
+    checkbox-checked-tick-color:$color-fff,
+
+    toggle-border-color:$color-020,
+    toggle-background-color:$color-fff,
+    toggle-switch-bg-color:$color-020,
+
+   
+    radio-bg-color:$color-fff,
+    radio-lable-color:$color-014,
+    radio-border-color:$color-016,
+    radio-hover-bdr-color: $color-015, 
+    radio-active-bg-color:$color-011,
+    radio-active-bdr-color:$color-011,
+    radio-active-lable-color:$color-011
+	)
+);
+
+.form-check-input:checked {
+  background-color: $color-011 !important;
+  border-color: $color-011 !important;
+}

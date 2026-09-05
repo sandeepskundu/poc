@@ -1,0 +1,20 @@
+module.exports = {
+    'cmsData/details/v1/root/fetch':require('./cmsData_details_v1_root_fetch'),
+    'cmsData/details/v1/root/create':require('./cmsData_details_v1_root_create'),
+    'cmsData/details/v1/rootById/update':require('./cmsData_details_v1_rootById_update'),
+    'cmsData/details/v1/info/create':require('./cmsData_details_v1_info_create'),
+    'cmsData/details/v1/info/update':require('./cmsData_details_v1_info_update'),
+    'cmsData/details/v1/child/create':require('./cmsData_details_v1_child_create'),
+    'cmsData/details/v1/child/update':require('./cmsData_details_v1_child_update'),
+    'cmsData/details/v1/getByHashId/fetch':require('./cmsData_details_v1_getByHashId_fetch'),
+    'cmsData/details/v1/getByParentId/fetch':require('./cmsData_details_v1_getByParentId_fetch'),
+    'templateData/details/v1/root/fetch':require('./templateData_details_v1_root_fetch'),
+    'templateData/details/v1/root/create':require('./templateData_details_v1_root_create'),
+    'templateData/details/v1/rootById/update':require('./templateData_details_v1_rootById_update'),
+    'templateData/details/v1/info/create':require('./templateData_details_v1_info_create'),
+    'templateData/details/v1/info/update':require('./templateData_details_v1_info_update'),
+    'templateData/details/v1/child/create':require('./templateData_details_v1_child_create'),
+    'templateData/details/v1/child/update':require('./templateData_details_v1_child_update'),
+    'templateData/details/v1/getByHashId/fetch':require('./templateData_details_v1_getByHashId_fetch'),
+    'templateData/details/v1/getByParentId/fetch':require('./templateData_details_v1_getByParentId_fetch')
+};

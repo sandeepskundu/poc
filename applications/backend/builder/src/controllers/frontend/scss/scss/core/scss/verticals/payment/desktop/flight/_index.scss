@@ -1,0 +1,9 @@
+@import './layover';
+@import './../payment';
+@import './flight-details';
+@import './airport-details';
+
+.adl-header-stepper{
+    min-width:rem(250);
+    margin-top:rem(10);
+}

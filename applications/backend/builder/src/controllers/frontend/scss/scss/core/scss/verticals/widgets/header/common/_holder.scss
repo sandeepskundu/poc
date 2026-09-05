@@ -1,0 +1,77 @@
+.adl-header-holder{
+    z-index:9999;
+    position:relative;
+    background:$color-fff;
+    padding:rem(16) rem(12);
+    border-bottom:1px solid $color-021;
+
+    .adl-hico-circle{
+        width:rem(36);
+        height:rem(34);
+        display:block;
+        padding:rem(3);
+        text-align:center;
+        @include adl-border-radius(rem(50), rem(50), rem(50), rem(50));   
+    }
+
+    .airport-logo-holder{
+        width:rem(50);
+        height:rem(43);
+    }
+
+    &.adl-header-sticky{
+        top:0;
+        position:fixed;
+        height: rem(80);
+    }
+
+    .airport-floating-logo{
+        display:none;
+    }
+
+    .airport-ai{
+        width:rem(156);
+        height:rem(36);
+        &::before{
+            height:rem(36);
+            font-size:rem(30);
+            line-height:rem(36);
+        }
+    }
+
+    &.adl-header-floating{
+        .airport-ai{
+            color:$color-fff;
+        }
+        .airport-banner-logo{
+            display:none;
+        }
+        .airport-floating-logo{
+            display:block;
+        }   
+    }
+}
+
+.header-menu{
+    max-height:30px;
+}
+
+.humurger-holder{
+    .slider-box-content-holder{
+        padding:0;
+        min-width:rem(399);
+    }
+}
+
+.header-stepper-holder{
+    margin-top:-#{rem(15)};
+}
+
+
+.hero-holder {
+    img {
+        width: 100%;
+        height: rem(900);
+        object-fit: cover;
+    }
+} 

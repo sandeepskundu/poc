@@ -1,0 +1,19 @@
+.inputGroup-wrapper {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  .sb-wrpr {
+    max-width: 130px;
+    .sb-icon-holder {
+      top:43%;
+    }
+  }
+  .inputGroup-separator {
+    margin: 10px 0;
+    border-right: 1px solid #ccc;
+  }
+  .input-wrapper {
+    width: 100%;
+    border: 1px solid $color-017;
+  }
+}

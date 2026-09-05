@@ -1,0 +1,99 @@
+.flight-details-model {
+  .model-content-holder {
+    max-width: rem(792);
+  }
+}
+
+.seg-flight-details {
+  padding: rem(30) 0 rem(10);
+  border-top: 1px solid $color-035;
+
+  &:first-child {
+    border: none;
+    padding-top: 0;
+  }
+}
+
+.details-seg {
+  position: relative;
+  padding: rem(50) 0 rem(18);
+
+  &::before {
+    top: 6px;
+    left: 50%;
+    display: block;
+    font-size: rem(10);
+    position: absolute;
+    padding: rem(4) rem(12);
+    background: $color-035;
+    content: attr(data-layover);
+    @include adl-transform(-50%, 0);
+    @include adl-border-radius(#{rem(20)}, #{rem(20)}, #{rem(20)}, #{rem(20)});
+  }
+
+  &:first-child {
+    padding-top: rem(18);
+
+    &::before {
+      display: none;
+    }
+  }
+
+  li {
+    display: inline-block;
+    padding-left: rem(18);
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  .airline-logo {
+    width: 11%;
+    position: relative;
+    padding-top: rem(33);
+
+    .logo-holder {
+      top: 0;
+      left: 0;
+      width: rem(30);
+      height: rem(30);
+      position: absolute;
+    }
+  }
+
+  .airline-timing {
+    width: 51%;
+  }
+
+  .baggage-info {
+    width: 19%;
+    text-align: right;
+  }
+}
+
+.details-org-dest {
+  li {
+    width: 38.86%;
+    padding-left: 0;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &.du {
+      width: 22.28%;
+      padding: rem(14) rem(25) 0 0;
+    }
+  }
+}
+
+.details-footer {
+  direction: rtl;
+
+  li {
+    &.price {
+      padding: rem(16) rem(20);
+    }
+  }
+}

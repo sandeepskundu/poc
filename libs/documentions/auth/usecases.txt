@@ -1,0 +1,55 @@
+OPEN POINTS : 
+    - Login with google/facebook etc.
+    - 
+    - Recovery username and password user details mail to users previous mail where user was registed and how has removed via update email id.
+    - Email and mobile update logs to be captured in user collection if user updates their email and mobile.
+
+Login usecase :
+
+    - Login with mobile and password => DONE
+    - Login with mobile and otp. => DONE
+
+    - Login with email and password => DONE
+    - Login with email and otp => DONE
+
+    - Username with password => DONE
+    - Username with email otp => DONE
+    - Username with mobile otp. => DONE
+
+    - Partially account creation or login => DONE
+
+     Two-Step Login Flow
+        - Step 1: Enter username/email/mobile => DONE
+        - Step 2: System detects preferred method: => DONE
+        
+        - If password is set → Prompt for password => DONE
+        - If passwordless user → Send OTP => DONE
+        - Soft login like login with mobile/email OTP only => DONE
+        - If risky login → Require both password + OTP =>> TBD - Required or not
+
+
+Login user Details : 
+    - User's auth details => DONE
+
+Logout user :
+    - User logout => DONE
+
+Account Detals => 
+    - Create account => DONE
+        - Registeratin mail => 
+    - Create username => DONE
+    - Create/Update Password => DONE
+        - Password update mail confirmation
+    - Forgot Password => DONE
+        - Password reset mail confirmation
+    - Verify Email Address => TBD
+    - Verify Mobile Number => TBD
+
+    - Update email address : TBD
+        - Update email address if doesn't exist. => 
+        - Update email address if linked with other account
+
+    - Update mobile number : TBD
+        - Update mobile if doesn't exist. => 
+        - Update email address if linked with other account
+        

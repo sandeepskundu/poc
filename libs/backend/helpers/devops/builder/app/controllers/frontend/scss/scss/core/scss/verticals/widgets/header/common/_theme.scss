@@ -1,0 +1,34 @@
+
+
+.adl-header-holder{
+    &.adl-header-floating{
+        border:none;
+        z-index:99;
+        position:fixed;
+        background:transparent;
+        .adl-hlink{
+            color:$color-fff;
+            &:hover{
+                color:$color-fff;
+                background:rgba($color:$color-fff, $alpha:0.25);
+            }
+        }
+    
+        .adl-dd-menu:hover .adl-dd-menu-label{
+            color:$color-fff;
+            background:rgba($color:$color-fff, $alpha:0.25);
+        }
+    
+    
+        .ah-blank{
+            .blank{
+                color:transparent;
+                background:transparent;
+            }
+        }
+
+        .adl-dd-menu-label{
+            margin-bottom:rem(12);
+        }
+    }
+}

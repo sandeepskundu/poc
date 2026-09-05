@@ -1,0 +1,25 @@
+.noResultWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: rem(10);
+  .descLabel {
+    margin-top: rem(40);
+    font-size: rem(16);
+    letter-spacing: rem(0.19);
+    color: $color-011;
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .noResultWrapper {
+    margin-top: 30%;
+    .no-result-image {
+      width: rem(260);
+    }
+    .descLabel {
+      text-align: center;
+      font-size: rem(14);
+    }
+  }
+}

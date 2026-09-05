@@ -1,0 +1,146 @@
+import Input from 'aio-global-raw-ui/atoms/form/input';
+
+export default {
+	title:"Atoms/Form/Input",
+	argTypes:{
+
+	},
+	component:Input,
+	tags:['autodocs'],
+	parameters:{
+		layout:"centered",
+		docs:{
+			description:{
+				component:"The Button component is a reusable React UI component designed to provide a consistent button experience across the application. It supports customizable content, styling, and optional icons on both the left and right sides of the button label.<br/><br/><strong>Import path:</strong><code>import Input from 'aio-global-raw-ui/atoms/form/input';</code><br/><br/><strong>Component directory:</strong><code>./libs/frontend/ui/raw/atoms/form/input/index</code><br/><br/>"
+			}
+		}
+	},
+	mockdata:{
+		defaults:{
+			button:{
+				content:"Button"
+			}
+		},
+		variants:{
+
+		}
+	}
+}
+
+export const Base = {
+	args:{
+		value:'',
+		defaultValue:'',
+		label:'',
+		id:'',
+		name:'',
+		type:"text",
+		error:'',
+		description:'',
+		placeholder:'',
+		maxlength:100,
+		minLength:2,
+		debounceDelay:500,
+		eye:true,
+		invalid:false,
+		disabled:false,
+		required:false,
+		readonly:false,
+		clearable:false,
+		prefix:false,
+		suffix:false,
+		callback:{
+			onCut:null,
+			onCopy:null,
+			onBlur:null,
+			onEnter:null,
+			onFocus:null,
+			onInput:null,
+			onPaste:null,
+			onSelect:null,
+			onKeyUp:null,
+			onKeyDown:null,
+			onChange:null,
+			onChangeEnd:null,
+			onChangeStart:null,
+			onBeforeInput:null,
+			onCompositionEnd:null,
+			onCompositionStart:null,
+			onCompositionUpdate:null
+		},
+		icons:{
+			left:{
+				config:{
+					markup:{
+						element:"span"
+					},
+					type:"font",
+					svg:{
+						style:{
+
+						},
+						size:"24px"
+					},
+					icon:{
+						name:'',
+						size:"24",
+						family:"g"
+					}
+				}
+			},
+			right:{
+				config:{
+					markup:{
+						element:"span"
+					},
+					type:"font",
+					svg:{
+						style:{
+
+						},
+						size:"24px"
+					},
+					icon:{
+						name:'',
+						size:"24",
+						family:"g"
+					}
+				}
+			},
+			clear:{
+				config:{
+					markup:{
+						element:"span"
+					},
+					type:"font",
+					svg:{
+						style:{
+
+						},
+						size:"24px"
+					},
+					icon:{
+						name:'',
+						size:"24",
+						family:"g"
+					}
+				}
+			}
+		},
+		config:{
+			wrapper:{
+				ds:{
+					predefined:{
+						default:{
+							size:"xl",
+							theme:"000"
+						}
+					}
+				}
+			}
+		},
+		button:{
+			content:"Button"
+		}
+	}
+}

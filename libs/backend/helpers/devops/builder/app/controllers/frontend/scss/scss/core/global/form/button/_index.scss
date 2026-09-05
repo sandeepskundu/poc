@@ -1,0 +1,136 @@
+.btn {
+    @extend .bdr-8;
+    cursor:pointer;
+    text-align:center;
+    position:relative;
+    align-items:center;
+    display:inline-flex;
+    text-decoration:none;
+    justify-content:center;
+    padding:rem(12) rem(16);
+    border:1px solid transparent;
+    @include animation('transition', 0.3s, 'ease-in-out');
+
+    .btn-lbl.with-ico{
+        flex:1; 
+    }
+
+    &.disabled {
+        cursor:default;
+        pointer-events:none;
+    }
+
+    &.sz-sm {
+        font-size:rem(14);
+        padding:rem(8) rem(12);
+    }
+
+    &.sz-md {
+        font-size:rem(14);
+        padding:rem(10) rem(14);
+    }
+
+    &.sz-lg {
+        font-size:rem(18);
+        padding:rem(14) rem(18);
+    }
+
+    &.sz-xl {
+        font-size:rem(18);
+        padding:rem(18) rem(22);
+    }
+
+    &:active {
+        transform:scale(0.94);
+    }
+}
+
+.btn-grp {
+    display:flex;
+    align-items:stretch;
+}
+
+.btn-grp .btn-hldr {
+    flex:1;
+    display:flex;
+}
+
+.btn-grp .btn-hldr {
+    .btn {
+        flex:1;
+        border-left-width:0;
+        @extend .bdr-flat;
+    }
+
+    &.first {
+        .btn {
+            border-left-width:1px;
+            @include aio-border-radius(rem(8), 0, 0, rem(8));
+        }
+    }
+
+    &.first {
+        .btn {
+            &.bdr-2{
+                @include aio-border-radius(rem(2), 0, 0, rem(2));
+            }
+
+            &.bdr-4{
+                @include aio-border-radius(rem(4), 0, 0, rem(4));
+            }
+
+            &.bdr-6{
+                @include aio-border-radius(rem(6), 0, 0, rem(6));
+            }
+
+            &.bdr-8{
+                @include aio-border-radius(rem(8), 0, 0, rem(8));
+            }
+
+            &.bdr-10{
+                @include aio-border-radius(rem(10), 0, 0, rem(10));
+            }
+
+            &.bdr-round{
+                @include aio-border-radius(rem(60), 0, 0, rem(60));
+            }
+
+            &.bdr-flat{
+                @extend .bdr-flat;   
+            }
+        }
+    }
+
+    &.last {
+        .btn {
+            @include aio-border-radius(0, rem(8), rem(8), 0);
+            &.bdr-2{
+                 @include aio-border-radius(0, rem(2), rem(2), 0);
+            }
+
+            &.bdr-4{
+                 @include aio-border-radius(0, rem(4), rem(4), 0);
+            }
+
+            &.bdr-6{
+                 @include aio-border-radius(0, rem(6), rem(6), 0);
+            }
+
+            &.bdr-8{
+                 @include aio-border-radius(0, rem(8), rem(8), 0);
+            }
+
+            &.bdr-10{
+                 @include aio-border-radius(0, rem(10), rem(10), 0);
+            }
+
+            &.bdr-round{
+                @include aio-border-radius(0, rem(60), rem(60), 0);
+            }
+
+            &.bdr-flat{
+                @extend .bdr-flat;
+            }
+        }
+    }
+}

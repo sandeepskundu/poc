@@ -1,0 +1,220 @@
+@import "adl-sass-partials/optional/airline-logos/both";
+.adlw {
+  @import "adl-sass-verticals/service/flightService/flightInfo";
+}
+.fids-be-wrpr {
+  background: $color-fff;
+  @include adl-border-radius(50px, 50px, 50px, 50px);
+
+  & > li {
+    position: relative;
+    &::after {
+      top: 50%;
+      right: 0;
+      width: 1px;
+      content: "";
+      height: 1.875rem;
+      position: absolute;
+      background: #ccc;
+      margin-top: -0.9375rem;
+    }
+  }
+
+  .fids-be-input {
+    position: relative;
+    padding: rem(12) rem(20);
+    &::after {
+      top: 50%;
+      right: 0;
+      width: 1px;
+      content: "";
+      height: rem(30);
+      position: absolute;
+      background: $color-019;
+      margin-top: -#{rem(15)};
+    }
+
+    &:last-child {
+      &::after {
+        display: none;
+      }
+    }
+
+    .sb-opt-wrpr {
+      margin: rem(22) 0 0 -#{rem(20)};
+    }
+  }
+
+  .placeholder {
+    opacity: 1 !important;
+    background: none !important;
+  }
+
+  .fids-airport {
+    width: 18%;
+    .sb-lable {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: rem(40) rem(30) rem(22) rem(30);
+    }
+    .placeholder {
+      padding-left: rem(30);
+      padding-top: rem(12);
+    }
+    .sb-opt-wrpr {
+      width: rem(270);
+      margin-top: rem(10);
+      padding: 0.625rem 0;
+      li:hover {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .sb-option {
+        .sb-o-ih {
+          top: rem(14);
+        }
+        &:first-child {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+        &.selected {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+  }
+
+  .fids-type {
+    width: 19%;
+    .sb-lable {
+      padding: rem(40) rem(30) rem(22) rem(30);
+    }
+    .placeholder {
+      padding-left: rem(30);
+      padding-top: rem(12);
+    }
+    .sb-opt-wrpr {
+      width: rem(270);
+      margin-top: rem(10);
+      padding: 0.625rem 0;
+      li:hover {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .sb-option {
+        .sb-o-ih {
+          top: rem(23);
+        }
+        &:first-child {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+        &.selected {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+  }
+
+  .fids-date {
+    width: 25%;
+    .sb-lable {
+      padding: rem(40) rem(30) rem(22) rem(30);
+    }
+    .placeholder {
+      padding-left: rem(30);
+      padding-top: rem(12);
+    }
+    .sb-opt-wrpr {
+      width: rem(270);
+      margin-top: rem(10);
+      padding: 0.625rem 0;
+      .sb-o-ih {
+        top: rem(23);
+      }
+      li:hover {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .sb-option {
+        &:first-child {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+        &.selected {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+  }
+
+  .fids-flight {
+    width: 32%;
+    .data-list {
+      max-height: rem(425);
+      padding: rem(20) 0 0;
+      .no-data-text {
+        font-size: rem(14);
+        color: red;
+        margin: 0 0 rem(20) rem(24);
+      }
+    }
+    .popup-label {
+      padding-left: rem(20);
+    }
+    .input-wrapper {
+      border: none;
+      min-height: rem(84);
+      .placholder {
+        top: rem(36);
+      }
+      &.focused,
+      &.filled {
+        .placholder {
+          top: rem(23);
+        }
+      }
+      .input-icon-holder {
+        margin-top: rem(3);
+      }
+    }
+    .popup-box-body {
+      width: rem(400);
+      margin-top: rem(15);
+      // margin-left: rem(-4);
+      overflow: auto;
+    }
+    &::after {
+      display: none;
+    }
+  }
+
+  .fids-search {
+    width: 27%;
+    margin-top: rem(4);
+    margin-right: -2px;
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: rem(1024)) {
+  .fids-be-wrpr {
+    .fids-airport {
+      width: 14%;
+      min-width: 14%;
+    }
+    .fids-type {
+      width: 26%;
+    }
+    .fids-date {
+      width: 23%;
+    }
+    .fids-flight,
+    .fids-search {
+      width: 36%;
+    }
+  }
+}

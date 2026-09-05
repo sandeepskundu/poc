@@ -1,0 +1,30 @@
+$flex-prefix:'flx-';
+
+[class^="#{$flex-prefix}"],
+[class*=" #{$flex-prefix}"] {
+    display: flex;
+}
+
+.flx-h {
+    flex-wrap: wrap;
+}
+
+.flx-sb {
+    justify-content: space-between;
+}
+
+.flx-se {
+    justify-content: space-evenly;
+}
+
+.flx-jce {
+    justify-content: flex-end;
+}
+
+.flx-vc {
+    align-items: center;
+}
+
+.flx-jc {
+    justify-content: center;
+}

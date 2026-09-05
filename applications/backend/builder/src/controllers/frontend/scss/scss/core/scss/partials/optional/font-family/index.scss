@@ -1,0 +1,23 @@
+@each $path, $list in $cdn-fonts-families {
+	@each $name, $family in $list {
+		//@include cdnFontFace($family, normal, normal, '#{$path}/');
+		.fm-#{$name}{
+			font-family:$family;
+        }
+
+        @if $name == $default-body-font-family{
+            body{
+                font-family:$family;
+            }
+        }
+	}
+}
+
+@each $path, $list in $fonts-families {
+	@each $name, $family in $list {
+		@include fontFace($family, normal, normal, '#{$path}/');
+		.fm-#{$name}{
+			font-family:$family;
+        }
+	}
+}

@@ -1,0 +1,26 @@
+{
+    "valuemap": {
+        "_merchantId": {
+            "valuemap": {
+                "map": "id",
+                "from": "merchant"
+            }
+        }
+    },
+    "query": {
+        "hidden": {
+            "enable": true,
+            "configs": {
+                "columns": {
+                    "merchantId": {
+                        "enable": true
+                    }
+                }
+            }
+        }
+    },
+    "schema": {},
+    "md5Hash": {},
+    "signature": {},
+    "pagination": {}
+}

@@ -1,0 +1,80 @@
+.org-dest .popup-box-body{
+    min-width:360px;
+    min-height:auto !important;
+    margin-top: rem(10);
+}
+
+.airport-options{
+    cursor:default;
+    padding:rem(20) 0 0;
+    max-height:420px;
+    overflow-y: auto;
+    .no-result{
+        font-size:rem(12);
+        color:$color-007;
+        padding:rem(10) rem(24);
+    }
+}
+
+.ao-hding{
+    font-size:rem(10);
+    position:relative;
+    line-height:rem(16);
+    padding:0 rem(25) 0 rem(50);
+    color: $flight-be-airport-option-type-color;
+
+    .ao-hding-ih{
+        top:0;
+        z-index:1;
+        width:16px;
+        height:16px;
+        left:rem(25);
+        position: absolute;
+    }
+}
+
+.ao-list{
+    padding:rem(10) 0 rem(10);
+    li{
+        cursor: pointer;
+        padding:rem(12) rem(24);
+    }
+
+    .ao-city{
+        position:relative;
+        padding-right: rem(30);
+        .ao-code{
+            top:0;
+            right:0;
+            width:rem(30);
+            position: absolute;
+        }
+        span{
+            font-family:$font-family-rm;
+        }
+    }
+
+    .ao-name{
+        font-size:rem(12);
+        margin:rem(5) 0 0;
+        color:$color-014;
+    }
+    .full{
+    &:hover{
+        background: #f3f3f3;
+    }
+}
+}
+
+.full.arrivalDepartureHighlight {
+    background: #eef4fb;
+    &:hover{
+        background: #eef4fb;
+        p {
+            span {
+                background: transparent;
+            }
+            background: transparent;
+        }
+    }
+  }

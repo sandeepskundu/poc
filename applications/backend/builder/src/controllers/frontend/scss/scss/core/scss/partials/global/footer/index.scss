@@ -1,0 +1,19 @@
+.adl-footer {
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 999;
+  position: fixed;
+  background: $color-fff;
+  border-top: 1px solid $color-021;
+
+  a:hover {
+    color: $color-011;
+  }
+
+  &.reduce-pd {
+    .btn {
+      padding: rem(13) rem(18);
+    }
+  }
+}

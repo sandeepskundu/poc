@@ -1,0 +1,73 @@
+@if $border-radius != null {
+    $bdr-prefix:map-get($border-radius, 'prefix');
+    $bdr-redius-list:map-get($border-radius, 'list');
+
+    @if $bdr-redius-list != null {
+        @each $bdr-redius in $bdr-redius-list {
+            .#{$bdr-prefix}-#{$bdr-redius} {
+                @include aio-border-radius(rem($bdr-redius), rem($bdr-redius), rem($bdr-redius), rem($bdr-redius))
+            }
+
+            .#{$bdr-prefix}-#{$bdr-redius}.#{$bdr-prefix}-rn,
+            .#{$bdr-prefix}-t#{$bdr-redius} {
+                @include aio-border-radius(rem($bdr-redius), rem($bdr-redius), 0, 0)
+            }
+
+            .#{$bdr-prefix}-#{$bdr-redius}.#{$bdr-prefix}-rln,
+            .#{$bdr-prefix}-r#{$bdr-redius} {
+                @include aio-border-radius(0, rem($bdr-redius), rem($bdr-redius), 0)
+            }
+
+            .#{$bdr-prefix}-#{$bdr-redius}.#{$bdr-prefix}-rtn,
+            .#{$bdr-prefix}-b#{$bdr-redius} {
+                @include aio-border-radius(0, 0, rem($bdr-redius), rem($bdr-redius))
+            }
+
+            .#{$bdr-prefix}-#{$bdr-redius}.#{$bdr-prefix}-rrn,
+            .#{$bdr-prefix}-l#{$bdr-redius} {
+                @include aio-border-radius(rem($bdr-redius), 0, 0, rem($bdr-redius))
+            }
+        }
+    }
+}
+
+.bdr-round{
+    @include aio-border-radius(rem(999), rem(999), rem(999), rem(999))
+}
+
+.bdr-1 {
+    border: 1px solid transparent;
+}
+
+.bdr-n,
+.bdr-wn {
+    border:none !important;
+}
+
+.bdr-rn {
+    @include aio-border-radius(0, 0, 0, 0)
+}
+
+.bdr-bn,
+.bdr-wbn,
+.bdr-wtbn{
+    border-bottom:none !important;
+}
+  
+.bdr-tn,
+.bdr-wtn,
+.bdr-wtbn {
+    border-top:none !important;
+}
+  
+.bdr-ln,
+.bdr-wln,
+.bdr-wrln {
+    border-left:none !important;
+}
+  
+.bdr-rn,
+.bdr-wrn,
+.bdr-wrln {
+    border-right:none !important;
+}

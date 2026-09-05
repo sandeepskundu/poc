@@ -1,0 +1,24 @@
+.date-select-wrapper {
+  .cal-icon {
+    position: absolute;
+    top: 36%;
+    right: 4%;
+  }
+  .sb-opt-wrpr {
+    padding: rem(10) 0;
+    li:hover {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .sb-option {
+      &:first-child {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+      &.selected {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+}

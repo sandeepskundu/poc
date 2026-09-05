@@ -1,0 +1,1 @@
+exports.appDetails = require('./app-details');

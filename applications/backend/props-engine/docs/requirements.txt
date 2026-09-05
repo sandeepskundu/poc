@@ -1,0 +1,13 @@
+1. string 
+2. number
+3. boolean
+4. array
+5. object
+6. function
+7. enum
+8. jsx
+9. nested
+10. comp
+
+
+// props-engine/props/v1/details/fetch

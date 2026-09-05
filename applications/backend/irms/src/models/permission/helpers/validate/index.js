@@ -1,0 +1,1 @@
+exports.access = require('./access');

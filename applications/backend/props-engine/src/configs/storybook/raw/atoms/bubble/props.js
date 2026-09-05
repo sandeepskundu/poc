@@ -1,0 +1,48 @@
+module.exports = {
+    content:{
+        type:"any",
+        dvalue:'',
+        description:"A prop used to pass content into a component. It can contain renderable React content such as JSX elements, strings, numbers, booleans, fragments, arrays of elements, or null/undefined. In some cases, it may also accept a function (render prop) that returns React content, allowing dynamic rendering based on component state or props.",
+    },
+    config:{
+        type:'predefined',
+        description:"The configuration supports design system–driven customization across various elements, including the avatar image, wrapper, and initials. Properties such as size, shape, border, background color, and typography can be configured through the design system, ensuring visual consistency, accessibility, and alignment with application design standards across different themes and use cases.",
+        ___:{
+            predefined:{
+                from:'statics',
+                mapping:'ds.configs',
+                overwirte:{
+                    markup:{
+                        ___:{
+                            nested:{
+                                element:{
+                                    dvalue:'span'
+                                }
+                            }
+                        }
+                    },
+                    ds:{
+                        ___:{
+                            nested:{
+                                predefined:{
+                                    ___:{
+                                        predefined:{
+                                            overwirte:{
+                                                color:{
+                                                    dvalue:'c00000'
+                                                },
+                                                background:{
+                                                    dvalue:'c11407'
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

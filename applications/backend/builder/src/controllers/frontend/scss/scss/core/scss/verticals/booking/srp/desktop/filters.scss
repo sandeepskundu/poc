@@ -1,0 +1,17 @@
+.filter-wrapper{
+    width:20%;
+    z-index:10;
+    margin-top:rem(30);
+    padding-bottom:rem(50);
+    &.round-trip{
+        padding-bottom:rem(132);
+    }
+}
+
+.filter-header{
+    margin-bottom:rem(18);
+}
+
+.filter-list-wrapper{
+    padding:rem(24) rem(15);
+}

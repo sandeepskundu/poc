@@ -1,0 +1,224 @@
+.traveller-wrapper {
+  padding-right: rem(15);
+
+  .traveller-flightInfo {
+    display: none;
+  }
+
+  .input-wrapper {
+    border: rem(1) solid $color-017;
+  }
+
+  .head {
+    margin-bottom: rem(10);
+  }
+
+  .traveller-desc {
+    margin-bottom: rem(40);
+    font-size: rem(16);
+    color: $color-009;
+  }
+
+  .traveller-content {
+    display: flex;
+  }
+
+  .adult-section {
+    margin-bottom: rem(52);
+  }
+
+  .head-1 {
+    margin-bottom: rem(20);
+    letter-spacing: rem(0.19);
+    color: $color-015;
+  }
+
+  .input-dropdown {
+    width: rem(130);
+  }
+
+  .first-input {
+    width: rem(350);
+    margin: 0 rem(20);
+  }
+
+  .input-group {
+    display: none;
+  }
+
+  .last-input {
+    width: rem(350);
+  }
+
+  .dob-input {
+    width: rem(350);
+    margin-top: rem(20);
+  }
+
+  .contact-section {
+    margin-top: rem(72);
+
+    .contact-content {
+      margin-bottom: rem(20);
+    }
+  }
+
+  .whatsapp-checkbox {
+    margin-bottom: rem(16);
+    display: flex;
+    align-items: center;
+
+    i {
+      margin-left: rem(5);
+    }
+  }
+
+  .gst-checkbox {
+    display: flex;
+    align-items: center;
+  }
+
+  .input-checkbox {
+    margin-right: rem(15);
+  }
+
+  .check-label {
+    margin-top: rem(4);
+  }
+
+  .contact-desc {
+    font-size: rem(16);
+    margin-bottom: rem(30);
+    color: $color-009;
+  }
+
+  .gst-section {
+    margin-top: rem(20);
+
+    .gst-input {
+      width: rem(276);
+    }
+
+    .gst-middle-input {
+      width: rem(276);
+      margin: 0 rem(20);
+    }
+
+    p {
+      line-height: rem(19);
+      margin-top: rem(15);
+      font-size: rem(14);
+      color: $color-014;
+    }
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(500)) {
+  .traveller-wrapper {
+    padding: 0;
+
+    .traveller-flightInfo {
+      display: block;
+      padding: rem(13) 0;
+      margin-bottom: rem(30);
+      background-color: $color-010;
+
+      .flightInfo-data {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .flight-icon {
+        margin-right: rem(15);
+      }
+
+      .city-name {
+        font-size: rem(18);
+        color: $color-014;
+      }
+
+      .flight-time {
+        font-size: rem(18);
+        margin-left: rem(5);
+      }
+
+      .flight-date {
+        font-size: rem(12);
+        margin-top: rem(5);
+        color: $color-014;
+      }
+
+      .flightInfo-icon {
+        margin: 0 rem(11);
+        margin-top: rem(-22);
+      }
+    }
+
+    .head {
+      font-size: rem(22);
+    }
+
+    .adult-section {
+      margin-bottom: rem(40);
+    }
+
+    .traveller-content {
+      display: block;
+    }
+
+    .input-dropdown {
+      display: none;
+    }
+
+    .first-input {
+      display: none;
+    }
+
+    .input-group {
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .last-input {
+      width: 100%;
+    }
+
+    .dob-input {
+      width: 100%;
+    }
+
+    .contact-section {
+      margin: 0 rem(-16);
+      margin-top: rem(40);
+      padding: rem(40) rem(16);
+      border-top: rem(8) solid $color-010;
+      border-bottom: rem(8) solid $color-010;
+
+      .contact-content {
+        margin-bottom: rem(30);
+      }
+    }
+
+    .check-label {
+      font-size: rem(14);
+      margin: 0;
+    }
+
+    .gst-section {
+      .gst-input {
+        width: 100%;
+      }
+
+      .gst-middle-input {
+        margin: rem(20) 0 rem(20) 0;
+        width: 100%;
+      }
+
+      p {
+        margin-top: rem(15);
+        margin-bottom: 0;
+      }
+    }
+  }
+}

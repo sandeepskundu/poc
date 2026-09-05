@@ -1,0 +1,58 @@
+@mixin define-icon-font-family ($icon-font-prefix:"", $icon-font-family) {
+    @if variable-exists(aio-icon-sizes){
+        $global-icon-prefix:map-get($aio-icon-sizes, 'prefix');
+        @if $global-icon-prefix != '' {
+            @if $icon-font-prefix != '' {
+                @if $icon-font-family != '' {
+                    [class^="#{$global-icon-prefix}-#{$icon-font-prefix}"],
+                    [class*=" #{$global-icon-prefix}-#{$icon-font-prefix}"]{
+                        &:before{
+                            font-family:'#{$icon-font-family}';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin build-icons-list-name ($icons-font-prefix:"", $icon-list:'') {
+    @if $icons-font-prefix != '' {
+        @if variable-exists(aio-icon-sizes){
+            $global-icon-prefix:map-get($aio-icon-sizes, 'prefix');
+            @if $global-icon-prefix != '' {
+                @if $icon-list != '' {
+                    @each $icon-name, $icon-props in $icon-list {
+                        $icon-unicode:map-get($icon-props, 'unicode');
+
+                        @if $icon-unicode != '' {
+                            .#{$global-icon-prefix}-#{$icons-font-prefix}-#{$icon-name}{
+                                &:before{
+                                    content:unicode($icon-unicode);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin icon-font-family ($icon-family:'', $icon-list:'') {
+    @if $icon-family != null {
+        @if $icon-family != '' {
+            $icons-font-path:map-get($icon-family, 'path');
+            $icons-font-family:map-get($icon-family, 'name');
+            $icons-font-prefix:map-get($icon-family, 'prefix');
+            $icons-font-family-name:'#{$icons-font-family}-ico';
+            @include aio-icons-font-face($icons-font-family-name, $icons-font-path, $icons-font-family); // aio-icons-font-face($family:'', $from:'', $font-name:'')
+            @include define-icon-font-family($icons-font-prefix, $icons-font-family-name);
+            @include build-icons-list-name($icons-font-prefix, $icon-list);
+        }
+    }
+}
+
+@mixin build-icons ($icon-family:'', $icon-list:'') {
+    @include icon-font-family($icon-family, $icon-list);
+}

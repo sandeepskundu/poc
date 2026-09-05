@@ -1,0 +1,25 @@
+.data-not-available {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .no-data-img-cont {
+    width: rem(160);
+    height: rem(80);
+
+    .no-data-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .no-data-header,
+  .no-data-info {
+    text-align: center;
+  }
+
+  .no-data-header {
+    padding: 0 rem(38);
+  }
+}

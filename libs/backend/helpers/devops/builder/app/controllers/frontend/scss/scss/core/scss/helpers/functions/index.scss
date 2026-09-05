@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+@function unicode($str){
+  @return unquote("\"")+unquote(str-insert($str, "\\", 1))+unquote("\"");
+}
+
+@function getThemeCode($theme, $obj:$theme-codes-all){
+	@return map-get($obj, $theme);
+}
+
+@function em($pixels) {
+	@return #{calc($pixels/$base-size)}em;
+}
+
+@function rem($pixels) {
+	@return #{calc($pixels/$base-size)}rem;
+}
+
+@function adl-img($p){
+	@return ('/#{$root-prefix}/#{$statics-folder}/#{$images-folder}/#{$p}?_v=#{$version}');
+}
+
+@function adl-common-font-path($p) {
+	@return ('#{$root-assetsCdnPath}/assets/airport/fonts/roboto/#{$p}');
+}

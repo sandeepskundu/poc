@@ -1,0 +1,87 @@
+.bs-holder {
+    left:0;
+    height:0;
+    bottom:0;
+    clear:both;
+    width:100vw;
+    z-index:99999;
+    overflow: auto;
+    position: fixed;
+    //background: $backdrop-bg-color;
+    transform: translateY(100%);
+    @include aio-border-radius(rem(18),rem(18),rem(0),rem(0));
+
+    &.opened {
+        height:auto;
+        transform:none;
+        max-height:85%;
+    }
+
+    &.max {
+        min-height: 85%;
+        max-height: 85%;
+    }
+
+    &.full-size {
+        min-height: 100%;
+        max-height: 100%;
+        border-radius: 0px;
+        z-index: 9999;
+    }
+
+    &.almost-full {
+        min-height: calc(100% - rem(10));
+        max-height: calc(100% - rem(10));
+    }
+}
+
+.bs-content {
+    position: relative;
+}
+
+.bs-header {
+    position:relative;
+    padding:rem(10) rem(16) rem(20) rem(0);
+}
+
+.bs-h-icon {
+    margin-bottom:rem(15);
+    width:rem(22);
+    height:rem(22);
+
+    .i-cross {
+        line-height: rem(16);
+    }
+}
+
+.bs-body {
+    padding: 0px;
+}
+
+.bs-ht {
+    font-size: rem(22);
+    color:$backdrop-title-text-color;
+}
+
+.bs-common {
+    .bs-header {
+        padding: 1rem 1rem 1.25rem 1rem;
+    }
+
+    .bs-body {
+        padding: 1rem;
+    }
+
+    .bs-inner {
+        padding: 1rem;
+    }
+}
+
+.bsh-sticky {
+    top:0;
+    z-index:9999;
+    position:-webkit-sticky;
+    position:sticky;
+    background: #fff;
+    @include aio-border-radius(rem(18),rem(18),rem(0),rem(0));
+}

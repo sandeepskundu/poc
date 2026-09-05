@@ -1,0 +1,52 @@
+Individual Contributors (IC) in Tech split into clear categories with codes:
+
+
+1. Engineering
+
+| Subcategory                    | Code           |
+| ------------------------------ | -------------- |
+| Frontend Engineer              | `IC-ENG-FE`    |
+| Backend Engineer               | `IC-ENG-BE`    |
+| Full Stack Engineer            | `IC-ENG-FS`    |
+| Mobile App Developer (iOS)     | `IC-ENG-MOB-I` |
+| Mobile App Developer (Android) | `IC-ENG-MOB-A` |
+
+
+
+
+2. Infrastructure & Operations
+
+| Subcategory                     | Code            |
+| ------------------------------- | --------------- |
+| DevOps Engineer                 | `IC-INF-DEVOPS` |
+| Cloud Engineer                  | `IC-INF-CLD`    |
+| Site Reliability Engineer (SRE) | `IC-INF-SRE`    |
+| Systems Administrator           | `IC-INF-SYS`    |
+| Database Administrator          | `IC-INF-DBA`    |
+
+
+
+3. Data & AI
+
+| Subcategory               | Code         |
+| ------------------------- | ------------ |
+| Data Engineer             | `IC-DATA-DE` |
+| Data Scientist            | `IC-DATA-DS` |
+| Machine Learning Engineer | `IC-DATA-ML` |
+
+
+4. Security
+
+
+| Subcategory       | Code         |
+| ----------------- | ------------ |
+| Security Engineer | `IC-SEC-ENG` |
+
+
+
+5. Quality Assurance
+
+| Subcategory                     | Code         |
+| ------------------------------- | ------------ |
+| Quality Assurance Engineer (QA) | `IC-QA-MAN`  |
+| Automation Test Engineer        | `IC-QA-AUTO` |

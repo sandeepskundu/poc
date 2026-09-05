@@ -1,0 +1,43 @@
+module.exports = {
+    "configs.loginBy":{
+        "message":{
+            "error":{
+                "checks":{
+                    "enums":"Login by type value is not valid"
+                }
+            }
+        },
+        "checks":{
+            "enums":{
+                "value":{
+                    "email":true,
+                    "mobile":true
+                }
+            },
+            "required":{
+                "value":"optional"
+            }
+        }
+    },
+    "configs.hasDataFor":{
+        "message":{
+            "error":{
+                "checks":{
+                    "enums":"Please provide correct value."
+                }
+            }
+        },
+        "checks":{
+            "enums":{
+                "value":{
+                    "both":true,
+                    "email":true,
+                    "mobile":true
+                }
+            },
+            "required":{
+                "value":"optional"
+            }
+        }
+    }
+}

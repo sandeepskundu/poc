@@ -1,0 +1,10 @@
+module.exports = [
+  {id:'A_POSITIVE', label:'A+'},
+  {id:'A_NEGATIVE', label:'A-'},
+  {id:'B_POSITIVE', label:'B+'},
+  {id:'B_NEGATIVE', label:'B-'},
+  {id:'AB_POSITIVE', label:'AB+'},
+  {id:'AB_NEGATIVE', label:'AB-'},
+  {id:'O_POSITIVE', label:'O+'},
+  {id:'O_NEGATIVE', label:'O-'},
+]

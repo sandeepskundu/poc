@@ -1,0 +1,65 @@
+.confirm-flight-details {
+  padding-top: rem(20);
+
+  li {
+    padding-left: rem(20);
+  }
+
+  .airline-details {
+    width: 14.14%;
+  }
+
+  .airport-details {
+    width: 49.91%;
+  }
+
+  .baggage-details {
+    width: 35.95%;
+  }
+}
+
+//BOTTOM CAROUSEL
+
+.cate-section {
+  margin: rem(90) 0 rem(84) 0;
+
+  .cs-title {
+    margin-bottom: rem(20);
+  }
+
+  .card-body {
+    padding: 0;
+    padding-top: rem(20);
+  }
+
+  .cate-section__content {
+    display: flex;
+    overflow: hidden;
+    overflow-x: auto;
+  }
+}
+
+.services-card__col {
+  margin-right: rem(20);
+  width: calc((200vw / 10.3));
+}
+
+.nobrdr {
+  border: none;
+}
+
+.fl-pnr-tool {
+  display: flex;
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .services-card__col {
+    width: rem(268);
+  }
+}
+
+@media only screen and (min-width: rem(1800)) and (max-width: rem(3072)) {
+  .services-card__col {
+    width: calc(100vw / 6.5);
+  }
+}

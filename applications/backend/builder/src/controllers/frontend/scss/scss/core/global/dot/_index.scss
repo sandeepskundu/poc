@@ -1,0 +1,14 @@
+$has-dot:has-component('dot');
+
+@if $has-dot != '' {
+    $dot-prefix:get-component-prefix('dot');
+
+    @if $dot-prefix != '' {
+        .#{$dot-prefix}{
+            width:rem(4);
+            height:rem(4);
+            display:inline-block;
+            @include aio-border-radius(50%, 50%, 50%, 50%)
+        }
+    }
+}

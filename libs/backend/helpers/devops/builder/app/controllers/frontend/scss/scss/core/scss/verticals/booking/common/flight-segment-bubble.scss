@@ -1,0 +1,42 @@
+.seg-bubble {
+  padding: rem(8) rem(15);
+  border: rem(1) solid $color-019;
+  border-radius: rem(25);
+  // margin-right: rem(8);
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  .airline-img {
+    position: relative;
+    top: rem(2);
+  }
+
+  &:hover{
+    border: rem(1) solid $color-020;
+  }
+
+  &.disabled {
+    &:hover {
+      border: rem(1) solid $color-019;
+    }
+  }
+
+  &.seg-bubble-selected {
+    border: rem(1) solid $color-020;
+    background-color: $color-060;
+    box-shadow: 0 0 0 rem(1) $color-020;
+    &:hover{
+      border: rem(1) solid $color-020;
+    }
+  }
+}
+
+@include adl-max-screen(768) {
+  .seg-bubble {
+    &:hover {
+      border-color: $color-019;
+    }
+  }
+}

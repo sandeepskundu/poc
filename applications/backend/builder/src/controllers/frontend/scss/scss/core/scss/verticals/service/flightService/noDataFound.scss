@@ -1,0 +1,36 @@
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: rem(40);
+  .failedText {
+    margin: rem(30) 0 rem(10) 0;
+    font-size: rem(20);
+    font-weight: bold;
+    letter-spacing: rem(0.24);
+    color: $color-015;
+  }
+  .descText {
+    margin-bottom: rem(20);
+    font-size: rem(16);
+    letter-spacing: rem(0.19);
+    color: $color-020;
+  }
+  .tryButton {
+    padding: rem(10) rem(50);
+    border-radius: rem(27);
+    font-size: rem(16);
+    font-weight: bold;
+    line-height: 1.69;
+    color: $color-fff;
+    background-color: $color-020;
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .mainWrapper {
+    .descText {
+      text-align: center;
+    }
+  }
+}

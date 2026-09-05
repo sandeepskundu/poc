@@ -1,0 +1,410 @@
+module.exports = {
+    "category":{
+        "message":{
+            "error":{
+                "checks":{
+                    "enums":"Please select a vaild app category",
+                    "required":"App category is required."
+                }
+            }
+        },
+        "checks":{
+            "enums":{
+                "value":{
+                    "ui":true,
+                    "api":true
+                },
+                "uivalue":{
+                    "ui":true,
+                    "api":true
+                },
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appName":{
+        "message":{
+            "error":{
+                "checks":{
+                    "regex":"App name invalid",
+                    "required":"App name is required."
+                }
+            }
+        },
+        "checks":{
+            "regex":{
+                "value":'^[a-z-]+$',
+                "uivalue":'^[a-z-]+$',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.ports.public":{
+        "message":{
+            "error":{
+                "checks":{
+                    "port":"Public port is invalid",
+                    "required":"Partner port is required."
+                }
+            }
+        },
+        "checks":{
+            "port":{
+                "value":'required',
+                "uivalue":'required',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.ports.partner":{
+        "message":{
+            "error":{
+                "checks":{
+                    "port":"Partner port is invalid",
+                    "required":"Partner port is required."
+                }
+            }
+        },
+        "checks":{
+            "port":{
+                "value":'required',
+                "uivalue":'required',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.ports.internal":{
+        "message":{
+            "error":{
+                "checks":{
+                    "port":"Partner port is invalid",
+                    "required":"Partner port is required."
+                }
+            }
+        },
+        "checks":{
+            "port":{
+                "value":'required',
+                "uivalue":'required',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.ports.scheduler":{
+        "message":{
+            "error":{
+                "checks":{
+                    "port":"Partner port is invalid",
+                    "required":"Partner port is required."
+                }
+            }
+        },
+        "checks":{
+            "port":{
+                "value":'required',
+                "uivalue":'required',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.instances.public":{
+        "message":{
+            "error":{
+                "checks":{
+                    "regex":"No of Instances value is invalid.",
+                    "required":"No of Instances are required."
+                }
+            }
+        },
+        "checks":{
+            "regex":{
+                "value":'^(5[0-0]|[1-4][0-9]|[1-9])$',
+                "uivalue":'^(5[0-0]|[1-4][0-9]|[1-9])$',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.instances.partner":{
+        "message":{
+            "error":{
+                "checks":{
+                    "regex":"No of Instances value is invalid.",
+                    "required":"No of Instances are required."
+                }
+            }
+        },
+        "checks":{
+            "regex":{
+                "value":'^(5[0-0]|[1-4][0-9]|[1-9])$',
+                "uivalue":'^(5[0-0]|[1-4][0-9]|[1-9])$',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"optional",
+                "uivalue":"optional",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.instances.internal":{
+        "message":{
+            "error":{
+                "checks":{
+                    "regex":"No of Instances value is invalid.",
+                    "required":"No of Instances are required."
+                }
+            }
+        },
+        "checks":{
+            "regex":{
+                "value":'^(5[0-0]|[1-4][0-9]|[1-9])$',
+                "uivalue":'^(5[0-0]|[1-4][0-9]|[1-9])$',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"optional",
+                "uivalue":"optional",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.instances.scheduler":{
+        "message":{
+            "error":{
+                "checks":{
+                    "regex":"No of Instances value is invalid.",
+                    "required":"No of Instances are required."
+                }
+            }
+        },
+        "checks":{
+            "regex":{
+                "value":'^(5[0-0]|[1-4][0-9]|[1-9])$',
+                "uivalue":'^(5[0-0]|[1-4][0-9]|[1-9])$',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"optional",
+                "uivalue":"optional",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.appExposedIn.public":{
+        "message":{
+            "error":{
+                "checks":{
+                    "boolean":"App exposed for pubilc value is invalid.",
+                    "required":"App exposed for pubilc is optional"
+                }
+            }
+        },
+        "checks":{
+            "boolean":{
+                "value":'required',
+                "uivalue":'required',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"optional",
+                "uivalue":"optional",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.appExposedIn.partner":{
+        "message":{
+            "error":{
+                "checks":{
+                    "boolean":"App exposed for partner value is invalid.",
+                    "required":"App exposed for partner is optional"
+                }
+            }
+        },
+        "checks":{
+            "boolean":{
+                "value":'required',
+                "uivalue":'required',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"optional",
+                "uivalue":"optional",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.appExposedIn.internal":{
+        "message":{
+            "error":{
+                "checks":{
+                    "boolean":"App exposed internally value is invalid.",
+                    "required":"App exposed internally is optional"
+                }
+            }
+        },
+        "checks":{
+            "boolean":{
+                "value":'required',
+                "uivalue":'required',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"optional",
+                "uivalue":"optional",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.appExposedIn.scheduler":{
+        "message":{
+            "error":{
+                "checks":{
+                    "boolean":"App exposed for pubilc value is invalid.",
+                    "required":"App exposed for pubilc is optional"
+                }
+            }
+        },
+        "checks":{
+            "boolean":{
+                "value":'required',
+                "uivalue":'required',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"optional",
+                "uivalue":"optional",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appConfig.applicationType":{
+        "message":{
+            "error":{
+                "checks":{
+                    "maxlength":"Please select a vaild application type",
+                    "required":"Application type is required."
+                }
+            }
+        },
+        "checks":{
+            "enums":{
+                "value":{
+                    "ui":true,
+                    "api":true
+                },
+                "uivalue":{
+                    "ui":true,
+                    "api":true
+                },
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appInfo.author":{
+        "message":{
+            "error":{
+                "checks":{
+                    "regex":"Author name invalid",
+                    "required":"Author name is required."
+                }
+            }
+        },
+        "checks":{
+            "regex":{
+                "value":'^[a-z-]+$',
+                "uivalue":'^[a-z-]+$',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appInfo.version":{
+        "message":{
+            "error":{
+                "checks":{
+                    "regex":"Version is invalid",
+                    "required":"Version is required."
+                }
+            }
+        },
+        "checks":{
+            "regex":{
+                "value":'^[0-9.]+$',
+                "uivalue":'^[0-9.]+$',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    },
+    "appInfo.description":{
+        "message":{
+            "error":{
+                "checks":{
+                    "regex":"Description is invalid",
+                    "required":"Description is required."
+                }
+            }
+        },
+        "checks":{
+            "regex":{
+                "value":'^[a-zA-Z0-9 ]+$',
+                "uivalue":'^[a-zA-Z0-9 ]+$',
+                "bothAreSame":true
+            },
+            "required":{
+                "value":"required",
+                "uivalue":"required",
+                "bothAreSame":true
+            }
+        }
+    }
+}

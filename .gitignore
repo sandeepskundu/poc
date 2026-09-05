@@ -1,0 +1,6 @@
+.DS_Store
+
+**/build/
+**/scrap/
+**/node_modules/
+**/package-lock.json

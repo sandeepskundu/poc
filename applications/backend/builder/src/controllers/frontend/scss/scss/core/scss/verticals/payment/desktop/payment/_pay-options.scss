@@ -1,0 +1,222 @@
+.pay-option-list {
+  li {
+    width: 33%;
+    display: inline-block;
+    padding: 0 rem(24) rem(22) 0;
+  }
+}
+
+.pay-option-item {
+  position: relative;
+  padding: rem(26) rem(55) rem(26) rem(16);
+}
+
+.pay-options-image {
+  top: 50%;
+  right: rem(16);
+  height: rem(22);
+  position: absolute;
+  @include adl-transform(0, -50%);
+}
+
+.other-bank-item {
+  padding: rem(12) rem(20);
+
+  &:hover {
+    background: $color-008;
+  }
+}
+
+.other-bank-holder {
+  .sb-opt-wrpr {
+    overflow: auto;
+    position: relative;
+    max-height: rem(256);
+    border: 1px solid $color-017;
+    box-shadow: 0 0 20px 0px rgb(136 136 136 / 0.2) !important;
+    padding: 0.875rem 0;
+  }
+
+  .sb-wrpr {
+    &.active {
+      .sb-lable {
+        border-color: $color-019;
+      }
+
+      .sb-opt-wrpr {
+        box-shadow: none;
+      }
+    }
+
+    .vob-hover {
+      &:hover {
+        background: #f3f3f3;
+      }
+    }
+  }
+
+  .sb-opt-wrpr .sb-option.selected {
+    background: transparent;
+  }
+}
+
+.cc-fop {
+  li {
+    img {
+      max-height: rem(14);
+    }
+  }
+
+  .pay-cta {
+    margin-right: rem(14);
+  }
+}
+
+.upi-logo-list {
+  img {
+    max-height: rem(20);
+  }
+}
+
+.collapsible-content {
+  .pay-option-list {
+    li {
+      div {
+        &:hover {
+          background: #f3f3f3;
+        }
+      }
+    }
+  }
+}
+
+.collapsible-wrapper {
+  .collapsible-list.active {
+    .collapsible-label {
+      background: #fff;
+      border-top-left-radius: rem(5);
+      border-top-right-radius: rem(5);
+    }
+  }
+
+  .collapsible-label {
+    &:hover {
+      background: #f3f3f3;
+    }
+  }
+}
+
+.collapsible-list:first-of-type {
+  .collapsible-label {
+    border-top-left-radius: rem(5);
+    border-top-right-radius: rem(5);
+  }
+}
+
+.collapsible-list:last-of-type {
+  .collapsible-label {
+    border-bottom-left-radius: rem(5);
+    border-bottom-right-radius: rem(5);
+  }
+}
+
+.cvv-hover {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 1.125rem;
+  background-color: transparent;
+  transition: background-color 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: #f3f3f3;
+  }
+}
+
+.tab-w {
+  .input-wrapper.has-right-icon .input-icon-holder {
+    right: rem(3);
+  }
+
+  img {
+    max-width: rem(176);
+  }
+}
+
+/*Header override css*/
+
+@media (min-width: 992px) {
+  .main-header > .container-fluid {
+    padding: 0 1.75rem;
+  }
+}
+
+/*Header override  css*/
+
+@media only screen and (min-width: rem(768)) and (max-width: rem(1200)) {
+  /*Breakpoint for Validity/cvv shrink*/
+  .cc-fop {
+    width: 100%;
+
+    .tab-cc {
+      flex: 0 0 100%;
+      margin-bottom: 24px;
+    }
+
+    .tab-ce {
+      padding-left: 0;
+      flex: 0 0 100%;
+    }
+
+    .tab-w {
+      width: 45%;
+    }
+
+    .tab-ch {
+      width: 100%;
+    }
+  }
+
+  /*Breakpoint for Validity/cvv shrink*/
+  .pay-option-list {
+    li {
+      width: 50%;
+    }
+  }
+
+  .nb-0 li:nth-child(3n) {
+    padding: 0 1.5rem 1.375rem 0;
+  }
+
+  .nb-0 li:nth-child(2n) {
+    padding: 0 0 1.375rem 0;
+  }
+
+  .nb-1 {
+    display: block;
+  }
+
+  .nb-1 li:last-child {
+    padding: 0 1.5rem 1.375rem 0;
+  }
+
+  .nb-1 li:nth-child(2n) {
+    padding: 0 0 1.375rem 0;
+  }
+}
+
+.nb-0 {
+  li:nth-child(4),
+  li:nth-child(5),
+  li:nth-child(6) {
+    padding-bottom: 0;
+  }
+}
+
+.rewards-checkbox {
+  .chckbx-wrpr label {
+    padding-left: 40px;
+  }
+}

@@ -1,0 +1,46 @@
+.skip-anchor {
+  float: right;
+
+  a {
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.skip-cancel,
+.skip-confirm {
+  padding: rem(10) rem(38);
+  line-height: rem(27);
+  border: rem(1) solid #222;
+  border-radius: rem(27);
+
+  &:active {
+    scale: 0.9;
+    color: #222;
+    background: #f3f3f3;
+  }
+}
+
+.skip-confirm {
+  color: #fff;
+  background-color: #222;
+
+  &:hover,
+  &:active {
+    color: #fff;
+    background: #333;
+  }
+}
+
+.addons-header-skip {
+  a {
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

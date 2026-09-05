@@ -1,0 +1,59 @@
+module.exports = {
+    "valuemap":{
+        "parentId":{
+            "valuemap":{
+                "map":"id",
+                "from":"params"
+            }
+        }
+    },
+
+    "schema":{
+        "appId":true,
+        "type":true,
+        "parentId":true
+    },
+
+    "signature":{
+        "creation":{
+            "enable":true,
+            "nodes":{
+                "_id":{
+                    "enable":true,
+                    "valueType":"objectId"
+                },
+                "_mapId":{
+                    "enable":true,
+                    "valueType":"objectId"
+                },
+                "_merchantId":{
+                    "enable":true,
+                    "valueType":"objectId"
+                }
+            }
+        }
+    },
+
+    "query":{
+        "runtime":{
+            "enable":true,
+            "configs":{
+                "query":{
+                    "0":{
+                        "cloumn":"parentId",
+                        "value":{
+                            "from":"params",
+                            "map":"id"
+                        },
+                        "operation":{
+                            "eq":{
+                                "enable":true,
+                                "opType":"eq"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

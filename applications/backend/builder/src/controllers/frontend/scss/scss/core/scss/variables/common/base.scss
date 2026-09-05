@@ -1,0 +1,8 @@
+$base-size:16;
+$wrapper-class:'';
+$fonts-folder:'fonts';
+$version:random(100000);
+$images-folder:'images';
+$statics-folder:"statics";
+$root-prefix:$pathPrefix; // $pathPrefix variable value is comming from env.pathPrefix via webpack
+$root-assetsCdnPath:$assetsCdnPath;

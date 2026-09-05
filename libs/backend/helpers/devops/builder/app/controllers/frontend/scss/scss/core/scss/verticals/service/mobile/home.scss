@@ -1,0 +1,81 @@
+@import "adl-sass-verticals/service/flightService/flightInfo";
+
+.fids-home-head-mobile {
+  padding: rem(18) rem(16);
+  .fids-head-title {
+    font-size: rem(22);
+    letter-spacing: rem(0.27);
+    margin-left: rem(25);
+  }
+}
+.fids-home-mobile {
+  & > li {
+    padding: rem(41.5) 1rem rem(15.5) 1rem;
+    border-bottom: rem(1) solid $color-021;
+    &:first-child {
+      padding: rem(20) 1rem rem(15.5) 1rem;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  .fids-search-wrapper {
+    .input-wrapper {
+      .input-icon-holder {
+        top: 47%;
+      }
+      &.has-left-icon {
+        &.has-icon-16 {
+          .input {
+            padding-left: 2.7rem;
+          }
+        }
+      }
+    }
+    .bs-common {
+      .bs-header {
+        padding: rem(30) rem(16) 0;
+        .bs-h-icon {
+          margin-bottom: rem(18);
+        }
+      }
+    }
+    .bs-inner {
+      padding: 0 rem(16);
+    }
+    .search-title {
+      font-size: rem(22);
+      letter-spacing: rem(0.27);
+      color: $color-014;
+      margin-bottom: 0;
+    }
+    .search-title-selected {
+      color: $color-014;
+      letter-spacing: rem(0.19);
+      margin-bottom: rem(5);
+    }
+    .fids-home-select-flight {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0;
+      .search-label {
+        color: $color-015;
+        font-size: rem(22);
+        letter-spacing: rem(0.27);
+        margin-bottom: 0;
+      }
+    }
+    .fids-data-list {
+      .fids-no-data {
+        font-size: rem(14);
+        color: $color-007;
+        text-align: center;
+      }
+      .detailsList,
+      .loadingList {
+        padding: rem(10) 0;
+      }
+    }
+  }
+}

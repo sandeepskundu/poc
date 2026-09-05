@@ -1,0 +1,25 @@
+$custom-font-sizes:(7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40);
+$line-height:(12, 14, 16, 18, 20, 21, 22, 24, 26, 28, 30);
+
+$font-version:$version;
+$default-body-font-family:'rr';
+$cdn-font-folder:'#{$root-assetsCdnPath}/assets/airport/fonts/';
+$font-folder:'/#{$root-prefix}/#{$statics-folder}/#{$fonts-folder}/';
+
+$font-family-rr:'Roboto';
+$font-family-rb:'Roboto-Bold';
+$font-family-rm:'Roboto-Medium';
+
+$fonts-families:(
+	fontello:(
+		ico:'fontello'
+	)
+);
+
+$cdn-fonts-families:(
+	roboto:(
+		rr:$font-family-rr,
+		rb:$font-family-rb,
+		rm:$font-family-rm
+	)
+);

@@ -1,0 +1,60 @@
+.badge {
+    text-align:center;
+    position:relative;
+    align-items:center;
+    display:inline-flex;
+    justify-content:center;
+    padding:rem(2) rem(12);
+    border:1px solid transparent;
+    
+    &.sm{
+        font-size:rem(12);
+        line-height:rem(18);
+        padding:rem(2) rem(8);
+    }
+
+    &.lg{
+        font-size:rem(14);
+        line-height:rem(18);
+    }
+
+    &.xl{
+        font-size:rem(14);
+        line-height:rem(18);
+        padding:rem(4) rem(12);
+    }
+
+    &.is-ico {
+        &.sm{
+            padding:rem(5);
+        }
+        &.lg{
+            padding:rem(6);
+        }
+        &.xl{
+            padding:rem(8);
+        }
+    }
+
+    &.is-avatar {
+        &.sm{
+            padding-left:rem(2);
+        }
+        &.lg{
+            padding-left:rem(2);
+        }
+        &.xl{
+            padding-left:rem(4);
+        }
+    }
+
+    &.round {
+        @include aio-border-radius(rem(60), rem(60), rem(60), rem(60));
+    }
+
+    &.disabled {
+        cursor:default;
+        pointer-events:none;
+        @include aio-opacity(0.5);
+    }
+}

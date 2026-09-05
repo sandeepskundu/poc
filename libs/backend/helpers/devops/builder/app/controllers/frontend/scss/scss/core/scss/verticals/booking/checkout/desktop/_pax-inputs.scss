@@ -1,0 +1,264 @@
+.pax-detail-inputs {
+  margin: rem(40) 0 0;
+
+  .input-wrapper {
+    &.focused,
+    &.filled {
+      .placholder {
+        font-size: rem(12);
+      }
+    }
+
+    &.filled {
+      .input {
+        padding-right: rem(20);
+      }
+
+      .input.id-proof-input {
+        padding-right: rem(77);
+      }
+    }
+
+    &.filled.focused {
+      .input {
+        padding-right: 2.8rem;
+      }
+
+      .input.id-proof-input {
+        padding-right: rem(77);
+      }
+    }
+  }
+
+  .input-date-cal {
+    .react-datepicker {
+      .react-datepicker__month--selecting-range {
+        .react-datepicker__day--in-selecting-range {
+          background-color: transparent !important;
+
+          &.react-datepicker__day--outside-month {
+            background-color: transparent !important;
+          }
+
+          .datepicker-date-holder {
+            background-color: transparent !important;
+          }
+        }
+      }
+
+      .react-datepicker__day--outside-month {
+        pointer-events: none;
+
+        &.react-datepicker__day--disabled {
+          .datepicker-date-holder {
+            .datepicker-date span {
+              opacity: 0.5;
+              cursor: default;
+            }
+          }
+        }
+
+        .datepicker-date-holder {
+          .datepicker-date span {
+            cursor: default;
+          }
+        }
+      }
+    }
+  }
+
+  .input-icon-holder {
+    .ai-close {
+      padding-top: rem(6);
+    }
+  }
+}
+
+.pax-inputs {
+  margin: rem(20) 0 0;
+
+  > li {
+    width: 50%;
+    display: inline-block;
+    padding-right: rem(20);
+
+    &:last-child {
+      padding-right: 0;
+    }
+
+    &.pax-title {
+      width: 14.44%;
+      padding-left: 0;
+
+      .sb-lable {
+        &:hover {
+          border-color: $input-border-focus-color;
+        }
+      }
+    }
+  }
+
+  .flag-space {
+    width: 46%;
+
+    .sb-opt-wrpr {
+      bottom: 100%;
+      margin: 0 0 rem(10);
+      top: initial;
+    }
+
+    .sb-opt-wrpr.bottom {
+      bottom: auto;
+      margin: rem(10) 0 0;
+    }
+  }
+
+  .sb-lable.three-dot {
+    padding: rem(20) rem(32) rem(2) rem(16);
+  }
+
+  .react-datepicker {
+    min-width: rem(320);
+
+    .datepicker-date-holder {
+      background: #fff;
+    }
+
+    .react-datepicker__day--selected {
+      .datepicker-date-holder {
+        background: #fff;
+      }
+    }
+  }
+}
+
+.pax-contact-details {
+  .bd-filled {
+    border: rem(1) solid $color-021;
+    border-radius: rem(6);
+
+    &:hover {
+      border-color: $color-015;
+    }
+  }
+
+  .bl-icon {
+    top: 40%;
+    right: 20px;
+  }
+}
+
+.bd-country {
+  .sb-wrpr .sb-lable:hover {
+    border-color: $color-015;
+  }
+}
+
+.pax-inputs-others {
+  > li {
+    flex: 0 0 33.33%;
+    padding: 0 rem(10);
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  .ai-calendar {
+    position: absolute;
+    right: 14px;
+    top: 21px;
+  }
+}
+
+.other-inputs {
+  > li {
+    padding-left: 0;
+    padding-right: 0;
+
+    &:nth-child(odd) {
+      padding-right: rem(20) !important;
+    }
+  }
+}
+
+.flight-checkout-left {
+  .saved-traveller-section {
+    .saved-travellers-container {
+      margin-bottom: rem(50);
+      &:first-child {
+        margin-top: rem(42);
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .see-less,
+      .see-more {
+        margin-top: rem(26);
+        margin-bottom: rem(4);
+      }
+      .saved-pax-list {
+        .saved-pax {
+          padding: rem(23) rem(0) rem(23) rem(0);
+          border-bottom: 1px solid $color-137;
+
+          .edit-icon {
+            width: rem(40);
+            height: rem(40);
+            border-radius: 50%;
+            right: 0px;
+            bottom: auto;
+            top: auto;
+            .ai-modify {
+              position: absolute;
+              top: rem(10);
+              left: rem(13);
+            }
+            &:hover {
+              background-color: $color-052;
+            }
+          }
+
+          .selection-check:hover {
+            .chckbx-wrpr input[type='checkbox'] + label::after {
+              border-color: $color-011;
+            }
+          }
+
+          &:first-child {
+            padding-top: 0;
+          }
+          &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+          }
+          .chckbx-wrpr {
+            label {
+              text-transform: capitalize;
+            }
+            input[type='checkbox'] {
+              &:checked + label {
+                font-family: $font-family-rm;
+              }
+            }
+          }
+        }
+        &.view-more .saved-pax:last-child {
+          border-bottom: 1px solid $color-137;
+          padding-bottom: rem(23);
+        }
+      }
+      .card-box {
+        border-color: $color-076;
+      }
+    }
+  }
+}
+
+.slider-box-content-holder {
+  .pax-detail-inputs {
+    .input-date-cal {
+      min-width: auto;
+    }
+  }
+}

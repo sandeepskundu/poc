@@ -1,0 +1,184 @@
+.adlw {
+  .hotels {
+    .fl-be-wrpr {
+      .org-dest {
+        flex: 0 0 25%;
+        .org-dest-input {
+          border-radius: rem(48) 0 0 rem(48);
+        }
+        .popup-label {
+          padding-left: rem(10);
+          border-radius: rem(48) 0 0 rem(48);
+        }
+        .popup-wrpr {
+          &.active {
+            .input {
+              margin-top: rem(5);
+            }
+            .placholder {
+              padding-left: rem(20);
+            }
+          }
+          .airport-options {
+            .ao-list {
+              .noHover:hover {
+                background-color: $color-fff;
+                cursor: default;
+                .full:hover {
+                  background-color: $color-fff;
+                }
+              }
+              .ao-city {
+                .fm-rr {
+                  font-family: $font-family-rr;
+                }
+              }
+              > :nth-child(2) {
+                &.nested {
+                  &::before {
+                    height: calc(100% - rem(14));
+                  }
+                }
+              }
+              .nested {
+                padding-left: rem(50);
+                &::before,
+                &::after {
+                  content: '';
+                  position: absolute;
+                  background-color: $color-119;
+                  bottom: 50%;
+                }
+                &::before {
+                  width: rem(1);
+                  height: 100%;
+                  left: rem(29);
+                }
+                &::after {
+                  width: rem(12);
+                  height: 1px;
+                  left: rem(30);
+                  bottom: 50%;
+                }
+              }
+            }
+          }
+        }
+        .input-wrapper .placholder {
+          top: rem(22);
+        }
+      }
+      .dates {
+        flex: 0 0 35%;
+      }
+      .pax {
+        flex: 0 0 22%;
+        .popup-box-body {
+          min-width: rem(456);
+          max-height: rem(620);
+          overflow-y: auto;
+          .bdr-top {
+            border-top: 1px solid $color-035;
+          }
+        }
+      }
+      .search {
+        flex: 0 0 18%;
+      }
+      .input-wrapper {
+        label {
+          cursor: pointer;
+        }
+      }
+    }
+    .sb-lable {
+      text-align: center;
+      margin: 0;
+      z-index: 10;
+      font-size: 1rem;
+      position: relative;
+      min-height: 2rem;
+      padding: 0.625rem 2rem 0.625rem 1rem;
+      cursor: pointer;
+      .sb-icon-holder {
+        top: 50%;
+        right: rem(8);
+        width: 1rem;
+        height: 1rem;
+        margin: -0.5rem 0 0;
+        position: absolute;
+      }
+    }
+
+    .sb-opt-wrpr {
+      height: rem(140);
+      overflow: auto;
+      width: 103px !important;
+      li {
+        div {
+          padding: rem(4) 0;
+          font-size: rem(16);
+          justify-content: center;
+          background: white;
+          &:hover {
+            background: $color-040;
+          }
+        }
+      }
+      .sb-option {
+        padding: rem(4) 0;
+        text-align: center;
+        span {
+          display: none;
+        }
+      }
+      .sb-otion .selected {
+        padding: rem(4) 0;
+        text-align: center;
+        background: $color-040;
+        span {
+          display: none;
+        }
+      }
+    }
+    .pax-counter-holder {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1.25rem 0 0 0;
+      padding: 0;
+      min-height: rem(37);
+      .pax-counter {
+        width: rem(103) !important;
+        position: relative;
+      }
+    }
+    .childAge {
+      .sb-lable {
+        height: rem(44);
+        padding: rem(6) rem(30) rem(8) rem(8);
+        .sb-icon-holder {
+          top: 35%;
+        }
+      }
+      .sb-opt-wrpr {
+        width: rem(100) !important;
+        height: rem(208);
+        padding: rem(8) rem(0);
+        left: -5px;
+        background-color: $color-fff;
+        li {
+          border-radius: 0%;
+          padding: rem(7) rem(0);
+        }
+      }
+      .sb-wrpr.RG-wrpr {
+        .sb-opt-wrpr {
+          margin-bottom: 10px;
+          bottom: 100%;
+          top: unset;
+        }
+      }
+    }
+  }
+}

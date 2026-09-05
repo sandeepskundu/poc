@@ -1,0 +1,102 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Button"
+                }
+            }
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "wrap": {
+            "description":"Wrap layer holder in outer element",
+            "type":"bool",
+            "defaultValue":false
+        },
+        "layer":{
+            "description":"Layer releated configuration like as size of layer, alignment and dimensions",
+            "type":"object",
+            "defaultValue":{
+                "size":24,
+                "align":"c",
+                "dimensions":{
+                    "width":"",
+                    "height":""
+                }
+            },
+            "isRequired":false
+        },
+        "content":{
+            "description":"Content related configuration details like text ds config, wrapper markup, toggle like read more less.",
+            "type":"object",
+            "defaultValue":{
+                "text":{
+                    "ds":{},
+                    "markup":{}
+                },
+                "wrapper":{
+                    "markup":{}
+                },
+                "toggle":{
+                    "enabled":false
+                }
+            }
+        },
+        "dsTheme":{
+            "description":"Layer releated configuration like as size of layer, alignment and dimensions",
+            "type":"object",
+            "defaultValue":{
+                "layer":{
+                    "background":"c00404"
+                },
+                "wrapper":{
+                    "radius":"8",
+                    "background":"c00206"
+                },
+                "content":{
+                    "color":"c00000"
+                },
+                "container":{
+                    "background":"c00206"
+                }
+            }
+        },
+        "config":{
+            "description":"Layer releated configuration like as size of layer, alignment and dimensions",
+            "type":"object",
+            "defaultValue":{
+                "wrapper":{
+                    "ds":{},
+                    "attrs":{},
+                    "markup":{
+                        "element":"div"
+                    }
+                },
+                "container":{
+                    "ds":{},
+                    "attrs":{},
+                    "markup":{
+                        "element":"div"
+                    }
+                },
+                "content":{
+                    "ds":{},
+                    "attrs":{},
+                    "markup":{
+                        "element":"div"
+                    }
+                },
+                "layer":{
+                    "ds":{},
+                    "attrs":{},
+                    "markup":{
+                        "element":"div"
+                    }
+                }
+            }
+        }
+    }
+}

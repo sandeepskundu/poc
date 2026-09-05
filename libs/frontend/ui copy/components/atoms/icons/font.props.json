@@ -1,0 +1,32 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Button"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "config":{
+            "description":"Default icon",
+            "type":"object",
+            "defaultValue":{
+                "ds":{},
+                "svg":null,
+                "attrs":{},
+                "type":"font",
+                "icon":{
+                    "name":"",
+                    "size":"24",
+                    "family":"g"
+                }
+            },
+            "isRequired":false
+        }
+    }
+}

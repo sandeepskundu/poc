@@ -1,0 +1,401 @@
+.review-details {
+  padding: rem(10) rem(20) 0 rem(20);
+}
+
+.r-org-dest-header {
+  padding: rem(10);
+  @include adl-border-radius(rem(8), rem(8), rem(8), rem(8));
+
+  .dest-wid {
+    width: 100%;
+  }
+
+  li.or-wid {
+    // width: 37%;
+    text-align: left;
+  }
+}
+
+.baggage-list {
+  padding: rem(14) 0;
+  border-top: 1px solid $color-021;
+
+  &:last-child {
+    border-top: 1px solid $color-021;
+  }
+}
+
+.layover-details {
+  width: 100%;
+  margin: rem(18) 0;
+
+  .layover-info {
+    padding: rem(6) rem(40);
+  }
+}
+
+.fl-pnr-tools {
+  color: $color-015;
+}
+
+.details-org-dest {
+  padding: rem(14) 0 0;
+
+  li {
+    width: 35.86%;
+
+    &.du {
+      width: 26.28%;
+      padding: rem(14) rem(10) 0;
+    }
+  }
+}
+
+.review-item-wrapper {
+  padding: rem(8) 0;
+  background-color: $color-010;
+
+  .tab-item {
+    &.scroll-tab {
+      padding-left: rem(10);
+      padding-right: rem(10);
+
+      &:first-child {
+        margin-left: rem(16);
+      }
+      &:last-child {
+        margin-right: rem(16);
+      }
+      &:not(.active) {
+        color: $color-015;
+      }
+    }
+  }
+
+  .segment-policy {
+    &.card-box {
+      border-color: $color-087;
+    }
+    .policy {
+      margin-bottom: rem(20);
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .review-item {
+    &.baggage-tab {
+      &:active {
+        background-color: $color-052;
+      }
+    }
+  }
+
+  .baggage-detail-info {
+    .baggage-item {
+      margin-bottom: rem(22);
+      &:first-child {
+        margin-top: rem(15);
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .ai-bag:before {
+        position: absolute;
+        top: -2px;
+      }
+    }
+  }
+}
+
+.review-promo-label {
+  .apply-coupon {
+    height: rem(26);
+    width: rem(40);
+  }
+
+  .view-all-arrow {
+    position: absolute;
+    right: -8px;
+    padding: rem(8) rem(10);
+    border-radius: 50%;
+    &:active {
+      background-color: $color-052;
+    }
+  }
+}
+
+.fl-pnr-tool {
+  display: block;
+  text-align: center;
+  margin-top: 3px;
+}
+
+.title-arrow {
+  position: relative;
+  top: -5px;
+}
+
+.input-wrapper {
+  .filled {
+    .input.id-proof-input {
+      padding-right: rem(77);
+    }
+
+    .title-arrow {
+      top: 0px;
+    }
+  }
+
+  &.filled.focused {
+    .input.id-proof-input {
+      padding-right: rem(77);
+    }
+  }
+}
+
+.gst-input-list {
+  .filled {
+    .input {
+      padding-right: rem(20);
+
+      &:disabled {
+        color: $color-011;
+        opacity: 50%;
+      }
+    }
+  }
+
+  .filled.focused {
+    .input {
+      padding-right: 2.8rem;
+    }
+  }
+
+  .gst-loader-mob {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+}
+
+.gst-input-fields {
+  li {
+    .filled {
+      .input {
+        &:disabled {
+          color: $color-011;
+          opacity: 50%;
+        }
+      }
+    }
+  }
+}
+
+.steps-desc {
+  position: absolute;
+  top: 22px;
+  right: 16px;
+}
+
+.m-tnc {
+  border-radius: rem(8);
+}
+
+.m-hide {
+  display: none;
+}
+
+.tnc-link {
+  text-decoration: underline !important;
+
+  &:hover {
+    color: $color-009;
+    text-decoration: none;
+  }
+}
+
+.w-city {
+  width: 45px;
+}
+
+.pd-traveller {
+  padding: rem(15);
+  min-width: max-content;
+
+  .m-detail:nth-child(2) {
+    margin-top: rem(20);
+    padding-top: 0;
+  }
+}
+
+.mr-la {
+  margin-left: auto;
+}
+
+.footer-pos {
+  position: fixed;
+  bottom: 0;
+  margin-bottom: rem(-50);
+}
+
+.title-d:last-child {
+  margin-bottom: 20px;
+}
+
+.mPax-details {
+  .input-date-cal-mobile {
+    .react-datepicker {
+      .react-datepicker__month--selecting-range {
+        .react-datepicker__day--in-selecting-range {
+          background-color: transparent !important;
+
+          &.react-datepicker__day--outside-month {
+            background-color: transparent !important;
+          }
+
+          .datepicker-date-holder {
+            background-color: transparent !important;
+          }
+        }
+      }
+
+      .react-datepicker__day--outside-month {
+        pointer-events: none;
+
+        &.react-datepicker__day--disabled {
+          .datepicker-date-holder {
+            .datepicker-date span {
+              opacity: 0.5;
+              cursor: default;
+            }
+          }
+        }
+
+        .datepicker-date-holder {
+          .datepicker-date span {
+            cursor: default;
+          }
+        }
+      }
+    }
+  }
+}
+
+.saved-travellers-container {
+  margin-top: rem(50);
+  .card-box {
+    border-color: $color-076;
+  }
+  .see-less,
+  .see-more {
+    margin-top: rem(26);
+    margin-bottom: rem(4);
+  }
+  .saved-pax-list {
+    .saved-pax {
+      padding: rem(23) rem(0) rem(23) rem(0);
+      border-bottom: 1px solid $color-137;
+      .edit-icon {
+        width: rem(40);
+        height: rem(40);
+        border-radius: 50%;
+        right: 0;
+        bottom: auto;
+        top: auto;
+
+        .ai-modify {
+          position: absolute;
+          top: rem(10);
+          left: rem(12);
+        }
+        &:active {
+          background-color: $color-052;
+        }
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .selection-check:active {
+        .chckbx-wrpr input[type='checkbox'] + label::after {
+          border-color: $color-011;
+        }
+      }
+      .chckbx-wrpr {
+        label {
+          text-transform: capitalize;
+        }
+        input[type='checkbox'] {
+          &:checked + label {
+            font-family: $font-family-rm;
+          }
+        }
+      }
+    }
+    &.view-more .saved-pax:last-child {
+      border-bottom: 1px solid $color-137;
+      padding-bottom: rem(23);
+    }
+  }
+}
+
+.flight-checkout {
+  .trvlr-mismatch-btm {
+    .btn {
+      padding: rem(13) rem(14);
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .adl-title-name-holder,
+  .input-wrapper,
+  .adl-mobile-holder {
+    &:hover {
+      border-color: $input-border-color;
+    }
+
+    &:focus-within {
+      border-color: $input-border-focus-color;
+    }
+  }
+}
+
+.bag-info {
+  gap: 10px;
+}
+
+.m-stick-wrap {
+  position: fixed;
+  bottom: -5px;
+  width: 95%;
+  left: 0;
+  right: 0;
+  margin: 0px auto;
+  z-index: 99;
+  background: #fff;
+  padding: 20px 0;
+}
+
+.mPax-details {
+  .input-wrapper {
+    .input {
+      .nat-input {
+        .title-arrow {
+          right: -8px;
+        }
+      }
+    }
+    .calender-icon {
+      right: 14px;
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Button group"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "callback": {
+            "description":"Callback functions",
+            "type":"object",
+            "defaultValue":{
+                "onBlur":null,
+                "onFocus":null,
+                "onPress":null,
+                "onClick":null,
+                "onPressUp":null,
+                "onPressEnd":null,
+                "onPressStart":null,
+                "onPressChange":null
+            }
+        },
+        "config":{
+            "description":"Button Group",
+            "type":"object",
+            "defaultValue":{
+                "buttons":{
+                    "0":{
+                        "button":{
+                            "content":0,
+                            "states":{
+                                "disabled":true
+                            }
+                        }
+                    },
+                    "1":{
+                        "button":{
+                            "content":1,
+                            "states":{
+                                "active":true,
+                                "disabled":false
+                            }
+                        }
+                        
+                    },
+                    "2":{
+                        "button":{
+                            "content":2,
+                            "states":{
+                                "disabled":false
+                            }
+                        }
+                        
+                    }
+                },
+                "theme":{
+                    "default":{
+                        "button":{
+                            "ds":{
+                                "predefined":{
+                                    "size":"sm",
+                                    "theme":"001"
+                                },
+                                "css":{
+                                    "class":{
+                                        "shadow":"sm"
+                                    }
+                                }
+                            },
+                            "markup": {
+                                "element": "label"
+                            }
+                        }
+                    },
+                    "active":{
+                        "button":{
+                            "ds":{
+                                "css":{},
+                                "states":{},
+                                "predefined":{}
+                            }
+                        }
+                    }, 
+                    "disabled":{
+                        "button":{
+                            "ds":{
+                                "css":{},
+                                "states":{},
+                                "predefined":{}
+                            }
+                        }
+                    }
+                },
+                "wrapper":{
+                    "attrs":{},
+                    "ds":{
+                        "theme":{
+                            "border":{},
+                            "background":{}
+                        },
+                        "css":{
+                            "class":{
+                                "padding":{
+                                    "1":6,
+                                    "2":8
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "isRequired":false
+        }
+    }
+}

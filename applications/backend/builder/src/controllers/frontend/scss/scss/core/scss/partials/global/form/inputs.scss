@@ -1,0 +1,398 @@
+%input-wrapper {
+  cursor: pointer;
+  min-height: rem(60);
+  line-height: rem(19);
+  position: relative;
+  padding: rem(26) rem(16) rem(10);
+  border: 1px solid $input-border-color;
+  @include adl-border-radius(rem(8), rem(8), rem(8), rem(8));
+}
+
+%input {
+  top: 0;
+  left: 0;
+  width: 100%;
+  border: none;
+  z-index: 90;
+  height: 100%;
+  outline: none;
+  @extend .fm-rm;
+  font-size: rem(16);
+  position: absolute;
+  display: inline-block;
+  padding: rem(26) rem(16) rem(10);
+  background-color: transparent;
+  @include adl-border-radius(rem(8), rem(8), rem(8), rem(8));
+  caret-color: $color-011;
+}
+
+.input-clear-holder {
+  top: rem(18);
+  right: rem(8);
+  width: rem(20);
+  float: left;
+  height: rem(20);
+  position: absolute;
+}
+
+.input-clear-holder i {
+  margin: rem(-5) rem(0) rem(0) rem(3);
+}
+
+.input-date-cal {
+  top: 100%;
+  left: 0;
+  z-index: 999;
+  position: absolute;
+  min-width: rem(320);
+  margin-top: rem(10);
+
+  &.dynamic-pos {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+
+  .sb-opt-wrpr {
+    clear: both;
+    overflow: auto;
+    min-width: rem(171);
+    max-height: rem(250);
+    margin-left: -#{rem(40)};
+
+    .sb-option {
+      padding-top: rem(8);
+      padding-bottom: rem(8);
+
+      &.selected {
+        .sb-o-ih {
+          top: rem(5);
+        }
+      }
+
+      &:first-child {
+        &.selected {
+          .sb-o-ih {
+            top: rem(11);
+          }
+        }
+      }
+    }
+  }
+}
+
+.input-date-cal-mobile {
+  @extend .input-date-cal;
+  &.dynamic-pos {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+  position: relative;
+}
+
+.react-datepicker-ignore-onclickoutside,
+.react-datepicker__input-container,
+.input {
+  @extend %input;
+}
+
+.placholder {
+  left: 0;
+  top: rem(20);
+  z-index: 80;
+  width: 100%;
+  opacity: 1;
+  font-size: rem(16);
+  padding: 0 0 0 rem(16);
+  position: absolute;
+  display: inline-block;
+  background: transparent;
+  color: $input-placeholder-color;
+}
+
+.input-error {
+  margin: rem(6) 0 0;
+  font-size: rem(14);
+  color: $input-error-text-color;
+}
+
+.input-wrapper {
+  @extend %input-wrapper;
+
+  &.focused,
+  &.filled {
+    .placholder {
+      top: rem(8);
+      font-size: rem(14);
+      z-index: 100;
+    }
+  }
+
+  &.focused {
+    border-color: $input-border-focus-color;
+  }
+
+  &.noHover {
+    &:hover {
+      border-color: $input-border-color;
+    }
+  }
+
+  &:hover {
+    border-color: $input-border-focus-color;
+  }
+
+  &.has-error {
+    border-color: $input-error-border-color;
+  }
+
+  .input-icon-holder {
+    top: 50%;
+    z-index: 99;
+    position: absolute;
+    @include adl-transform(0, -50%);
+  }
+
+  &.no-border {
+    border-color: transparent !important;
+  }
+
+  &.no-floating {
+    padding: rem(15);
+
+    .input {
+      padding: rem(15);
+      line-height: rem(28);
+    }
+
+    .placeholder {
+      display: none;
+    }
+  }
+
+  &.has-right-icon {
+    &.has-icon-16 {
+      padding-right: rem(48);
+
+      .input {
+        padding-right: rem(48);
+      }
+    }
+
+    &.has-icon-20 {
+      padding-right: rem(52);
+
+      .input {
+        padding-right: rem(52);
+      }
+    }
+
+    &.has-icon-40 {
+      padding-right: rem(72);
+
+      .input {
+        padding-right: rem(72);
+      }
+
+      .input-icon-holder {
+        max-width: rem(40);
+      }
+    }
+
+    .input-icon-holder {
+      right: rem(16);
+    }
+  }
+
+  &.has-left-icon {
+    &.has-icon-16 {
+      padding-left: rem(48);
+
+      .input {
+        padding-left: rem(48);
+      }
+    }
+
+    &.has-icon-20 {
+      padding-left: rem(52);
+
+      .input {
+        padding-left: rem(52);
+      }
+    }
+
+    &.has-icon-40 {
+      padding-left: rem(72);
+
+      .input {
+        padding-left: rem(72);
+      }
+    }
+
+    .input-icon-holder {
+      left: rem(16);
+    }
+  }
+
+  &.round {
+    @include adl-border-radius(rem(50), rem(50), rem(50), rem(50));
+  }
+
+  &.xsmall {
+    min-height: rem(42);
+
+    .input {
+      @extend .fm-rr;
+      line-height: rem(20);
+      padding-top: rem(10);
+      padding-bottom: rem(10);
+    }
+  }
+
+  &.second-icons {
+    .second-icon {
+      opacity: 0.8;
+      position: absolute;
+      right: rem(16);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .cross-icon {
+      position: absolute;
+      right: rem(32);
+      z-index: 197;
+
+      .cross {
+        right: rem(10);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  &.allIcons {
+    .cross-icon {
+      position: absolute;
+      right: rem(8);
+      top: rem(8);
+      top: 50%;
+      z-index: 197;
+      .cross {
+        padding: rem(6);
+      }
+      .ai-close {
+        position: unset;
+      }
+    }
+
+    .input {
+      padding-left: rem(42);
+      padding-right: rem(36);
+    }
+  }
+
+  @each $theme, $data in $inputs-map {
+    &.theme-#{$theme} {
+      $text: map-get($data, 'text');
+      $bdr: map-get($data, 'border');
+      $bg: map-get($data, 'background');
+
+      @if $bg {
+        background: $bg;
+      }
+
+      @if $bdr {
+        border-color: $bdr;
+      }
+
+      @if $text {
+        color: $text;
+      }
+    }
+  }
+
+  .calender-icon {
+    top: 32%;
+    position: absolute;
+    right: rem(24);
+    .input-cal-icon {
+      &::before {
+        opacity: 0.8;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.input-icon-holder .ai-close {
+  width: rem(30) !important;
+  height: rem(30) !important;
+  position: absolute;
+  right: 0;
+  top: rem(-14);
+  padding-top: rem(8);
+  border-radius: rem(50);
+  text-align: center;
+
+  &:hover {
+    background: $color-060;
+  }
+}
+
+.code-input {
+  .input-wrapper {
+    .input-icon-holder .ai-close {
+      padding: rem(2) rem(2) 0 rem(2);
+    }
+  }
+}
+
+input::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .input-wrapper {
+    .input-icon-holder {
+      top: 46%;
+    }
+
+    .input {
+      .nat-input {
+        position: relative;
+
+        .title-arrow {
+          top: rem(-14);
+          position: absolute;
+          right: rem(7);
+        }
+      }
+    }
+  }
+}
+
+.topC {
+  top: auto;
+  bottom: 100%;
+  margin-bottom: rem(10);
+}

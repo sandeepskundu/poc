@@ -1,0 +1,156 @@
+const schema = {
+    "isac":true,
+    "type":true,
+    "access":true,
+    "hashId":true,
+    "itemId":true,
+    "active":true,
+    "relation":true
+}
+
+const update = () => {
+    return {...schema, ...{itemId:false, relation:false, type:false}}
+}
+
+module.exports = {
+    response:{
+        exclude:{
+            enable:true,
+            kies:{
+                ts:true,
+                hashId:true
+            }
+        },
+    },
+    valuemap: {},
+
+    md5Hash:{
+        hashId:{
+            nodes:{
+                0:{
+                    map:"runtimeUtils.merchantRootHash",
+                    from:"appConfig"
+                },
+                1:{
+                    map:"access",
+                    from:"body-item"
+                },
+                2:{
+                    map:"relation",
+                    from:"body-item"
+                },
+                3:{
+                    map:"type",
+                    from:"body-item"
+                },
+                4:{
+                    map:"itemId",
+                    from:"body-item"
+                }
+            }
+        },
+    },
+
+    schema:{
+        default:schema,
+        update:update()
+    },
+
+    signature:{
+        merge:{
+            enable:true
+        },
+        creation:{
+            enable:true,
+            nodes:{
+                _id:{
+                    enable:true,
+                    valueType:"objectId"
+                },
+                _merchantId:{
+                    enable:true,
+                    valueType:"objectId"
+                }
+            }
+        }
+    },
+
+    query:{
+        byId:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"_id",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        itemIdAndType:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"itemId",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        },
+                        2:{
+                            cloumn:"type",
+                            value:{
+                                map:"subId",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+    },
+
+    validation:{
+        errors:{
+            hashId:{
+                mapTo:'access',
+                messages:{
+                    11000:'Duplicate team by access type is not allowed'
+                }
+            }
+        }
+    },
+
+    values:{
+        infoDetails:{
+            default:{},
+            exclude:{},
+            hardcoded:{},
+        }
+    }
+}

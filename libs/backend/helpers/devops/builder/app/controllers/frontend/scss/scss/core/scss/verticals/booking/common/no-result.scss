@@ -1,0 +1,17 @@
+.no-result-found{
+    .img-holder{
+        width:rem(80);
+        height:rem(80);
+        display: inline-block;
+        //background:$color-031;
+        @include adl-border-radius(4px, 4px, 4px, 4px)
+    }
+    .no-result-heading{
+        margin:rem(30) 0 rem(10);
+    }
+
+    .no-result-msg{
+        font-size:rem(12);
+        margin-bottom:rem(16);
+    }
+}

@@ -1,0 +1,161 @@
+1. Mobility & Transportation 
+
+    | Code    | Service                           |
+    | ------- | --------------------------------- |
+    | MOB-RHL | Ride-hailing (cars, bikes, autos) |
+    | MOB-CPL | Carpooling / Bike-sharing         |
+    | MOB-PBT | Public transport ticketing        |
+    | MOB-LGD | Logistics & parcel delivery       |
+    | MOB-CHR | Chauffeur & rental services       |
+
+
+2. Travel & Hospitality
+
+    | Code    | Service                  |
+    | ------- | ------------------------ |
+    | OTA-FLT | Flight booking           |
+    | OTA-TRN | Train booking            |
+    | OTA-BUS | Bus booking              |
+    | OTA-HTL | Hotel reservations       |
+    | OTA-HLP | Holiday packages         |
+    | OTA-TRI | Travel insurance         |
+    | OTA-EXP | Local experience booking |
+
+
+3. Food & Beverage
+
+    | Code    | Service                   |
+    | ------- | ------------------------- |
+    | FNB-FDL | Food delivery             |
+    | FNB-RST | Restaurant discovery      |
+    | FNB-TBL | Table reservations        |
+    | FNB-CKN | Cloud kitchen integration |
+    | FNB-GRC | Grocery delivery          |
+    | FNB-BEV | Beverage delivery         |
+
+
+4. E-Commerce & Retail
+
+    | Code     | Service                     |
+    | -------- | --------------------------- |
+    | ECOM-MKT | Online marketplace          |
+    | ECOM-FSH | Fashion                     |
+    | ECOM-ELE | Electronics                 |
+    | ECOM-HOM | Home goods                  |
+    | ECOM-DSC | Flash sales & deals         |
+    | ECOM-HLS | Hyperlocal shopping         |
+    | ECOM-SEC | Second-hand goods resale    |
+    | ECOM-DGP | Digital product marketplace |
+
+
+5. Financial Services (Fintech)
+
+    | Code     | Service                   |
+    | -------- | ------------------------- |
+    | FIN-WLT  | Digital wallet            |
+    | FIN-UPI  | UPI / QR payments         |
+    | FIN-P2P  | Peer-to-peer transfers    |
+    | FIN-BLP  | Bill payments & recharges |
+    | FIN-MLN  | Microloans & credit       |
+    | FIN-INS  | Insurance                 |
+    | FIN-INV  | Investment & trading      |
+    | FIN-BNPL | Buy Now Pay Later         |
+
+6. Healthcare
+
+    | Code     | Service                 |
+    | -------- | ----------------------- |
+    | HLTH-DOC | Doctor consultation     |
+    | HLTH-MED | Medicine delivery       |
+    | HLTH-LAB | Lab tests & diagnostics |
+    | HLTH-HIN | Health insurance        |
+    | HLTH-WLL | Wellness & fitness      |
+    | HLTH-MNT | Mental health therapy   |
+
+
+7. Education & Learning
+
+    | Code    | Service                   |
+    | ------- | ------------------------- |
+    | EDU-CRS | Online courses            |
+    | EDU-LNG | Language learning         |
+    | EDU-SKL | Skill development         |
+    | EDU-EXM | Exam preparation          |
+    | EDU-KID | Kids’ educational content |
+    | EDU-COR | Corporate training        |
+
+
+8. Lifestyle & Entertainment
+
+    | Code    | Service              |
+    | ------- | -------------------- |
+    | LIF-OTT | OTT streaming        |
+    | LIF-MUS | Music streaming      |
+    | LIF-GAM | Gaming               |
+    | LIF-EVT | Event ticket booking |
+    | LIF-SOC | Social networking    |
+    | LIF-DAT | Dating services      |
+
+
+9. Real Estate & Housing
+
+    | Code    | Service                      |
+    | ------- | ---------------------------- |
+    | REA-BUY | Property buying              |
+    | REA-RNT | Renting                      |
+    | REA-PGH | PG & hostel booking          |
+    | REA-HMS | Home services                |
+    | REA-INT | Interior design & renovation |
+
+
+10. Utilities & Government Services
+
+    | Code    | Service                        |
+    | ------- | ------------------------------ |
+    | UTL-BLP | Utility bill payments          |
+    | UTL-TAX | Tax filing                     |
+    | UTL-DOC | Digital IDs & document storage |
+    | UTL-TRL | Traffic challan payments       |
+    | UTL-CRT | Court fee payments             |
+    | UTL-GOV | Government schemes access      |
+
+
+11. Professional & Freelance Services
+
+    | Code     | Service                     |
+    | -------- | --------------------------- |
+    | PRO-FRL  | Freelance hiring            |
+    | PRO-TASK | Task-based gig jobs         |
+    | PRO-CNS  | Business consulting         |
+    | PRO-LGL  | Legal & accounting services |
+
+
+12. Corporate & B2B
+
+    | Code    | Service                      |
+    | ------- | ---------------------------- |
+    | B2B-LGD | Bulk logistics               |
+    | B2B-PRC | B2B procurement              |
+    | B2B-EBM | Employee benefits management |
+    | B2B-VPS | Vendor payment solutions     |
+
+
+13. Agriculture & Rural Services
+
+    | Code    | Service                |
+    | ------- | ---------------------- |
+    | AGR-MKT | Farm-to-market sales   |
+    | AGR-LOA | Agri loans & subsidies |
+    | AGR-WTH | Weather forecasts      |
+    | AGR-INS | Crop insurance         |
+
+
+14. Emerging Tech & Future Add-ons
+
+    | Code    | Service               |
+    | ------- | --------------------- |
+    | TEC-CRP | Crypto payments       |
+    | TEC-NFT | NFTs                  |
+    | TEC-AIA | AI personal assistant |
+    | TEC-ARV | AR/VR shopping        |
+    | TEC-MET | Metaverse integration |

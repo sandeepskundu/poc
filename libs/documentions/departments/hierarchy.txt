@@ -1,0 +1,175 @@
+Reporting Flow
+
+1. Governance & Founding
+
+    | Category Code | Category              | Subcategory            | Sub Code   |
+    | ------------- | --------------------- | ---------------------- | ---------- |
+    | GOV           | Governance & Founding | Board of Directors     | BOD        |
+    | GOV           | Governance & Founding | Founders / Co-Founders | FDR        |
+
+
+2. Executive Leadership => 
+
+    | Category Code | Category Name        | Subcategory             | Sub Code  |
+    | ------------- | -------------------- | ----------------------- | --------- |
+    | EXE           | Executive Leadership | Chief Executive Officer | CEO       |
+
+
+
+3. Deputy Executives Leadership (Reports to CEO)
+
+    3.1. Operations & Strategy
+
+        | Category Code | Category Name      | Subcategory Name       | Sub Code  |
+        | ------------- | ------------------ | ---------------------- | --------- |
+        | DEXE          | Deputy Executives | Chief Operating Officer | COO       |
+        | DEXE          | Deputy Executives | Chief Strategy Officer  | CSO2      |
+
+
+
+    3.2 Technology & Product
+
+        | Category Code | Category Name      | Subcategory Name        | Sub Code  |
+        | ------------- | ------------------ | ----------------------- | --------- |
+        | DEXE          | Deputy Executives | Chief Technology Officer | CTO       |
+        | DEXE          | Deputy Executives | Chief Product Officer    | CPO       |
+        | DEXE          | Deputy Executives | Chief Design Officer     | CDO       |
+        | DEXE          | Deputy Executives | Chief Data Officer       | CDO2      |
+
+
+
+    3.3 Business Growth
+
+        | Category Code | Category Name      | Subcategory Name       | Sub Code  |
+        | ------------- | ------------------ | ---------------------- | --------- |
+        | DEXE          | Deputy Executives | Chief Marketing Officer | CMO       |
+        | DEXE          | Deputy Executives | Chief Revenue Officer   | CRO       |
+        | DEXE          | Deputy Executives | Chief Customer Officer  | CCO       |
+
+
+
+    3.4 Finance & Legal
+
+        | Category Code | Category Name      | Subcategory Name                     | Sub Code  |
+        | ------------- | ------------------ | ------------------------------------ | --------- |
+        | DEXE          | Deputy Executives | Chief Financial Officer               | CFO       |
+        | DEXE          | Deputy Executives | Chief Legal Officer / General Counsel | CLO       |
+
+
+
+    3.5 People & Security
+
+        | Category Code | Category Name      | Subcategory Name             | Sub Code  |
+        | ------------- | ------------------ | ---------------------------- | --------- |
+        | DEXE          | Deputy Executives | Chief Human Resources Officer | CHRO      |
+        | DEXE          | Deputy Executives | Chief Security Officer        | CSO       |
+
+
+
+4. Senior Leadership (Reports to Deputy Executives)
+
+    1. Sr. Vice Presidents (SVP)
+
+        | Category Code | Category Name     | Subcategory Name       | Sub Code   |
+        | ------------- | ----------------- | ---------------------- | ---------- |
+        | SRL           | Senior Leadership | Sr. Vice Presidents    | SVP        |
+
+
+
+    2. Vice Presidents (VP)
+
+        | Category Code | Category Name     | Subcategory Name       | Sub Code  |
+        | ------------- | ----------------- | ---------------------- | --------- |
+        | SRL           | Senior Leadership | Vice Presidents        | VP        |
+
+
+
+    3. Sr. Directors
+
+        | Category Code | Category Name     | Subcategory Name      | Sub Code   |
+        | ------------- | ----------------- | --------------------- | ---------- |
+        | SRL           | Senior Leadership | Sr. Directors         | SDIR       |
+
+
+
+    4. Directors
+
+        | Category Code | Category Name     | Subcategory Name   | Sub Code  |
+        | ------------- | ----------------- | ------------------ | --------- |
+        | SRL           | Senior Leadership | Directors          | DIR       |
+
+
+
+    5. Heads of department HOD
+
+        | Category Code | Category Name     | Subcategory Name    | Sub Code |
+        | ------------- | ----------------- | ------------------- | -------- |
+        | SRL           | Senior Leadership | Heads of department | HOD      |
+
+
+
+5. Leadership - LD
+
+    1. General Managers - GM
+
+        | Category Code | Category Name  | Subcategory Name       | Sub Code  |
+        | ------------- | -------------- | ---------------------- | --------- |
+        | MGT           | Leadership     | General Managers       | GM        |
+
+
+
+    2. Assistant General Manager - AGM
+
+        | Category Code | Category Name  | Subcategory Name          | Sub Code    |
+        | ------------- | -------------- | ------------------------- | ----------- |
+        | MGT           | Leadership     | Assistant General Manager | AGM         |
+
+
+
+    3. Deputy General Manager - DGM
+
+        | Category Code | Category Name  | Subcategory Name       | Sub Code    |
+        | ------------- | -------------- | ---------------------- | ----------- |
+        | MGT           | Leadership     | Deputy General Manager | DGM         |
+
+
+
+    4. Sr. Managers - SMG
+
+        | Category Code | Category Name     | Subcategory Name  | Sub Code   |
+        | ------------- | ----------------- | ----------------- | ---------- |
+        | MGT           | Leadership        | Sr. Managers      | SMG        |
+
+
+
+    5. Manager - MG
+
+        | Category Code | Category Name     | Subcategory Name  | Sub Code   |
+        | ------------- | ----------------- | ----------------- | ---------- |
+        | MGT           | Leadership        | Managers.         | MG         |
+
+
+
+5. Junior Leadership  - JLD
+
+    1. Deputy Managers - DM
+
+        | Category Code | Category Name     | Subcategory Name  | Sub Code   |
+        | ------------- | ----------------- | ----------------- | ---------- |
+        | TL            | Team Leads        | Deputy Managers   | DM         |
+
+
+
+    2. Sr. Team Lead - STL
+
+        | Category Code | Category Name     | Subcategory Name  | Sub Code   |
+        | ------------- | ----------------- | ----------------- | ---------- |
+        | TL            | Team Leads        | Sr. Team Lead     | STL        |
+
+
+
+    3. Team Lead
+
+        | Category Code | Category Name     | Subcategory Name  | Sub Code   |
+        | ------------- | ----------------- | ----------------- | ---------- |
+        | TL            | Team Leads        | Team Lead         | TL         |

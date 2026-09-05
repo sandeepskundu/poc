@@ -1,0 +1,49 @@
+module.exports = {
+    paddingOff:{
+        dvalue:false,
+        type:"boolean",
+        description:"Determines whether the container's horizontal padding is removed. When set to true, the left and right padding are disabled, allowing the content to span the full width of the container. When set to false, the default horizontal padding is applied."
+    },
+    fluid:{
+        dvalue:false,
+        type:"boolean",
+        description:"Determines whether the container expands to fill the available width. When set to true, the container stretches to occupy the full width of its parent. When set to false, the container uses a fixed or constrained width based on the layout configuration."
+    },
+    config:{
+        type:'predefined',
+        description:"The configuration supports design system–driven customization across various elements, including the avatar image, wrapper, and initials. Properties such as size, shape, border, background color, and typography can be configured through the design system, ensuring visual consistency, accessibility, and alignment with application design standards across different themes and use cases.",
+        ___:{
+            predefined:{
+                from:'statics',
+                mapping:'ds.configs',
+                overwirte:{
+                    markup:{
+                        ___:{
+                            nested:{
+                                element:{
+                                    dvalue:'div'
+                                }
+                            }
+                        }
+                    },
+                    ds:{
+                        ___:{
+                            nested:{
+                                predefined:{
+                                    ___:{
+                                        predefined:{
+                                            overwirte:{
+                                                color:{},
+                                                background:{}
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

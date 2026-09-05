@@ -1,0 +1,281 @@
+$color-000: #000;
+$color-fff: #fff;
+$color-001: #208aff;
+$color-002: #0d67ca;
+$color-003: #007aff;
+$color-007: #fb3737;
+$color-008: #f2f2f2;
+$color-009: #555555;
+$color-010: #f8f8f8;
+$color-011: #222222;
+$color-012: #f1f7f9;
+$color-013: #999999;
+$color-014: #666666;
+$color-015: #333333;
+$color-016: #b2b2b2;
+$color-017: #dadce0;
+$color-018: #ebebeb;
+$color-019: #cccccc;
+$color-020: #222222;
+$color-021: #e2e2e2;
+$color-022: #e0e0e0;
+$color-023: #18aa26;
+$color-024: $color-002;
+$color-025: #444444;
+$color-026: #fbfbfd;
+$color-027: #777777;
+$color-028: #d8d8d8;
+$color-029: #13a180;
+$color-030: #806f6f;
+$color-031: #cacaca;
+$color-032: #4d4d4d;
+$color-033: #979797;
+$color-034: #c6c6c6;
+$color-035: #eaeaea;
+$color-036: #d5d5d9;
+$color-037: #fef6ea;
+$color-038: #dba14b;
+$color-039: #dedede;
+$color-040: #eef4fb;
+$color-041: #f04c23;
+$color-042: #e4e4e4;
+$color-043: #5f6367;
+$color-044: #f5faff;
+$color-045: #ffcf09;
+$color-046: #e3463b;
+$color-047: #0d67ca;
+$color-048: #e8e8e8;
+$color-049: #eaebed;
+$color-050: #8a8a8f;
+$color-051: #aaaaaa;
+$color-052: #f3f3f3;
+$color-053: #f1f1f1;
+$color-054: #d3d3d3;
+$color-055: #0b58ac;
+$color-056: #dddddd;
+$color-057: #f4f9ff;
+$color-058: #d1d1d1;
+$color-059: #f6f1ff;
+$color-060: #f5f5f5;
+$color-061: #dc464b;
+$color-062: #eb9845;
+$color-063: #0d0d0d;
+$color-064: #0d67ca12;
+$color-065: #f04c23;
+$color-066: #f6f6f6;
+$color-067: #006db7;
+$color-068: #00b16b;
+$color-069: #f2f3f4;
+$color-070: #c1c2c7;
+$color-071: #13a180;
+$color-072: #eef8f6;
+$color-073: #fcf2f2;
+$color-074: #fdf8f2;
+$color-075: #fdf4ec;
+$color-076: #ced4da;
+$color-077: #018849;
+$color-078: #ff0000;
+$color-079: #e40000;
+$color-080: #5e8dc4;
+$color-081: #fff8e5;
+$color-082: #fff7b7;
+$color-083: #c9daed;
+$color-084: #ececec;
+$color-085: #f8efe7;
+$color-086: #bcbcbc;
+$color-087: #eeeeee;
+$color-088: #e2e2e280;
+$color-089: #e7e7e7;
+$color-090: #8c8c8c;
+$color-091: #dee2e6;
+$color-092: #2222220d;
+$color-093: #b3b3b3;
+$color-094: #fef6ea;
+$color-095: #df5f44;
+$color-096: #e3caa4;
+$color-097: #e67225;
+$color-098: #0a52a2;
+$color-099: #0a4d98;
+$color-100: #fbfbfb;
+$color-101: #fafafa;
+$color-102: #eb98451a;
+$color-103: #dc464b12;
+$color-104: #ebf8f3;
+$color-105: #b6b6b680;
+$color-106: #98d0be;
+$color-107: #9ec8fa;
+$color-108: #b375b3;
+$color-109: #44a30b;
+$color-110: #bf4c43;
+$color-111: #13a181;
+$color-112: #4ab969;
+$color-113: #00bc4c;
+$color-114: #f4f4f8;
+$color-115: #99999966;
+$color-116: #22222266;
+$color-117: #cccccc66;
+$color-118: #e9cda3;
+$color-119: #22222280;
+$color-120: #13a1801f;
+$color-121: #fabd05;
+$color-122: #34a852;
+$color-123: #34a8521a;
+$color-124: #fabd051a;
+$color-125: #ea43361a;
+$color-126: #aaaaaa1a;
+$color-127: #fcfcfc;
+$color-128: #f8cccd;
+$color-129: #f4f4f4;
+$color-130: #f9f9f9;
+$color-131: #646464;
+$color-132: #feb319;
+$color-133: #e63a38;
+$color-134: #12662d;
+$color-135: #11a670;
+$color-136: #000000b3;
+$color-137: #dededeb3;
+$color-138: #e7f6f2;
+$color-139: #fbeded;
+$color-140: #cc5150;
+$color-141: #ffa918;
+
+$color-names: (
+  '000': $color-000,
+  'fff': $color-fff,
+  '001': $color-001,
+  '007': $color-007,
+  '008': $color-008,
+  '009': $color-009,
+  '010': $color-010,
+  '011': $color-011,
+  '012': $color-012,
+  '013': $color-013,
+  '014': $color-014,
+  '015': $color-015,
+  '016': $color-016,
+  '017': $color-017,
+  '018': $color-018,
+  '019': $color-019,
+  '020': $color-020,
+  '021': $color-021,
+  '022': $color-022,
+  '023': $color-023,
+  '024': $color-024,
+  '025': $color-025,
+  '026': $color-026,
+  '027': $color-027,
+  '028': $color-028,
+  '029': $color-029,
+  '030': $color-030,
+  '031': $color-031,
+  '032': $color-032,
+  '033': $color-033,
+  '034': $color-034,
+  '035': $color-035,
+  '036': $color-036,
+  '037': $color-037,
+  '038': $color-038,
+  '039': $color-039,
+  '040': $color-040,
+  '041': $color-041,
+  '042': $color-042,
+  '043': $color-043,
+  '044': $color-044,
+  '045': $color-045,
+  '046': $color-046,
+  '047': $color-047,
+  '048': $color-048,
+  '049': $color-049,
+  '050': $color-050,
+  '051': $color-051,
+  '052': $color-052,
+  '053': $color-053,
+  '054': $color-054,
+  '055': $color-055,
+  '056': $color-056,
+  '057': $color-057,
+  '058': $color-058,
+  '059': $color-059,
+  '060': $color-060,
+  '061': $color-061,
+  '062': $color-062,
+  '063': $color-063,
+  '064': $color-064,
+  '065': $color-065,
+  '066': $color-066,
+  '067': $color-067,
+  '068': $color-068,
+  '069': $color-069,
+  '070': $color-070,
+  '071': $color-071,
+  '072': $color-072,
+  '073': $color-073,
+  '074': $color-074,
+  '075': $color-075,
+  '076': $color-076,
+  '077': $color-077,
+  '078': $color-078,
+  '079': $color-079,
+  '080': $color-080,
+  '081': $color-081,
+  '082': $color-082,
+  '083': $color-083,
+  '084': $color-084,
+  '085': $color-085,
+  '086': $color-086,
+  '087': $color-087,
+  '088': $color-088,
+  '089': $color-089,
+  '090': $color-090,
+  '091': $color-091,
+  '092': $color-092,
+  '093': $color-093,
+  '094': $color-094,
+  '095': $color-095,
+  '096': $color-096,
+  '097': $color-097,
+  '098': $color-098,
+  '099': $color-099,
+  '100': $color-100,
+  '101': $color-101,
+  '102': $color-102,
+  '103': $color-103,
+  '104': $color-104,
+  '105': $color-105,
+  '106': $color-106,
+  '107': $color-107,
+  '108': $color-108,
+  '109': $color-109,
+  '110': $color-110,
+  '111': $color-111,
+  '112': $color-112,
+  '113': $color-113,
+  '114': $color-114,
+  '115': $color-115,
+  '116': $color-116,
+  '117': $color-117,
+  '118': $color-118,
+  '119': $color-119,
+  '120': $color-120,
+  '121': $color-121,
+  '122': $color-122,
+  '123': $color-123,
+  '124': $color-124,
+  '125': $color-125,
+  '126': $color-126,
+  '127': $color-127,
+  '128': $color-128,
+  '129': $color-129,
+  '130': $color-130,
+  '131': $color-131,
+  '132': $color-132,
+  '133': $color-133,
+  '134': $color-134,
+  '135': $color-135,
+  '136': $color-136,
+  '137': $color-137,
+  '138': $color-138,
+  '139': $color-139,
+  '140': $color-140,
+  '141': $color-141,
+);

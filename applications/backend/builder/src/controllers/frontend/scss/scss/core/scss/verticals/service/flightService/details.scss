@@ -1,0 +1,440 @@
+.detailsWrapper {
+  .dataWrapper {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    flex-direction: column;
+    .backImage {
+      height: rem(500);
+      object-fit: cover;
+    }
+    .details-head-nav {
+      display: none;
+    }
+    .lastUpdatedDesktop,
+    .lastUpdatedMobile {
+      display: block;
+      .updatedTitle {
+        line-height: rem(16);
+        font-size: rem(14);
+        letter-spacing: rem(0.17);
+        color: $color-015;
+      }
+      .updatedTime {
+        line-height: rem(16);
+        font-size: rem(14);
+        letter-spacing: rem(0.17);
+        color: $color-015;
+        margin: 0 rem(10) 0 rem(5);
+      }
+    }
+    .lastUpdatedMobile {
+      display: none;
+    }
+    .lastUpdate-shimmer {
+      height: 40px;
+    }
+    .detailsContainer {
+      position: relative;
+      top: rem(-117);
+      width: 65%;
+      margin: 0 auto;
+      padding: rem(50);
+      border-radius: rem(4);
+      box-shadow: 0 0 rem(8) rem(1) rgba(137, 137, 137, 0.2);
+      background-color: $color-fff;
+      .upDeatils {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .flightData {
+          display: flex;
+          align-items: center;
+          .flightTitle {
+            line-height: rem(28);
+            font-size: rem(24);
+            color: $color-015;
+            margin-left: rem(10);
+          }
+          .dataSeparator {
+            height: rem(30);
+            border-right: rem(1) solid $color-013;
+            margin: rem(5) rem(10);
+          }
+          .planeCode {
+            line-height: rem(28);
+            font-size: rem(24);
+            color: $color-015;
+          }
+        }
+      }
+      .middleDetailsDesktop,
+      .middleDetailsMobile {
+        display: flex;
+        justify-content: space-between;
+        margin-top: rem(50);
+        li {
+          width: 33.3333333333%;
+        }
+        .detailsOrigin,
+        .detailsDest,
+        .details-dest,
+        .details-origin {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          .detailsOrgCity {
+            line-height: rem(33);
+            font-size: rem(28);
+            font-weight: bold;
+            letter-spacing: rem(0.34);
+            color: $color-015;
+          }
+          .detailsOrgTerminal {
+            font-size: rem(13);
+            padding: rem(6) rem(7);
+            border-radius: rem(4);
+            margin-left: rem(10);
+            background-color: $color-045;
+          }
+        }
+        .detailsOrigin {
+          justify-content: initial;
+        }
+        .details-dest {
+          justify-content: initial;
+        }
+        .details-origin {
+          justify-content: flex-end;
+        }
+        .detailsAirportOrg,
+        .detailsAirportDest {
+          line-height: rem(21);
+          margin-top: rem(10);
+          font-size: rem(16);
+          letter-spacing: rem(0.19);
+          color: $color-014;
+        }
+        .detailsAirportDest {
+          text-align: end;
+        }
+        .middleIconDeparture,
+        .middleIconArrival {
+          display: flex;
+          align-items: center;
+          margin-bottom: 4%;
+          justify-content: center;
+          .flightDashed {
+            width: rem(90);
+            border-top: rem(1) dashed $color-013;
+          }
+          .smallIcon {
+            color: $color-009;
+            margin: 0 rem(10);
+            transform: rotate(45deg);
+          }
+        }
+        .middleIconArrival {
+          margin-right: 0;
+          margin-left: 3%;
+        }
+      }
+      .middleDetailsMobile {
+        display: none;
+      }
+      .downDetails {
+        display: flex;
+        justify-content: space-between;
+        margin-top: rem(50);
+        .subHead {
+          line-height: rem(19);
+          font-size: rem(16);
+          color: $color-014;
+          margin-bottom: rem(5);
+        }
+        .subBody,
+        .subBodyRed,
+        .subBodyGreen {
+          line-height: rem(21);
+          font-size: rem(18);
+          font-weight: bold;
+          letter-spacing: rem(0.22);
+          color: $color-015;
+        }
+        .subBodyRed {
+          color: $color-061;
+        }
+        .subBodyGreen {
+          color: $color-029;
+        }
+        .checkIn-row {
+          max-width: rem(182);
+          line-height: rem(23);
+        }
+        .subSeparator {
+          height: rem(55);
+          border-right: rem(1) solid $color-021;
+        }
+        .detailsGate {
+          display: none;
+        }
+        .detailsBelt {
+          display: none;
+        }
+      }
+    }
+    .flightNA {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: rem(374);
+      .flightNaTitle {
+        font-size: rem(24);
+        letter-spacing: rem(0.29);
+      }
+      .flightNaSubTitle {
+        color: $color-015;
+        margin-top: rem(24);
+        margin-bottom: rem(40);
+      }
+      .flightNaButton {
+        padding: rem(13) rem(60);
+        border-radius: rem(27);
+        border: rem(1.5) solid $color-020;
+        background-color: $color-fff;
+        &:hover {
+          background-color: $color-052;
+        }
+      }
+    }
+  }
+}
+
+.link-inline {
+  display: inline;
+}
+
+.airlineList,
+.feed-details {
+  .tool-tip {
+    position: absolute;
+    display: inline-block;
+    z-index: 99;
+    top: 122px;
+    right: 330px;
+
+    .tooltip-text {
+      width: 20rem;
+      height: 3rem;
+      margin: 0.375rem 0 0;
+      padding: 0.938rem 1.375rem 0.938rem 1.438rem;
+      border-radius: 4px;
+      background-color: #222;
+      visibility: visible;
+      color: $color-fff;
+      z-index: 1;
+      bottom: 100%;
+      right: 20px;
+      left: 0;
+      box-shadow: none;
+
+      &:after {
+        content: " ";
+        position: absolute;
+        top: -32%;
+        left: 5%;
+        width: 0.938rem;
+        height: 0.938rem;
+        margin: 0 1rem 2.438rem 15.875rem;
+        transform: rotate(3.142rad);
+        border-color: #333 transparent transparent transparent;
+        border-width: 8px;
+        border-style: solid;
+      }
+    }
+  }
+
+  .greydots {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgb(153, 153, 153);
+  }
+
+  .unsave-popup-btns {
+    height: 48px;
+    padding: 0.7rem rem(32);
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .detailsWrapper {
+    padding: 0;
+    .details-header {
+      display: none;
+    }
+    .dataWrapper {
+      .backImage {
+        height: rem(350);
+        object-fit: cover;
+        object-position: top;
+      }
+      .details-head-nav {
+        display: block;
+        position: absolute;
+        top: 4%;
+        left: 5%;
+        width: rem(32);
+        height: rem(32);
+        border-radius: rem(18);
+        padding: rem(4.4) 0 0 rem(5);
+        background-color: $color-fff;
+      }
+      .lastUpdatedDesktop {
+        display: none;
+      }
+      .lastUpdatedMobile {
+        display: block;
+        position: absolute;
+        top: rem(40);
+        right: 5%;
+        .updatedTitle {
+          color: $color-fff;
+        }
+        .updatedTime {
+          color: $color-fff;
+        }
+        i {
+          color: $color-fff;
+        }
+      }
+      .detailsContainer {
+        top: rem(-146);
+        width: 90%;
+        padding: rem(18) rem(16) rem(30) rem(16);
+        .upDeatils {
+          padding: rem(20) 0;
+          border-top: rem(1) solid $color-021;
+          border-bottom: rem(1) solid $color-021;
+          .flightData {
+            .flightTitle {
+              font-size: rem(16);
+              font-weight: bold;
+            }
+            .dataSeparator {
+              height: rem(16);
+            }
+            .planeCode {
+              font-size: rem(16);
+              font-weight: bold;
+            }
+          }
+          .updatedData {
+            display: none;
+          }
+        }
+        .middleDetailsDesktop {
+          display: none;
+        }
+        .middleDetailsMobile {
+          display: flex;
+          margin-top: 0;
+          margin-bottom: rem(19);
+          li {
+            width: 39%;
+          }
+          .detailsOrigin,
+          .detailsDest {
+            .detailsOrgCity {
+              font-size: rem(24);
+            }
+          }
+          .detailsDestArrival {
+            justify-content: flex-start;
+          }
+          .detailsOrgArrival {
+            justify-content: flex-end;
+          }
+          .detailsAirportOrg,
+          .detailsAirportDest {
+            margin-top: 0;
+            font-size: rem(13);
+          }
+          .departAirport {
+            text-align: start;
+          }
+          .arrivalAirport {
+            text-align: end;
+          }
+          .middleIconDeparture {
+            margin-bottom: 0;
+            margin-right: 0;
+            .flightDashed {
+              width: rem(20);
+            }
+          }
+        }
+        .downDetails {
+          flex-wrap: wrap;
+          margin-top: rem(18);
+          li {
+            width: 50%;
+            margin-bottom: rem(22);
+            &:nth-last-child(-n + 2) {
+              margin-bottom: 0;
+            }
+            .subHead {
+              font-size: rem(13);
+            }
+            .subBody,
+            .subBodyRed,
+            .subBodyGreen {
+              font-size: rem(16);
+            }
+            .subBodyRed {
+              color: $color-061;
+            }
+            .subBodyGreen {
+              color: $color-029;
+            }
+          }
+          .departureGate {
+            display: none;
+          }
+          .baggageBelt {
+            display: none;
+          }
+          .detailsGate {
+            display: block;
+          }
+          .detailsBelt {
+            display: block;
+          }
+          .subSeparator {
+            display: none;
+          }
+        }
+      }
+      .flightNA {
+        height: rem(410);
+        .flightNaTitle {
+          font-size: rem(22);
+          text-align: center;
+          letter-spacing: rem(0.27);
+        }
+        .flightNaSubTitle {
+          text-align: center;
+        }
+        .flightNaButton {
+          border: rem(1) solid $color-020;
+        }
+      }
+      .static-back-title {
+        .details-head-nav {
+          margin-top: rem(4);
+        }
+      }
+    }
+  }
+}

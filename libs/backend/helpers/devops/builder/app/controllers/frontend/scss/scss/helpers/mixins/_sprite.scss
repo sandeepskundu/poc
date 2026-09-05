@@ -1,0 +1,210 @@
+@mixin create-common-sprite-class($clsName, $gridWidth, $gridHeight, $spriteUrl, $spriteWidth, $spriteHeight) {
+  .#{$clsName} {
+    width: #{$gridWidth}px;
+    height: #{$gridHeight}px;
+    background: transparent url(adl-img($spriteUrl)) 0 0 no-repeat;
+    background-size: #{$spriteWidth}px #{$spriteHeight}px;
+  }
+}
+
+@mixin create-sprite-icon-cordinate(
+  $clsName,
+  $gridWidth,
+  $gridHeight,
+  $customSize,
+  $width,
+  $height,
+  $iconsList,
+  $sizePrefix,
+  $iconClsPrefix
+) {
+  $icoheight: (calc($gridHeight/$gridWidth) * $width);
+
+  @if $iconsList !=false {
+    @each $icon in $iconsList {
+      $iconName: nth($icon, 1);
+      $iconRow: nth($icon, 2);
+      $iconCol: nth($icon, 3);
+
+      @if $customSize ==false {
+        .#{$clsName}.#{$iconClsPrefix}#{$iconName} {
+          background-position: -#{($width * $iconCol)}px -#{($icoheight * $iconRow)}px;
+        }
+      } @else {
+        @if $customSize == 'default' {
+          .#{$clsName}.#{$iconClsPrefix}#{$iconName} {
+            background-position: -#{($gridWidth * $iconCol)}px -#{($gridHeight * $iconRow)}px;
+          }
+        } @else {
+          .#{$clsName}.#{$sizePrefix}#{$customSize}.#{$iconClsPrefix}#{$iconName} {
+            background-position: -#{($width * $iconCol)}px -#{($icoheight * $iconRow)}px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin resize-common-icon-sprite(
+  $clsName,
+  $spriteWidth,
+  $spriteHeight,
+  $gridWidth,
+  $gridHeight,
+  $width,
+  $height,
+  $customSize,
+  $sizePrefix
+) {
+  $icoheight: (calc($gridHeight/$gridWidth) * $width);
+
+  @if $customSize == 'default' {
+    .#{$clsName} {
+      $width: #{(calc($spriteWidth/$gridWidth) * $width)};
+      $height: #{(calc($spriteHeight/$gridHeight) * $height)};
+
+      width: #{$gridWidth}px;
+      height: #{$gridHeight}px;
+      background-size: #{($width)}px #{$height}px;
+    }
+  } @else {
+    .#{$clsName}.#{$sizePrefix}#{$customSize} {
+      $bgWidth: #{(calc($spriteWidth/$gridWidth) * $width)};
+      $bgHeight: #{(calc($spriteHeight/$gridHeight) * $icoheight)};
+
+      width: #{$width}px;
+      height: #{$icoheight}px;
+      background-size: #{($bgWidth)}px #{$bgHeight}px;
+    }
+  }
+}
+
+@mixin create-sprite-cordinate(
+  $clsName,
+  $gridWidth,
+  $gridHeight,
+  $customSize,
+  $width,
+  $height,
+  $iconsList,
+  $sizePrefix,
+  $iconClsPrefix
+) {
+  @if $customSize ==false {
+    @include create-sprite-icon-cordinate(
+      $clsName,
+      $gridWidth,
+      $gridHeight,
+      $customSize,
+      $width,
+      $height,
+      $iconsList,
+      $sizePrefix,
+      $iconClsPrefix
+    );
+  } @else {
+    @include create-sprite-icon-cordinate(
+      $clsName,
+      $gridWidth,
+      $gridHeight,
+      $customSize,
+      $width,
+      $height,
+      $iconsList,
+      $sizePrefix,
+      $iconClsPrefix
+    );
+  }
+}
+
+@mixin create-sprite(
+  $clsName,
+  $gridWidth,
+  $gridHeight,
+  $spriteUrl,
+  $spriteWidth,
+  $spriteHeight,
+  $list: false,
+  $sizes: false,
+  $sizePrefix: 'size-',
+  $iconClsPrefix: 'x'
+) {
+  @include create-common-sprite-class($clsName, $gridWidth, $gridHeight, $spriteUrl, $spriteWidth, $spriteHeight);
+
+  @if $sizes ==false {
+    @if $list !=false {
+      @include resize-common-icon-sprite(
+        $clsName,
+        $spriteWidth,
+        $spriteHeight,
+        $gridWidth,
+        $gridHeight,
+        $width: $gridWidth,
+        $height: $gridWidth,
+        $customSize: 'default',
+        $sizePrefix: $sizePrefix
+      );
+      @include create-sprite-cordinate(
+        $clsName,
+        $gridWidth,
+        $gridHeight,
+        $customSize: 'default',
+        $width: $gridWidth,
+        $height: $gridWidth,
+        $iconsList: $list,
+        $sizePrefix: $sizePrefix,
+        $iconClsPrefix: $iconClsPrefix
+      );
+    }
+  } @else {
+    @if $list !=false {
+      @include resize-common-icon-sprite(
+        $clsName,
+        $spriteWidth,
+        $spriteHeight,
+        $gridWidth,
+        $gridHeight,
+        $width: $gridWidth,
+        $height: $gridWidth,
+        $customSize: 'default',
+        $sizePrefix: $sizePrefix
+      );
+      @include create-sprite-cordinate(
+        $clsName,
+        $gridWidth,
+        $gridHeight,
+        $customSize: 'default',
+        $width: $gridWidth,
+        $height: $gridWidth,
+        $iconsList: $list,
+        $sizePrefix: $sizePrefix,
+        $iconClsPrefix: $iconClsPrefix
+      );
+
+      @each $size in $sizes {
+        @include resize-common-icon-sprite(
+          $clsName,
+          $spriteWidth,
+          $spriteHeight,
+          $gridWidth,
+          $gridHeight,
+          $width: $size,
+          $height: $size,
+          $customSize: $size,
+          $sizePrefix: $sizePrefix
+        );
+        @include create-sprite-cordinate(
+          $clsName,
+          $gridWidth,
+          $gridHeight,
+          $customSize: $size,
+          $width: $size,
+          $height: $size,
+          $iconsList: $list,
+          $sizePrefix: $sizePrefix,
+          $iconClsPrefix: $iconClsPrefix
+        );
+      }
+    }
+  }
+}

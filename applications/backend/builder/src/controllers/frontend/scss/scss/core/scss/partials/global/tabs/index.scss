@@ -1,0 +1,92 @@
+.tab-holder{
+    width:100%;
+    border-bottom:1px solid $color-039;
+
+    &.scroll-tab-container{
+        margin-left: rem(0);
+        margin-right: rem(0);
+    }
+}
+
+.tab-holder .tab-item {
+    padding:rem(14) rem(15);
+    color:$color-014;
+    cursor: pointer;
+    text-align:center;
+    position:relative;
+    display:inline-block;
+    white-space: nowrap;
+
+    .tick-container{
+        width: rem(14);
+        height: rem(14);
+        margin-left: rem(5);
+        background: $color-029;
+        border-radius: 50%;
+        position: relative;
+        
+        .ai-tick{
+            position: absolute;
+            top: rem(3);
+            left: rem(4);
+            &::before{
+                font-weight: bolder;
+            }
+        }
+    }
+    
+    &:after {
+        content: "";
+        position: absolute;
+        background-color: #222;
+        left: 0;
+        height: rem(2);
+        bottom: -12px;
+        z-index: 2;
+        width: 100%;
+        transition: all .3s;
+        transform: scale(0);
+    }
+
+    &.active {
+        cursor:default;
+        color:$color-015;
+        border-color:$color-015;
+        font-family:$font-family-rb;
+        border-radius: rem(8);
+        border-bottom: 5px solid #fff;
+           
+        &::after{
+            left:0;
+            bottom:-12px;
+            width:100%;
+            content: '';
+            height:rem(2);
+            position: absolute;
+            background: $color-015;
+        }
+        &:after {
+            transition: all .3s;
+            transform: scale(1);
+        }
+    }
+    &:active {
+        background: $color-052;
+    } 
+}
+
+.ptc-tabs {
+    .tab-holder .tab-item {
+        padding-bottom: 4px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .tab-holder{
+        .tab-item:not(.active):hover {
+            color: $color-015;
+            background-color: $color-052;
+            border-radius: rem(8);
+        }
+    }
+}

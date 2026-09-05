@@ -1,0 +1,26 @@
+module.exports = {
+    "codeId":{
+        "nodes":{
+            "0":{
+                "from":"appConfig",
+                "map":"runtimeUtils.merchantRootHash"
+            },
+            "1":{
+                "map":"code",
+                "from":"body-item"
+            },
+        }
+    },
+    "hashId":{
+        "nodes":{
+            "0":{
+                "from":"appConfig",
+                "map":"runtimeUtils.merchantRootHash"
+            },
+            "1":{
+                "map":"name",
+                "from":"body-item"
+            },
+        }
+    },
+}

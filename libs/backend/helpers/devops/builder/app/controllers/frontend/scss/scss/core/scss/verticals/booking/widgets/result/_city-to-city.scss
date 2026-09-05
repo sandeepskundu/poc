@@ -1,0 +1,130 @@
+@import 'adl-sass-theme';
+
+/*City to City widget starts*/
+
+.flight-city-widget {
+    .w-filter-heading {
+        li {
+            > span {
+                display: inline-block;
+                width: 16.66%;
+            }
+
+            .sort-label{
+                font-size: 12px;
+                color:$color-015;
+                text-transform: uppercase;
+                span{
+                    padding-right:6px;
+                }
+            }
+        }
+    }
+    .w-filter-data {
+        border-top:1px solid $color-056;
+        li {
+            display: inline-block;
+            width: 16.66%;
+            vertical-align: top;
+            text-align: center;
+            .btn {
+                padding: rem(9) rem(2);
+                margin-top: rem(0);
+                width: 100%;
+                }
+                img {
+                    margin: 0 auto;
+                    display: block;
+                    height: rem(24);
+                }
+        }
+        .airline-name {
+            font-weight: 600;
+        }
+        &:hover {
+            background: $color-040;
+            .btn {
+                background: $color-002;
+                color: $color-fff;
+                }
+        }
+        .price {
+            color: $color-011;
+        }
+    }
+    .view-button {
+        .btn-000 {
+            &:active {
+                color: $color-020;
+                background: $color-052;
+                transform: scale(0.90);
+                transition: -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(768)) { 
+    
+.flight-city-widget { 
+    .w-filter-heading {
+        li { 
+            > span {
+                width: 20%;
+                &:last-child {
+                    display: none;
+                }
+            }
+        }
+    }
+    .w-filter-data {
+            li {
+                width: 20%;
+                &:last-child {
+                    display: none;
+                }
+            }
+            .price {
+                color: $color-067;
+                font-weight: 600;
+            }
+        }
+    }
+}
+/*City to City widget ends*/
+
+/*Flight information widget starts*/
+
+.flight-info-container {
+    width: 100%;
+    .flight-info-desc {
+        width: 50%;
+        .w-desc {
+            p {
+                margin-bottom:0;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(768)) {  
+    .flight-info-container {
+        width: 100%;
+        .flight-info-desc {
+            width: 100%;
+            border-bottom: 1px solid #ebebeb;
+            .w-desc {
+                width: 90%;
+                line-height: 1.5rem;
+                p {
+                    margin-bottom:0;
+                }
+            }
+            span {
+                margin-top: 15px;
+            }
+        }
+    }
+}
+
+/*Flight information widget ends*/

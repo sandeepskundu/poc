@@ -1,0 +1,82 @@
+.resp-img {
+    max-width:100%;
+    max-height:100%;
+}
+
+.sep, .hr{
+    clear:both;
+    width:100%;
+}
+  
+.pr {
+    position: relative;
+}
+  
+.pa {
+    position: absolute;
+}
+  
+.cp {
+    cursor: pointer;
+}
+  
+.pe-n {
+    pointer-events: none;
+}
+  
+.hide {
+    display: none !important;
+}
+  
+.vs-hide {
+    visibility:hidden !important;
+}
+  
+.oh {
+    overflow:hidden;
+}
+
+.oa {
+    overflow:auto;
+}
+  
+.b {
+    font-weight: bold;
+}
+  
+.ns, .no-select {
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.dib {
+    display: inline-block;
+}
+  
+.db {
+    display: block;
+}
+  
+.fr {
+    float: right;
+}
+  
+.fl {
+    float: left;
+}
+
+.txt-n{
+    color: transparent !important;
+}
+
+.bg-n{
+    background-color: transparent !important;
+}
+
+.r-180d{
+    transform:rotate(180deg);
+}

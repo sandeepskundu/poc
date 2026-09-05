@@ -1,0 +1,55 @@
+.pax-contact-details {
+  margin: rem(70) 0 0;
+
+  .pax-detail-inputs {
+    margin-top: rem(0);
+  }
+}
+
+.isd-holder {
+  .sb-opt-wrpr {
+    clear: both;
+    overflow: auto;
+    width: rem(250);
+    max-height: rem(340);
+
+    .sb-option {
+      padding: rem(16) 0 0;
+
+      &:last-child {
+        padding-bottom: rem(16);
+      }
+    }
+  }
+
+  .isd-search {
+    padding: rem(16) rem(16) rem(4);
+  }
+}
+
+.isd-option {
+  position: relative;
+  padding: 0 rem(16) 0 rem(24);
+
+  .isd-flag {
+    top: 0;
+    left: rem(16);
+    position: absolute;
+  }
+}
+
+.gst-details {
+  .chckbx-wrpr {
+    width: 80%;
+  }
+}
+
+.input-date-cal {
+  .sb-opt-wrpr {
+    width: 125px;
+  }
+
+  .w-70p {
+    width: 100%;
+  }
+}

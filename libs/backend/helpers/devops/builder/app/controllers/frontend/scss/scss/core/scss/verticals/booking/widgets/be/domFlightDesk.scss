@@ -1,0 +1,212 @@
+@import './base.scss';
+
+.adlw.dom-flight-desk {
+  .flw-tabs li {
+    color: $color-011;
+
+    &:hover {
+      color: $color-011;
+    }
+
+    &.active {
+      color: $color-011;
+      font-weight: bold;
+
+      &::after {
+        height: rem(3);
+        background: $color-011;
+      }
+    }
+  }
+
+  .modify-flight-inputs {
+    border: rem(1) solid $color-019;
+
+    .trip-type {
+      .sb-wrpr {
+        > .full {
+          &:first-child {
+            &:hover {
+              background: none;
+              border-radius: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .org-dest-input {
+      .popup-label {
+        &:hover {
+          background: none;
+        }
+      }
+
+      .date-input {
+        .input-wrapper {
+          &:hover {
+            background: none;
+            border-radius: 0;
+          }
+        }
+      }
+    }
+
+    .org-dest-input.focussed {
+      background: none;
+      border-radius: 0;
+    }
+
+    .pax {
+      .popup-box-body {
+        .pax-counter-holder {
+          .pax-counter {
+            .contr-wrpr {
+              .contr-actn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            }
+          }
+        }
+      }
+
+      .popup-label {
+        &:hover {
+          background: none;
+        }
+      }
+    }
+
+    .fare-type {
+      .sb-wrpr {
+        > .full {
+          &:first-child {
+            &:hover {
+              background: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .fids-be-wrpr {
+    border: rem(1) solid $color-019;
+
+    .fids-airport,
+    .fids-type,
+    .fids-date {
+      .sb-wrpr {
+        > .full {
+          &:first-child {
+            &:hover {
+              background: none;
+              border-radius: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .fids-flight {
+      .input-wrapper {
+        .placholder {
+          top: rem(32);
+          cursor: pointer;
+        }
+      }
+
+      .input-wrapper.focused {
+        .placholder {
+          top: rem(20);
+        }
+      }
+
+      .popup-box-body {
+        margin-top: rem(7);
+      }
+
+      .popup-label {
+        &:hover {
+          background: none;
+        }
+      }
+    }
+  }
+
+  .adl-fui {
+    .ai-11 {
+      display: flex;
+    }
+  }
+}
+
+@media only screen and (min-width: rem(768)) and (max-width: rem(1366)) {
+  .ptc-included {
+    .fare-type {
+      flex: 0 0 10%;
+      max-width: 10%;
+    }
+
+    .search {
+      flex: 0 0 14%;
+    }
+
+    .fl-be-wrpr.modify-flight-inputs {
+      .input-wrapper.no-floating {
+        .input {
+          padding: 31px 12px 21px 8px;
+        }
+      }
+
+      .input-wrapper.filled {
+        .placholder {
+          padding-left: 8px;
+        }
+      }
+    }
+  }
+
+  .adlw.dom-flight-desk {
+    .fids-be-wrpr {
+      .fids-type {
+        width: 17%;
+      }
+
+      .fids-date {
+        width: 14%;
+      }
+
+      .fids-type,
+      .fids-date {
+        .sb-lable {
+          padding: 40px 12px 22px;
+        }
+
+        .placeholder {
+          padding-left: 12px;
+        }
+      }
+
+      .fids-flight {
+        width: 26%;
+
+        .popup-label {
+          padding-left: 0px;
+        }
+
+        .input-wrapper {
+          .input-icon-holder {
+            margin-right: -15px;
+          }
+        }
+      }
+
+      .fids-search {
+        width: 31%;
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+.adlw {
+    @import 'adl-sass-helpers';
+    @import 'adl-sass-service/widget/saved-flight';
+    @import "adl-sass-verticals/service/flightService";
+    @import 'adl-sass-service/widget/saved-flight-form';
+}

@@ -1,0 +1,90 @@
+@import 'adl-sass-theme';
+
+.fl-be-wrpr {
+  .train-details {
+    min-height: rem(86);
+    .place-input {
+      .org-dest-input {
+        cursor: pointer;
+        &.org {
+          padding-right: rem(0);
+          padding-left: rem(12);
+          &:hover {
+            border-radius: rem(50) rem(0) rem(0) rem(50);
+          }
+          &:after {
+            display: none;
+          }
+        }
+        &.dest {
+          padding-left: rem(0);
+        }
+        .input-wrapper {
+          &.focused,
+          &.filled {
+            .placholder {
+              font-size: rem(12);
+            }
+          }
+        }
+        .placholder {
+          font-size: rem(16);
+        }
+        .popup-box-body {
+          margin-top: rem(23);
+        }
+      }
+      flex: 0 0 60%;
+    }
+    .date-input {
+      flex: 0 0 24%;
+      padding-top: rem(12);
+      padding-bottom: rem(12);
+      .date {
+        padding-left: rem(16);
+      }
+      &:hover {
+        background: #f3f3f3;
+      }
+      &:after {
+        display: none;
+      }
+      .date-input-cal {
+        margin-top: rem(23);
+        right: 0;
+      }
+      .input-wrapper .input {
+        padding: rem(18) 0;
+      }
+    }
+    .search {
+      flex: 0 0 16%;
+      cursor: pointer;
+    }
+  }
+
+  .org-dest-input {
+    &:has(.popup-wrpr.active):hover {
+      background-color: $color-fff;
+    }
+
+    .popup-box-body .airport-options .ao-list {
+      .highlight {
+        background-color: $color-040;
+        &:hover {
+          background-color: $color-040;
+        }
+      }
+    }
+  }
+}
+
+.adlw .hp-widget.trains .train-details .org-dest-input .input-wrapper.no-floating .input {
+  line-height: rem(45);
+  padding-left: rem(16);
+}
+
+.adlw .hp-widget.trains .train-details .date-input .input-wrapper .input.blank-holder .full.flx-sb {
+  position: absolute;
+  top: rem(9);
+}

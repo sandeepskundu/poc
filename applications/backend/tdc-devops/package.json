@@ -1,0 +1,54 @@
+{
+    "license": "ISC",
+    "name": "tdc-devops",
+    "author": "sandeep-kundu",
+    "version": "0.0.1",
+    "description": "TDC Devops application",
+    "scripts": {
+        "start": "node build/scripts/server.js",
+        "start-watch": "nodemon build/scripts/server.js",
+        "start-dev": "nodemon --inspect=2621 build/scripts/server.js",
+        "init-app": "node scripts/index.js"
+    },
+    "_moduleAliases": {
+        "node-modules": "./node_modules/",
+        "helpers": "./build/scripts/helpers",
+        "aio-be-libs": "./../../../libs/backend/"
+    },
+    "devDependencies": {
+        "buffer": "^6.0.3",
+        "cookie-parser": "^1.4.6",
+        "deepmerge": "^4.3.1",
+        "nodemon": "^3.0.1",
+        "path": "^0.12.7",
+        "portfinder": "^1.0.32"
+    },
+    "dependencies": {
+        "axios": "^1.4.0",
+        "cors": "^2.8.5",
+        "crypto-js": "^4.1.1",
+        "deepmerge": "^4.3.1",
+        "dotenv": "^16.3.1",
+        "es6-promise": "4.2.8",
+        "express": "^4.18.2",
+        "express-xss-sanitizer": "^2.0.2",
+        "fs-extra": "^11.2.0",
+        "image-size": "^2.0.2",
+        "json-schema-compare": "^0.2.2",
+        "jsonwebtoken": "^9.0.2",
+        "module-alias": "^2.2.3",
+        "mongoose": "^8.7.1",
+        "mongoose-paginate-v2": "^1.8.5",
+        "multer": "^2.0.1",
+        "process": "^0.11.10",
+        "request": "^2.88.2",
+        "stream-http": "^3.2.0",
+        "svgtofont": "^6.5.1",
+        "swagger-ui-express": "^5.0.0",
+        "terser": "^5.43.1",
+        "try-require": "^1.2.1",
+        "universal-cookie": "^8.1.0",
+        "url": "^0.11.1",
+        "xml2js": "^0.6.2"
+    }
+}

@@ -1,0 +1,33 @@
+.fb-popup-box{
+    &.popup-wrpr{
+        position:relative;
+    }
+    
+    .popup-label{
+        position:relative;
+    }
+    
+    
+    .popup-box-body{
+        left:0;
+        top:100%;
+        z-index:999;
+        display:none;
+        overflow:auto !important;
+        min-height:rem(10);
+        margin:rem(15) 0 0;
+        position:absolute;
+        // max-height:rem(380);
+        background:$popup-box-body-bg-color;
+        border:1px solid $popup-box-border-color;
+        box-shadow:rem(0) rem(0) rem(20) rem(0) $popup-box-body-shadow;
+        @include adl-border-radius(rem(8), rem(8), rem(8), rem(8));
+    }
+    
+    &.popup-wrpr.active{
+        .popup-box-body{
+            display:block;
+            max-height: fit-content;
+        }   
+    }
+}

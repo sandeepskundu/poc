@@ -1,0 +1,51 @@
+🧍‍♂️ Personal Information
+    - Full Name (first name, last name)
+    - Gender (optional)
+    - Date of Birth
+    - Nationality
+    - Profile Photo (optional but useful for personalization)
+    - Preferred Language 
+
+📞 Contact Information
+    - Email Address (primary identifier)
+    - Mobile Number (with country code)
+    - Alternate Phone Number (optional)
+    - Residential Address (for billing or verification)
+
+🔐 Account Details
+    - Username
+    - Password (hashed & secured)
+    - Account Type (e.g., guest, registered, corporate, agent)
+    - Login Method (email/password, Google, Facebook, Apple, etc.)
+    - KYC/ID Proof Upload (if required for certain bookings)
+
+✈️ Travel Preferences
+    - Preferred Airport/City
+    - Seat Preference (aisle/window)
+    - Meal Preferences (veg/non-veg, allergies)
+    - Loyalty Program Numbers (e.g., airline or hotel reward memberships)
+    - Frequent Travel Destinations
+    - Preferred Currency
+
+📜 Booking & History Data
+    - Past Bookings (with booking references)
+    - Saved Itineraries or Wishlists
+    - Saved Payment Methods (tokenized for security)
+    - Travel Insurance Preference
+    - Special Requests (e.g., wheelchair, early check-in)
+
+📧 Communication Preferences
+    - Marketing Preferences (opt-in/out for promotions)
+    - Preferred Communication Channel (email, SMS, WhatsApp)
+    - Language for Notifications
+
+👨‍👩‍👧‍👦 Family & Travel Companions
+    - Saved Traveler Profiles (for frequent co-travelers like spouse, children)
+    - Emergency Contact Information
+
+🔍 Security & Activity
+    - Last Login Details (IP, location, device)
+    - Session Logs
+    - Two-Factor Authentication Status
+    - Consent Logs (for GDPR or data usage)
+

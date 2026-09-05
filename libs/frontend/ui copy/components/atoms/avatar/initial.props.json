@@ -1,0 +1,68 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Button"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "nowrapper":{
+            "description":"wrapper element",
+            "type":"bool",
+            "defaultValue":false
+        },
+        "dsTheme":{
+            "description":"Ds theme config of avatar",
+            "type":"object",
+            "defaultValue":{
+                "size":40,
+                "outer":20,
+                "shadow":"sm",
+                "radius":"round",
+                "color":"c00000",
+                "hcolor":"c11806",
+                "background":"c12306",
+                "hbackground":"g00003"
+            }
+        },
+        "image":{
+            "description":"Image config of image avatar",
+            "type":"bool",
+            "defaultValue":null
+        },
+
+        "initial":{
+            "description":"Initial config of name",
+            "type":"bool",
+            "defaultValue":{
+                "size":"",
+                "family":"",
+                "fallback":"",
+                "display":false,
+                "value":""
+            }
+        },
+
+        "icon":{
+            "description":"Icon config of initial",
+            "type":"object",
+            "defaultValue":null
+        },
+
+        "config":{
+            "description":"Default button",
+            "type":"object",
+            "defaultValue":{
+                "image":null,
+                "wrapper":{},
+                "initial":{}
+            }
+        }
+    }
+}

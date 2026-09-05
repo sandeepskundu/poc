@@ -1,0 +1,798 @@
+@import 'adl-sass-theme';
+@import 'adl-sass-verticals/booking/be/common';
+@import './tabs.scss';
+@import './fids.scss';
+@import './cabs.scss';
+
+.fl-be-wrpr {
+  background: $color-fff;
+  min-height: rem(86);
+  @include adl-border-radius(50px, 50px, 50px, 50px);
+
+  .org-dest-input,
+  .fl-be-input {
+    position: relative;
+
+    &::after {
+      top: 50%;
+      right: 0;
+      width: 1px;
+      content: '';
+      height: rem(30);
+      position: absolute;
+      background: $color-021;
+      margin-top: -#{rem(15)};
+    }
+  }
+
+  .fl-be-input {
+    position: relative;
+
+    &:last-child {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .trip-type {
+    max-width: 11.35%;
+    flex: 0 0 11.35%;
+
+    &:hover {
+      background: none;
+      border-radius: 0;
+    }
+
+    .sb-wrpr {
+      > .full {
+        &:first-child {
+          &:hover {
+            background: $color-052;
+            border-radius: 3.125rem 0rem 0rem 3.125rem;
+          }
+        }
+      }
+    }
+
+    .sb-opt-wrpr {
+      min-width: rem(180);
+      margin-top: rem(10);
+      padding: rem(10) 0;
+
+      .sb-option {
+        &.selected {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+        &:first-child {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+        &:last-child {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+
+    .sb-lable {
+      padding: rem(40) rem(30) rem(19) rem(30);
+
+      .sb-icon-holder {
+        display: none;
+      }
+    }
+
+    .placeholder {
+      opacity: 1 !important;
+      background: none !important;
+      padding-left: rem(30);
+      padding-top: rem(12);
+    }
+  }
+
+  .org-dest {
+    flex: 0 0 29.84%;
+
+    .org-dest-input {
+      &:first-child::after {
+        display: none;
+      }
+
+      &:hover {
+        background: none;
+        border-radius: 0;
+      }
+
+      .popup-label {
+        &:hover {
+          background: $color-052;
+        }
+      }
+    }
+  }
+
+  .dates {
+    flex: 0 0 27.76%;
+
+    .org-dest-input {
+      &:hover {
+        background: none;
+        border-radius: 0;
+      }
+
+      .date-input {
+        .input-wrapper {
+          &:hover {
+            background: $color-052;
+            border-radius: 0;
+          }
+        }
+      }
+    }
+
+    .fl-be-input {
+      .org-dest-input {
+        .ai-close::before {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+        }
+      }
+    }
+  }
+
+  .pax {
+    flex: 0 0 19.95%;
+
+    &::after {
+      display: none;
+    }
+
+    &:hover {
+      background: none;
+      border-radius: 0;
+    }
+
+    .popup-label {
+      padding: rem(12) rem(7);
+
+      &:hover {
+        background: $color-052;
+      }
+
+      .input-wrapper.gb {
+        .tooltip-box-holder {
+          position: absolute;
+          top: rem(61);
+          left: rem(21);
+          z-index: 99;
+
+          .tooltip-content {
+            z-index: 999;
+            display: none;
+            padding: rem(4) rem(11);
+            letter-spacing: rem(0.12);
+            margin-top: rem(8);
+            position: absolute;
+            color: $color-fff;
+            width: max-content;
+            @include adl-border-radius(rem(2), rem(2), rem(2), rem(2));
+
+            .ac {
+              text-align: left;
+            }
+          }
+
+          .tooltip-content.ltToRt {
+            left: 0px;
+            bottom: 0px;
+            transform: translate(0%, 113%);
+
+            &:before {
+              width: 0;
+              height: 0;
+              content: '';
+              top: -14px;
+              left: rem(6);
+              transform: translate(50%, 0);
+              margin-top: rem(8);
+              position: absolute;
+              border-left: rem(8) solid transparent;
+              border-right: rem(8) solid transparent;
+              border-bottom: rem(8) solid $color-011;
+            }
+          }
+
+          &:hover {
+            .tooltip-content {
+              opacity: 1;
+              display: block;
+            }
+          }
+        }
+
+        .info-box-holder {
+          display: contents;
+        }
+
+        .gbtext {
+          position: absolute;
+          bottom: 2px;
+        }
+
+        .dc {
+          display: contents;
+        }
+      }
+    }
+
+    .input-wrapper {
+      .input {
+        line-height: rem(43);
+
+        .pax-cls {
+          &:before {
+            top: 50%;
+            left: rem(6);
+            content: '';
+            width: rem(4);
+            height: rem(4);
+            margin-top: rem(-2);
+            display: block;
+            position: absolute;
+            background-color: $color-013;
+            border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+            -webkit-border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+            -moz-border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+          }
+        }
+      }
+
+      .placholder {
+        top: 10px;
+        font-size: rem(12);
+        margin-bottom: rem(4);
+      }
+    }
+
+    .org-holder i {
+      display: none;
+    }
+
+    .popup-box-body {
+      right: 0;
+      min-width: rem(360);
+      margin-top: rem(10);
+    }
+  }
+
+  .search {
+    flex: 0 0 11.2%;
+    padding-left: 0;
+    padding-right: rem(20);
+  }
+
+  .placholder {
+    opacity: 1;
+    background: none;
+    font-size: rem(12);
+    margin-bottom: rem(4);
+  }
+
+  .org-dest,
+  .date-input {
+    .input-wrapper {
+      padding-left: 0;
+      padding-right: 0;
+
+      .input {
+        padding-left: 0;
+        padding-right: 0;
+        line-height: rem(43);
+      }
+
+      .placholder {
+        top: 10px;
+        font-size: rem(12);
+        margin-bottom: rem(4);
+      }
+    }
+  }
+
+  .org-dest .popup-box-body {
+    margin-top: rem(10);
+  }
+
+  .date-input-cal {
+    top: 100%;
+    z-index: 9999;
+    position: absolute;
+    margin-top: rem(10);
+    min-width: rem(700);
+
+    .react-datepicker {
+      display: flex;
+      margin-left: 0;
+      justify-content: space-between;
+
+      .react-datepicker__month-container {
+        flex: 0 0 50%;
+      }
+    }
+
+    .react-datepicker__day--outside-month {
+      .datepicker-date-holder,
+      .datepicker-price {
+        display: none;
+      }
+    }
+  }
+
+  .date-input.return-date {
+    .date-input-cal {
+      left: -179px;
+    }
+  }
+
+  .closePopup {
+    margin-top: rem(30);
+
+    span {
+      margin-top: 0;
+    }
+  }
+
+  .be-class-list {
+    margin-top: rem(30);
+
+    li {
+      display: inline-block;
+      margin: rem(10) rem(10) 0 0;
+    }
+
+    li:last-child {
+      margin-top: 30px;
+    }
+  }
+
+  .org-dest-input {
+    padding: rem(12) rem(20);
+  }
+
+  .travel-date {
+    position: relative;
+
+    .cal-ico-older {
+      top: 50%;
+      z-index: 999;
+      width: rem(12);
+      height: rem(12);
+      right: rem(20);
+      position: absolute;
+      margin-top: -#{rem(10)};
+    }
+
+    .org-holder {
+      i {
+        display: none;
+      }
+    }
+  }
+
+  &.modify-flight-inputs {
+    .input-wrapper {
+      min-height: rem(84);
+      border: none;
+
+      &.no-floating {
+        .input {
+          padding: rem(31) rem(20) rem(21);
+        }
+      }
+
+      .widget-return {
+        top: rem(22);
+      }
+
+      &.filled {
+        .placholder {
+          top: rem(22);
+          padding-left: rem(20);
+        }
+      }
+    }
+
+    .org-dest,
+    .date-input {
+      .input-wrapper {
+        .input {
+          padding: rem(31) rem(20) rem(21);
+        }
+      }
+
+      .focussed {
+        .input-wrapper {
+          input {
+            &.input {
+              padding: rem(41) rem(20) rem(21);
+            }
+          }
+        }
+      }
+    }
+
+    .org-dest-input {
+      padding: 0;
+    }
+
+    .pax {
+      .popup-label {
+        padding: 0;
+      }
+    }
+  }
+
+  &.blank-padding {
+    li {
+      &.nowrap {
+        .input-wrapper {
+          &.no-floating {
+            .input {
+              padding: rem(27) rem(20) rem(21);
+            }
+          }
+        }
+      }
+
+      &.pax-class {
+        .input-wrapper {
+          &.no-floating {
+            .input {
+              padding: rem(19) rem(20) rem(21);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.hp-widget {
+  .loader {
+    .dot {
+      margin: rem(8) 0;
+    }
+  }
+}
+
+.pax {
+  .input-wrapper.blank-holder {
+    .input {
+      line-height: rem(43);
+    }
+  }
+}
+
+.fids-be-wrpr {
+  .fids-airport {
+    &:hover {
+      background: none;
+      border-radius: 0;
+    }
+
+    .sb-wrpr {
+      > .full {
+        &:first-child {
+          &:hover {
+            background: $color-052;
+            border-radius: 3.125rem 0rem 0rem 3.125rem;
+          }
+        }
+      }
+    }
+  }
+
+  .fids-type {
+    &:hover {
+      background: none;
+      border-radius: 0;
+    }
+
+    .sb-wrpr {
+      > .full {
+        &:first-child {
+          &:hover {
+            background: $color-052;
+            border-radius: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .fids-date {
+    &:hover {
+      background: none;
+      border-radius: 0;
+    }
+
+    .sb-wrpr {
+      > .full {
+        &:first-child {
+          &:hover {
+            background: $color-052;
+            border-radius: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .fids-flight {
+    &:hover {
+      background: none;
+      border-radius: 0;
+    }
+
+    .popup-label {
+      &:hover {
+        background: $color-052;
+      }
+    }
+  }
+}
+
+.ptc-included {
+  .trip-type {
+    flex: 0 0 11%;
+  }
+
+  .org-dest {
+    flex: 0 0 29%;
+  }
+
+  .dates {
+    flex: 0 0 25%;
+  }
+
+  .pax-class {
+    flex: 0 0 12%;
+
+    &::after {
+      display: unset;
+    }
+  }
+
+  .search {
+    flex: 0 0 11%;
+  }
+
+  .fare-type {
+    flex: 0 0 12%;
+    max-width: 12%;
+
+    &::after {
+      display: none;
+    }
+
+    .sb-wrpr {
+      > .full {
+        &:first-child {
+          &:hover {
+            background: $color-052;
+          }
+        }
+      }
+    }
+
+    .sb-opt-wrpr {
+      min-width: rem(262);
+      margin-top: rem(10);
+      padding: rem(10) 0;
+    }
+
+    .sb-lable {
+      padding: rem(40) rem(20) rem(21);
+
+      .sb-icon-holder {
+        display: none;
+      }
+    }
+
+    .placeholder {
+      opacity: 1 !important;
+      background: none !important;
+      padding-left: rem(21);
+      padding-top: rem(12);
+    }
+  }
+}
+
+.ssr-hp-widget {
+  .fl-be-wrpr .pax .input-wrapper .input .pax-cls:before {
+    left: rem(2);
+  }
+}
+
+@media only screen and (min-width: rem(768)) and (max-width: rem(1366)) {
+  .fl-be-wrpr {
+    .dates {
+      .fl-be-input {
+        #returnOnTravelDate {
+          .date-input {
+            .input-wrapper {
+              .input {
+                padding-right: 30px;
+              }
+            }
+          }
+
+          .input-icon-holder {
+            .ai-close {
+              right: 5px;
+            }
+          }
+        }
+      }
+    }
+
+    &.blank-padding {
+      li {
+        p {
+          padding: 22px 12px 21px !important;
+        }
+      }
+    }
+  }
+
+  .ptc-included {
+    .trip-type {
+      min-width: 11.35%;
+
+      .sb-lable {
+        padding: 40px 8px 19px 20px;
+      }
+
+      .placeholder {
+        padding-left: 20px;
+      }
+    }
+
+    .org-dest {
+      flex: 0 0 25%;
+
+      .fl-be-input {
+        .adlw-swap {
+          width: 32px !important;
+          padding-left: 8px;
+        }
+      }
+    }
+
+    .dates {
+      flex: 0 0 27%;
+    }
+
+    .pax-class {
+      flex: 0 0 13%;
+    }
+
+    .fare-type {
+      flex: 0 0 11%;
+      max-width: 11%;
+
+      .sb-lable {
+        padding: 40px 12px 21px;
+      }
+
+      .placeholder {
+        padding-left: 12px;
+      }
+    }
+
+    .search {
+      flex: 0 0 13%;
+
+      .btn {
+        padding: 13px 25px;
+      }
+    }
+
+    .fl-be-wrpr.modify-flight-inputs {
+      .org-dest,
+      .date-input {
+        .input-wrapper {
+          .input {
+            padding: 31px 12px 21px;
+          }
+        }
+      }
+
+      .input-wrapper.no-floating {
+        .input {
+          padding: 31px 12px 21px;
+        }
+      }
+
+      .input-wrapper.filled {
+        .placholder {
+          padding-left: 12px;
+        }
+      }
+    }
+  }
+
+  .fids-be-wrpr {
+    .fids-airport {
+      width: 12%;
+    }
+
+    .fids-type {
+      width: 18%;
+    }
+
+    .fids-date {
+      width: 15%;
+    }
+
+    .fids-airport,
+    .fids-type,
+    .fids-date {
+      .sb-lable {
+        padding: 40px 20px 22px;
+      }
+
+      .placeholder {
+        padding-left: 20px;
+      }
+    }
+
+    .fids-flight {
+      width: 26%;
+
+      .popup-label {
+        padding-left: 10px;
+      }
+
+      .input-wrapper {
+        .input-icon-holder {
+          margin-right: -15px;
+        }
+      }
+    }
+
+    .fids-search {
+      width: 29%;
+    }
+  }
+}
+
+@media only screen and (min-width: rem(993)) and (max-width: rem(1112)) {
+  .fl-be-wrpr.modify-flight-inputs .org-dest .input-wrapper .input,
+  .fl-be-wrpr.modify-flight-inputs .date-input .input-wrapper .input,
+  .fl-be-wrpr.modify-flight-inputs .input-wrapper.no-floating .input {
+    padding: rem(31) rem(7) rem(21);
+  }
+
+  .fl-be-wrpr.modify-flight-inputs .input-wrapper.filled .placholder {
+    padding-left: rem(7);
+  }
+
+  .ptc-included .fare-type .sb-lable {
+    padding: rem(40) rem(7) rem(21);
+  }
+
+  .ptc-included .fare-type .placeholder {
+    padding-left: rem(7);
+  }
+
+  .fl-be-wrpr .search {
+    .btn {
+      padding: rem(13) rem(20);
+    }
+  }
+}

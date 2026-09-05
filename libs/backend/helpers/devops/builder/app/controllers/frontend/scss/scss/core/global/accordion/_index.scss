@@ -1,0 +1,27 @@
+.acrdn-ihead-lbl {
+    z-index:9;
+}
+
+.acrdn-item .acrdn-ctent {
+    height:0;
+    opacity:0;
+    max-width:0;
+    max-height:0;
+    overflow:hidden;
+    visibility:hidden;
+    position:absolute;
+    top:-#{rem(200000)};
+    left:-#{rem(200000)};
+}
+
+.acrdn-item .acrdn-ihead.active ~ .acrdn-ctent {
+    top:inherit;
+    left:inherit;
+    height:inherit;
+    opacity:inherit;
+    position:inherit;
+    overflow:inherit;
+    max-width:inherit;
+    max-height:inherit;
+    visibility:inherit;
+}

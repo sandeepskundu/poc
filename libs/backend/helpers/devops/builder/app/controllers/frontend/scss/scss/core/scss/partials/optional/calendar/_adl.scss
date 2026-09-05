@@ -1,0 +1,124 @@
+.calendar-wrapper {
+  color: $color-015;
+}
+
+.sticky-calender-week {
+  position: sticky;
+  top: rem(98);
+  z-index: 9999;
+  background: white;
+  border-bottom: 1px solid #e2e2e2;
+  padding: 0 rem(16) rem(13);
+}
+
+.cal-month {
+  padding: 0 rem(16);
+}
+
+.calendar-title {
+  padding: rem(24) rem(24) rem(12);
+  position: relative;
+
+  .cal-nav {
+    top: rem(24);
+    width: rem(20);
+    height: rem(20);
+    position: absolute;
+
+    &.cal-left-nav {
+      left: rem(24);
+    }
+
+    &.cal-right-nav {
+      right: rem(24);
+    }
+  }
+}
+
+.cal-dates {
+  margin-bottom: rem(8);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .date {
+    width: rem(40);
+    height: rem(40);
+    cursor: pointer;
+    text-align: center;
+    line-height: rem(40);
+    display: inline-block;
+    @include adl-border-radius(#{rem(20)}, #{rem(20)}, #{rem(20)}, #{rem(20)});
+  }
+
+  .date-info {
+    font-size: rem(11);
+    text-align: center;
+  }
+
+  .cal-price {
+    margin: rem(3) 0 rem(5);
+  }
+
+  li {
+    width: 14.285%;
+    font-size: rem(14);
+    display: inline-block;
+
+    &.range-to {
+      @include adl-border-radius(0, #{rem(20)}, #{rem(20)}, 0);
+
+      .cal-date-holder {
+        background: linear-gradient(to right, #f2f2f2, #fff) !important;
+      }
+    }
+
+    &.range-from {
+      @include adl-border-radius(#{rem(20)}, 0, 0, #{rem(20)});
+
+      .cal-date-holder {
+        background: linear-gradient(to left, #f2f2f2, #fff) !important;
+      }
+    }
+
+    &.in-range {
+      .cal-date-holder {
+        background: $color-008;
+      }
+    }
+
+    &.in-range,
+    &.range-to,
+    &.range-from {
+      &.disabled {
+        background: transparent;
+      }
+    }
+
+    &.week-days {
+      font-size: rem(12);
+      margin-bottom: 15px;
+    }
+
+    &.out-of-month {
+      color: $color-013;
+    }
+
+    &.selected,
+    &.range-from {
+      .date {
+        color: $color-fff;
+        background: $color-015;
+      }
+    }
+    &.disabled {
+      opacity: 0.7;
+      color: $color-013;
+
+      .date {
+        cursor: default;
+      }
+    }
+  }
+}

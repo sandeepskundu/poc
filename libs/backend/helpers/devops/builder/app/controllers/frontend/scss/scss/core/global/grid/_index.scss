@@ -1,0 +1,117 @@
+.grid-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+[class^="grid-"],
+[class*=" grid-"] {
+  @include aio-box-sizing(border-box);
+}
+
+.grid-wrapper .grid-w1 {
+    flex: 0 0 8.333%;
+  }
+  
+  .grid-wrapper .grid-w2 {
+    flex: 0 0 16.666%;
+  }
+  
+  .grid-wrapper .grid-w3 {
+    flex: 0 0 25%;
+  }
+  
+  .grid-wrapper .grid-w4 {
+    flex: 0 0 33.333%;
+  }
+  
+  .grid-wrapper .grid-w5 {
+    flex: 0 0 41.666%;
+  }
+  
+  .grid-wrapper .grid-w6 {
+    flex: 0 0 50%;
+  }
+  
+  .grid-wrapper .grid-w7 {
+    flex: 0 0 58.333%;
+  }
+  
+  .grid-wrapper .grid-w8 {
+    flex: 0 0 66.666%;
+  }
+  
+  .grid-wrapper .grid-w9 {
+    flex: 0 0 75%;
+  }
+  
+  .grid-wrapper .grid-w10 {
+    flex: 0 0 83.333%;
+  }
+  
+  .grid-wrapper .grid-w11 {
+    flex: 0 0 91.666%;
+  }
+  
+  .grid-wrapper .grid-w12 {
+    flex: 0 0 100%;
+  }
+  
+.grid-wrapper.grid-layout-2 .grid, .grid-2 {
+    flex: 0 0 50%;
+}
+  
+.grid-wrapper.grid-layout-3 .grid, .grid-3 {
+    flex: 0 0 33%;
+}
+  
+.grid-wrapper.grid-layout-4 .grid, .grid-4 {
+    flex: 0 0 25%;
+}
+  
+.grid-wrapper.grid-layout-5 .grid, .grid-5 {
+    flex: 0 0 20%;
+}
+  
+.grid-wrapper.grid-layout-6 .grid, .grid-6 {
+    flex: 0 0 16.666%;
+}
+  
+.grid-wrapper.grid-layout-7 .grid, .grid-7 {
+    flex: 0 0 14.285%;
+}
+  
+.grid-wrapper.grid-layout-8 .grid, .grid-8 {
+    flex: 0 0 12.5%;
+}
+  
+.grid-wrapper.grid-layout-9 .grid, .grid-9 {
+    flex: 0 0 11.111%;
+}
+  
+.grid-wrapper.grid-layout-10 .grid, .grid-10 {
+    flex: 0 0 10%;
+}
+  
+.grid-wrapper.grid-layout-11 .grid, .grid-11 {
+    flex: 0 0 9.09%;
+}
+  
+.grid-wrapper.grid-layout-12 .grid, .grid-12 {
+    flex: 0 0 8.333%;
+}
+  
+.grid-wrapper.grid-layout-13 .grid, .grid-13 {
+    flex: 0 0 56%;
+}
+  
+.grid-wrapper.grid-layout-14 .grid, .grid-14 {
+    flex: 0 0 44%;
+}
+
+.grid-wrapper.grid-layout-15 .grid, .grid-15 {
+    flex: 0 0 47%;
+}
+
+.grid-wrapper .grid.full {
+    flex: 0 0 100%;
+}

@@ -1,0 +1,268 @@
+@import 'adl-sass-partials/optional/slick-slider';
+@import 'adl-sass-partials/optional/airline-logos/both';
+
+.save-flight {
+  .save-flight-header {
+    position: relative;
+
+    .seeAll-btn {
+      position: absolute;
+      right: 115px;
+      top: 6px;
+    }
+
+    h3 {
+      font-size: 1.75rem;
+      font-family: $font-family-rb;
+      margin-bottom: 1.875rem;
+    }
+  }
+
+  .slides-container {
+    overflow-y: hidden;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    flex-wrap: nowrap;
+    display: flex;
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+  }
+
+  .save-flight-tupple {
+    width: 50%;
+    padding-right: 1.25rem;
+    margin-right: 1.25rem;
+    border: 1px solid #dedede;
+    border-radius: 8px;
+
+    &:hover {
+      border: 1px solid $color-011;
+    }
+
+    .addFlight-icon {
+      width: 26px;
+      height: 26px;
+      border: 2px solid $color-009;
+      border-radius: 50px 50px 50px 50px;
+      -webkit-border-radius: 50px 50px 50px 50px;
+    }
+  }
+
+  .save-flight-tupple.addFlight {
+    min-height: rem(205);
+    padding: rem(52) rem(20) rem(41) rem(20);
+  }
+
+  .slides-container .save-flight-tupple:first-child {
+    margin-left: 1.25rem;
+  }
+
+  .save-flight-head {
+    border-bottom: 1px solid $color-088;
+  }
+
+  .round-seprator {
+    width: 0.25rem;
+    height: 0.25rem;
+    margin-top: -2px;
+    display: inline-block;
+    background-color: #999;
+    border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+    -webkit-border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+    -moz-border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+    vertical-align: top;
+  }
+
+  .detailsOrgTerminal {
+    font-size: 0.8125rem;
+    padding: 0.375rem 0.4375rem;
+    border-radius: 0.25rem;
+    margin-left: rem(10.2);
+    background-color: #ffcf09;
+    vertical-align: top;
+    display: inline-block;
+  }
+
+  .middleIconArrival {
+    padding-left: 85px;
+    position: relative;
+
+    .flightDashed {
+      width: 40px;
+      border-top: 0.0625rem dashed #999;
+      position: absolute;
+
+      &:first-child {
+        top: 8px;
+        left: 43px;
+      }
+
+      &:last-child {
+        top: 8px;
+        left: 105px;
+      }
+    }
+
+    .ai-fight.small-icon {
+      color: #555;
+      margin: 0 0.625rem;
+      transform: rotate(45deg);
+    }
+  }
+
+  .save-from,
+  .save-to,
+  .middleIconArrival {
+    width: 33.33%;
+    display: inline-block;
+  }
+
+  .save-to {
+    text-align: right;
+  }
+
+  .middleDetailsDesktop {
+    border-bottom: 1px solid $color-088;
+  }
+
+  .see-all {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $color-039;
+    border-radius: 50%;
+    width: rem(60);
+    height: rem(60);
+  }
+}
+
+.slick-prev,
+.slick-next {
+  color: #333;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  border: 1px solid #ddd;
+
+  &::before {
+    content: '';
+  }
+
+  &:hover {
+    color: #333;
+    outline: none;
+    background: #f3f3f3;
+  }
+}
+
+.slick-prev {
+  top: -48px;
+  right: 52px;
+  left: auto !important;
+
+  .ai-left {
+    top: 8px;
+    left: 8px;
+    position: absolute;
+  }
+}
+
+.slick-next {
+  top: -48px;
+  right: 10px;
+
+  .ai-right {
+    top: 8px;
+    right: 9px;
+    position: absolute;
+    font-size: 13px;
+  }
+}
+
+.slick-arrow {
+  visibility: visible !important;
+}
+
+.slick-dots {
+  display: none !important;
+}
+
+.ai-flight.smallIcon {
+  color: #555;
+  transform: rotate(45deg);
+}
+
+.flight-logo {
+  border: 1px solid #ddd;
+  display: inline-block !important;
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .slick-prev,
+  .slick-next {
+    display: none !important;
+  }
+
+  .save-flight {
+    .save-flight-header {
+      h3 {
+        font-size: 1.375rem;
+        margin-bottom: 20px;
+      }
+    }
+
+    .slick-list::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      background: transparent;
+    }
+
+    .save-flight-tupple {
+      display: inline-block;
+      flex-basis: 320px;
+      padding-right: 16px;
+      padding-left: 16px;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+
+    .slides-container::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      background: transparent;
+    }
+
+    .middleIconArrival {
+      padding-left: 40px;
+
+      .flightDashed {
+        width: 16px;
+
+        &:first-child {
+          left: 22px;
+        }
+
+        &:last-child {
+          left: 60px;
+        }
+      }
+    }
+  }
+
+  .slick-list {
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+}

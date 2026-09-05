@@ -1,0 +1,1 @@
+exports.pipelines = require('./pipelines');

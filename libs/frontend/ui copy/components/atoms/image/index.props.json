@@ -1,0 +1,70 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Tags (also known as “chips”) are compact elements that allow users to enter information, make selections, filter content, or trigger actions. They’re similar to badges, but are more commonly used in inputs to allow users to select multiple items at once."
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "src": {
+            "description":"Callback functions",
+            "type":"string",
+            "isRequired":true,
+            "defaultValue":"''"
+        },
+        "wrap":{
+            "description":"Callback functions",
+            "type":"bool",
+            "isRequired":false,
+            "defaultValue":false
+        },
+
+        "dsTheme":{
+            "description":"Callback functions",
+            "type":"object",
+            "isRequired":false,
+            "defaultValue":{
+                "image__d__thumbnail":"28"
+            }
+        },
+
+        "wrapperDsTheme":{
+            "description":"Callback functions",
+            "type":"object",
+            "isRequired":false,
+            "defaultValue":{
+                "radius":"round"
+            }
+        },
+        "config":{
+            "description":"Callback functions",
+            "type":"object",
+            "isRequired":false,
+            "defaultValue":{
+                "wrapper":{
+                    "markup":{
+                        "element":"div"
+                    },
+                    "attrs":{},
+                    "ds":{
+                        "css":{},
+                        "theme":{}
+                    }
+                },
+                "image":{
+                    "attrs":{},
+                    "ds":{
+                        "css":{},
+                        "theme":{}
+                    }
+                }
+            }
+        }
+    }
+}

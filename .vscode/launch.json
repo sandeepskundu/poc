@@ -1,0 +1,11 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Node.js",
+      "program": "./../applications/backend/tdc-devops/build/scripts/server.js"
+    }
+  ]
+}

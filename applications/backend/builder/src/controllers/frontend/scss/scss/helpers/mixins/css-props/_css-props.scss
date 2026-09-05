@@ -1,0 +1,80 @@
+
+
+$state-selectors:(
+    state-hover:(
+        class:'hvr',
+        state:'hover'
+    )
+);
+
+@mixin get-states-attrs($props, $config){
+    $state:map-get($config, 'state');
+    $class:map-get($config, 'class');
+        
+    @if $class != null {
+        &.#{$class}{
+            @content;
+        }
+    }
+
+    @if $state != null {
+        @if $class != null {
+            &:#{$state}{
+                @extend .#{$class}
+            }
+        } @else {
+            &:#{$state}{
+                @content;
+            }
+        }
+    }
+}
+
+@mixin set-cssOrState-props($props){
+    @each $props-name, $props-list in $props {
+        $is-state:map-get($state-selectors, $props-name);
+        @if $is-state != null {
+            @include compile-css-props($props-list, $is-state);
+        } @else {
+            #{$props-name}:#{$props-list};
+        }
+    }
+}
+
+@mixin compile-css-props($props-list, $state-config:''){
+    @if $state-config != '' {
+        @include get-states-attrs($props-list, $state-config){
+            @include set-cssOrState-props($props-list);
+        }
+    }@else {
+        @include set-cssOrState-props($props-list);
+    }
+}
+
+@mixin create-size($sizes:'', $class-prefix:''){
+    @if $sizes != '' {
+        @include compile-css-props(map-get($sizes, "default"));
+        @each $size, $size-values in $sizes {
+            @if $size != default {
+                @if $class-prefix != ''{
+                    &.#{$class-prefix}-#{$size}{
+                        @include compile-css-props(map-get($sizes, $size));
+                    }
+                } @else {
+                    &.#{$size}{
+                        @include compile-css-props(map-get($sizes, $size));
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin create-base($sizes:'', $themes:'', $size-prefix:'', $theme-prefix:'theme'){
+    @if $exclude-theme-from-compile != null {
+        @content;
+        @include create-size($sizes, $size-prefix);
+    } @else {
+        @include create-size($themes, $theme-prefix);
+    } 
+}

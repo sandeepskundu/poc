@@ -1,0 +1,44 @@
+.fids-airport-wrapper {
+  .city-title {
+    color: $color-014;
+    letter-spacing: rem(0.19);
+    margin-bottom: rem(5);
+  }
+  .city-label {
+    color: $color-015;
+    font-size: rem(22);
+    letter-spacing: rem(0.27);
+    margin-bottom: 0;
+  }
+  .tickIcon {
+    position: relative;
+    right: rem(9);
+  }
+  .bs-header {
+    padding: rem(30) rem(16) 0;
+    .bs-h-icon {
+      margin-bottom: rem(18);
+    }
+  }
+  .bs-inner {
+    padding: 0 0 rem(14) 0;
+    .fids-airport-datalist {
+      padding: rem(16);
+      .fids-airport-data {
+        p {
+          margin: 0;
+          &:first-child {
+            margin-bottom: rem(3);
+          }
+        }
+        .fids-airport-title {
+          font-size: rem(14);
+          color: $color-011;
+        }
+      }
+    }
+    .selected {
+      background-color: $color-040;
+    }
+  }
+}

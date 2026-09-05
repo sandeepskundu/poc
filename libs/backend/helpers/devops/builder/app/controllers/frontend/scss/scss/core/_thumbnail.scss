@@ -1,0 +1,20 @@
+@if variable-exists(thumbnail) {
+    $thumb-prefix:map-get($thumbnail, 'prefix');
+    $thumb-size-list:map-get($thumbnail, 'list');
+
+    @if $thumb-size-list != null {
+        @each $thumb-size in $thumb-size-list {
+            .#{$thumb-prefix}-#{$thumb-size}{
+                height:rem($thumb-size);
+                width:rem($thumb-size);
+                line-height:rem($thumb-size);
+            }
+        }
+    }
+
+   .#{$thumb-prefix}-auto{
+        width:auto;
+        height:auto;
+        line-height:inherit;
+   }
+}

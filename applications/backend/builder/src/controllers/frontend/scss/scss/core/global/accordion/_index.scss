@@ -1,0 +1,33 @@
+.acrdn {}
+
+.acrdn-tb .inpt{
+    width:0;
+    height:0;
+    opacity:0;
+    z-index:-1;
+    visibility:hidden;
+    position:absolute;
+}
+
+.acrdn-tb .acrdn-ctent{
+    height:0;
+    opacity:0;
+    max-width:0;
+    max-height:0;
+    overflow:hidden;
+    visibility:hidden;
+}
+
+.acrdn-tb .inpt:checked ~ .acrdn-ctent {
+    height:inherit;
+    opacity:inherit;
+    max-width:inherit;
+    max-height:inherit;
+    overflow:inherit;
+    visibility:inherit;
+}
+
+.acrdn-tb .inpt:checked ~ .acrdn-lbl .acrdn-ico{
+    transform:rotate(-180deg);
+    -webkit-transform:rotate(-180deg); 
+}

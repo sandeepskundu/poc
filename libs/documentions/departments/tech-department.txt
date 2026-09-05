@@ -1,0 +1,32 @@
+1. Development
+    - Frontend Developer
+    - Backend Developer
+    - Full Stack Developer
+    - App Developer 
+        - Android Developer
+        - iOS Developer
+
+2. Quality Assurance (QA) & Testing
+    - QA Tester - Manual
+    - QA Tester - Automation
+    - QA Tester - Mobile App
+    - QA Tester - API
+    - QA Tester - Performance
+    - QA Tester - Fullstack
+
+3. DevOps / Site Reliability Engineering (SRE)
+    - DevOps Engineer
+    - DevOps Engineer - Automation
+
+4. Security / Cybersecurity
+    - Application Security Engineer
+    - Network Security Engineer
+    - Cloud Security Engineer
+
+5. Data Science & Analytics
+    - Data Engineer
+    - AI Engineer
+    - Data Analyst
+
+6. Database Administration (DBA)
+    - Database Developer

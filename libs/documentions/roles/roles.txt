@@ -1,0 +1,23 @@
+1. Identity & Access Roles
+    GLOBAL.IDENTITY.PROFILE_VIEW → View their own profile
+    GLOBAL.IDENTITY.PROFILE_UPDATE → Update personal info (phone, address, etc.)
+    GLOBAL.IDENTITY.SECURITY_MANAGE → Change password, manage MFA/2FA
+
+2. HR & Employee Hub
+    GLOBAL.EMPLOYEE_HUB.PERSONAL_INFORMATION_VIEW → View personal HR details
+    GLOBAL.EMPLOYEE_HUB.LEAVE_REQUEST → Apply for leave, view leave balance
+    GLOBAL.EMPLOYEE_HUB.ATTENDANCE_VIEW → View attendance/shift/timesheet
+    GLOBAL.EMPLOYEE_HUB.PAYSLIP_VIEW → View their own payslips & tax forms
+
+3. Collaboration Tools
+    GLOBAL.COLLABORATION.DIRECTORY_VIEW → View company org chart, colleague contacts
+    GLOBAL.COLLABORATION.TICKET_CREATE → Raise IT/HR/service tickets
+    GLOBAL.COLLABORATION.DOCUMENT_VIEW → Access to shared documents/policies
+
+4. Compliance & Policies
+    GLOBAL.COMPLIANCE.POLICY_VIEW → Read company policies (HR, security, code of conduct)
+    GLOBAL.COMPLIANCE.TRAINING_ACCESS → Access to compliance/security training modules
+
+5. IT & Support
+    GLOBAL.IT.SELF_SERVICE → Reset their own password, request basic IT support
+    GLOBAL.IT.ASSET_VIEW → View assigned devices/assets (laptop, phone, etc.)

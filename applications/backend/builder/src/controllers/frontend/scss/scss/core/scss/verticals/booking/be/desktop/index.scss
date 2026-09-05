@@ -1,0 +1,337 @@
+@import './../common';
+
+.be-warpper {
+  padding: rem(20) 0;
+
+  >li {
+    padding-right: rem(10);
+  }
+
+  .trip-type {
+    width: 11.5%;
+
+    .sb-option {
+      white-space: nowrap;
+    }
+  }
+
+  .org-dest {
+    width: 31.45%;
+  }
+
+  .be-inputs {
+    border: 1px solid $color-017;
+    @include adl-border-radius(rem(8), rem(8), rem(8), rem(8));
+
+    &.focussed {
+      border-color: $color-015;
+    }
+
+    &:hover {
+      border-color: $color-011;
+    }
+  }
+
+  .org-dest-input {
+    @include adl-border-radius(rem(8), 0, 0, rem(8));
+    position: relative;
+
+    &:last-child {
+      @include adl-border-radius(0, rem(8), rem(8), 0);
+    }
+  }
+
+  .dates {
+    width: 26.29%;
+
+    .be-inputs {
+      border: rem(1) solid $color-017;
+      @include adl-border-radius(rem(8), rem(8), rem(8), rem(8));
+
+      &:hover {
+        border-color: $color-011;
+      }
+
+      &.focussed {
+        border: 0;
+
+        .org-dest-input {
+          border: rem(1) solid $color-056;
+        }
+
+        .org-dest-input:nth-child(1) {
+          border-right: none;
+        }
+
+        .org-dest-input:nth-child(3) {
+          border-left: none;
+        }
+
+        .org-dest-input.focussed {
+          border: rem(1) solid $color-015;
+          background: transparent;
+        }
+
+        .seprator {
+          display: none;
+        }
+      }
+    }
+
+    .ai-close {
+      right: rem(9);
+      top: rem(14);
+      z-index: 999;
+    }
+
+    .seprator {
+      border-right: 1px solid $color-017;
+      height: rem(35);
+      margin-top: rem(14);
+    }
+  }
+
+  .pax {
+    width: 16.2%;
+
+    .popup-box-body {
+      min-width: 360px;
+      min-height: auto !important;
+      max-height: fit-content;
+      margin-top: rem(10);
+    }
+
+    .input{
+      width: 100%;
+      .pax-cls{
+        &:before {
+          top: 50%;
+          left: rem(6);
+          content: "";
+          width: rem(4);
+          height: rem(4);
+          margin-top: rem(-2);
+          display: block;
+          position: absolute;
+          background-color: $color-013;
+          border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+          -webkit-border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+          -moz-border-radius: 0.125rem 0.125rem 0.125rem 0.125rem;
+        }
+      }
+    }
+  }
+
+  .search {
+    width: 14.67%;
+  }
+
+  .date-input {
+    position: relative;
+
+    .date-input-cal {
+      top: 100%;
+      z-index: 999;
+      position: absolute;
+      min-width: rem(700);
+      margin-top: rem(10);
+
+      .react-datepicker {
+        display: flex;
+        justify-content: space-between;
+
+        .react-datepicker__month-container {
+          flex: 0 0 50%;
+        }
+      }
+
+      .react-datepicker__day--outside-month {
+
+        .datepicker-date-holder,
+        .datepicker-price {
+          display: none;
+        }
+      }
+    }
+
+    &.return-date {
+      .date-input-cal {
+        left: -165px;
+      }
+    }
+  }
+
+  .sb-icon-holder {
+    top: 40%;
+  }
+
+  .modify-input-controls {
+    &.dates {
+      .seprator {
+        height: 27px;
+        margin-top: 12px;
+      }
+
+      .ai-close {
+        top: 8px;
+      }
+
+      .org-dest-input {
+        .input-wrapper {
+          .org-holder {
+            padding: rem(14) rem(10);
+          }
+        }
+      }
+    }
+  }
+
+  &.ptc-included{
+    .trip-type{
+      width: 10%;
+    }
+    .org-dest{
+      width: 29%;
+    }
+    .dates{
+      width: 25%;
+    }
+    .pax{
+      width: 12%;
+    }
+    .fare-type{
+      width: 12%;
+      .sb-opt-wrpr{
+        min-width: rem(262);
+        padding: rem(10) 0;
+        .sb-option{
+          border-radius: 0;
+        }
+      }
+    }
+    .search{
+      width: 12%;
+    }
+  }
+}
+
+.org-dest {
+  .org-dest-input {
+    width: 45%;
+  }
+}
+
+.nowrap-reduce {
+  width: 92%;
+}
+
+.closePopup {
+  float: right;
+  margin: rem(10) rem(10) rem(10) 0;
+  width: 100%;
+
+  span {
+    width: 41%;
+    float: right;
+    background: $color-015;
+    color: $color-fff;
+    margin: rem(50) 0 rem(10);
+  }
+}
+
+.calInDates {
+  position: absolute;
+  left: 10px;
+  color: $color-043;
+}
+
+.three-dot {
+  i {
+    position: absolute;
+    right: 0px;
+  }
+}
+
+.modify-controls {
+  .sb-wrpr {
+    &.no-floating {
+      .sb-lable {
+        min-height: rem(50);
+        padding: rem(15);
+        line-height: inherit;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+.modify-input-controls {
+  .input-wrapper {
+    &.no-floating {
+      padding: rem(15);
+      min-height: rem(49);
+      line-height: inherit;
+
+      .input {
+        padding: rem(14);
+        line-height: inherit;
+      }
+    }
+  }
+}
+
+.modify-pax-controls {
+  .input-wrapper {
+    &.no-floating {
+      padding: rem(15);
+      min-height: rem(51);
+      line-height: inherit;
+
+      .input {
+        padding: rem(15);
+        line-height: inherit;
+      }
+    }
+  }
+}
+
+.modify-btn-controls {
+  .btn {
+    padding: 0.764rem 0.875rem;
+  }
+
+  .blank {
+    &.round {
+      &:after {
+        border-radius: rem(50);
+      }
+    }
+  }
+}
+
+.modify-blank-height {
+  min-height: rem(50);
+  padding: rem(10) !important;
+}
+
+.adlw {
+  .pax .popup-box-body {
+    min-width: 360px !important;
+    min-height: auto !important;
+    margin-top: 0.625rem;
+  }
+
+  .airport-options {
+    .ao-hding {
+      font-size: rem(10);
+    }
+  }
+}
+
+@include adl-max-screen(768) {
+  .closePopup {
+    span {
+      width: 100%;
+    }
+  }
+}

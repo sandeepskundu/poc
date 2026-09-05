@@ -1,0 +1,69 @@
+.sd-wrpr {
+    top:0;
+    z-index:91;
+    width:100vw;
+    height:100vh;
+    overflow:auto;
+    position:fixed;
+    max-width:100vw;
+    max-height:100vh;
+    left:-#{rem(99999)};
+}
+
+.sd-ctnt-wrpr {
+    top:0;
+    z-index:92;
+    height:100vh;
+    position:fixed;
+    max-height:100vh;
+    left:-#{rem(99999)};
+}
+
+.sd-ctnt-hldr {
+    clear:both;
+    height:100vh;
+    overflow:auto;
+    min-height:100vh;
+    max-height:100vh;
+}
+
+.sd-close {
+    top:0;
+    left:100%;
+    width:rem(16);
+    height:rem(16);
+    position:absolute;
+}
+
+.sd-wrpr.from-right .sd-close {
+    right:100%;
+    left:inherit;
+}
+
+.sd-wrpr.from-right .sd-ctnt-wrpr {
+    left:inherit;
+    right:-#{rem(99999)};
+}
+
+.sd-wrpr.from-left.active .sd-ctnt-wrpr {
+    left:0;
+}
+
+.sd-wrpr.from-right.active .sd-ctnt-wrpr {
+    right:0;
+    left:inherit;
+}
+
+.sd-wrpr.active .backdrop {
+    opacity:1;
+    width:100vw;
+    height:100vh;
+    display:block;
+}
+
+.sd-wrpr.from-right,
+.sd-wrpr.from-right .sd-ctnt,
+.sd-wrpr.from-right .sd-ctnt-wrpr{
+    left:inherit;
+    right:-#{rem(99999)};
+}

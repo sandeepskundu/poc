@@ -1,0 +1,26 @@
+.policy {
+  border: rem(1) solid $color-022;
+  border-radius: rem(6);
+  a {
+    font-size: rem(14);
+    text-decoration: none;
+    color: $color-000;
+  }
+  &_link {
+    padding: rem(10) rem(16);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    strong {
+      font-size: rem(14);
+      text-decoration: none;
+      color: $color-000;
+    }
+  }
+  .icon {
+    width: rem(20);
+    text-align: center;
+    padding: rem(1) rem(8);
+  }
+}

@@ -1,0 +1,60 @@
+@mixin aio-opacity($value) {
+    opacity: $value;
+}
+
+@mixin aio-box-sizing($sizing) {
+	box-sizing:$sizing;
+	-webkit-box-sizing:$sizing;
+	-moz-box-sizing:$sizing;
+}
+
+@mixin aio-transition($transition:all 1s linear) {
+	-webkit-transition: $transition;
+	-moz-transition: $transition;
+	transition: $transition;
+}
+
+@mixin aio-border-radius($radiusTop:4px, $radiusRight:4px, $radiusBottom:4px, $radiusLeft:4px) {
+	border-radius:$radiusTop $radiusRight $radiusBottom $radiusLeft;
+	-webkit-border-radius:$radiusTop $radiusRight $radiusBottom $radiusLeft;
+	-moz-border-radius:$radiusTop $radiusRight $radiusBottom $radiusLeft;
+}
+
+@mixin aio-box-shadow($hOffset: 0px, $vOffset: 0px, $blur: 0px, $color: rgba(0, 0, 0, 0.18)) {
+	box-shadow:$hOffset $vOffset $blur $color;
+	-webkit-box-shadow:$hOffset $vOffset $blur $color;
+	-moz-box-shadow:$hOffset $vOffset $blur $color;
+}
+
+@mixin aio-transform($x:0, $y:0) {
+	transform: translateX(#{$x}) translateY(#{$y});
+    -moz-transform: translateX(#{$x}) translateY(#{$y});
+    -webkit-transform: translateX(#{$x}) translateY(#{$y});
+}
+
+@mixin aio-rotate ($deg) { 
+	transform:rotate(#{$deg}deg);
+    -moz-transform:rotate(#{$deg}deg);
+    -webkit-transform:rotate(#{$deg}deg);
+}
+
+@mixin scale($scale) {
+	@include aio-transform(scale($scale));
+}
+
+@mixin skew ($x, $y) {
+	@include aio-transform(skew(#{$x}deg, #{$y}deg));
+}
+
+@mixin transform-origin ($origin) {
+    -webkit-transform-origin: $origin;
+    -moz-transform-origin: $origin;
+	-ms-transform-origin: $origin;
+	transform-origin: $origin;
+}
+
+@mixin aio-max-screen($size) {
+	@media (max-width: #{$size}px) {
+	  @content;
+	}
+  }

@@ -1,0 +1,125 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Accordion menu"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+
+    "props":{
+        "id":{
+            "type":"string",
+            "defaultValue":"",
+            "isRequired":false,
+            "description":"Id of slide drawer which will set in inputs"
+        },
+
+        "direction":{
+            "description":"Open from direction of slider drawer",
+            "type":"oneOf",
+            "defaultValue":"right",
+            "value":"'left', 'right'",
+            "isRequired":false
+        },
+
+        "hideClose":{
+            "type":"bool",
+            "defaultValue":false,
+            "isRequired":false,
+            "description":"Flag to hide close button of slider drawer"
+        },
+
+        "outsideClose":{
+            "type":"bool",
+            "defaultValue":false,
+            "isRequired":false,
+            "description":"Flag to set close on click on backdrop of slider drawer"
+        },
+
+        "__wrapperDs":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Slider drawer wrapper design system configuration",
+            "defaultValue":{
+                "divider":{
+                    "ds":{},
+                    "enabled":false,
+                    "position":"top"
+                },
+                "ds":{
+                    "css":{
+                        "class":{
+                            "borderNone":{
+                                "1":true,
+                                "2":true,
+                                "4":true
+                            }
+                        }
+                    },
+                    "theme":{
+                        "colorPairing":{
+                            "default":"024"
+                        }
+                    }
+                }
+            }
+        },
+
+        "wrapperDs":{
+            "defaultValue":{}
+        },
+
+        "__contentDs":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Slider drawer content wrapper design system configuration",
+            "defaultValue":{
+                "theme":{
+                    "colorPairing":{
+                        "default":"030"
+                    }
+                }
+            }
+        },
+
+        "contentDs":{
+            "defaultValue":{}
+        },
+
+        "__closeIconDs":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Design system configuration of close icon",
+            "defaultValue":{
+                "icon":{
+                    "name":"da"
+                },
+                "theme":{
+                    "colorPairing":{
+                        "default":"030"
+                    }
+                },
+                "css":{
+                    "class":{
+                        "padding":{
+                            "1":8,
+                            "2":8,
+                            "3":8,
+                            "4":8
+                        }
+                    }
+                }
+            }
+        },
+
+        "closeIconDs":{
+            "defaultValue":{}
+        }
+    }
+}

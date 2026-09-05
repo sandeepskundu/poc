@@ -1,0 +1,105 @@
+import ContentRow from 'aio-global-ui/atoms/0/content-row';
+
+export default {
+	title:"Atoms/0/ContentRow",
+	component:ContentRow,
+	parameters:{
+		layout:"centered",
+		docs:{
+			description:{
+				component:"Tags (also known as “chips”) are compact elements that allow users to enter information, make selections, filter center, or trigger actions. They’re similar to badges, but are more commonly used in inputs to allow users to select multiple items at once.<br/><br /><strong>Import path:</strong><code>import ContentRow from 'aio-global-ui/atoms/0/content-row';</code><br /><strong>Component directory:</strong><code>./libs/frontend/ui/components/atoms/0/content-row/index</code><br/><br/>"
+			}
+		}
+	},
+	tags:['autodocs'],
+	argTypes:{
+
+	}
+}
+
+export const Base = {
+	args:{
+		callbacks:{
+			onBlur:null,
+			onClick:null,
+			onFocus:null,
+			onKeyUp:null,
+			dsTheme:null,
+			onKeyDown:null,
+			onDragStart:null,
+			onMouseDown:null,
+			onPointerUp:null,
+			onPointerDown:null,
+			onPointerEnter:null,
+			onPointerLeave:null
+		},
+		childs:{
+			start:'',
+			before:'',
+			after:'',
+			end:'',
+			center:''
+		},
+		dsTheme:{
+			wrapper:{
+				color:'',
+				className:'',
+				background:'',
+				font__d__size:''
+			},
+			center:{
+				background:''
+			},
+			start:{
+				background:''
+			},
+			before:{
+				background:''
+			},
+			after:{
+				background:''
+			},
+			end:{
+				background:''
+			}
+		},
+		config:{
+			wrapper:{
+				markup:{
+					element:"div"
+				}
+			},
+			center:{
+				markup:{
+					element:"div"
+				}
+			},
+			start:{
+				markup:{
+					element:"div"
+				}
+			},
+			before:{
+				markup:{
+					element:"div"
+				}
+			},
+			after:{
+				markup:{
+					element:"div"
+				}
+			},
+			end:{
+				markup:{
+					element:"div"
+				}
+			}
+		},
+		attrs:{
+
+		},
+		dataAttrs:{
+
+		}
+	}
+}

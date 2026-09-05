@@ -1,0 +1,136 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Accordion menu"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+
+    "props":{
+        "__wrapperDs":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Design system configuration of page wrapper",
+            "defaultValue":{
+                "css":{
+                    "class":{}
+                },
+                "theme":{
+                    "background":{
+                        "default":"'c00100'"
+                    }
+                }
+            }
+        },
+
+        "__pageDs":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Design system configuration of page content",
+            "defaultValue":{
+                "attrs":{},
+                "dataAttrs":{},
+                "theme":{}
+            }
+        },
+
+        "__menuDs":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Design system configuration of menu wrapper",
+            "defaultValue":{
+                "attrs":{},
+                "dataAttrs":{},
+                "theme":{
+                    "border":{
+                        "default":"'c00103'"
+                    },
+
+                    "background":{
+                        "default":"'c00000'"
+                    }
+                },
+                "css":{
+                    "class":{
+                        "borderNone":{
+                            "1":true,
+                            "3":true,
+                            "4":true
+                        }
+                    }
+                }
+            }
+        },
+
+        "__rightMenuDs":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Design system configuration of menu wrapper",
+            "defaultValue":{
+                "attrs":{},
+                "dataAttrs":{},
+                "theme":{
+                    "border":{
+                        "default":"'c00103'"
+                    },
+
+                    "background":{
+                        "default":"'c00000'"
+                    }
+                },
+                "css":{
+                    "class":{
+                        "borderNone":{
+                            "1":true,
+                            "2":true,
+                            "3":true
+                        }
+                    }
+                }
+            }
+        },
+
+        "wrapperDs":{
+            "defaultValue":{}
+        },
+
+        "pageDs":{
+            "defaultValue":{}
+        },
+
+        "menuDs":{
+            "defaultValue":{}
+        },
+
+        "rightMenuDs":{
+            "defaultValue":{}
+        },
+
+        "appMenu":{
+            "type":"JSX",
+            "defaultValue":"",
+            "isRequired":false,
+            "description":"JSX of app menu element"
+        },
+
+        "appRightMenu":{
+            "type":"JSX",
+            "defaultValue":"",
+            "isRequired":false,
+            "description":"JSX of app menu element"
+        },
+
+        "appPage":{
+            "type":"JSX",
+            "defaultValue":"",
+            "isRequired":false,
+            "description":"JSX of app page element"
+        }
+    }
+}

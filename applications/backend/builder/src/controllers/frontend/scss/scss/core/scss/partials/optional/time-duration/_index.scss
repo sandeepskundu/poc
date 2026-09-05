@@ -1,0 +1,44 @@
+.time-duration{
+    padding:rem(18) 0 0;
+    position: relative;
+    .duration-dots{
+        top:6px;
+        left:0;
+        height:1px;
+        width:100%;
+        position:absolute;
+        border-bottom:1px dashed $color-014;
+        &::after,
+        &::before{
+            top:-2px;
+            content:'';
+            width:rem(5);
+            height:rem(5);
+            position:absolute;
+            background:$color-013;
+            @include adl-border-radius(4px, 4px, 4px, 4px);
+        }
+        &::after{
+            left:-2px;
+        }
+        &::before{
+            right:-2px;
+        }
+    }
+
+    .duration-timing-icon{
+        top:1px;
+        left:50%;
+        width:rem(14);
+        height:rem(14);
+        position:absolute;
+        margin-left:-#{rem(7)};
+        background:$color-fff;
+        color:$color-014;
+        i{
+            left:-1px;
+            top:-3px;
+            position: relative;
+        }
+    }
+}

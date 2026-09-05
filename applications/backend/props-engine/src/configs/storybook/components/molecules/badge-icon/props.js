@@ -1,0 +1,61 @@
+const helpers = process.uiHelpers();
+
+const props = process.aioAppConfigs('storybook/components/atoms/badge/icon/props');
+
+module.exports = helpers.json.merge(props || {}, {
+    icons:null,
+    avatars:null,
+    content:null,
+    config:{
+        ___:{
+            nested:{
+                content:null
+            }
+        }
+    },
+    icon:{
+        type:'compProps',
+        description:"",
+        ___:{
+            asroot:false,
+            compProps:{
+                from:'statics',
+                mapping:'raw/atoms/icons',
+                overwirte:{
+                    config:{
+                        ___:{
+                            predefined:{
+                                overwirte:{
+                                    svg:{
+                                        ___:{
+                                            nested:{
+                                                size:{
+                                                    dvalue:'16px'
+                                                },
+                                                name:{
+                                                    dvalue:''
+                                                }
+                                            }
+                                        }
+                                    },
+                                    icon:{
+                                        ___:{
+                                            nested:{
+                                                size:{
+                                                    dvalue:16
+                                                },
+                                                name:{
+                                                    dvalue:''
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+});

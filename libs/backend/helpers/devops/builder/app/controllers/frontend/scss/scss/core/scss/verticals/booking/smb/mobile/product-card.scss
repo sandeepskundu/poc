@@ -1,0 +1,35 @@
+.product-card {
+  border-bottom: rem(1) solid #dee2e6;
+
+  &:last-child {
+    border: none;
+  }
+
+  .product-image {
+    min-width: rem(60);
+    max-width: rem(60);
+    min-height: rem(60);
+    max-height: rem(60);
+    border: rem(1) solid $color-087;
+    border-radius: rem(10);
+    background-color: $color-fff;
+
+    .prd-img {
+      border-radius: rem(9);
+    }
+
+    .type-img {
+      border-radius: rem(2);
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      width: 14px;
+      height: 14px;
+      background: $color-fff;
+    }
+  }
+
+  .product-name {
+    width: 60%;
+  }
+}

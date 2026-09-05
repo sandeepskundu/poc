@@ -1,0 +1,12 @@
+.adl-mobile-holder {
+    .sb-opt-wrpr{
+        overflow:auto;
+        min-width:rem(320);
+        max-height:rem(320);
+
+        .sb-option{
+            padding-top:rem(6);
+            padding-bottom:rem(6);
+        }
+    }
+}

@@ -1,0 +1,192 @@
+
+const content = () => {
+    return {
+        dvalue:'',
+        type:"any",
+        description:""
+    }
+}
+
+const button = (elm) => {
+    return {
+        type:'predefined',
+        description:'The configuration supports design system–driven customization for button wrapper element. Properties such as size, shape, border, background color, and typography can be configured through the design system, ensuring visual consistency, accessibility, and alignment with application design standards across different themes and use cases.',
+        ___:{
+            predefined:{
+                from:'statics',
+                mapping:'ds.configs',
+                overwirte:{
+                    markup:{
+                        ___:{
+                            nested:{
+                                element:{
+                                    dvalue:'button'
+                                }
+                            }
+                        }
+                    },
+                    ds:{
+                        ___:{
+                            nested:{
+                                predefined:{
+                                    ___:{
+                                        predefined:{
+                                            overwirte:{
+                                                size:{
+                                                    dvalue:''
+                                                },
+                                                theme:{
+                                                    dvalue:'000'
+                                                },
+                                                color:{},
+                                                background:{}
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    ariaProps:{
+                        type:'object',
+                        description:'',
+                        dvalue:{},
+                    },
+                    states:{
+                        description:"A callback function is a function passed from a parent component to a child component through props, allowing the child component to execute logic in the parent when a specific event occurs.",
+                        type:"nested",
+                        ___:{
+                            nested:{
+                                hover:{
+                                    dvalue:false,
+                                    description:'',
+                                    type:"boolean"
+                                },
+                                active:{
+                                    dvalue:false,
+                                    description:'',
+                                    type:"boolean"
+                                },
+                                disabled:{
+                                    dvalue:false,
+                                    description:'',
+                                    type:"boolean"
+                                },
+                                wait:{
+                                    description:"",
+                                    type:"nested",
+                                    ___:{
+                                        nested:{
+                                            enabled:{
+                                                dvalue:false,
+                                                description:'',
+                                                type:"boolean"
+                                            },
+                                            content:content()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+const func = () => {
+    return {
+        dvalue:null,
+        type:'function'
+    }
+}
+
+module.exports = {
+    callback:{
+        description:"A callback function is a function passed from a parent component to a child component through props, allowing the child component to execute logic in the parent when a specific event occurs.",
+        type:"nested",
+        ___:{
+            nested:{
+                onBlur:func(),
+                onFocus:func(),
+                onPress:func(),
+                onClick:func(),
+                onPressUp:func(),
+                onPressEnd:func(),
+                onPressStart:func(),
+                onPressChange:func()
+            }
+        }
+    },
+
+    button:button(),
+    icons:{
+        type:'nested',
+        description:"The configuration supports design system–driven customization across various icons with-in button component, including the left and right icon. Properties such as size, shape, border, background color, and typography can be configured through the design system, ensuring visual consistency, accessibility, and alignment with application design standards across different themes and use cases.",
+        ___:{
+            nested:{
+                left:{
+                    type:'compProps',
+                    description:"",
+                    ___:{
+                        asroot:false,
+                        compProps:{
+                            from:'statics',
+                            mapping:'raw/atoms/icons',
+                            overwirte:{
+                                config:{
+                                    ___:{
+                                        predefined:{
+                                            overwirte:{
+                                                icon:{
+                                                    ___:{
+                                                        nested:{
+                                                            name:{
+                                                                dvalue:null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                right:{
+                    type:'compProps',
+                    description:"",
+                    ___:{
+                        asroot:false,
+                        compProps:{
+                            from:'statics',
+                            mapping:'raw/atoms/icons',
+                            overwirte:{
+                                config:{
+                                    ___:{
+                                        predefined:{
+                                            overwirte:{
+                                                icon:{
+                                                    ___:{
+                                                        nested:{
+                                                            name:{
+                                                                dvalue:null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

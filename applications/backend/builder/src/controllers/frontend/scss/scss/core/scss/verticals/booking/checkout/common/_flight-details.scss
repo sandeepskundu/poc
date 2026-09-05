@@ -1,0 +1,567 @@
+.flight-checkout-wrpr {
+  .chckbx-wrpr {
+    input[type='checkbox'] + label {
+      &:after {
+        border-color: #555555;
+      }
+    }
+  }
+  .chckbx-wrpr {
+    input[type='checkbox']:checked + label {
+      &:after {
+        border-color: #222;
+      }
+    }
+  }
+  .input-wrapper {
+    &.filled {
+      &.focused {
+        .input {
+          padding-right: rem(48);
+        }
+      }
+    }
+  }
+
+  .cobrandBg {
+    background-image: linear-gradient(to right bottom, #ffeef6, #fbeef9, #f6eefc, #f1effe, #ebf0ff);
+  }
+
+  .add-edit-trvlr {
+    .trvlr-inputs {
+      .sb-lable.nat-hover .placeholder {
+        width: 80%;
+      }
+    }
+  }
+}
+
+.review-details {
+  padding: 0 rem(20) rem(30);
+
+  &:first-child {
+    padding-top: rem(20);
+  }
+}
+
+.review-seg-header {
+  position: relative;
+  min-height: rem(56);
+  margin-top: rem(20);
+  background: $color-026;
+  border-top: 1px solid $color-021;
+  border-bottom: 1px solid $color-021;
+  padding: rem(14) rem(20) rem(14) rem(63);
+
+  .airline-logo-holder {
+    top: 50%;
+    left: rem(20);
+    width: rem(28);
+    height: rem(28);
+    position: absolute;
+    margin: -#{rem(14)} 0 0;
+  }
+
+  .layover {
+    font-size: rem(10);
+    padding: rem(4) rem(12);
+    background: $color-035;
+    @include adl-border-radius(#{rem(20)}, #{rem(20)}, #{rem(20)}, #{rem(20)});
+  }
+}
+
+.review-flight-details {
+  position: relative;
+  padding: rem(18) 0;
+
+  &:last-child {
+    padding-bottom: none;
+  }
+
+  .details-item {
+    padding: 0 0 0 rem(20);
+  }
+
+  .airline-details {
+    width: 13.52%;
+    position: relative;
+  }
+
+  .airport-details {
+    width: 69.91%;
+  }
+
+  .baggage-details {
+    width: 16.57%;
+  }
+}
+
+.details-org-dest {
+  li {
+    width: 37.86%;
+    padding-left: 0;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &.du {
+      width: 24.28%;
+      padding: rem(6) rem(40) 0 0;
+    }
+  }
+}
+
+.gst-details {
+  .chckbx-wrpr {
+    width: 80%;
+  }
+
+  .gst-info-text {
+    i {
+      color: $color-009;
+    }
+  }
+}
+
+.lc {
+  text-transform: lowercase;
+}
+
+.fs-title {
+  display: inline-block;
+}
+
+.fs-detail {
+  float: right;
+}
+
+.m-ffare:first-child {
+  border-top: 1px solid $color-036;
+  padding-top: rem(15);
+}
+
+.m-fafare {
+  margin-top: rem(15);
+  padding: rem(15) 0;
+  border-top: 1px solid $color-036;
+  border-bottom: 1px solid $color-036;
+}
+
+.bs-common {
+  .review-details {
+    padding: 0.625rem 0 0;
+  }
+}
+
+.imp-info {
+  li {
+    span.dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50px;
+      display: inline-block;
+      background: #666;
+      margin-right: 8px;
+      vertical-align: top;
+      margin-top: 8px;
+    }
+
+    .imp-info-label {
+      display: inline-block;
+      width: 90%;
+      font-size: rem(15);
+    }
+  }
+}
+
+.baggage-details {
+  .baggage-list {
+    li {
+      &:last-child {
+        p {
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+// INSURANCE RADIO BUTTON
+
+.bg-recommeded {
+  background-color: $color-102;
+  border: 1px solid $color-102;
+  border-radius: rem(10);
+}
+
+.rb-wid {
+  display: flex;
+  border: solid 1px $color-039;
+  border-radius: 6px;
+  height: rem(54);
+  min-width: rem(290);
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    border-color: $color-011;
+  }
+
+  .chckbx-wrpr {
+    label {
+      &::after {
+        top: rem(-1);
+      }
+    }
+  }
+}
+
+.card-box {
+  .insurance-option {
+    ul {
+      display: flex;
+    }
+  }
+
+  .zero-cancel-icon {
+    width: rem(40);
+  }
+
+  .mr-t-4 {
+    margin-top: rem(-4);
+  }
+
+  .dsAmtL {
+    text-decoration: line-through;
+  }
+}
+
+.err-msg-ins {
+  width: 97%;
+  background-color: $color-103;
+  padding: rem(10) rem(0) rem(10) rem(16);
+  align-items: center;
+  border-radius: rem(8);
+}
+
+/********** New Promo UI Common ****************/
+.flight-checkout-holder {
+  .important-point {
+    .dot {
+      width: rem(6);
+      height: rem(6);
+    }
+  }
+  .code-input {
+    .ext-coupon {
+      .input-wrapper {
+        border: 1px solid $color-029;
+
+        .input:disabled {
+          color: $color-011;
+        }
+      }
+    }
+
+    .input-icon-holder {
+      .ai-close {
+        width: rem(30);
+        height: rem(30);
+        position: absolute;
+        right: rem(4);
+        top: rem(-14);
+        padding: rem(6) rem(2);
+        border-radius: rem(50);
+        text-align: center;
+
+        &:hover {
+          background-color: $color-060;
+        }
+      }
+    }
+  }
+
+  .price-change-float {
+    position: fixed;
+    width: max-content;
+    bottom: rem(90);
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 100;
+  }
+
+  .apply-coupon-float-cont {
+    position: fixed;
+    width: fit-content;
+    bottom: rem(90);
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 100;
+    &.with-price-change {
+      bottom: rem(163);
+    }
+
+    .apply-coupon-float {
+      border-radius: rem(40);
+      transform: scale(1);
+      transition: all 0.1s linear;
+      &:active {
+        transform: scale(0.9);
+        transition: all 0.1s linear;
+        background-color: $color-134;
+      }
+
+      .apply-coupon-down-icon {
+        animation: moveUpDown 1s ease-in-out infinite;
+        padding-right: rem(15);
+        position: relative;
+        & > span {
+          position: absolute;
+          top: -9px;
+          & > i {
+            &:first-child {
+              opacity: 0.7;
+              margin-bottom: rem(-5);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.disabled-apply {
+  cursor: default;
+  text-decoration: underline;
+}
+
+.coupon-list,
+.promo-popup-v2,
+.promo-btm-v2 {
+  .coupon-code {
+    padding: rem(5) rem(10);
+    border: 1px dashed $color-014;
+    border-radius: rem(4);
+  }
+
+  .coupon-logo {
+    max-width: rem(24);
+    max-height: rem(24);
+  }
+
+  .saved-money {
+    color: $color-029;
+  }
+
+  .tick-container {
+    display: none;
+    width: rem(14);
+    height: rem(14);
+    margin-left: rem(5);
+    background: $color-029;
+    border-radius: 50%;
+    position: relative;
+
+    .ai-tick {
+      position: absolute;
+      top: rem(3);
+      left: rem(4);
+    }
+
+    &::before {
+      font-weight: bolder;
+    }
+  }
+
+  .review-coupon-selected {
+    .coupon-code {
+      border-color: $color-029;
+    }
+
+    .saved-money {
+      color: $color-029;
+    }
+
+    .tick-container {
+      display: block;
+    }
+  }
+}
+
+.coupon-list {
+  .review-coupon-selected {
+    .coupon-code {
+      background-color: $color-120;
+    }
+  }
+}
+
+@keyframes moveUpDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/**************************/
+
+.insurance-benefits {
+  .benefits-rt {
+    border-radius: 8px;
+    border: solid 1px #f3f3f3;
+    line-height: rem(16);
+    background-color: #f8f8f8;
+
+    &:hover:last-child {
+      background-color: #ececec;
+    }
+  }
+}
+
+//Billing Detail
+.w-break {
+  word-break: break-word;
+}
+
+//TABLET INSURANCE
+
+@media only screen and (min-width: rem(767)) and (max-width: rem(1200)) {
+  .w-insurance {
+    margin-left: rem(10);
+
+    .rdio-wrpr {
+      min-width: rem(130);
+    }
+  }
+
+  .rb-wid {
+    width: rem(300);
+    margin-bottom: rem(20);
+    cursor: pointer;
+
+    &:hover {
+      border-color: $color-011;
+    }
+  }
+
+  .insurance-benefits {
+    flex-wrap: wrap;
+
+    .benefits-rt {
+      width: 46%;
+      min-height: rem(64);
+      margin-bottom: rem(10);
+    }
+  }
+
+  .card-box {
+    .insurance-option {
+      ul {
+        display: block;
+      }
+    }
+  }
+
+  .err-msg-ins {
+    width: 94%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .flight-checkout-holder {
+    .code-input {
+      .input-icon-holder {
+        .ai-close {
+          top: rem(-18);
+        }
+      }
+    }
+  }
+
+  .w-insurance {
+    margin-left: rem(0);
+  }
+
+  .rb-wid-m {
+    display: flex;
+    border: solid 1px $color-039;
+    border-radius: 6px;
+    height: rem(54);
+    min-width: rem(290);
+    align-items: center;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+
+    &:focus-within {
+      border-color: $color-011;
+    }
+
+    .chckbx-wrpr {
+      label {
+        &::after {
+          top: rem(-1);
+        }
+      }
+    }
+  }
+
+  .travelLogo-img {
+    height: 34px;
+  }
+
+  .insured-img {
+    margin-top: 0;
+  }
+
+  .insurance-benefits {
+    .benefits-rt {
+      .benefits-rt:last-child {
+        &:hover {
+          background-color: #ececec;
+        }
+      }
+    }
+
+    .benefits-list.slide {
+      padding: rem(13) rem(0) rem(7) rem(0);
+    }
+  }
+
+  .mr-t-4 {
+    margin-top: rem(-4);
+  }
+
+  .dsAmtL {
+    text-decoration: line-through;
+  }
+
+  .zero-cancel-icon {
+    width: rem(34);
+  }
+
+  .err-msg-ins {
+    width: 100%;
+  }
+
+  .flight-checkout {
+    .ex-footer-pd {
+      .footer_wrapper {
+        padding-bottom: rem(140);
+      }
+    }
+  }
+
+  .review-details {
+    &:first-child {
+      padding-top: rem(10);
+    }
+  }
+}

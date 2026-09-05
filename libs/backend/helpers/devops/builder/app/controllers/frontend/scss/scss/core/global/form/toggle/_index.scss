@@ -1,0 +1,48 @@
+.tgl-wrpr {
+    width:rem(36);
+    position:relative;
+    display: inline-block;
+}
+
+.tgl-wrpr input{
+    top:0;
+    left:0;
+    opacity:0;
+}
+
+.tgl-trck{
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    height:rem(20);
+    cursor:pointer;
+    position:absolute;
+    //background-color:var(--c00102);
+
+    &::before {
+        content: '';
+        top:rem(2);
+        left:rem(2);
+        width:rem(16);
+        height:rem(16);
+        position:absolute;
+        @extend .transition;
+        //@extend .shdw-sm;
+        //background-color:var(--c00000);
+    }
+
+    &.bdr-round, 
+    &.bdr-round:before{
+        @include aio-border-radius(rem(60), rem(60), rem(60), rem(60));
+    }
+}
+
+.tgl-wrpr input:checked + .tgl-trck {
+    //background-color:var(--c00207);
+}
+
+.tgl-wrpr input:checked + .tgl-trck:before {
+    left:100%;
+    transform: translate(-#{rem(18)}, 0);
+}

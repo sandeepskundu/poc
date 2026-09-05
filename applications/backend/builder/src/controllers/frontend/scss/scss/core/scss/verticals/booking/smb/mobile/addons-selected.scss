@@ -1,0 +1,36 @@
+.addons-selected-wrpr {
+  position: fixed;
+  left: 0;
+  bottom: rem(67);
+  width: 100vw;
+  z-index: 998;
+  background-color: #f4f4f4;
+  border-top-right-radius: rem(20);
+  border-top-left-radius: rem(20);
+  box-shadow: 0 0 rem(10) $color-105;
+  .addons-fare {
+    text-align: end;
+  }
+
+  &:active{
+    background-color: $color-084;
+  }
+}
+
+.addons-list {
+  margin-bottom: rem(15);
+  padding-bottom: rem(15);
+  border-bottom: rem(1) solid #e4e4e4;
+
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .type-img {
+    width: rem(14);
+    height: rem(14);
+    background: #fff;
+  }
+}

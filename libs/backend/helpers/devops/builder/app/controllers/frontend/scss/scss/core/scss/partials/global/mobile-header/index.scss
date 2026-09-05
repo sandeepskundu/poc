@@ -1,0 +1,58 @@
+.adl-mobile-header-content {
+  position: relative;
+  padding: rem(22) rem(16);
+  background-color: $color-fff;
+
+  .back-icon-holder {
+    top: 50%;
+    left: rem(8);
+    width: rem(24);
+    height: rem(24);
+    position: absolute;
+    @include adl-transform(0, -50%);
+  }
+
+  &.has-back-icon {
+    padding-left: rem(50);
+  }
+}
+
+.mobile-airport-logo {
+  width: rem(146);
+
+  .airport-logo {
+    width: rem(146);
+
+    &::before {
+      width: rem(146);
+      font-size: rem(34);
+    }
+  }
+
+  .airport-logo-img {
+    max-width: 2rem;
+    max-height: 100%;
+    margin-right: rem(12);
+  }
+
+  &.BOM {
+    .airport-logo-img {
+      max-width: 2.5rem;
+    }
+  }
+
+  &.ADLONE {
+    .airport-logo {
+      display: none;
+    }
+
+    .airport-logo-img {
+      max-width: 7.5rem;
+      max-height: 100%;
+    }
+  }
+}
+
+.refund-box {
+  margin-bottom: rem(150);
+}

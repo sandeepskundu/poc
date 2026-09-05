@@ -1,0 +1,342 @@
+.fids-search-cntr {
+  padding-bottom: rem(100);
+  .adl-header {
+    padding: 0;
+    .main-header {
+      margin-bottom: 0;
+      &.sticky {
+        position: unset;
+        &.borderBottom {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+  .search-page-filters {
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    background: $color-fff;
+    padding: rem(20) 0;
+    border-bottom: rem(1) solid $color-048;
+    .searchBE {
+      .searchList {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .tripStatus {
+          width: rem(168);
+          .sb-lable {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: rem(50);
+            padding: rem(15) rem(48) rem(10) rem(12);
+            .sb-icon-holder {
+              display: none;
+              // top: 48%;
+            }
+            &:hover {
+              border-color: $color-015;
+            }
+          }
+          .sb-opt-wrpr {
+            width: rem(270);
+            padding: rem(10) 0;
+            li:hover {
+              border-bottom-left-radius: 0;
+              border-bottom-right-radius: 0;
+            }
+            .sb-option {
+              &:first-child {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+              }
+              &.selected {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+              }
+            }
+          }
+        }
+        .input-wrapper {
+          min-height: rem(50);
+          border: rem(1) solid $color-017;
+          .dropInput {
+            color: $color-014;
+            line-height: rem(16);
+            padding: rem(16) rem(15) rem(10);
+          }
+          &.focus {
+            border-color: $color-015;
+          }
+          &:hover {
+            border-color: $color-015;
+          }
+        }
+        .searchCalendar {
+          width: rem(233);
+          .sb-lable {
+            min-height: rem(50);
+            padding: rem(15) rem(48) rem(10) rem(12);
+            .sb-icon-holder {
+              display: none;
+              // top: 48%;
+            }
+            &:hover {
+              border-color: $color-015;
+            }
+            .calendar-icon {
+              opacity: 0.5;
+              margin-right: rem(10);
+            }
+          }
+          .sb-opt-wrpr {
+            width: rem(270);
+            padding: rem(10) 0;
+            li:hover {
+              border-bottom-left-radius: 0;
+              border-bottom-right-radius: 0;
+            }
+            .sb-option {
+              &:first-child {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+              }
+              &.selected {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+              }
+            }
+          }
+        }
+        .searchDetails {
+          width: rem(262);
+          .dataList {
+            max-height: rem(425);
+            padding: rem(20) 0 0;
+            .errorText {
+              font-size: rem(14);
+              color: $color-007;
+              margin: 0 0 rem(20) rem(24);
+            }
+          }
+          .popup-box-body {
+            top: 100%;
+            margin: rem(10) 0 0;
+            width: rem(400);
+            overflow: auto;
+          }
+          .input-wrapper {
+            .input-icon-holder {
+              top: 48%;
+              right: rem(10);
+            }
+          }
+        }
+        .searchButton {
+          min-height: rem(50);
+          min-width: rem(50);
+          margin-right: rem(10);
+          border-radius: rem(8);
+          border: rem(1) solid $color-017;
+          color: $color-014;
+          background-color: $color-fff;
+          &:last-child {
+            margin-right: 0;
+          }
+          &.selected {
+            color: $color-011;
+            border: solid rem(1) $color-011;
+          }
+          &:hover {
+            border-color: $color-015;
+          }
+        }
+        .modifyButton {
+          min-height: rem(50);
+          font-size: rem(16);
+          font-weight: bold;
+          padding: rem(15) rem(34);
+          border-radius: rem(30);
+          border: none;
+          color: $color-fff;
+          background-color: $color-002;
+          &:disabled {
+            background-color: $color-019;
+          }
+        }
+      }
+    }
+  }
+  .mainSection {
+    margin-top: rem(30);
+    .search-head-nav {
+      display: none;
+    }
+    .searchSubHeader {
+      display: flex;
+      justify-content: space-between;
+      .statusHeader {
+        margin: 0;
+        font-size: rem(28);
+        letter-spacing: rem(0.34);
+        color: $color-020;
+        line-height: rem(37);
+      }
+      .updateSection {
+        display: flex;
+        align-items: flex-end;
+        .updateTitle {
+          line-height: rem(19);
+          font-size: rem(14);
+          letter-spacing: rem(0.17);
+          color: $color-015;
+        }
+        .updateTime {
+          margin: 0 rem(10) 0 rem(5);
+          line-height: rem(19);
+          font-size: rem(14);
+          letter-spacing: rem(0.17);
+          color: $color-015;
+        }
+        .subDate {
+          display: none;
+        }
+        .bs-header {
+          padding: rem(30) rem(16) 0;
+          .bs-h-icon {
+            margin-bottom: rem(18);
+          }
+          p {
+            margin-bottom: 0;
+          }
+        }
+        .blank-ups {
+          font-size: rem(30);
+        }
+      }
+    }
+    .dataHeading {
+      margin: rem(20) 0;
+      padding: rem(14) rem(20);
+      border-radius: rem(6);
+      background-color: $color-010;
+      li {
+        display: flex;
+        width: 16.6666666667%;
+        span {
+          cursor: pointer;
+          font-weight: 500;
+          letter-spacing: rem(0.14);
+          color: $color-009;
+          font-size: rem(14);
+        }
+      }
+      .sortIcon {
+        margin-left: rem(5);
+      }
+    }
+    .mob-search-widget {
+      display: none;
+    }
+    .airlineList {
+      border-radius: rem(6);
+      border: solid rem(1) $color-021;
+      background-color: $color-fff;
+    }
+    .airlineListNoResult {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  
+  .unsave-popup-btns{
+    height: 48px;
+    padding: 0.7rem 1.875rem
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .fids-search-cntr {
+    padding-bottom: rem(40);
+    .adl-header {
+      display: none;
+    }
+    .search-page-filters {
+      display: none;
+    }
+    .mainSection {
+      margin-top: 0;
+      .searchMainWrapper {
+        padding: 0;
+        .search-head-nav {
+          display: flex;
+          align-items: center;
+          padding: rem(18) rem(16);
+          .search-nav-title {
+            margin-left: rem(25);
+            .cityInfo {
+              display: inline-block;
+              width: calc(100vw - 75px);
+              .cityTitle {
+                color: $color-014;
+              }
+              .oval {
+                display: inline-block;
+                width: rem(4);
+                height: rem(4);
+                border-radius: rem(4);
+                margin: rem(3) rem(4);
+                background-color: $color-014;
+              }
+              .cityLabel {
+                color: $color-014;
+              }
+            }
+            .typeInfo {
+              font-size: rem(16);
+              letter-spacing: rem(0.27);
+            }
+          }
+        }
+        .sub-header-sticky {
+          position: sticky;
+          position: -webkit-sticky;
+          top: 0;
+          z-index: 2;
+          .searchSubHeader {
+            display: block;
+            .statusHeader {
+              display: none;
+            }
+            .updateSection {
+              display: none;
+            }
+          }
+        }
+        .dataHeading {
+          display: none;
+        }
+        .bsh-sticky{
+          z-index: 999;
+        }
+        .mob-search-widget {
+          display: block;
+        }
+        .airlineList {
+          border: none;
+          .no-search {
+            display: flex;
+            justify-content: center;
+            margin-top: 50%;
+          }
+        }
+      }
+    }
+    .search-tick-icon {
+      position: relative;
+      right: rem(9);
+    }
+  }
+}

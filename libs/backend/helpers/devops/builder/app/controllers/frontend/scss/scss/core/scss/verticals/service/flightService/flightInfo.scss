@@ -1,0 +1,65 @@
+@import "adl-sass-partials/optional/airline-logos/both";
+
+.detailsList,
+.loadingList {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: rem(10);
+  cursor: pointer;
+  padding: 0.625rem 1.5rem;
+
+  .airlineDetails {
+    width: 45%;
+    display: flex;
+    .flight-icon {
+      margin-right: rem(20);
+    }
+    .flightNumber {
+      font-size: rem(16);
+      font-weight: 500;
+      color: $color-015;
+      line-height: rem(19);
+    }
+    .flightName {
+      font-size: rem(12);
+      color: $color-014;
+      margin-top: rem(5);
+      line-height: rem(14);
+    }
+  }
+  .placeDetails {
+    width: 40%;
+    .city {
+      font-size: rem(16);
+      font-weight: 500;
+      color: $color-015;
+      line-height: rem(19);
+    }
+  }
+  .time {
+    width: 15%;
+    font-size: rem(16);
+    font-weight: 500;
+    color: $color-015;
+    line-height: rem(19);
+    text-align: right;
+  }
+  &:hover {
+    background: $color-052;
+  }
+}
+
+.loadingList {
+  cursor: default;
+  &:hover {
+    background: none;
+  }
+}
+
+.searchCalendar {
+  .i-down {
+    position: absolute;
+    right: rem(20);
+    top: rem(20);
+  }
+}

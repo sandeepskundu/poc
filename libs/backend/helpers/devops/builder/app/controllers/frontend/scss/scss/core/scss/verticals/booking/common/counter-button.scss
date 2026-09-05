@@ -1,0 +1,53 @@
+.ctr-btn-wrpr,
+.ctr-btn-wrpr-added {
+  max-width: rem(108);
+  color: $color-002;
+  padding: 0.5938rem rem(40);
+  border: rem(1) solid $color-070;
+  border-radius: rem(24);
+  height: fit-content;
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  .counter-icon-minus,
+  .counter-icon-plus {
+    padding-top: 0.5938rem;
+    padding-bottom: 0.5938rem;
+  }
+
+  .counter-icon-minus {
+    padding-right: rem(8);
+  }
+
+  .counter-icon-plus {
+    padding-left: rem(8);
+  }
+
+  .data-count {
+    min-width: rem(30);
+    text-align: center;
+  }
+}
+
+.ctr-btn-wrpr-added {
+  color: #fff;
+  background-color: $color-002;
+  padding: 0;
+  border: rem(1) solid $color-002;
+
+  &:hover {
+    background-color: $color-055;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .ctr-btn-wrpr {
+    &:hover {
+      background-color: $color-047;
+      border-color: $color-047;
+      color: $color-fff;
+    }
+  }
+}

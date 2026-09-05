@@ -1,0 +1,11 @@
+.tabs-ctnt-list {
+    &::after {
+        content:attr(data-more-label)" ";
+    }
+}
+
+.rd-mor-lss-chbx:checked ~ .rd-mor-lbl-hldr > label.rd-mor-lss-lbl {
+    &::after {
+        content:attr(data-less-label)" ";
+    }
+}

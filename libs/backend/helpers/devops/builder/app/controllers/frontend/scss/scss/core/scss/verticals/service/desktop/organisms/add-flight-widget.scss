@@ -1,0 +1,11 @@
+.add-flight-wrapper {
+  .add-flight-body {
+    margin-top: rem(7);
+    & > li {
+      margin-bottom: rem(20);
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

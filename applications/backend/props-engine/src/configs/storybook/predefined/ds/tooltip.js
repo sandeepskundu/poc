@@ -1,0 +1,97 @@
+const css = require('./css');
+const preset = require('./preset');
+const helpers = process.uiHelpers();
+
+const colorEnums = {
+    type:"enum",
+    description:"",
+    ___:{
+        enum:{
+            from:'statics',
+            mapping:"global.color",
+        }
+    }
+}
+
+module.exports = {
+    type:'nested',
+    description:"",
+    ___:{
+        nested:{
+            color:colorEnums,
+            background:colorEnums,
+            content:{
+                type:"string",
+                description:"",
+            },
+            tigger:{
+                type:"enum",
+                dvalue:"both",
+                description:"",
+                ___:{
+                    enum:{
+                        from:'statics',
+                        mapping:"tooltip.trigger",
+                    }
+                }
+            },
+            position:{
+                type:"enum",
+                description:"",
+                ___:{
+                    enum:{
+                        from:'statics',
+                        mapping:"tooltip.position",
+                    }
+                }
+            },
+            ds:{
+                type:'nested',
+                description:``,
+                ___:{
+                    required:false,
+                    nested:{
+                        predefined:{
+                            type:'nested',
+                            ___:{
+                                nested:{
+                                    color:preset.color,
+                                    //border:preset.border,
+                                    //pairing:preset.pairing,
+                                    background:preset.background,
+                                }
+                            }
+                        },
+                        css:helpers.json.merge(css, {
+                            ___:{
+                                nested:{
+                                    others:null,
+                                    class:{
+                                        ___:{
+                                            nested:{
+                                                margin:null,
+                                                padding:null,
+                                                borderNone:null
+                                            }
+                                        }
+                                    },
+                                    flags:{
+                                        ___:{
+                                            nested:{
+                                                noBorder:null,
+                                                rounded:null,
+                                                disabled:null,
+                                                boxSizing:null,
+                                                animation:null,
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "🟢 => BE - Builder",
+            "command": "cd applications/backend/builder && pwd && npm run start"
+        }, {
+            "type": "shell",
+            "label": "🟢 => BE - Props Engine",
+            "command": "cd applications/backend/props-engine && pwd && npm run start-dev"
+        }, {
+            "type": "shell",
+            "label": "🟢 => BE - TDC devOps",
+            "command": "cd applications/backend/tdc-devops && pwd && npm run start-dev"
+        }, {
+            "type": "shell",
+            "label": "🌐 => FE - Comp Engine",
+            "command": "cd applications/frontend/comp-engine && pwd && npm run start"
+        }, {
+            "type": "shell",
+            "label": "🛠️ => UI - Comp Engine",
+            "command": "cd applications/frontend/comp-engine && pwd && npm run dev",
+            
+        }, {
+            "type": "shell",
+            "label": "🌐 => FE - Insider Cdn",
+            "command": "cd applications/frontend/insider-cdn && pwd && npm run start"
+        }, {
+            "type": "shell",
+            "label": "🛠️ => UI - Insider Cdn",
+            "command": "cd applications/frontend/insider-cdn && pwd && npm run dev"
+        }, {
+            "label": "Backend",
+            "dependsOrder": "parallel",
+            "dependsOn": ["🟢 => BE - Builder", "🟢 => BE - Props Engine", "🟢 => BE - TDC devOps"]
+        }, {
+            "label": "Frontend",
+            "dependsOrder": "parallel",
+            "dependsOn": ["🌐 => FE - Comp Engine", "🌐 => FE - Insider Cdn", "🛠️ => UI - Insider Cdn", "🛠️ => UI - Comp Engine"]
+        }, {
+            "label":"Start",
+            "dependsOrder":"parallel",
+            "dependsOn":["Backend", "Frontend"]
+        }
+    ]
+}

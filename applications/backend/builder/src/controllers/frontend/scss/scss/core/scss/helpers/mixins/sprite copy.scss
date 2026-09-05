@@ -1,0 +1,92 @@
+@mixin create-common-sprite-class(
+    $clsName,
+    $gridWidth,
+    $gridHeight,
+    $spriteUrl,
+    $spriteWidth,
+    $spriteHeight 
+){
+	.#{$clsName}{
+		width:#{$gridWidth}px;
+        height:#{$gridHeight}px;
+        background:transparent url("#{$images-folder}#{$spriteUrl}?version=#{$sprite-version}") 0 0 no-repeat;
+        background-size:#{$spriteWidth}px #{$spriteHeight}px;	
+	}
+}
+
+/*--
+@mixin include-common-icon-sprite(){
+	@each $icon in $common-icons-list{
+		$icon-name:nth($icon, 1);
+		.#{$icon-name}{
+			@extend .#{$default-common-icon-sprite-class};
+		}	
+	}
+}
+
+@mixin resize-common-icon-sprite($icon-width, $icon-height, $custom-size){
+	@if $custom-size == 'default'{
+		.#{$default-common-icon-sprite-class}{
+            $width:#{($common-icon-sprite-width/$default-common-icon-grid-width*$common-icon-standrad-width)};
+			$height:#{($common-icon-sprite-height/$default-common-icon-grid-height*$common-icon-standrad-height)};
+
+            width:#{$common-icon-standrad-width}px;
+			height:#{$common-icon-standrad-height}px;
+            background-size:#{($width)}px #{$height}px;
+		}
+	}@else{
+		.#{$default-common-icon-sprite-class}.#{$custom-size-prefix}-#{$custom-size}{
+            $width: #{($common-icon-sprite-width/$default-common-icon-grid-width*$icon-width)};
+			$height: #{($common-icon-sprite-height/$default-common-icon-grid-height*$icon-height)};
+
+            width:#{$icon-width}px;
+			height:#{$icon-height}px;
+            background-size:#{($width)}px #{$height}px;
+		}
+	}
+};
+
+
+@mixin create-common-icon-cordinate($custom-size, $width, $height, $icons-list){
+	@if $custom-size != false{
+		@include resize-common-icon-sprite($icon-width:$width, $icon-height:$height, $custom-size:$custom-size);
+	};
+
+	@each $icon in $icons-list{
+		$icon-name:nth($icon, 1);
+       	$icon-row:nth($icon, 2);
+        $icon-col:nth($icon, 3);
+
+		@if $custom-size == false{
+			.#{$icon-name}{
+				background-position:-#{($width*$icon-col)}px -#{($height*$icon-row)}px;
+			}
+		} @else {
+			@if $custom-size == 'default'{
+				.#{$default-common-icon-sprite-class}-#{$icon-name}{
+					background-position:-#{($common-icon-standrad-width*$icon-col)}px -#{($common-icon-standrad-height*$icon-row)}px;
+				}
+			}@else{
+				.#{$custom-size-prefix}-#{$custom-size}.#{$default-common-icon-sprite-class}-#{$icon-name}{
+					background-position:-#{($width*$icon-col)}px -#{($height*$icon-row)}px;
+				}
+			}
+		}	
+	}
+}
+
+@mixin create-dom-ailrine-logo($icons-list, $custom-size:false, $width:$default-common-icon-grid-width, $height:$default-common-icon-grid-height){	
+	@if $custom-size == false{
+		@include create-common-icon-cordinate($custom-size, $width, $height, $icons-list);
+	} @else {
+		@include create-common-icon-cordinate($custom-size, $width, $height, $icons-list);
+	}
+}-*/
+
+@mixin create-sprite($include-in-int:false){
+	@include create-common-sprite-class($clsName, $gridWidth, $gridHeight, $spriteUrl, $spriteWidth, $spriteHeight);
+	//@include create-icon-with-label-class;
+	//@each $size in $icon-sizes{
+	//	@include create-dom-ailrine-logo($custom-size:$size, $width:$size, $height:$size, $icons-list:$common-icons-list);
+	//}	
+}

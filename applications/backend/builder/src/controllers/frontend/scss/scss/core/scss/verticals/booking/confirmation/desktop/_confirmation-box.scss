@@ -1,0 +1,340 @@
+.confirmation-box {
+  margin-top: rem(30);
+  position: relative;
+  border-radius: rem(12);
+  background-color: $color-fff;
+  border: solid rem(2) $color-029;
+  padding: rem(32) rem(49) rem(24) rem(100);
+  box-shadow: -2px -1px 5px 0 rgba(73, 210, 178, 0.57);
+
+  .info-icon-holder {
+    position: absolute;
+    width: rem(145);
+    height: rem(145);
+    left: -1.375rem;
+    top: -1.25rem;
+  }
+
+  .round_blank {
+    position: absolute;
+    left: rem(29);
+    padding: rem(25);
+    top: rem(26);
+  }
+
+  &.empty {
+    border-color: $color-035;
+    box-shadow: none;
+  }
+
+  &.warn {
+    border-color: $color-038;
+    box-shadow: -2px -1px 5px 0 rgba($color: $color-038, $alpha: 0.57);
+  }
+
+  &.error {
+    border-color: $color-007;
+    box-shadow: -2px -1px 5px 0 rgba($color: $color-007, $alpha: 0.57);
+  }
+
+  .lottie-style {
+    width: rem(94);
+    position: absolute;
+    left: 5px;
+    top: 1px;
+  }
+
+  .confirmation-left {
+    width: 58%;
+
+    .mr-tb24 {
+      a {
+        display: inline-block;
+      }
+
+      button {
+        margin-bottom: rem(10);
+      }
+    }
+  }
+
+  .confirmation-right {
+    color: unset;
+    cursor: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .cross-sell-image {
+      width: 23.75rem;
+      height: 19.375rem;
+    }
+  }
+}
+
+.confirm-status-list {
+  display: block;
+  padding: rem(8) 0 rem(24) 0;
+  margin: rem(24) 0 0;
+  border-top: 1px solid $color-035;
+  border-bottom: 1px solid $color-035;
+
+  li {
+    display: inline-block;
+    padding-right: rem(40);
+    margin-top: rem(16);
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  .status-label {
+    font-size: rem(12);
+  }
+}
+
+.confirmation-action-btn {
+  .btn {
+    padding: rem(13) rem(15);
+  }
+}
+
+.confirm-actions {
+  margin: rem(24) 0 0;
+
+  li {
+    display: inline-block;
+    padding-right: rem(16);
+  }
+}
+
+.confirmation-flight-list {
+  margin-top: rem(90);
+}
+
+.confirmation-holder {
+  .details-seg {
+    width: 80%;
+  }
+}
+
+.support-link {
+  text-decoration: underline !important;
+
+  &:hover {
+    color: #333;
+    text-decoration: none !important;
+  }
+}
+
+.cancelled-info {
+  left: 40px;
+  position: absolute;
+  top: 26px;
+  color: $color-061;
+}
+
+.confirmation-lottie {
+  width: 100%;
+
+  .loyalty-banner {
+    margin-top: 24px;
+  }
+
+  .lottie-style {
+    position: static;
+  }
+
+  .ai-info {
+    position: relative;
+    display: inline-block;
+  }
+
+  .ai-info .tooltiptext {
+    visibility: hidden;
+    width: 202px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: rem(12) rem(8);
+    position: absolute;
+    z-index: 1;
+    bottom: 170%;
+    left: 50%;
+    transform: translateX(-50%);
+    &.co-brand {
+      width: rem(440);
+      text-align: left;
+      padding-left: rem(14);
+      padding-right: rem(14);
+    }
+  }
+
+  .ai-info .tooltiptext::after {
+    content: ' ';
+    position: absolute;
+    top: 100%;
+    /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+  }
+
+  .ai-info:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .btn.round {
+    padding: 0.625rem 1rem 0.625rem 1rem;
+  }
+}
+
+.refund-text {
+  a {
+    color: $color-011;
+    text-decoration: underline;
+  }
+}
+
+.m-radius {
+  border-radius: rem(8);
+}
+
+.more-offers {
+  .slider-box-content-holder {
+    img {
+      width: 100%;
+      margin-right: 0;
+      background: $color-052;
+    }
+  }
+
+  .offer-condition {
+    background: rgba(13, 103, 202, 0.05);
+  }
+
+  .visit-web {
+    border-top: 1px solid #dedede;
+    margin-top: 20px;
+
+    .btn {
+      width: 160px;
+    }
+  }
+
+  img {
+    height: 80px;
+    width: 80px;
+    margin-right: 15px;
+  }
+
+  .offer-tupple {
+    border: 1px solid #eaeaea;
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .offer-img {
+    display: inline-block !important;
+    vertical-align: top;
+  }
+
+  .offer-desc {
+    width: 68%;
+  }
+
+  .slick-prev,
+  .slick-next {
+    color: #333;
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    border: 1px solid #ddd;
+
+    &::before {
+      content: '';
+    }
+
+    &:hover {
+      color: #333;
+      outline: none;
+      background: #f3f3f3;
+    }
+  }
+
+  .slick-prev {
+    top: -61px;
+    right: 52px;
+    left: auto !important;
+
+    .ai-left {
+      top: 9px;
+      left: 8px;
+      position: absolute;
+    }
+  }
+
+  .slick-next {
+    top: -61px;
+    right: 10px;
+
+    .ai-right {
+      top: 9px;
+      right: 8px;
+      position: absolute;
+    }
+  }
+
+  .slick-arrow {
+    visibility: visible !important;
+  }
+
+  .slick-dots {
+    display: none !important;
+  }
+}
+
+.card-desc {
+  -webkit-line-clamp: 2;
+}
+
+.breakup-list {
+  margin-bottom: rem(15);
+  line-height: rem(24);
+
+  &:last-child {
+    margin-bottom: 0;
+    line-height: 0;
+  }
+
+  .icon {
+    width: rem(20);
+  }
+}
+
+.confirmation-details {
+  .review-details {
+    &:first-child {
+      padding-top: 0;
+      padding-bottom: 48px;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.confirmation-trvlr-tabs {
+  .addon-purchase {
+    border-top: rem(1) solid $color-021;
+
+    .addon-img {
+      width: rem(20);
+    }
+  }
+}

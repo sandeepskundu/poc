@@ -1,0 +1,62 @@
+const helpers = process.uiHelpers();
+const props = require('./../props');
+
+module.exports = helpers.json.merge(props || {}, {
+    avatars:null,
+    icons:{
+        ___:{
+            nested:{
+                left:{
+                    ___:{
+                        compProps:{
+                            overwirte:{
+                                config:{
+                                    ___:{
+                                        predefined:{
+                                            overwirte:{
+                                                icon:{
+                                                    ___:{
+                                                        nested:{
+                                                            name:{
+                                                                dvalue:''
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                right:{
+                    ___:{
+                        compProps:{
+                            overwirte:{
+                                config:{
+                                    ___:{
+                                        predefined:{
+                                            overwirte:{
+                                                icon:{
+                                                    ___:{
+                                                        nested:{
+                                                            name:{
+                                                                dvalue:''
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+});

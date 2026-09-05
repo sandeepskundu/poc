@@ -1,0 +1,178 @@
+const schema = {
+    "type":true,
+    //"isac":true,
+    "mapId":true,
+    "hashId":true,
+    "mapping":true,
+    "linkFor":true,
+    "linkType":true,   
+}
+
+const update = () => {
+    return {...schema, ...{}}
+}
+
+module.exports = {
+    response:{
+        exclude:{
+            enable:true,
+            kies:{
+                ts:true,
+                hashId:true
+            }
+        },
+    },
+    valuemap: {},
+
+    md5Hash:{
+        hashId:{
+            nodes:{
+                0:{
+                    map:"runtimeUtils.merchantRootHash",
+                    from:"appConfig"
+                },
+                1:{
+                    map:"mapId",
+                    from:"body-item"
+                },
+                2:{
+                    map:"linkFor",
+                    from:"body-item"
+                },
+                3:{
+                    map:"linkType",
+                    from:"body-item"
+                },
+                4:{
+                    map:"mapping",
+                    from:"body-item"
+                }
+            }
+        }
+    },
+
+    schema:{
+        default:schema,
+        update:update()
+    },
+
+    signature:{
+        merge:{
+            enable:true
+        },
+        creation:{
+            enable:true,
+            nodes:{
+                _id:{
+                    enable:true,
+                    valueType:"objectId"
+                },
+                _merchantId:{
+                    enable:true,
+                    valueType:"objectId"
+                }
+            }
+        }
+    },
+
+    query:{
+        byId:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"_id",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        mapId:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"mapId",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        mapIdAndLinkFor:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"mapId",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        },
+                        2:{
+                            cloumn:"linkFor",
+                            value:{
+                                map:"subId",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    validation:{
+        errors:{
+            hashId:{
+                mapTo:'mapping',
+                messages:{
+                    11000:'Duplicate mapping is not allowed'
+                }
+            }
+        }
+    },
+
+    values:{
+        infoDetails:{
+            default:{},
+            exclude:{},
+            hardcoded:{},
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "path": "../../ael/armi"
+        },
+        {
+            "path": "../../ael/llmc"
+        },
+        {
+            "path": "../../personal/poc"
+        },
+        {
+            "path": "."
+        }
+    ]
+}

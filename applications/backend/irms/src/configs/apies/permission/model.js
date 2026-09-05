@@ -1,0 +1,161 @@
+const schema = {
+    "type":true,
+    "itemId":true,
+    "userId":true,
+    "hashId":true,
+    "relation":true
+}
+
+const update = () => {
+    return {...schema, ...{}}
+}
+
+module.exports = {
+    response:{
+        exclude:{
+            enable:true,
+            kies:{
+                ts:true
+            }
+        },
+    },
+    md5Hash:{
+        hashId:{
+            nodes:{
+                0:{
+                    map:"runtimeUtils.merchantRootHash",
+                    from:"appConfig"
+                },
+                1:{
+                    map:"itemId",
+                    from:"body-item"
+                },
+                2:{
+                    map:"userId",
+                    from:"body-item"
+                },
+                3:{
+                    map:"relation",
+                    from:"body-item"
+                }
+            }
+        }
+    },
+    valuemap:{},
+
+    schema:{
+        default:schema,
+        update:update()
+    },
+
+    signature:{
+        merge:{
+            enable:true
+        },
+        creation:{
+            enable:true,
+            nodes:{
+                _id:{
+                    enable:true,
+                    valueType:"objectId"
+                },
+                _merchantId:{
+                    enable:true,
+                    valueType:"objectId"
+                }
+            }
+        }
+    },
+
+    query:{
+        byId:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"_id",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        userPermsByItemAndCode:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"userId",
+                            value:{
+                                map:"userId",
+                                from:"auth"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        },
+                        1:{
+                            cloumn:"itemId",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        },
+                        2:{
+                            cloumn:"code",
+                            value:{
+                                map:"subId",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    validation:{
+        errors:{
+            hashId:{
+                mapTo:'type',
+                messages:{
+                    11000:'Permission for selected user and data item already assigned. Please verify or change permission type and try again.'
+                }
+            }
+        }
+    },
+
+    values:{
+        infoDetails:{
+            default:{},
+            exclude:{},
+            hardcoded:{},
+        }
+    }
+}

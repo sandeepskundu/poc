@@ -1,0 +1,1 @@
+exports.slideDrawer = require('./slide-drawer');

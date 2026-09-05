@@ -1,0 +1,58 @@
+{
+    "000":{
+        "css-props":{
+            "colors-by-var-name":{
+                "color":"c00108",
+                "border-color":"c00104",
+                "background-color":"c00000"
+            }
+        },
+        "childs-css-props-list":{
+            "0":{
+                "define":"css-props",
+                "pseudo-selector":" .inpt-lbl",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "background-color":"c00000"
+                    }
+                }
+            },
+            "1":{
+                "define":"css-props",
+                "pseudo-selector":" .input",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "color":"c00109"
+                    }
+                }
+            },
+            "2":{
+                "define":"css-props",
+                "selector":".error",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "border-color":"c00306"
+                    }
+                }
+            },
+            "3":{
+                "define":"css-props",
+                "pseudo-selector":".error .inpt-err",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "color":"c00306"
+                    }
+                }
+            },
+            "4":{
+                "define":"css-props",
+                "selector":".focus",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "border-color":"c00204"
+                    }
+                }
+            }
+        }
+    }
+}

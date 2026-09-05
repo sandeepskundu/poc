@@ -1,0 +1,1 @@
+exports.byCate = require('./byCate');

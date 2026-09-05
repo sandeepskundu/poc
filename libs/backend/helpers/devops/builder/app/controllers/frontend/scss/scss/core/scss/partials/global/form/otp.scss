@@ -1,0 +1,26 @@
+.adl-otp-holder{
+    > div {
+        flex:100%;
+        justify-content:space-between;
+    }
+    > div > div{
+        flex:0 0 16.66%;
+        padding:0 rem(6);
+
+        > input {
+            font-size:rem(24);
+            padding: 0.9375rem;
+            line-height: 1.75rem;
+            width:100% !important;
+            border:1px solid $input-border-color;
+            @include adl-border-radius(rem(8), rem(8), rem(8), rem(8));
+            &:focus{
+                border-color:$input-border-focus-color;
+            }
+        }
+    }
+
+    &.has-error > div > div > input{
+		border-color:$input-error-border-color
+	}
+}

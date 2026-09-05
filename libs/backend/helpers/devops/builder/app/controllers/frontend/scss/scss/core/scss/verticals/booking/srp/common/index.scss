@@ -1,0 +1,84 @@
+.srp-price-carousel{
+    padding:0 20px;
+    position:relative;
+
+    .spc-content{
+        button{
+            display:none;
+        }
+    }
+
+    .spc-left-nav,
+    .spc-right-nav{
+        top:0;
+        z-index:999;
+        height:100%;
+        width:rem(25);
+        cursor: pointer;
+        position:absolute;
+
+        .spc-ico{
+            margin:10px 0 0;
+            font-weight:900;
+        }
+    }
+
+    .spc-left-nav{
+        left:0;
+    }
+
+    .spc-right-nav{
+        right:0;
+    }
+
+    .fare-date{
+        padding:rem(10);
+        position: relative;
+        &::after{
+            left:0;
+            bottom:0;
+            content:'';
+            width:100%;
+            height:rem(3);
+            position: absolute;
+        }
+
+        .price{
+            margin-top:rem(10);
+        }
+
+        .date{
+            color: $color-014;
+        }
+
+        &.selected{
+            color: $color-001;
+            &::after{
+                background:$color-001;
+            }
+            .date{
+                color: $color-001;
+            }
+        }
+    }
+}
+.adlPortraitview{
+    .Go-To-Top{
+        z-index:201;
+    }
+}
+.ptc-lottie-icon{
+    width: rem(82);
+}
+@media (min-width: 992px) {
+    .flight-srp {
+      .thinFooterWrapper {
+        padding-top: 80px;
+      }
+    }
+  }
+  @media (max-width: 992px){
+    .ptc-lottie-icon{
+        width: rem(60);
+    }
+  }

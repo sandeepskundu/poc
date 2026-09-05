@@ -1,0 +1,85 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Tags (also known as “chips”) are compact elements that allow users to enter information, make selections, filter content, or trigger actions. They’re similar to badges, but are more commonly used in inputs to allow users to select multiple items at once."
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "defaults":{
+            "description":"Callback functions",
+            "type":"object",
+            "isRequired":false,
+            "defaultValue":{}
+        },
+        "templates":{
+            "description":"Callback functions",
+            "type":"object",
+            "isRequired":false,
+            "defaultValue":{
+                "trigger":null,
+                "content":null
+            }
+        },
+        "dsTheme":{
+            "description":"Callback functions",
+            "type":"object",
+            "isRequired":false,
+            "defaultValue":{
+                "wrapper":{},
+                "content":{
+                    "radius":8,
+                    "border":"c00208",
+                    "background":"c00307"
+                }
+            }
+        },
+
+        "controls":{
+            "description":"Callback functions",
+            "type":"object",
+            "isRequired":false,
+            "defaultValue":{
+                "open":false,
+                "arrow":true,
+                "mode":"static",
+                "toggle":"hover",
+                "position":"bottom-right"
+            }
+        },
+
+        "config":{
+            "description":"Callback functions",
+            "type":"object",
+            "isRequired":false,
+            "defaultValue":{
+                "content":{
+                    "markup":{
+                        "element":"div"
+                    },
+                    "attrs":{},
+                    "ds":{
+                        "css":{},
+                        "theme":{}
+                    }
+                },
+                "wrapper":{
+                    "markup":{
+                        "element":"div"
+                    },
+                    "attrs":{},
+                    "ds":{
+                        "css":{},
+                        "theme":{}
+                    }
+                }
+            }
+        }
+    }
+}

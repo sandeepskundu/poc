@@ -1,0 +1,17 @@
+.item-menu {
+  font-size: rem(18);
+  padding: rem(24) rem(18);
+  &.cancellation {
+    padding-bottom: rem(40);
+  }
+  &.bdr-top {
+    &:before {
+      content: '';
+      background-color: $color-021;
+      position: absolute;
+      height: rem(1);
+      top: rem(-1);
+      width: calc(100% - rem(34));
+    }
+  }
+}

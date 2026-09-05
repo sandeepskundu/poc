@@ -1,0 +1,59 @@
+.org-dest-date {
+  li {
+    display: inline-block;
+    padding: 0 7px 0 0;
+    font-size: 16px;
+  }
+
+  .d-date {
+    color: $color-009;
+    font-size: rem(16);
+    margin-left: rem(5);
+  }
+
+  .h4 {
+    color: $color-015;
+  }
+}
+
+.review-city-labels{
+  li {
+    font-size: 22px;
+  }
+}
+
+.be-class-list {
+  margin-top: rem(10);
+
+  li {
+    display: inline-block;
+    margin: rem(10) rem(10) 0 0;
+  }
+
+  li:last-child {
+    margin-top: 30px;
+  }
+}
+
+.pax-done-btn {
+  margin-top: rem(20);
+}
+
+.bs-body {
+  .be-class-list {
+    margin-bottom: rem(80);
+
+    li:last-child {
+      margin-top: rem(18);
+    }
+  }
+
+  .pax-done-btn {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 92%;
+    margin: 0 auto;
+    bottom: 16px;
+  }
+}

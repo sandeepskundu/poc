@@ -1,0 +1,25 @@
+.flight-wrapper {
+  padding-right: rem(15);
+  .head {
+    margin-bottom: rem(20);
+  }
+  .content-section {
+    padding: rem(10) rem(24);
+    border-radius: rem(6);
+    border: solid rem(1) $color-021;
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(500)) {
+  .flight-wrapper {
+    padding: 0;
+    .head {
+      margin-bottom: rem(17);
+      font-size: rem(22);
+    }
+    .content-section {
+      padding: 0;
+      border: none;
+    }
+  }
+}

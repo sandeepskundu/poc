@@ -1,0 +1,45 @@
+module.exports = {
+    "response":{
+        "exclude":{
+            "enable":true,
+            "kies":{
+                "ts":true,
+                "parentId":true
+            }
+        },
+        "transform":{
+            "enable":true,
+            "kies":{
+                "_id":"id",
+                "_hashId":"hId",
+            }
+        }
+    },
+
+    "query":{
+        "hidden":{
+            "userId":false,
+            "merchantId":true
+        },
+        "runtime":{
+            "enable":true,
+            "configs":{
+                "query":{
+                    "0":{
+                        "cloumn":"_parentId",
+                        "value":{
+                            "from":"appConfig",
+                            "map":"runtimeUtils.merchantRootHash",
+                        },
+                        "operation":{
+                            "eq":{
+                                "enable":true,
+                                "opType":"eq"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

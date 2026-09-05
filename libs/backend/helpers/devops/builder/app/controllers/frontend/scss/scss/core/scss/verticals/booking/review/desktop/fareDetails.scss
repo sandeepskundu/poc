@@ -1,0 +1,269 @@
+.fare-Detail_wrap {
+  .fare-Detail_content {
+    width: 100%;
+    border: rem(1) $color-021 solid;
+    padding: rem(30) rem(25);
+    border-radius: rem(6);
+
+    header {
+      margin-bottom: rem(18);
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      align-items: center;
+
+      h4 {
+        font-size: rem(15);
+      }
+
+      span {
+        font-size: rem(20);
+      }
+    }
+  }
+
+  .bill_details {
+    ul {
+      list-style: none;
+      margin: 0;
+      margin-bottom: 1.5rem;
+      padding: 0;
+
+      li {
+        margin-bottom: rem(14);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: rem(14);
+
+        label {
+          font-size: rem(14);
+        }
+
+        span {
+          font-weight: 600;
+
+          &.green {
+            color: $color-023;
+          }
+        }
+
+        &.fare-Detail_total {
+          border-top: rem(1) solid $color-022;
+          border-bottom: rem(1) solid $color-022;
+          padding: rem(16) 0;
+          font-weight: bold;
+          font-size: rem(18);
+          font-size: rem(14);
+          margin-top: rem(18);
+          margin-bottom: rem(30);
+        }
+      }
+    }
+
+    .check-condition-desktop,
+    .check-condition-mobile {
+      display: flex;
+      margin-bottom: rem(30);
+      width: rem(280);
+
+      .checkbox-text {
+        margin: rem(4) 0 0 rem(10);
+        font-size: rem(14);
+        color: $color-015;
+
+        a {
+          color: $color-000;
+        }
+      }
+    }
+
+    .checkCondition-section {
+      display: none;
+    }
+
+    .bill-button,
+    .bill-button-disabled {
+      width: 100%;
+      border: none;
+      padding: rem(12) rem(42) rem(11);
+      border-radius: rem(22);
+      background-color: $color-024;
+      color: $color-fff;
+    }
+
+    .bill-button-disabled {
+      background-color: $color-019;
+    }
+
+    .view-fare {
+      margin: rem(30) 0;
+
+      a {
+        font-size: rem(15);
+        font-weight: 500;
+        color: $color-000;
+      }
+
+      i {
+        width: rem(20);
+        text-align: center;
+        padding: rem(1) rem(8);
+      }
+    }
+
+    .sub-head {
+      margin-left: rem(-25);
+      margin-right: rem(-25);
+      margin-bottom: rem(20);
+      padding: rem(7) rem(23);
+      background-color: $color-010;
+    }
+
+    .subHead-title {
+      font-size: rem(14);
+      font-weight: 500;
+      letter-spacing: rem(0.17);
+      color: $color-014;
+
+      .trip-arrow {
+        margin: 0 rem(7);
+      }
+    }
+
+    .return-details {
+      margin-top: rem(30);
+      margin-bottom: rem(19);
+    }
+
+    .total-amount {
+      padding-top: rem(15);
+      border-top: rem(1) solid $color-022;
+    }
+
+    .feeLabel-desktop {
+      display: block;
+    }
+
+    .feeLabel-mobile {
+      display: none;
+    }
+
+    .amountLabel-desktop {
+      display: block;
+    }
+
+    .amountLabel-mobile {
+      display: none;
+    }
+
+    .applyCoupon-desktop {
+      display: block;
+    }
+
+    .button-desktop {
+      display: block;
+    }
+
+    .button-mobile {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(500)) {
+  .fare-Detail_wrap {
+    .fare-Detail_content {
+      border: none;
+      padding: 0;
+
+      header {
+        h4 {
+          font-size: rem(22);
+          color: $color-011;
+        }
+      }
+    }
+
+    .bill_details {
+      .section-mobile {
+        margin-top: rem(40);
+
+        ul {
+          li {
+            label {
+              font-size: rem(16);
+              color: $color-014;
+            }
+
+            span {
+              font-size: rem(16);
+              color: $color-015;
+
+              &.green {
+                color: $color-023;
+              }
+            }
+
+            b {
+              font-size: rem(20);
+              color: $color-015;
+            }
+          }
+        }
+
+        .feeLabel-desktop {
+          display: none;
+        }
+
+        .feeLabel-mobile {
+          display: block;
+        }
+
+        .amountLabel-desktop {
+          display: none;
+        }
+
+        .amountLabel-mobile {
+          display: block;
+          color: $color-015;
+          font-size: rem(20);
+        }
+      }
+
+      .button-desktop {
+        display: none;
+      }
+
+      .button-mobile {
+        display: block;
+      }
+
+      .fareBreak-head {
+        font-size: rem(15);
+      }
+
+      .applyCoupon-desktop {
+        display: none;
+      }
+
+      .check-condition-desktop {
+        display: none;
+      }
+
+      .checkCondition-section {
+        display: flex;
+        margin: 0 rem(-16);
+        margin-bottom: rem(30);
+        padding: 0 rem(16);
+        padding-top: rem(30);
+        border-top: rem(8) solid $color-010;
+
+        .check-condition-mobile {
+          width: 100%;
+          margin: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,200 @@
+.sb-wrpr {
+  position: relative;
+
+  .placeholder {
+    left: 0;
+    margin: 0;
+    width: 100%;
+    z-index: 9;
+    top: rem(20);
+    font-size: rem(16);
+    position: absolute;
+    padding: 0 0 0 rem(16);
+    display: inline-block;
+    color: $select-box-placeholder-color;
+  }
+
+  &.active {
+    .sb-lable {
+      border-color: $select-border-focus-color;
+    }
+
+    .sb-opt-wrpr {
+      display: block;
+    }
+  }
+
+  &.has-selected {
+    .placeholder {
+      top: rem(11);
+      font-size: rem(12);
+    }
+  }
+
+  &.has-error {
+    .sb-lable {
+      border-color: $select-error-border-color;
+    }
+  }
+
+  &.no-floating {
+    .sb-lable {
+      line-height: rem(28);
+      padding: rem(15) rem(40) rem(15) rem(15);
+
+      &:hover {
+        border-color: $input-border-focus-color;
+      }
+    }
+
+    .placeholder {
+      display: none;
+    }
+  }
+
+  &.max-height {
+    .sb-opt-wrpr {
+      overflow: auto;
+      min-width: rem(320);
+      max-height: rem(320);
+    }
+  }
+
+  .sb-lable {
+    &.nat-hover {
+      &:hover {
+        border-color: $input-border-focus-color;
+      }
+    }
+  }
+
+  .input-icon-holder {
+    &.nat-arrow {
+      right: rem(16);
+    }
+  }
+}
+
+.sb-lable {
+  margin: 0;
+  z-index: 10;
+  @extend .fm-rm;
+  font-size: rem(16);
+  position: relative;
+  min-height: rem(60);
+  padding: rem(26) rem(48) rem(10) rem(16);
+  cursor: pointer;
+
+  .sb-icon-holder {
+    top: 50%;
+    right: rem(16);
+    width: rem(16);
+    height: rem(16);
+    margin: -#{rem(8)} 0 0;
+    position: absolute;
+  }
+
+  &.custom-label {
+    padding: 0;
+  }
+}
+
+.sb-opt-wrpr {
+  left: 0;
+  top: 100%;
+  z-index: 999;
+  display: none;
+  margin: rem(10) 0 0;
+  position: absolute;
+  background: $select-box-list-bg-color;
+  box-shadow: 0 0 rem(20) 0 $select-box-list-shadow;
+
+  li:hover {
+    background: $color-052;
+  }
+
+  .sb-option {
+    cursor: pointer;
+    position: relative;
+    color: $select-box-option-color;
+    // padding: rem(16) rem(20);
+
+    &:first-child {
+      border-top-left-radius: rem(7);
+      border-top-right-radius: rem(7);
+
+      .sb-o-ih {
+        top: rem(14);
+      }
+
+      &.selected {
+        border-bottom-left-radius: rem(0);
+        border-bottom-right-radius: rem(0);
+      }
+    }
+
+    &:last-child {
+      border-bottom-left-radius: rem(7);
+      border-bottom-right-radius: rem(7);
+    }
+
+    &.selected {
+      @extend .fm-rm;
+      background: #eef4fb;
+    }
+
+    &.disabled{
+      color: $color-017;
+      cursor: default;
+      &:hover{
+        background: none;
+      }
+    }
+
+    &.custom-option {
+      padding: 0;
+    }
+
+    .tooltip-box-holder, .tooltip-box-holder-m{
+      width: inherit;
+      .desc{
+        max-width: rem(204);
+        margin-bottom: 0;
+      }
+    }
+
+    .sb-o-ih {
+      top: rem(14);
+      right: rem(20);
+      width: rem(16);
+      height: rem(16);
+      margin: 0 0 0;
+      position: absolute;
+    }
+  }
+}
+
+.sb-lable,
+.sb-opt-wrpr {
+  border: 1px solid $color-017;
+  @include adl-border-radius(#{rem(8)}, #{rem(8)}, #{rem(8)}, #{rem(8)});
+
+  &.no-bdr {
+    border: none;
+  }
+}
+
+.adlw {
+  .sb-opt-wrpr {
+    .sb-option {
+      .sb-o-ih {
+        top: rem(14);
+      }
+
+      &.selected {
+        border-bottom-left-radius: rem(0);
+        border-bottom-right-radius: rem(0);
+      }
+    }
+  }
+}

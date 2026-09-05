@@ -1,0 +1,94 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Button"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "nowrapper":{
+            "description":"wrapper element",
+            "type":"bool",
+            "defaultValue":false
+        },
+        "dsTheme":{
+            "description":"Ds theme config of avatar",
+            "type":"object",
+            "defaultValue":{
+                "size":40,
+                "outer":20,
+                "shadow":"sm",
+                "radius":"round",
+                "color":"c00000",
+                "hcolor":"c11806",
+                "background":"c12306",
+                "hbackground":"g00003"
+            }
+        },
+        "image":{
+            "description":"Image config of image avatar",
+            "type":"object",
+            "defaultValue":{
+                "src":""
+            }
+        },
+
+        "initial":{
+            "description":"Initial config of name",
+            "type":"object",
+            "defaultValue":{
+                "size":"xxl",
+                "family":"bd",
+                "fallback":"UH",
+                "display":false,
+                "value":"Mandeep Kundu"
+            }
+        },
+
+        "icon":{
+            "description":"Initial config of name",
+            "type":"object",
+            "defaultValue":{
+                "ds":{},
+                "attrs":{},
+                "markup":{},
+                "type":"font",
+                "svg":{
+                    "style":{},
+                    "src":null,
+                    "size":"24px"
+                },
+                "icon":{
+                    "size":16,
+                    "name":"",
+                    "family":""
+                }
+            }
+        },
+
+        "config":{
+            "description":"Default button",
+            "type":"object",
+            "defaultValue":{
+                "image":{},
+                "wrapper":{},
+                "initial":{
+                    "ds":{
+                        "css":{
+                            "class":{
+                                "family":"md",
+                                "fontsize":"sm"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,282 @@
+@function get-theme-name($theme) {
+    @if $theme < 10 {
+        @return "00#{$theme}" 
+    } @else {
+        @if $theme < 99 {
+            @return "0#{$theme}" 
+        } @else {
+            @return "#{$theme}" 
+        }
+    }
+};
+
+@mixin parse-childs-css-props-list($child-list:'') {
+    @if $child-list != null {
+        @if $child-list != '' {
+            @each $child-item, $child-item-props in $child-list {
+                $child-define-type:map-get($child-item-props, 'define');
+                $child-selector:map-get($child-item-props, 'selector');
+                $child-pseudo-selector:map-get($child-item-props, 'pseudo-selector');
+                $item-css-props:map-get($child-item-props, 'css-props');
+                $childs-css-props:map-get($child-item-props, 'childs-css-props');
+                $childs-css-props-list:map-get($child-item-props, 'childs-css-props-list');
+
+                @if $child-define-type == css-props {
+                    @if $item-css-props != null {
+                        @if $child-selector != null {  
+                            @if $child-pseudo-selector != null {
+                                @if $child-selector != '' {
+                                    &#{$child-selector},
+                                    &#{$child-pseudo-selector} {
+                                        @include props-by-type($item-css-props);
+                                        @if $childs-css-props != null {
+                                            @include parse-props($childs-css-props);
+                                        }
+                                        @include parse-childs-css-props-list($childs-css-props-list);
+                                    }
+                                } @else {
+                                    @if $child-pseudo-selector != '' {
+                                        &#{$child-pseudo-selector} {
+                                            @include props-by-type($item-css-props);
+                                            @if $childs-css-props != null {
+                                                @include parse-props($childs-css-props);
+                                            }
+                                            @include parse-childs-css-props-list($childs-css-props-list);
+                                        }
+                                    }
+                                }
+                            } @else {
+                                @if $child-selector != '' {
+                                    &#{$child-selector} {
+                                        @include props-by-type($item-css-props);
+                                        @if $childs-css-props != null {
+                                            @include parse-props($childs-css-props);
+                                        }
+                                        @include parse-childs-css-props-list($childs-css-props-list);
+                                    }
+                                }
+                            } 
+                        } @else {
+                            @if $child-pseudo-selector != null {
+                                @if $child-pseudo-selector != '' {
+                                    &#{$child-pseudo-selector} {
+                                        @include props-by-type($item-css-props);
+                                        @if $childs-css-props != null {
+                                            @include parse-props($childs-css-props);
+                                        }
+                                        @include parse-childs-css-props-list($childs-css-props-list);
+                                    }
+                                }
+                            }
+                        }
+                    } @else {
+                        @if $childs-css-props != null {
+                            @if $child-selector != null {
+                                @if $child-pseudo-selector != null {
+                                    @if $child-selector != '' {
+                                        &#{$child-selector},
+                                        &#{$child-pseudo-selector} {
+                                            @include parse-props($childs-css-props);
+                                            @include parse-childs-css-props-list($childs-css-props-list);
+                                        }
+                                    } @else {
+                                        @if $child-pseudo-selector != '' {
+                                            &#{$child-pseudo-selector} {
+                                                @include parse-props($childs-css-props);
+                                                @include parse-childs-css-props-list($childs-css-props-list);
+                                            }
+                                        }
+                                    }
+                                } @else {
+                                    @if $child-selector != '' {
+                                        #{$child-selector} {
+                                            @include parse-props($childs-css-props);
+                                            @include parse-childs-css-props-list($childs-css-props-list);
+                                        }
+                                    }
+                                } 
+                            }
+                        } @else {
+                            @if $child-pseudo-selector != null {
+                                @if $child-pseudo-selector != '' {
+                                    #{$child-pseudo-selector} {
+                                        @include props-by-type($item-css-props);
+                                        @if $childs-css-props != null {
+                                            @include parse-props($childs-css-props);
+                                        }
+                                        @include parse-childs-css-props-list($childs-css-props-list);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } @else {
+                    @include props-by-type($child-item-props);
+                }
+            }
+        }
+    }
+}
+
+@mixin color-pairing($component-themes, $prefix, $type:'theme'){
+    @if $component-themes != null {
+        @if $prefix != null {
+            @if $prefix != '' {
+                @each $theme-code, $theme-props in $component-themes {
+                    $theme-name:get-theme-name($theme-code);
+                    $theme-define:map-get($theme-props, 'define');
+                    $theme-type:map-get($theme-props, 'type');
+                    $css-props:map-get($theme-props, 'css-props');
+                    $childs-css-props:map-get($theme-props, 'childs-css-props');
+                    $childs-css-props-list:map-get($theme-props, 'childs-css-props-list');
+
+                    @if $type == theme {
+                        .#{$prefix} {
+                            @if $theme-define != '' {
+                                @if $theme-type == default {
+                                    @if $css-props != null {
+                                        @include props-by-type($css-props);
+                                    }
+            
+                                    @if $childs-css-props != null {
+                                        @include parse-props($childs-css-props);
+                                    }
+            
+                                    @if $childs-css-props-list != null{
+                                        @include parse-childs-css-props-list($childs-css-props-list)
+                                    }
+                                } @else {
+                                    &.th-#{$theme-name} {
+                                        @if $css-props != null {
+                                            @include props-by-type($css-props);
+                                        }
+            
+                                        @if $childs-css-props != null {
+                                            @include parse-props($childs-css-props);
+                                        }
+            
+                                        @if $childs-css-props-list != null{
+                                            @include parse-childs-css-props-list($childs-css-props-list)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }@else {
+                        .#{$prefix}-#{$theme-name},
+                        .h#{$prefix}-#{$theme-name}:hover {
+                            @if $css-props != null {
+                                @include props-by-type($css-props);
+                            }
+
+                            @if $childs-css-props != null {
+                                @include parse-props($childs-css-props);
+                            }
+
+                            @if $childs-css-props-list != null{
+                                @include parse-childs-css-props-list($childs-css-props-list)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin build-color-pairs () {
+    @if variable-exists(theme-data){ // => Check that theme data variable is deifined globally or not
+        $color-pairs:map-get($theme-data, 'color-pairs');
+        @if $color-pairs != null {
+            @if $color-pairs != '' {
+                @include color-pairing($color-pairs, 'cp', 'color-paris');
+            }
+        }
+    }
+}
+
+@mixin build-theme-colors() {
+    @if variable-exists(theme-colors) { 
+        @if $theme-colors != null {
+            @each $code in $theme-colors {
+                .bdr-#{$code},
+                .hbdr-#{$code}:hover {
+                    border-color:var(--#{$code});
+                }
+
+                .txt-#{$code},
+                .htxt-#{$code}:hover {
+                    color:var(--#{$code});
+                }
+
+                .bg-#{$code},
+                .hbg-#{$code}:hover {
+                    background:var(--#{$code});
+                }
+
+                /*--.atxt-#{$code}:after,
+                .btxt-#{$code}:before,
+                .hbtxt-#{$code}:hover:before,
+                .hatxt-#{$code}:hover:after{
+                    @extend .txt-#{$code}
+                }
+
+                .abg-#{$code}:after,
+                .bbg-#{$code}:before,
+                .hbbg-#{$code}:hover:before,
+                .habg-#{$code}:hover:after{
+                    @extend .bg-#{$code}
+                }
+
+                .abdr-#{$code}:after,
+                .bbdr-#{$code}:before,
+                .hbbdr-#{$code}:hover:before,
+                .habdr-#{$code}:hover:after{
+                    @extend .bdr-#{$code}
+                }--*/
+            }
+        }
+    }
+}
+
+@mixin components-theme () {
+    @if variable-exists(aio-components) { // => Check that components list is defined or not
+        @if variable-exists(theme-data){ // => Check that theme data variable is deifined globally or not
+            @each $components-name, $components-props in $aio-components {
+                $has-components:has-component($components-name); // => Check that component is enabled or not
+                @if $has-components != '' {
+                    $component-themes:map-get($theme-data, $components-name);
+                    $components-class-prefix:get-component-prefix($components-name);
+                    @if $components-class-prefix != '' {
+                        @include color-pairing($component-themes, $components-class-prefix)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin shadows () {
+    @if variable-exists(theme-data){ // => Check that theme data variable is deifined globally or not
+        $shadows:map-get($theme-data, 'shadows');
+        @if $shadows != null {
+            $prefix:map-get($shadows, 'prefix');
+            $shadow-sizes:map-get($shadows, 'sizes');
+            @if $prefix != '' {
+                @each $shadows-name, $shadows-props in $shadow-sizes {
+                    .#{$prefix}-#{$shadows-name} {
+                        box-shadow:#{$shadows-props};
+                        -moz-box-shadow:#{$shadows-props};
+                        -webkit-box-shadow:#{$shadows-props};
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin build-theme() {
+    @include shadows();
+    @include components-theme();
+    @include build-color-pairs();
+}

@@ -1,0 +1,331 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "An input component is a controlled or uncontrolled field used to capture user input such as text, numbers, email, passwords, etc."
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "label":{
+            "description":"By default design system thems on input elements",
+            "type":"string",
+            "defaultValue":""
+		},
+
+		"name":{
+            "description":"By default design system thems on input elements",
+            "type":"string",
+            "defaultValue":""
+		},
+
+		"type":{
+            "description":"By default design system thems on input elements",
+            "defaultValue":"text",
+            "value":"'text', 'password', 'email'"
+		},
+
+		"error":{
+            "description":"By default design system thems on input elements",
+            "type":"string",
+            "defaultValue":"Invaild"
+		},
+
+		"description":{
+            "description":"By default design system thems on input elements",
+            "type":"string",
+            "defaultValue":""
+		},
+
+		"placeholder":{
+            "description":"By default design system thems on input elements",
+            "type":"string",
+            "defaultValue":""
+		},
+
+        "defaultValue":{
+            "description":"By default design system thems on input elements",
+            "type":"string",
+            "defaultValue":""
+		},
+
+		"eye":{
+            "description":"By default design system thems on input elements",
+            "type":"bool",
+            "defaultValue":true
+		},
+
+		"maxlength":{
+            "description":"By default design system thems on input elements",
+            "type":"number",
+            "defaultValue":100
+		},
+
+		"minLength":{
+            "description":"By default design system thems on input elements",
+            "type":"number",
+            "defaultValue":2
+		},
+
+		"debounceDelay":{
+            "description":"By default design system thems on input elements",
+            "type":"number",
+            "defaultValue":500
+		},
+
+		"invalid":{
+            "description":"By default design system thems on input elements",
+            "type":"bool",
+            "defaultValue":false
+		},
+
+		"disabled":{
+            "description":"By default design system thems on input elements",
+            "type":"bool",
+            "defaultValue":false
+		},
+
+		"required":{
+            "description":"By default design system thems on input elements",
+            "type":"bool",
+            "defaultValue":false
+		},
+
+		"readonly":{
+            "description":"By default design system thems on input elements",
+            "type":"bool",
+            "defaultValue":false
+		},
+
+		"clearable":{
+            "description":"By default design system thems on input elements",
+            "type":"bool",
+            "defaultValue":true
+		},
+
+		"prefix":{
+            "description":"By default design system thems on input elements",
+            "type":"bool",
+            "defaultValue":false
+		},
+
+		"suffix":{
+            "description":"By default design system thems on input elements",
+            "type":"bool",
+            "defaultValue":false
+		},
+
+        "dsTheme":{
+            "description":"By default design system thems on input elements",
+            "type":"object",
+            "defaultValue":{
+                "radius":"",
+                "size":"xl",
+                "theme":"000"
+            }
+		},
+
+        "callback": {
+            "description":"Callback functions",
+            "type":"object",
+            "defaultValue":{
+                "onCut":null,
+                "onCopy":null,
+                "onBlur":null,
+                "onEnter":null,
+                "onFocus":null,
+                "onInput":null,
+                "onPaste":null,
+                "onSelect":null,
+                "onKeyUp":null,
+                "onKeyDown":null,
+                "onChange":null,
+                "onChangeEnd":null,
+                "onChangeStart":null,
+                "onBeforeInput":null,
+                "onCompositionEnd":null,
+                "onCompositionStart":null,
+                "onCompositionUpdate":null
+            }
+        },
+        "config":{
+            "description":"Default button",
+            "type":"object",
+            "isRequired":false,
+            "defaultValue":{
+                "icons":{
+                    "left":{
+                        "svg":{},
+                        "attrs":{},
+                        "markup":{},
+                        "type":"font",
+                        "icon":{
+                            "name":""
+                        },					
+                        "ds":{
+                            "css":{},
+                            "theme":{
+                                "filled":{},
+                                "invalid":{},
+                                "focused":{},
+                                "readonly":{},
+                                "disabled":{},
+                                "default":{}
+                            }
+                        }
+                    },
+                    "right":{
+                        "svg":{},
+                        "attrs":{},
+                        "markup":{},
+                        "type":"font",
+                        "icon":{
+                            "name":""
+                        },					
+                        "ds":{
+                            "css":{},
+                            "theme":{
+                                "filled":{},
+                                "invalid":{},
+                                "focused":{},
+                                "readonly":{},
+                                "disabled":{},
+                                "default":{}
+                            }
+                        }
+                    },
+                    "clear":{
+                        "svg":{},
+                        "attrs":{},
+                        "markup":{},
+                        "type":"font",
+                        "icon":{
+                            "name":""
+                        },					
+                        "ds":{
+                            "css":{},
+                            "theme":{
+                                "filled":{},
+                                "invalid":{},
+                                "focused":{},
+                                "readonly":{},
+                                "disabled":{},
+                                "default":{}
+                            }
+                        }
+                    }
+                },
+			    "description":{
+                    "attrs":{},
+                    "markup":{},
+				    "ds":{
+                        "css":{},
+                        "theme":{
+                            "filled":{},
+                            "invalid":{},
+                            "focused":{},
+                            "readonly":{},
+                            "disabled":{},
+                            "default":{}
+                        }
+				    }
+			    },
+                "error":{
+                    "attrs":{},
+                    "markup":{},
+				    "ds":{
+                        "css":{},
+                        "theme":{
+                            "filled":{},
+                            "invalid":{},
+                            "focused":{},
+                            "readonly":{},
+                            "disabled":{},
+                            "default":{}
+                        }
+				    }
+			    },
+                "label":{
+                    "attrs":{},
+                    "markup":{},
+				    "ds":{
+                        "css":{},
+                        "theme":{
+                            "filled":{},
+                            "invalid":{},
+                            "focused":{},
+                            "readonly":{},
+                            "disabled":{},
+                            "default":{}
+                        }
+				    }
+			    },
+                "input":{
+                    "attrs":{},
+                    "markup":{},
+				    "ds":{
+                        "css":{},
+                        "theme":{
+                            "filled":{},
+                            "invalid":{},
+                            "focused":{},
+                            "readonly":{},
+                            "disabled":{},
+                            "default":{}
+                        }
+				    }
+			    },
+                "inputWrapper":{
+                    "attrs":{},
+                    "markup":{},
+				    "ds":{
+                        "css":{},
+                        "theme":{
+                            "filled":{},
+                            "invalid":{},
+                            "focused":{},
+                            "readonly":{},
+                            "disabled":{},
+                            "default":{}
+                        }
+				    }
+			    },
+                "wrapper":{
+                    "attrs":{},
+                    "markup":{},
+				    "ds":{
+                        "css":{},
+                        "theme":{
+                            "filled":{},
+                            "invalid":{},
+                            "focused":{},
+                            "readonly":{},
+                            "disabled":{},
+                            "default":{}
+                        }
+				    }
+			    },
+                "asterisk":{
+                    "attrs":{},
+                    "markup":{},
+				    "ds":{
+                        "css":{},
+                        "theme":{
+                            "filled":{},
+                            "invalid":{},
+                            "focused":{},
+                            "readonly":{},
+                            "disabled":{},
+                            "default":{}
+                        }
+				    }
+			    }
+		    }
+        }
+    }
+}

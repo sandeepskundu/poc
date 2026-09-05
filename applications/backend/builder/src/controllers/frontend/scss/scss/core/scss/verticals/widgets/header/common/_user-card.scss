@@ -1,0 +1,23 @@
+.user-card-box{
+    cursor:pointer;
+    &:hover{
+        background-color:$color-052;
+    }
+}
+
+.user-card-info{
+    position:relative;
+    min-height:rem(42);
+    padding-left:rem(54);
+
+    .user-avatar{
+        top:0;
+        left:0;
+        width:rem(42);
+        height:rem(42);
+        position:absolute;
+        padding:rem(5) rem(8);
+        border:1px solid $color-054;
+        @include adl-border-radius(50%, 50%, 50%, 50%);
+    }
+}

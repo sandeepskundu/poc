@@ -1,0 +1,16 @@
+.meals-blank-wrpr {
+  .product-card {
+    .product-image.blank {
+      &::after {
+        border-radius: rem(9);
+      }
+    }
+    .ctr-btn-wrpr.blank {
+      border: none;
+
+      &::after {
+        border-radius: rem(24);
+      }
+    }
+  }
+}

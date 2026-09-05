@@ -1,0 +1,154 @@
+@import 'adl-sass-verticals/booking/common/flight-segment-bubble.scss';
+
+.adlw {
+  .hp-widget.ptc-included {
+    .fare-type {
+      .tooltip-box-holder,
+      .tooltip-box-holder-m {
+        width: 100%;
+        .tooltip-content {
+          right: 104%;
+
+          .desc {
+            max-width: rem(204);
+          }
+          &:before {
+            left: 99.5%;
+            top: rem(32);
+            border-left: 0.5rem solid $color-020;
+          }
+        }
+      }
+    }
+  }
+
+  .flight-service-widget,
+  .fbh {
+    .fare-type {
+      .seg-bubble {
+        &.disabled {
+          cursor: default;
+        }
+      }
+
+      .tooltip-box-holder {
+        .tooltip-content {
+          transform: none;
+          left: 0;
+          bottom: unset;
+          z-index: 9;
+        }
+      }
+    }
+
+    .ft-info {
+      padding-bottom: 0 !important;
+
+      .new {
+        padding: rem(4) rem(8);
+        text-align: center;
+        line-height: normal;
+        background-color: $color-078;
+        cursor: default;
+        margin-left: rem(6);
+        border-radius: rem(11);
+        color: $color-fff;
+      }
+
+      .info {
+        max-width: rem(128);
+        line-height: normal;
+      }
+
+      &.pa {
+        right: rem(-170);
+      }
+
+      .new-tag-info {
+        &:before {
+          content: '';
+          position: absolute;
+          width: rem(10);
+          left: rem(-10);
+          border-right: 0.5rem solid $color-020;
+          border-top: 0.5rem solid transparent;
+          border-bottom: 0.5rem solid transparent;
+        }
+      }
+    }
+
+    .fare-type-holder {
+      .tooltip-box-holder,
+      .tooltip-box-holder-m {
+        .tooltip-content {
+          right: 104%;
+
+          &:before {
+            left: 99.5%;
+            top: rem(32);
+            border-left: 0.5rem solid $color-020;
+          }
+        }
+      }
+    }
+  }
+}
+
+.be-warpper.ptc-included {
+  .fare-type {
+    .tooltip-box-holder,
+    .tooltip-box-holder-m {
+      .tooltip-content {
+        right: 104%;
+
+        &:before {
+          left: 99.5%;
+          top: rem(32);
+          border-left: 0.5rem solid $color-020;
+        }
+      }
+    }
+  }
+}
+
+.hp-widget.ptc-included {
+  .fare-type {
+    .new {
+      padding: 0.156rem 0.35rem;
+      text-align: center;
+      line-height: normal;
+      background-color: $color-078;
+      cursor: default;
+      margin-left: rem(7);
+      border-radius: rem(10);
+    }
+    .sb-wrpr {
+      .sb-opt-wrpr {
+        .sb-option {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+}
+.fare-type {
+  .seg-bubble {
+    i {
+      &::before {
+        position: absolute;
+      }
+      &.ai-stuf {
+        margin-bottom: 1px;
+      }
+    }
+    &:last-child {
+      margin-right: rem(1);
+    }
+    &.disabled {
+      border-color: $color-117;
+      &:hover {
+        border-color: $color-117;
+      }
+    }
+  }
+}

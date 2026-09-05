@@ -1,0 +1,1 @@
+exports.byLoginType = require('./by-login-type')

@@ -1,0 +1,32 @@
+.bubble {
+    text-align:center;
+    position:relative;
+    align-items:center;
+    display:inline-flex;
+    padding:rem(2) rem(6);
+    justify-content:center;
+    border:1px solid transparent;
+    
+    &.sz-sm{
+        font-size:rem(12);
+        line-height:rem(18);
+        padding:rem(1) rem(6);
+    }
+
+    &.sz-lg{
+        font-size:rem(12);
+        line-height:rem(18);
+    }
+
+    &.sz-xl{
+        font-size:rem(14);
+        line-height:rem(20);
+        padding:rem(2) rem(6);
+    }
+
+    &.disabled {
+        opacity:0.5;
+        cursor:default;
+        pointer-events:none;
+    }
+}

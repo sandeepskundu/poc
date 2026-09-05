@@ -1,0 +1,7 @@
+"use strict";(self.webpackChunkirms=self.webpackChunkirms||[]).push([[2940],{"./src/storybook/ui-libs/components/atoms/request/index.stories.jsx"(__unused_webpack_module,__webpack_exports__,__webpack_require__){__webpack_require__.r(__webpack_exports__),__webpack_require__.d(__webpack_exports__,{Base:()=>Base,__namedExportsOrder:()=>__namedExportsOrder,default:()=>index_stories});var react=__webpack_require__("./node_modules/react/index.js"),Request=function Request(dprops){return helpers.element.jsx.props.define({},dprops),react.createElement(react.Fragment,null,react.createElement("p",null,"Sandeep Kundu"))};Request.propTypes={},Request.defaultProps={},Request.__docgenInfo={description:"",methods:[],displayName:"Request"};let index_stories={title:"Atoms/Request",component:Request,parameters:{layout:"centered",docs:{description:{component:"Descriptions of the component will display here<br/><br /><strong>Import path:</strong><code>import Request from 'aio-global-ui/atoms/request';</code><br /><strong>Component directory:</strong><code>./libs/frontend/ui/components/atoms/request/index</code><br/><br/>"}}},tags:["autodocs"],argTypes:{}};var Base={args:{attrs:{},dataAttrs:{}}};Base.parameters={...Base.parameters,docs:{...Base.parameters?.docs,source:{originalSource:`{
+  args: {
+    attrs: {},
+    dataAttrs: {}
+  }
+}`,...Base.parameters?.docs?.source}}};let __namedExportsOrder=["Base"]}}]);
+//# sourceMappingURL=storybook-ui-libs-components-atoms-request-index-stories.2e18c68e.iframe.bundle.js.map

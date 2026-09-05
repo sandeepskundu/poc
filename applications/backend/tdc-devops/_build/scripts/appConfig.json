@@ -1,0 +1,111 @@
+{
+    "appConfig": {
+        "scriptDir": "scripts",
+        "applicationType": "api",
+        "srcDir": "src",
+        "cdnPath": "/",
+        "cssCdnPath": "/",
+        "apiBasePath": "/",
+        "fontsCdnPath": "/",
+        "imagesCdnPath": "/",
+        "assetsCdnPath": "/",
+        "appEnv": "local",
+        "appName": "tdc-devops",
+        "category": "api",
+        "appExposedIn": {
+            "public": true,
+            "partner": false,
+            "internal": false,
+            "scheduler": false
+        },
+        "instances": {
+            "public": 1,
+            "partner": 1,
+            "internal": 1,
+            "scheduler": 1
+        },
+        "ports": {
+            "public": 2600,
+            "partner": 2650,
+            "internal": 2700,
+            "scheduler": 2750
+        },
+        "dbConfigs": {
+            "defaultCollections": {
+                "merchant": false,
+                "apiSchema": false,
+                "collections": false,
+                "appDetails": false
+            }
+        },
+        "pathPrefix": "tdc-devops",
+        "docsDir": "docs",
+        "buildDir": "build",
+        "schemaDir": "schema",
+        "configDir": "configs",
+        "paths": {
+            "docs": "build/docs",
+            "schema": "build/docs/schema"
+        },
+        "authConfigs": {
+            "expiry": {
+                "auth": "30D",
+                "session": "365D"
+            },
+            "cookies": {
+                "authToken": "ssoToken",
+                "refreshToken": "refreshoken",
+                "windowSession": "wsToken"
+            },
+            "secrets": {
+                "jwt": "JWTSESSIONAIOFOUNDATIONJWTSESSION",
+                "crypto": "CRYPTOSESSIONAIOFOUNDATIONCRYPTOSESSION"
+            },
+            "collection": {
+                "name": "emps"
+            }
+        }
+    },
+    "appInfo": {
+        "author": "sandeep-kundu",
+        "version": "0.0.1",
+        "description": "TDC Devops application",
+        "appId": "68260aef22b1cf19a93b623e"
+    },
+    "hashId": "6a8e550c21d46b0d5a101ae3b2ca4438",
+    "portHashId": "3480323c36174b71bd1d0fee266a092f",
+    "internalPortHashId": "a451fd6ec92db4b665d6df0119266d90",
+    "partnerPortHashId": "2bd204badd414d6c02d756c165e19141",
+    "schedulerPortHashId": "40cbaabe5f72535b7f1895edf41934aa",
+    "signature": {
+        "id": "68260aef22b1cf19a93b623d",
+        "token": "U2FsdGVkX19lzoaWU/wcycUpChOxGNUML+3h1GDynY0fYmoLBgniJfbHAbLnL1o8CGGpfYKsFQp/V8fcKpKtFzI3/okxtBBtk02uZgb3xuUOwCWV4focVVNneFLtvJupAuUvdY2oSaycisDqrUPw1d5+EiTFN/HUD39H7mft1I1yM/35LAeO2G319oreNa65ORzitQyLzTW1idGk+ghnjBw4nDP8s9pIxMjuCInEGtuaR+K853q/wwU7lMyr1cGxOFY4bmYpU7TUO+uWH1rw9YibEQ9El6cMi2j3m+aDKXU="
+    },
+    "vd": {
+        "id": "68260aef22b1cf19a93b623d"
+    },
+    "tokens": {
+        "marchant": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoiQUlPQ0FSVCIsImlkIjoiNjcyY2FjNjQ0YTBkZGVkNzY1YjVjM2IyIiwiTUVSQ0hBTlRfQVVUSF9UT0tFTiI6IiIsIk1FUkNIQU5UX1NJR05BVFVSRV9UT0tFTiI6IjY3MmNhZDUwMDcwOGNmZDNjMzA3ZTg4ZiIsIk1FUkNIQU5UX0FQUF9FTlZJUk9OTUVOVCI6ImxvY2FsIiwiaWF0IjoxNzUxNzk3MDc2fQ.ZnqRF9vGtgsWR7JntKQIv4SF2PBUxXFu7XWhuILZjxs"
+    },
+    "dirs": {
+        "build": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt/applications/backend/tdc-devops/build",
+        "app": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt/applications/backend/tdc-devops",
+        "configDir": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt/applications/backend/tdc-devops/configs",
+        "beLib": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt/libs/backend",
+        "uiLib": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt/libs/frontend",
+        "root": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt",
+        "applications": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt/applications",
+        "scriptDir": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt/applications/backend/tdc-devops/build/scripts",
+        "category": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt/applications/backend",
+        "srcDir": "/Users/sandy/Documents/sandeep/workspace/codebase/dev/mtt/applications/backend/tdc-devops/src"
+    },
+    "_appInfo": {
+        "id": "",
+        "cate": "",
+        "prefix": "",
+        "disabled": "",
+        "name": "Cdn Application",
+        "appId": "6738829afbe779c7746626aa",
+        "description": "This is sample description and will be replaced with original content"
+    }
+}

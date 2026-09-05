@@ -1,0 +1,48 @@
+.carousel-arrow-wrpr {
+  .right-arrow,
+  .left-arrow,
+  .posHalf {
+    position: absolute;
+    height: rem(40);
+    width: rem(40);
+    border-radius: rem(50);
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid #333;
+    z-index: 21;
+    background: #fff;
+    top: rem(270);
+    right: rem(-20);
+
+    .ai-right {
+      position: absolute;
+      top: rem(11);
+      right: rem(11);
+    }
+
+    .ai-left {
+      position: absolute;
+      top: rem(11);
+      left: rem(11);
+    }
+    
+    &:hover {
+      background: $color-052;
+    }
+  }
+
+  .left-arrow {
+    right: initial;
+    left: rem(-20);
+  }
+
+  .posHalf {
+    top: 50%;
+  }
+}
+
+.seat-container {
+  .posHalf {
+    top: 55%;
+  }
+}

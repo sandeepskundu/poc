@@ -1,0 +1,140 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Tags (also known as “chips”) are compact elements that allow users to enter information, make selections, filter content, or trigger actions. They’re similar to badges, but are more commonly used in inputs to allow users to select multiple items at once."
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "callbacks": {
+            "description":"Callback methods",
+            "type":"object",
+            "defaultValue":{
+                "item":{
+                    "onBlur":null,
+                    "onClick":null,
+                    "onFocus":null,
+                    "onKeyUp":null,
+                    "dsTheme":null,
+                    "onKeyDown":null,
+                    "onDragStart":null,
+                    "onMouseDown":null,
+                    "onPointerUp":null,
+                    "onPointerDown":null,
+                    "onPointerEnter":null,
+                    "onPointerLeave":null,
+                    "beforeRender":null
+                },
+                "group":{
+                    "onBlur":null,
+                    "onClick":null,
+                    "onFocus":null,
+                    "onKeyUp":null,
+                    "dsTheme":null,
+                    "onKeyDown":null,
+                    "onDragStart":null,
+                    "onMouseDown":null,
+                    "onPointerUp":null,
+                    "onPointerDown":null,
+                    "onPointerEnter":null,
+                    "onPointerLeave":null,
+                    "beforeRender":null
+                }
+            }
+        },
+        "templates":{
+            "description":"Childs content of list item",
+            "type":"object",
+            "defaultValue":{}
+        },
+        "data":{
+            "description":"Childs content of list item",
+            "type":"object",
+            "defaultValue":{}
+        },
+        "mapping":{
+            "description":"Childs content of list item",
+            "type":"object",
+            "defaultValue":{
+                "group":{
+                    "end":"",
+                    "after":"",
+                    "start":"",
+                    "before":"",
+                    "center":"label"
+                },
+                "item":{
+                    "end":"",
+                    "after":"",
+                    "start":"",
+                    "before":"",
+                    "center":"label"
+                }
+            }
+        },
+        "childs":{
+            "description":"Childs content of list item",
+            "type":"object",
+            "defaultValue":{
+                "item":{},
+                "group":{}
+            }
+        },
+        "dsTheme": {
+            "description":"Predefined ds theme config",
+            "type":"object",
+            "defaultValue":{
+                "boxWrapper":{},
+                "item":{
+                    "end":{},
+                    "after":{},
+                    "start":{},
+                    "before":{},
+                    "center":{},
+                    "wrapper":{}
+                },
+                "group":{
+                    "end":{},
+                    "after":{},
+                    "start":{},
+                    "before":{},
+                    "center":{},
+                    "wrapper":{}
+                }
+            }
+        },
+
+        "config": {
+            "description":"Ds theme",
+            "type":"object",
+            "defaultValue":{
+                "item":{
+                    "end":{},
+                    "after":{},
+                    "start":{},
+                    "before":{},
+                    "center":{},
+                    "wrapper":{}
+                },
+                "group":{
+                    "end":{},
+                    "after":{},
+                    "start":{},
+                    "before":{},
+                    "center":{},
+                    "wrapper":{}
+                },
+                "boxWrapper":{
+                    "ds":{},
+                    "markup":{}
+                }
+            }
+        }
+    }
+}

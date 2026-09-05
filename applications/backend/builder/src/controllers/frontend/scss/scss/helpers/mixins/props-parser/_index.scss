@@ -1,0 +1,137 @@
+@mixin colors-by-var-name($colors-by-var-name:'') {
+    @if $colors-by-var-name != null {
+        @each $prop, $props-values in $colors-by-var-name {
+            #{$prop}:var(--#{$props-values});
+        }
+    }
+}
+
+@mixin sizes-in-rem($sizes-in-rem:'') {
+    @if $sizes-in-rem != null {
+        @each $prop, $props-values in $sizes-in-rem {
+            #{$prop}:rem($props-values);
+        }
+    }
+}
+
+@mixin css-props-and-value($css-props-and-value:'') {
+    @if $css-props-and-value != null {
+        @each $prop, $props-values in $css-props-and-value {
+            #{$prop}:$props-values;
+        }
+    }
+}
+
+@mixin props-by-type($props:'') {
+    @each $prop, $props-values in $props {
+        @if $prop == colors-by-var-name {
+            @include colors-by-var-name($props-values)
+        }
+
+        @if $prop == sizes-in-rem {
+            @include sizes-in-rem($props-values)
+        }
+
+        @if $prop == css-props-and-value {
+            @include css-props-and-value($props-values)
+        }
+    }
+}
+
+@mixin parse-props($props:''){
+    @if $props != null {
+        $define-type:map-get($props, 'define');
+        @if $define-type == css-props {
+            $selector:map-get($props, 'selector');
+            $css-props:map-get($props, 'css-props');
+            $pseudo-selector:map-get($props, 'pseudo-selector');
+            $childs-css-props:map-get($props, 'childs-css-props');
+
+            @if $css-props != null {
+                @if $selector != null {  
+                    @if $pseudo-selector != null {
+                        @if $selector != '' {
+                            #{$selector},
+                            #{$selector}#{$pseudo-selector} {
+                                @include props-by-type($css-props);
+                                @if $childs-css-props != null {
+                                    @include parse-props($childs-css-props);
+                                }
+                            }
+                        } @else {
+                            @if $pseudo-selector != '' {
+                                &#{$pseudo-selector} {
+                                    @include props-by-type($css-props);
+                                    @if $childs-css-props != null {
+                                        @include parse-props($childs-css-props);
+                                    }
+                                }
+                            }
+                        }
+                        
+                    } @else {
+                        @if $selector != '' {
+                            #{$selector} {
+                                @include props-by-type($css-props);
+                                @if $childs-css-props != null {
+                                    @include parse-props($childs-css-props);
+                                }
+                            }
+                        }
+                    } 
+                } @else {
+                    @if $pseudo-selector != null {
+                        @if $pseudo-selector != '' {
+                            &#{$pseudo-selector} {
+                                @include props-by-type($css-props);
+                                @if $childs-css-props != null {
+                                    @include parse-props($childs-css-props);
+                                }
+                            }
+                        }
+                    }
+                }
+            } @else {
+                @if $childs-css-props != null {
+                    @if $selector != null {
+                        @if $pseudo-selector != null {
+                            @if $selector != '' {
+                                #{$selector},
+                                #{$selector}#{$pseudo-selector} {
+                                    @include parse-props($childs-css-props);
+                                }
+                            } @else {
+                                @if $pseudo-selector != '' {
+                                    &#{$pseudo-selector} {
+                                        @include parse-props($childs-css-props);
+                                    }
+                                }
+                            }
+                        } @else {
+                            @if $selector != '' {
+                                #{$selector} {
+                                    @include parse-props($childs-css-props);
+                                }
+                            }
+                        } 
+                    }
+                    
+                } @else {
+                    @if $pseudo-selector != null {
+                        @if $pseudo-selector != '' {
+                            #{$pseudo-selector} {
+                                @include props-by-type($css-props);
+                                @if $childs-css-props != null {
+                                    @include parse-props($childs-css-props);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }@else {
+            @include props-by-type($props);
+        }
+    }
+}

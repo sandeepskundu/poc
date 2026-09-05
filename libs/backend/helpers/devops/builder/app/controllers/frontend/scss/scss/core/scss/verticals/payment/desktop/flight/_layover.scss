@@ -1,0 +1,21 @@
+.layover-details{
+    width:100%;
+    position:relative;
+    .line{
+        left:0;
+        top:50%;
+        width:100%;
+        height:rem(1);
+        position:absolute;
+        background:$color-035;
+    }
+    .layover-info{
+        z-index:99;
+        position:relative;
+        display:inline-block;
+        background:$color-fff;
+        padding:rem(7) rem(24);
+        border:1px solid $color-035;
+        @include adl-border-radius(rem(30), rem(30), rem(30), rem(30));
+    }
+}

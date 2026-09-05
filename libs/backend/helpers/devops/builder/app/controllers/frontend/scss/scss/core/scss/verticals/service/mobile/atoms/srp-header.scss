@@ -1,0 +1,36 @@
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  padding: rem(20) rem(16);
+  .back-icon {
+    display: inline-block;
+    margin-bottom: rem(8);
+    color: $color-000;
+  }
+  .details {
+    margin-left: rem(20);
+    .title {
+      color: $color-011;
+    }
+    .city-detail {
+      display: inline-block;
+      width: calc(100vw - 75px);
+      color: $color-011;
+      margin-top: rem(4);
+      .city-name {
+        color: $color-014;
+      }
+      .oval {
+        display: inline-block;
+        width: rem(4);
+        height: rem(4);
+        border-radius: rem(4);
+        margin: rem(3) rem(4);
+        background-color: $color-014;
+      }
+      .airport-name {
+        color: $color-014;
+      }
+    }
+  }
+}

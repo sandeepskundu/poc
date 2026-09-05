@@ -1,0 +1,81 @@
+{
+    "000":{
+        "childs-css-props-list":{
+            "0":{
+                "define":"css-props",
+                "pseudo-selector":" .inpt",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "border-color":"c00104"
+                    }
+                }
+            },
+            "1":{
+                "define":"css-props",
+                "pseudo-selector":" input:checked + .inpt",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "border-color":"c00207",
+                        "background-color":"c00207"
+                    }
+                }
+            }, 
+            "2":{
+                "define":"css-props",
+                "pseudo-selector":" input:checked + .inpt:after",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "background-color":"c00000"
+                    }
+                }
+            }, 
+            "3":{
+                "define":"css-props",
+                "pseudo-selector":" input:checked + .inpt:before",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "background-color":"c00000"
+                    }
+                }
+            },
+            "4":{
+                "define":"css-props",
+                "pseudo-selector":".disabled .inpt",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "border-color":"c00104",
+                        "background-color":"c00101"
+                    }
+                }
+            },
+            "5":{
+                "define":"css-props",
+                "pseudo-selector":".disabled input:checked + .inpt",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "border-color":"c00104",
+                        "background-color":"c00101"
+                    }
+                }
+            },
+            "6":{
+                "define":"css-props",
+                "pseudo-selector":".disabled input:checked + .inpt:after",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "background-color":"c00104"
+                    }
+                }
+            },
+            "7":{
+                "define":"css-props",
+                "pseudo-selector":".disabled input:checked + .inpt:before",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "background-color":"c00104"
+                    }
+                }
+            }
+        }
+    }
+}

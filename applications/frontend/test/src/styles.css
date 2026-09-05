@@ -1,0 +1,225 @@
+:root {
+  font-family: "Space Grotesk", "Avenir Next", sans-serif;
+  color: #f5efe4;
+  background:
+    radial-gradient(circle at top, rgba(250, 155, 78, 0.28), transparent 32%),
+    linear-gradient(135deg, #1f2533 0%, #10131d 52%, #0b0e16 100%);
+  line-height: 1.5;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding: 32px;
+  display: grid;
+  place-items: center;
+}
+
+.hero-card {
+  width: min(920px, 100%);
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  background: rgba(13, 16, 24, 0.76);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #f7b977;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 0.98;
+  max-width: 12ch;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+
+.intro {
+  max-width: 62ch;
+  color: rgba(245, 239, 228, 0.76);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 28px 0 32px;
+}
+
+.ra-button {
+  --button-bg: linear-gradient(135deg, #f18a42 0%, #d94f3d 100%);
+  --button-bg-hover: linear-gradient(135deg, #f59e5f 0%, #ef6d46 100%);
+  --button-bg-press: linear-gradient(135deg, #cc6533 0%, #b63b31 100%);
+  --button-text: #fffaf3;
+  --button-shadow: 0 16px 28px rgba(217, 79, 61, 0.28);
+  --button-ring: 0 0 0 4px rgba(241, 138, 66, 0.22);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  box-shadow: var(--button-shadow);
+  cursor: pointer;
+  transform: translateY(0) scale(1);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease,
+    opacity 180ms ease;
+}
+
+.ra-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.ra-button.is-hovered {
+  background: var(--button-bg-hover);
+  transform: translateY(-1px);
+  filter: saturate(1.05);
+}
+
+.ra-button.is-focused,
+.ra-button.is-focus-visible {
+  outline: none;
+  box-shadow: var(--button-shadow), var(--button-ring);
+}
+
+.ra-button.is-pressed {
+  background: var(--button-bg-press);
+  transform: translateY(1px) scale(0.985);
+}
+
+.ra-button.is-clicked .ra-button__label {
+  transform: scale(0.98);
+}
+
+.ra-button.is-disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  filter: grayscale(0.2);
+}
+
+.ra-button__label {
+  transition: transform 160ms ease;
+}
+
+.ra-button__icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ra-button__tag {
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 0.76rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.control-panel,
+.state-panel {
+  padding: 20px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.toggle-list {
+  display: grid;
+  gap: 12px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(245, 239, 228, 0.88);
+  text-transform: capitalize;
+}
+
+.state-panel pre {
+  margin: 0;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.25);
+  color: #cfe7ff;
+  overflow: auto;
+}
+
+@media (max-width: 720px) {
+  .page-shell {
+    padding: 18px;
+  }
+
+  .hero-card {
+    padding: 22px;
+  }
+
+  .panel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ra-button {
+    width: 100%;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+}

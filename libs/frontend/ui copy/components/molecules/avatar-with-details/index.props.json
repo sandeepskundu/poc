@@ -1,0 +1,145 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Tags (also known as “chips”) are compact elements that allow users to enter information, make selections, filter content, or trigger actions. They’re similar to badges, but are more commonly used in inputs to allow users to select multiple items at once."
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "title":{
+            "description":"round button",
+            "type":"string",
+            "defaultValue":""
+        },
+        "description":{
+            "description":"round button",
+            "type":"string",
+            "defaultValue":""
+        },
+        "__titleDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "theme":{
+                    "color":{
+                        "default":"c00108"
+                    }
+                },
+                "css":{
+                    "class":{
+                        "fontsize":"sm",
+                        "family":"sb"
+                    },
+                    "flags":{
+                        "isDisplay":false
+                    }
+                }
+            }
+        },
+
+        "titleDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "__contentDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "css":{
+                    "class":{
+                        "padding":{
+                            "1":0,
+                            "2":0,
+                            "3":0,
+                            "4":12
+                        }
+                    }
+                }
+            }
+        },
+
+        "contentDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "__descriptionDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "css":{
+                    "class":{
+                        "fontsize":"sm",
+                        "margin":{
+                            "1":0
+                        }
+                    }
+                }
+            }
+        },
+
+        "descriptionDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "__descriptionMoreLess":{
+            "type":"object",
+            "defaultValue":{}
+        },
+
+        "descriptionMoreLess":{
+            "type":"object",
+            "defaultValue":{}
+        },
+
+        "__layerDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "size":40,
+                "align":"tl",
+                "element":"div"
+            }
+        },
+
+        "layerDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "__avatarDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "icon":"",
+                "size":"md",
+                "initals":"",
+                "contrastBorder":"",
+                "image":"http://localhost:1300/cdn/statics/images/avatar.jpg"
+            }
+        },
+
+        "avatarDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        }
+    }
+}

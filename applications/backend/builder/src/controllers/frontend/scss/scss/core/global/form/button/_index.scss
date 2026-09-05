@@ -1,0 +1,72 @@
+.btn {
+    cursor:pointer;
+    text-align:center;
+    position:relative;
+    align-items:center;
+    display:inline-flex;
+    text-decoration:none;
+    justify-content:center;
+    //flex-direction:column;
+    //display:inline-block;
+    //vertical-align: middle;
+    padding:rem(10) rem(16);
+    border:1px solid transparent;
+
+    &.btn-group {
+        padding:0;
+        cursor:default;
+    }
+    
+    &.sm{
+        padding:rem(8) rem(12);
+    }
+
+    &.md{
+        padding:rem(10) rem(14);
+    }
+
+    &.lg{
+        padding:rem(10) rem(16);
+    }
+
+    &.xl{
+        padding:rem(12) rem(18);
+    }
+
+    &.xxl{
+        padding:rem(16) rem(22);
+    }
+
+    &.ico {
+        padding:rem(12);
+
+        &.sm{
+            padding:rem(8);
+        }
+    
+        &.md{
+            padding:rem(10);
+        }
+    
+        &.lg{
+            padding:rem(12);
+        }
+    
+        &.xl{
+            padding:rem(14);
+        }
+    
+        &.xxl{
+            padding:rem(16);
+        }
+    }
+
+    &.round {
+        @include aio-border-radius(rem(60), rem(60), rem(60), rem(60));
+    }
+
+    &.disabled {
+        cursor:default;
+        pointer-events:none;
+    }
+}

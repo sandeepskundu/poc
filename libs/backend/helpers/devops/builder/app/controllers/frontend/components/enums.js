@@ -1,0 +1,42 @@
+const DS_SCHEMA = `{
+    "theme":{
+        "colorPairing":{
+            "hover":"",
+            "default":""
+        },
+        "background":{
+            "hover":"",
+            "default":""
+        },
+        "text":{
+            "hover":"",
+            "default":""
+        },
+        "border":{
+            "hover":"",
+            "default":""
+        }
+    },
+    "css":{
+        "class":{
+            "border":"",
+            "family":"",
+            "shadow":"",
+            "radius":{},
+            "margin":{},
+            "padding":{},
+            "fontsize":"",
+            "borderNone":{}
+        },
+        "flags":{
+            "rounded":false,
+            "noBorder":false,
+            "disabled":false,
+            "isDisplay":true,
+            "boxSizing":false
+        },
+        "others":""
+    }
+}`
+
+exports.DS_SCHEMA = DS_SCHEMA;

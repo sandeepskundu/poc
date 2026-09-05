@@ -1,0 +1,54 @@
+@mixin aio-icon-font-family($icon-family:''){
+    @if $icon-family != '' {
+        font-family:'#{$icon-family}';
+    }
+}
+
+@mixin aio-icon-family($icon-prefix:'', $icon-family:'') {
+    @if $icon-prefix != '' {
+        [class^="#{$icon-prefix}-"],
+        [class*=" #{$icon-prefix}-"]{
+            width:rem(16);
+            height:rem(16);
+            position:relative;
+            display:inline-block;
+            vertical-align:baseline;
+            &:before{ 
+                top:50%;
+                left:50%;
+                width:rem(16);
+                height:rem(16);
+                font-size:rem(16);
+                line-height:100%;
+                position:absolute;
+                //font-style:normal;
+                //font-weight:normal;
+                display:inline-block;
+                vertical-align:baseline;
+
+                transform: translate(-50%, -50%);
+                
+                //-webkit-font-smoothing:antialiased;
+                //-moz-osx-font-smoothing:grayscale;
+                //@include aio-icon-font-family('icons-ico');
+            }
+        }
+    }
+}
+
+@if $aio-icon-sizes {
+    $aio-icon-prefix:map-get($aio-icon-sizes, 'prefix');
+    $aio-icon-size-list:map-get($aio-icon-sizes, 'list');
+    @include aio-icon-family($aio-icon-prefix);
+
+    @if $aio-icon-size-list != null {
+        @each $aio-icon-size in $aio-icon-size-list {
+            .#{$aio-icon-prefix}-#{$aio-icon-size},
+            .#{$aio-icon-prefix}-#{$aio-icon-size}:before{
+                width:#{rem($aio-icon-size)};
+                height:#{rem($aio-icon-size)};
+                font-size:#{rem($aio-icon-size)};
+            }
+        }
+    }
+}

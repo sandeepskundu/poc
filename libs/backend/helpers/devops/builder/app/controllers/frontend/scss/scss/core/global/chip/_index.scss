@@ -1,0 +1,15 @@
+$has-chip:has-component('chip');
+
+@if $has-chip != '' {
+    $chip-prefix:get-component-prefix('chip');
+    @if $chip-prefix != '' {
+        .#{$chip-prefix}{
+            //color:$color-025;
+            font-size:rem(11);
+            padding:rem(3) rem(12);
+            //border:1px solid $color-021;
+            //background-color:$color-fff;
+            @include aio-border-radius(rem(10), rem(10), rem(10), rem(10));
+        }
+    }
+}

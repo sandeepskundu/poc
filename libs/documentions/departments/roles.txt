@@ -1,0 +1,121 @@
+1. Executive Leadership (EXE)
+
+    | Sub-department           | Code      |
+    | ------------------------ | --------- |
+    | Chief Executive Officer  | `EXE-CEO` |
+    | Chief Operating Officer  | `EXE-COO` |
+    | Chief Technology Officer | `EXE-CTO` |
+    | Chief Product Officer    | `EXE-CPO` |
+    | Chief Marketing Officer  | `EXE-CMO` |
+    | Chief Finance Officer    | `EXE-CFO` |
+
+
+2. Product & Design (PRD)
+
+    | Sub-department     | Code      |
+    | ------------------ | --------- |
+    | Product Management | `PRD-PM`  |
+    | Product Strategy   | `PRD-STR` |
+    | UI/UX Design       | `PRD-UX`  |
+    | User Research      | `PRD-RES` |
+
+
+3. Engineering & Development (ENG)
+
+    | Sub-department          | Code         |
+    | ----------------------- | ------------ |
+    | Frontend Development    | `ENG-FE`     |
+    | Backend Development     | `ENG-BE`     |
+    | Mobile Development      | `ENG-MOB`    |
+    | DevOps & Infrastructure | `ENG-DEVOPS` |
+    | QA & Testing            | `ENG-QA`     |
+
+
+4. Data & AI (DAT)
+
+    | Sub-department        | Code      |
+    | --------------------- | --------- |
+    | Data Engineering      | `DAT-ENG` |
+    | Data Science          | `DAT-DS`  |
+    | AI & Machine Learning | `DAT-ML`  |
+    | Business Intelligence | `DAT-BI`  |
+
+
+5. Sales & Partnerships (SAL)
+
+    | Sub-department         | Code      |
+    | ---------------------- | --------- |
+    | Enterprise Sales       | `SAL-ENT` |
+    | SMB Sales              | `SAL-SMB` |
+    | Strategic Partnerships | `SAL-STR` |
+    | Channel Sales          | `SAL-CHN` |
+
+
+6. Marketing & Communications (MKT)
+
+    | Sub-department    | Code      |
+    | ----------------- | --------- |
+    | Digital Marketing | `MKT-DIG` |
+    | Brand & Creative  | `MKT-BRD` |
+    | Public Relations  | `MKT-PR`  |
+    | Content Marketing | `MKT-CNT` |
+
+
+7. Customer Experience & Support (CXS)
+
+    | Sub-department              | Code      |
+    | --------------------------- | --------- |
+    | Customer Support            | `CXS-SUP` |
+    | Onboarding & Training       | `CXS-ONB` |
+    | Customer Success Management | `CXS-CSM` |
+    | Retention & Loyalty         | `CXS-RET` |
+
+
+8. HR & Talent Management (HRT)
+
+    | Sub-department          | Code      |
+    | ----------------------- | --------- |
+    | Recruitment             | `HRT-REC` |
+    | Employee Relations      | `HRT-ER`  |
+    | Learning & Development  | `HRT-LND` |
+    | Compensation & Benefits | `HRT-CNB` |
+
+
+9. Finance & Legal (FIN)
+
+    | Sub-department                | Code      |
+    | ----------------------------- | --------- |
+    | Accounting                    | `FIN-ACC` |
+    | Financial Planning & Analysis | `FIN-FPA` |
+    | Legal Affairs                 | `FIN-LGL` |
+    | Compliance                    | `FIN-CMP` |
+
+
+10. Operations & Admin (OPS)
+
+    | Sub-department    | Code       |
+    | ----------------- | ---------- |
+    | Office Management | `OPS-OFF`  |
+    | Procurement       | `OPS-PROC` |
+    | Logistics         | `OPS-LOG`  |
+    | Vendor Management | `OPS-VEN`  |
+
+
+11. Security & Compliance (SEC)
+
+    | Sub-department             | Code      |
+    | -------------------------- | --------- |
+    | Cybersecurity              | `SEC-CYB` |
+    | Data Protection            | `SEC-DP`  |
+    | Security Operations Center | `SEC-SOC` |
+    | Risk & Compliance          | `SEC-RSK` |
+
+
+12. R&D & Innovation (RDI)
+
+    | Sub-department         | Code      |
+    | ---------------------- | --------- |
+    | Emerging Tech Research | `RDI-ET`  |
+    | Prototyping & Labs     | `RDI-LAB` |
+    | Innovation Programs    | `RDI-IP`  |
+    | Tech Evangelism        | `RDI-TE`  |

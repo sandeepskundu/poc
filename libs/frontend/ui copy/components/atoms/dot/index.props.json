@@ -1,0 +1,45 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Button"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "color":{
+            "description":"Default button",
+            "type":"object",
+            "defaultValue":{
+                "hover":"",
+                "default":"c00106"
+            }
+        },
+        "dsTheme":{
+            "description":"Default button",
+            "type":"object",
+            "defaultValue":{
+                "size":""
+            }
+        },
+        "config":{
+            "description":"Default button",
+            "type":"object",
+            "defaultValue":{
+                "attrs":{},
+                "markup":{
+                    "element":"span"
+                },
+                "ds":{
+                    "css":{},
+                    "theme":{}
+                }
+            }
+        }
+    }
+}

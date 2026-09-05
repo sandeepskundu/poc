@@ -1,0 +1,33 @@
+{
+    "000":{
+        "childs-css-props-list":{
+            "0":{
+                "define":"css-props",
+                "pseudo-selector":" .tgl-trck:before",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "background-color":"c00000"
+                    }
+                }
+            },
+            "1":{
+                "define":"css-props",
+                "pseudo-selector":" .tgl-trck",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "background-color":"c00102"
+                    }
+                }
+            },
+            "2":{
+                "define":"css-props",
+                "pseudo-selector":" input:checked + .tgl-trck",
+                "css-props":{
+                    "colors-by-var-name":{
+                        "background-color":"c00207"
+                    }
+                }
+            }
+        }
+    }
+}

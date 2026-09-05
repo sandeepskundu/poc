@@ -1,0 +1,241 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Badges help highlight important information, such as notifications or new and unread messages. They’re primarily used for communicating secondary or additional information to text."
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+
+    "props":{
+        "action":{
+            "description":"round button",
+            "type":"string",
+            "defaultValue":"",
+            "isRequired":false
+        },
+
+        "buttonLabel":{
+            "description":"round button",
+            "type":"string",
+            "defaultValue":"",
+            "isRequired":false
+        },
+
+        "__wrapperDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "element":"div",
+                "openOnHover":false
+            }
+        },
+
+        "wrapperDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "__buttonDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "label":"",
+                "size":"md",
+                "theme":"001",
+                "element":"div",
+                "icoButtonDs":{
+                    "name":"",
+                    "color":"",
+                    "size":"20",
+                    "family":"",
+                    "attrs":{},
+                    "dataAttrs":{}
+                },
+                "leftIconDs":{
+                    "name":"",
+                    "color":"",
+                    "size":"20",
+                    "family":"",
+                    "attrs":{},
+                    "dataAttrs":{}
+                },
+                "rightIconDs":{
+                    "name":"",
+                    "color":"",
+                    "size":"20",
+                    "family":"",
+                    "attrs":{},
+                    "dataAttrs":{}
+                }
+            }
+        },
+
+        "buttonDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "__bodyDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{
+                "alignFrom":"",
+                "theme":{
+                    "colorPairing":{
+                        "default":"025"
+                    }
+                },
+                "css":{
+                    "class":{
+                        "shadow":"md",
+                        "padding":{
+                            "1":6,
+                            "2":6,
+                            "3":6,
+                            "4":6
+                        },
+                        "radius":{
+                            "1":8
+                        }
+                    }
+                }
+            }
+        },
+
+        "bodyDs":{
+            "description":"round button",
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false
+        },
+
+        "openOnHover":{
+            "description":"Open popbox on hover",
+            "type":"bool",
+            "defaultValue":false,
+            "isRequired":false
+        },
+
+        "wrapperElement":{
+            "description":"HTML element of popup box holder",
+            "type":"oneOf",
+            "defaultValue":"div",
+            "value":"'div'",
+            "isRequired":false
+        },
+
+        "popupClassName":{
+            "description":"CSS class name of popup box",
+            "type":"string",
+            "defaultValue":"",
+            "isRequired":false
+        },
+
+        "popupAlignFrom":{
+            "description":"Popup box should align from action",
+            "type":"oneOf",
+            "defaultValue":"left",
+            "value":"'left', 'right', 'bottom'",
+            "isRequired":false
+        },
+
+        "popupColorPairing":{
+            "description":"Color pairing of popup box",
+            "type":"string",
+            "defaultValue":"025",
+            "isRequired":false
+        },
+
+        "popupBorderRadius":{
+            "description":"Border radius of popup box",
+            "type":"oneOf",
+            "defaultValue":8,
+            "value":"0, 2, 4, 6, 8, 10, 12, 16, 20, 24, 9999"
+        },
+
+        "popupShadow":{
+            "description":"Popup box shadow",
+            "type":"oneOf",
+            "defaultValue":"lg",
+            "value":"'xs', 'sm', 'md', 'lg', 'xl', 'xxl'"
+        },
+
+        "actionButtonLable":{
+            "description":"Action button label",
+            "type":"string",
+            "defaultValue":"001",
+            "isRequired":false
+        },
+
+        "actionButtonTheme":{
+            "description":"Theme color of action button",
+            "type":"string",
+            "defaultValue":"001",
+            "isRequired":false
+        },
+
+        "actionButtonSize":{
+            "description":"Popup box shadow",
+            "type":"oneOf",
+            "defaultValue":"md",
+            "value":"'xs', 'sm', 'md', 'lg', 'xl', 'xxl'"
+        },
+
+        "actionAttrs":{
+
+        },
+
+        "actionContent":{
+            "description":"Color pairing of popup box",
+            "type":"string",
+            "defaultValue":"",
+            "isRequired":false
+        },
+
+        "active":{
+            "description":"Open popbox on hover",
+            "type":"bool",
+            "defaultValue":false,
+            "isRequired":false
+        },
+
+        "onClose":{
+            "description":"On close callback method",
+            "type":"func",
+            "isRequired":false
+        }, 
+
+        "onOpen":{
+            "description":"On open callback method",
+            "type":"func",
+            "isRequired":false
+        }
+    },
+    "componentTypes":{
+        "primary":{
+            "label":"Mandeep",
+            "toggle":false,
+            "con":"kundu"
+        }, 
+        "buttonB":{
+            "label":"Button B",
+            "toggle":false,
+            "con":"B Button"
+        },
+        "buttonA":{
+            "label":"Button A",
+            "toggle":false,
+            "con":"A Button"
+        }
+    }
+}

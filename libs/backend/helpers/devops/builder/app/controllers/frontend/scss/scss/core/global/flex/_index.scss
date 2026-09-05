@@ -1,0 +1,66 @@
+$flex-prefix:'flx-';
+
+.d-flx,
+[class^="#{$flex-prefix}"],
+[class*=" #{$flex-prefix}"] {
+    display: flex;
+}
+
+.flx-inline{
+    display:inline-flex;
+}
+
+.flx-h {
+    flex-wrap: wrap;
+}
+
+.flx-sb {
+    justify-content: space-between;
+}
+
+.flx-se {
+    justify-content: space-evenly;
+}
+
+.flx-jce {
+    justify-content: flex-end;
+}
+
+.flx-vc,
+.flx-center{
+    align-items: center;
+}
+
+.flx-jc,
+.flx-center{
+    justify-content: center;
+}
+
+.flx-full {
+    flex:1
+}
+
+
+.flx-page{
+    width:100%;
+    height:100%;
+    min-height:0;
+    flex-direction:column;
+}
+
+.flx-page .footer,
+.flx-page .header{
+    flex-shrink:0;
+}
+
+.flx-page .body {
+    flex:1 1 0;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.flx-equal-grid { 
+    width:100%;
+    height:100%;
+    align-items: stretch;
+}

@@ -1,0 +1,59 @@
+.gst-details {
+  padding: rem(0) 0 0;
+
+  .billing-address-inputs {
+    .filled {
+      .input {
+        &:disabled {
+          color: $color-011;
+          opacity: 50%;
+        }
+      }
+    }
+  }
+
+  .gst-info-text {
+    i {
+      color: $color-009;
+    }
+  }
+}
+
+.gst-input-list {
+  li {
+    display: inline-block;
+    padding: rem(20) 0 0 rem(20);
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    .filled {
+      .input {
+        padding-right: rem(20);
+
+        &:disabled {
+          color: $color-011;
+          opacity: 50%;
+        }
+      }
+    }
+
+    .filled.focused {
+      .input {
+        padding-right: 2.8rem;
+      }
+    }
+
+    .has-right-icon,
+    .has-icon-14 {
+      padding-right: 2rem;
+    }
+  }
+
+  .gst-loader {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+  }
+}

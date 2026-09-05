@@ -1,0 +1,68 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Button"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "callback": {
+            "description":"Callback functions",
+            "type":"object",
+            "defaultValue":{
+                "onBlur":null,
+                "onFocus":null,
+                "onPress":null,
+                "onClick":null,
+                "onPressUp":null,
+                "onPressEnd":null,
+                "onPressStart":null,
+                "onPressChange":null
+            }
+        },
+        "config":{
+            "description":"Default button",
+            "type":"object",
+            "defaultValue":{
+                "button":{
+                    "attrs":{},
+                    "content":"",
+                    "ariaProps":{},
+                    "states":{
+                        "disabled":false,
+                        "wait":{
+                            "enabled":false,
+                            "content":""
+                        }
+                    },
+                    "ds":{
+                        "theme":{
+                            "default":{
+                                "border":{},
+                                "background":{}
+                            },
+                            "disabled":{
+                                "border":{},
+                                "background":{}
+                            }
+                        }
+                    },
+                    "markup": {
+                        "element": "span"
+                    }
+                },
+                "icons": {
+                    "left":{},
+                    "right":{}
+                }
+            },
+            "isRequired":false
+        }
+    }
+}

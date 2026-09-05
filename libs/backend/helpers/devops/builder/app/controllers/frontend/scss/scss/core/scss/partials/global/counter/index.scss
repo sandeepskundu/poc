@@ -1,0 +1,41 @@
+.contr-wrpr{
+    width:rem(92);
+    height:rem(26);
+    padding:0 rem(26);
+    font-size: rem(16);
+    line-height: rem(26);
+    position:relative;
+    text-align:center;
+}
+
+.contr-actn{
+    top:rem(-3);
+    width:rem(32);
+    height:rem(32);
+    font-size:rem(19);
+    cursor:pointer;
+    position:absolute;
+    color:$counter-action-text-color;
+    background:$counter-action-bg-color;
+    border:1px solid $counter-action-bdr-color;
+    @include adl-border-radius(rem(50),rem(50),rem(50),rem(50));
+    &.decrease{
+        left:rem(-2);
+        &:hover{
+            background:#f3f3f3;
+        }
+    }
+    &.increase{
+        right:rem(-2);
+        &:hover{
+            background:#f3f3f3;
+        }
+    }
+    &.disable{
+        opacity:0.4;
+        cursor:default;
+        &:hover {
+            background:none;
+        }
+    }
+}

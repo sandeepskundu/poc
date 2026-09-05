@@ -1,0 +1,12 @@
+$has-list:has-component('list');
+
+@if $has-list != '' {
+    $list-prefix:get-component-prefix('list');
+
+    @if $list-prefix != '' {
+        .#{$list-prefix} li{
+            margin-left:1rem;
+            list-style:disc outside;
+        }
+    }
+}

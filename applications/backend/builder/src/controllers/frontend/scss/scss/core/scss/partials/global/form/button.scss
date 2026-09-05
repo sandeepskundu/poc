@@ -1,0 +1,163 @@
+.btn {
+  color: $color-fff;
+  background: $color-002;
+  border-color: $color-002;
+  display: inline-block;
+  font-family: $font-family-rm;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: 0.813rem 1.875rem;
+  font-size: 1rem;
+  transition: transform 0.1s ease 0s;
+
+  &:hover,
+  &.active {
+    color: $color-fff;
+    background: $color-002;
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  &.round {
+    @include adl-border-radius(rem(50), rem(50), rem(50), rem(50));
+  }
+
+  &.large {
+    padding: rem(13) rem(50);
+  }
+
+  &.medium {
+    font-size: rem(16);
+    padding: rem(8) rem(18);
+  }
+
+  &.xmedium {
+    font-size: rem(16);
+    padding: rem(10) rem(32);
+  }
+
+  &.small {
+    font-size: rem(16);
+    line-height: rem(21);
+    padding: rem(13) rem(18);
+  }
+
+  &.xsmall {
+    font-size: rem(14);
+    line-height: rem(18);
+    padding: rem(8) rem(12);
+    white-space: nowrap;
+  }
+
+  &.disabled {
+    opacity: 1;
+    cursor: default;
+    color: $color-fff;
+    background: $color-019;
+    border-color: $color-019;
+
+    &:hover,
+    &.active {
+      color: $color-fff;
+      background: $color-019;
+      border-color: $color-019;
+    }
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.btn-000 {
+  color: $color-011;
+  background: $color-fff;
+  border-color: $color-015;
+
+  &:hover {
+    color: $color-011;
+    background: $color-052;
+  }
+
+  &.active {
+    color: $color-fff;
+    background: $color-000;
+  }
+
+  &:active {
+    color: $color-fff;
+    background: $color-000;
+  }
+}
+
+.btn-001 {
+  color: $color-002;
+  background: $color-fff;
+  border-color: $color-002;
+
+  &:hover,
+  &:first-child:active,
+  &:last-child:active,
+  &.active {
+    color: $color-fff;
+    background: $color-002;
+  }
+}
+
+.btn-002 {
+  color: $color-fff;
+  background: $color-002;
+  border-color: $color-002;
+
+  &:hover,
+  &:first-child:active,
+  &:last-child:active,
+  &.active {
+    color: $color-fff;
+    background: $color-055;
+  }
+}
+
+.btn-003 {
+  color: $color-fff;
+  background: $color-020;
+  border-color: $color-020;
+
+  &:hover,
+  &.active {
+    color: $color-fff;
+    background: $color-015;
+  }
+}
+
+.btn-004 {
+  color: $color-000;
+  background: $color-fff;
+  border-color: $color-000;
+
+  &:hover,
+  &.active {
+    color: $color-000;
+    border-color: none;
+    background: $color-052;
+  }
+}
+
+.btn-005 {
+  color: $color-fff;
+  background: $color-077;
+  border-color: $color-077;
+
+  &:hover,
+  &.active {
+    color: $color-fff;
+    background: $color-077;
+  }
+}

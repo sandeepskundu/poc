@@ -1,0 +1,95 @@
+.chkbx-wrpr {
+    position:relative;
+    display:inline-block;
+}
+
+.chkbx-inpt,
+.chkbx-wrpr,
+.chkbx-wrpr input {
+    width:rem(18);
+    height:rem(18);
+}
+
+.chkbx-wrpr input{
+    top:0;
+    left:0;
+    opacity:0;
+}
+
+.chkbx-lbl.disabled{
+    opacity:0.8;
+    cursor:default;
+}
+
+.chkbx-inpt{
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    cursor:pointer;
+    position:absolute;
+
+    &::after,
+    &::before{
+        opacity:0;
+        content:"";
+        left:-#{rem(3)};
+        position:absolute;
+        @extend .transition;
+        transform-origin:left bottom;
+        transform:translateX(10px) rotate(-45deg);
+        @include aio-border-radius(#{rem(2)}, #{rem(2)}, #{rem(2)}, #{rem(2)});
+    }
+
+    &::before {
+        top:rem(7);
+        width:rem(2);
+        height:rem(7);
+    }
+    
+    &::after {
+        bottom:rem(4);
+        height:rem(2);
+        width:rem(12);
+    }
+}
+
+.chkbx-wrpr.disabled .chkbx-inpt{
+    cursor:default;
+}
+
+.chkbx input:checked + .inpt:after,
+.chkbx input:checked + .inpt:before {
+    opacity:1;
+}
+
+/*--
+.chkbx .inpt {
+    //background-color:var(--c00102);
+    border-color:var(--c00104);
+}
+
+.chkbx input:checked + .inpt {
+    border-color:var(--c00207);
+    background-color:var(--c00207);
+}
+
+.chkbx input:checked + .inpt:after,
+.chkbx input:checked + .inpt:before {
+    background-color:var(--c00000);
+}
+
+.chkbx.disabled .inpt {
+    border-color:var(--c00104);
+    background-color:var(--c00101);
+}
+
+.chkbx.disabled input:checked + .inpt {
+    border-color:var(--c00104);
+    background-color:var(--c00101);
+}
+
+.chkbx.disabled input:checked + .inpt:after,
+.chkbx.disabled input:checked + .inpt:before {
+    background-color:var(--c00104);
+}--*/

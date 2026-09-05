@@ -1,0 +1,126 @@
+const schema = {
+    "code":true,
+    "name":true,
+    "nameHash":true,
+    "codeHash":true,
+    "description":true
+}
+
+const update = () => {
+    return {...schema, ...{}}
+}
+
+module.exports = {
+    response:{
+        exclude:{
+            enable:true,
+            kies:{
+                ts:true,
+                codeHash:true,
+                nameHash:true
+            }
+        },
+        transform:{
+            enable:true,
+            kies:{
+                _id:"id"
+            }
+        }
+    },
+    valuemap: {},
+
+    md5Hash:{
+        nameHash:{
+            nodes:{
+                0:{
+                    map:"runtimeUtils.merchantRootHash",
+                    from:"appConfig"
+                },
+                2:{
+                    map:"name",
+                    from:"body-item"
+                }
+            }
+        },
+        codeHash:{
+            nodes:{
+                0:{
+                    map:"runtimeUtils.merchantRootHash",
+                    from:"appConfig"
+                },
+                2:{
+                    map:"code",
+                    from:"body-item"
+                }
+            }
+        }
+    },
+
+    schema:{
+        default:schema,
+        update:update()
+    },
+
+    signature:{
+        merge:{
+            enable:true
+        },
+        creation:{
+            enable:true,
+            nodes:{
+                _id:{
+                    enable:true,
+                    valueType:"objectId"
+                },
+                _merchantId:{
+                    enable:true,
+                    valueType:"objectId"
+                }
+            }
+        }
+    },
+
+    query:{
+        byId:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"_id",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    validation:{
+        errors:{
+            nameHash:{
+                mapTo:'name',
+                messages:{
+                    11000:'Duplicate name is not allowed'
+                }
+            },
+            codeHash:{
+                mapTo:'code',
+                messages:{
+                    11000:'Duplicate code is not allowed'
+                }
+            }
+        }
+    },
+
+    values:{}
+}

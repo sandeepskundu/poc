@@ -1,0 +1,194 @@
+.airline-anim-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  .airplane-anim {
+    display: flex;
+    flex-direction: column;
+    .cloudLarge {
+      width: rem(200);
+      height: rem(50);
+      position: relative;
+      animation: moveLeftRight 2.5s infinite reverse;
+      animation-timing-function: linear;
+    }
+    .airplaneCont {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: rem(54) 0 rem(70);
+      .airplane {
+        width: rem(480);
+        height: rem(130);
+        animation: moveUpDown 2s linear infinite;
+      }
+    }
+    .cloudSmallCont {
+      .cloudSmall {
+        width: rem(100);
+        height: rem(40);
+        position: relative;
+        animation: moveLeftRight 3s infinite reverse;
+        animation-timing-function: linear;
+      }
+    }
+    .searchDetails {
+      display: flex;
+      flex-direction: column;
+      margin-top: rem(50);
+      align-items: center;
+      justify-content: center;
+      .getSet {
+        font-size: rem(20);
+        letter-spacing: rem(0.22);
+        margin-bottom: rem(10);
+      }
+      .searchingBest {
+        font-size: rem(14);
+        letter-spacing: rem(0.14);
+        color: $color-014;
+      }
+      .gradientLine {
+        width: rem(30);
+        height: rem(2);
+        margin: rem(22) 0;
+        border-radius: rem(1.5);
+        background-image: linear-gradient(
+          89deg,
+          #0fb371 -44%,
+          #2073b8 19%,
+          #6b5ca6 45%,
+          #923993 72%,
+          #f05636 117%,
+          #f05636 137%
+        );
+      }
+      .flightData {
+        display: flex;
+        align-items: center;
+        .cityOrg {
+          font-size: rem(20);
+          letter-spacing: rem(0.22);
+        }
+        .roundIcon {
+          color: $color-009;
+        }
+        .roundTrip {
+          margin: 0 rem(10) rem(3) rem(14);
+        }
+        .oneTrip {
+          margin: 0 rem(14) 0 rem(10);
+        }
+        .cityDest {
+          font-size: rem(20);
+          letter-spacing: rem(0.22);
+        }
+      }
+      .flightDetails {
+        display: flex;
+        align-items: center;
+        margin-top: rem(10);
+        font-size: rem(14);
+        letter-spacing: rem(0.14);
+        color: $color-014;
+        .flightDates {
+          display: inherit;
+          .hyphen {
+            margin: 0 rem(3);
+          }
+        }
+        .oval {
+          width: rem(3);
+          height: rem(3);
+          border-radius: rem(3);
+          margin: 0 rem(8);
+          background-color: $color-013;
+        }
+      }
+    }
+
+    @keyframes moveLeftRight {
+      from {
+        left: -10%;
+      }
+      to {
+        left: 100%;
+      }
+    }
+    @keyframes moveUpDown {
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .airline-anim-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    .airplane-anim {
+      .cloudLarge {
+        width: rem(130);
+        height: rem(40);
+        animation-duration: 1.5s;
+      }
+      .airplaneCont {
+        margin: rem(54) 0 rem(50);
+        .airplane {
+          width: rem(300);
+          animation-duration: 2s;
+        }
+      }
+      .cloudSmallCont {
+        .cloudSmall {
+          width: rem(70);
+          height: rem(30);
+          animation-duration: 2.5s;
+        }
+      }
+      .searchDetails {
+        margin-top: rem(41);
+        .getSet {
+          font-size: rem(16);
+          margin-bottom: rem(5);
+        }
+        .searchingBest {
+          font-size: rem(12);
+        }
+        .gradientLine {
+          margin: rem(20) 0;
+        }
+        .flightData {
+          width: 90%;
+          margin: auto;
+          justify-content: center;
+          .cityOrg {
+            font-size: rem(16);
+          }
+          .cityDest {
+            font-size: rem(16);
+          }
+        }
+        .flightDetails {
+          margin-top: rem(5);
+          font-size: rem(12);
+        }
+      }
+      @keyframes moveLeftRight {
+        from {
+          left: -40%;
+        }
+        to {
+          left: 100%;
+        }
+      }
+    }
+  }
+}

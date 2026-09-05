@@ -1,0 +1,276 @@
+.seats-layout-wrpr {
+  .seat-container {
+    border: 1px solid #e2e2e2;
+    border-radius: 16px;
+    height: auto;
+    display: block;
+
+    .front-row-count {
+      .tooltip-box-holder .tooltip-content {
+        z-index: 8;
+      }
+    }
+  }
+
+  .bs-holder {
+    .legend-color-box {
+      &.xl:before {
+        color: $color-000;
+        top: rem(4);
+        right: rem(4);
+      }
+      &.nr-m:after {
+        width: rem(22);
+        height: rem(4);
+        right: rem(-1);
+        bottom: rem(-1);
+      }
+    }
+  }
+
+  .seat-legends-container {
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 25px;
+
+    .legend-color-box {
+      &.nr:after {
+        width: rem(4);
+        height: rem(14);
+        right: rem(-1);
+        top: rem(-1);
+      }
+      &.nr-m:after {
+        width: rem(4);
+        height: rem(14);
+        right: rem(-1);
+        top: rem(-1);
+      }
+      &.xl:before {
+        color: $color-000;
+        top: rem(2);
+        right: rem(2);
+      }
+    }
+  }
+
+  .occupied:before{
+    content: url(adl-img('flight/addons/occupiedSeat.svg'));
+    color: $color-019;
+    line-height: 1;
+  }
+
+  .nr:after {
+    content: '';
+    position: absolute;
+    width: rem(7);
+    background-color: $color-000;
+    min-height: -webkit-fill-available;
+    right: 0;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+  .xl:before {
+    content: 'XL';
+    color: $color-fff;
+    position: absolute;
+  }
+  .nr-m:after {
+    content: '';
+    position: absolute;
+    width: -webkit-fill-available;
+    bottom: 0;
+    height: rem(7);
+    background-color: $color-000;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+
+  .legend-color-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    &.lgd-btm {
+      width: rem(22);
+      height: rem(22);
+    }
+  }
+
+  .cyan,
+  .blue,
+  .pink {
+    @extend .legend-color-box;
+    border: none;
+    background-color: #98d0be;
+  }
+
+  .blue {
+    background-color: #9ec8fa;
+  }
+
+  .pink {
+    background-color: #b375b3;
+  }
+
+  .seat-legend{
+    .legend{
+      margin-right: rem(12);
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+
+  }
+
+  .legend-label {
+    line-height: 1;
+    border-radius: 4px;
+  }
+
+  .legend-non-recline {
+    display: block;
+    position: relative;
+    left: 9px;
+    bottom: 1px;
+    width: 4px;
+    height: 14px;
+    background-color: #333;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+
+  .first-stick {
+    position: sticky;
+    left: 0;
+    z-index: 9;
+  }
+
+  .front-row-label {
+    height: 38px;
+    width: 38px;
+    margin: 6px;
+    font-size: 12px;
+    line-height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+  }
+
+  .front-row-count {
+    .front-row-label {
+      &.selected-seat {
+        border-radius: 50%;
+        background-color: $color-111;
+        border-color: $color-111;
+      }
+    }
+  }
+
+  .seat-cyan,
+  .seat-blue,
+  .seat-pink,
+  .seat-grey {
+    @extend .front-row-label;
+    border: none;
+    background-color: #98d0be;
+  }
+
+  .seat-blue {
+    background-color: #9ec8fa;
+  }
+
+  .seat-pink {
+    background-color: #b375b3;
+  }
+
+  .seat-grey {
+    background-color: grey;
+  }
+
+  .seat-select {
+    overflow-y: hidden;
+    overflow-x: auto;
+    margin-right: -14px;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    scroll-behavior: smooth !important;
+  }
+
+  .front-row-label.seat-pink.nrs {
+    border-radius: 6px;
+  }
+
+  .scroll-hide {
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      background: transparent;
+    }
+  }
+
+  .name-embed {
+    height: 38px;
+    width: 38px;
+    margin: 6px;
+    font-size: 12px;
+    line-height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 50px;
+    background-color: green;
+  }
+
+  .exitPlan {
+    position: absolute;
+    border: 1px solid #ddd;
+    width: 50px;
+    display: block;
+    height: 50px;
+  }
+
+  .non-recline-seat {
+    background-color: #333;
+    position: absolute;
+    width: 6px;
+    height: 38px;
+    display: block;
+    right: 0px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+
+  .xl-label {
+    color: #fff;
+  }
+
+  .blank-holder {
+    .blank.round {
+      &::after {
+        border-radius: rem(8);
+      }
+    }
+  }
+
+  .scroll-tab-container {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+.seat-select {
+  .blank-holder .blank.round:after {
+    border-radius: 8px;
+  }
+}
+
+.seat-row-container {
+  .exit-seat-row + .exit-seat-row {
+    .exit-label {
+      display: none;
+    }
+  }
+}

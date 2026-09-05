@@ -1,0 +1,144 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Accordion menu"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+
+    "props":{
+        "active":{
+            "type":"number",
+            "defaultValue":"",
+            "isRequired":false,
+            "description":"Index number of default active accordion item"
+        },
+        "name":{
+            "type":"string",
+            "defaultValue":"",
+            "isRequired":false,
+            "description":"Name of accordion which will set in inputs"
+        },
+
+        "size":{
+            "description":"Size of accordion menu",
+            "type":"oneOf",
+            "defaultValue":"md",
+            "value":"'md'",
+            "isRequired":false
+        },
+
+        "openMultiple":{
+            "type":"bool",
+            "defaultValue":false,
+            "isRequired":false,
+            "description":"Flag to make multiple menu openable"
+        },
+
+        "__wrapperDs":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Acordion menu wrapper design system configuration",
+            "defaultValue":{
+                "divider":{
+                    "ds":{},
+                    "enabled":false,
+                    "position":"top"
+                },
+                "css":{
+                    "class":{
+                        "borderNone":{
+                            "1":true,
+                            "2":true,
+                            "3":true,
+                            "4":true
+                        }
+                    }
+                },
+                "theme":{}
+            }
+        },
+
+        "wrapperDs":{
+            "defaultValue":{}
+        },
+
+        "__labelDs":{
+            "defaultValue":{
+                "label":"",
+                "leftIcon":{},
+                "rightIcon":{},
+                "divider":{
+                    "ds":{},
+                    "enabled":false,
+                    "position":"bottom"
+                },
+                "attrs":{},
+                "dataAttrs":{},
+                "theme":{},
+                "css":{
+                    "class":{
+                        "family":"sb",
+                        "fontsize":"md",
+                        "padding":{}
+                    },
+                    "flags":{
+                        "animation":"anim"
+                    }
+                }
+            }
+        },
+
+        "labelDs":{
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false,
+            "description":""
+        },
+
+        "__contentDs":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Acordion menu content design system configuration",
+            "defaultValue":{
+                "css":{
+                    "class":{},
+                    "flags":{
+                        "boxSizing":true
+                    }
+                }
+            }
+        },
+
+        "contentDs":{
+            "defaultValue":{}
+        },
+
+        "__moreLess":{
+            "type":"object",
+            "isRequired":false,
+            "description":"Acordion menu content read more less configuration",
+            "defaultValue":{
+                "lineClamp":7,
+                "enabled":true,
+                "moreLabel":"Read more",
+                "lessLabel":"Read less",
+                "alignMoreOption":"al"
+            }
+        },
+
+        "moreLess":{
+            "defaultValue":{}
+        },
+
+        "listOptions":{
+            "defaultValue":[]
+        }
+    }
+}

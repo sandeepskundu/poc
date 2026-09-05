@@ -1,0 +1,122 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Button"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "content":{
+            "description":"Content can have any option like, string, function and JSX element",
+            "type":"any",
+            "defaultValue":""
+        },
+        "dsTheme": {
+            "description":"Callback functions",
+            "type":"object",
+            "defaultValue":{
+                "size":"",
+                "radius":"4"
+            }
+        },
+        "theme": {
+            "description":"Callback functions",
+            "type":"object",
+            "defaultValue":{
+                "colorPairing":{
+                    "default":"000",
+                    "hover":"001"
+                }
+            }
+        },
+        "avatar": {
+            "description":"Callback functions",
+            "type":"object",
+            "defaultValue":{
+                "colorPairing":{
+                    "left":"",
+                    "right":""
+                }
+            }
+        },
+
+
+        "config":{
+            "description":"Default button",
+            "type":"object",
+            "defaultValue":{
+                "icons":{
+                    "left":{
+                        "ds":{
+                            "css":{},
+                            "theme":{
+                                "border":{},
+                                "background":{},
+                                "colorPairing":{}
+                            }
+                        },
+                        "svg":{},
+                        "attrs":{},
+                        "markup":{},
+                        "type":"font",
+                        "icon":{
+                            "name":"a-down"
+                        }
+                    },
+                    "right":{
+                        "ds":{
+                            "css":{},
+                            "theme":{
+                                "border":{},
+                                "background":{},
+                                "colorPairing":{}
+                            }
+                        },
+                        "svg":{},
+                        "attrs":{},
+                        "markup":{},
+                        "type":"font",
+                        "icon":{
+                            "name":"a-down"
+                        }
+                    }
+                },
+                "content":{
+                    "attrs":{},
+                    "markup":{
+                        "element":"p"
+                    },
+                    "ds":{
+                        "css":{},
+                        "theme":{
+                            "border":{},
+                            "background":{},
+                            "colorPairing":{}
+                        }
+                    }
+                },
+                "wrapper":{
+                    "attrs":{},
+                    "markup":{
+                        "element":"div"
+                    },
+                    "ds":{
+                        "css":{},
+                        "theme":{
+                            "border":{},
+                            "background":{},
+                            "colorPairing":{}
+                        }
+                    }
+                }
+            },
+            "isRequired":false
+        }
+    }
+}

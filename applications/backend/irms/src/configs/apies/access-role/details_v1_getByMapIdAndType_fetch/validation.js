@@ -1,0 +1,18 @@
+const validate = require('./../validation');
+const validation = process.aioBeLibs('helpers/_private/utils/validations');
+
+module.exports = async (req) => {
+    return {
+        "request":{
+            "methods":{
+                "get":await validation.build(req, 'request.methods.get')
+            }
+        },
+        "validation":{
+            "params":{
+                subId:await validate.type(req),
+                id:await validation.build(req, 'universal.mongoId'),
+            }
+        }
+    }
+}

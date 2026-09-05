@@ -1,0 +1,20 @@
+.no-data-wrpr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: rem(115) 0;
+  border: rem(1) solid #e2e2e2;
+  border-radius: rem(16);
+
+  .no-data-img-cont {
+    width: rem(250);
+    height: rem(132);
+
+    .no-data-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}

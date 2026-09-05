@@ -1,0 +1,77 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Link list"
+                }
+            }
+          
+        },
+        "tags": ["autodocs"]
+    },
+
+    "props":{
+        "__wrapperDs":{
+            "defaultValue":{
+                "divider":{
+                    "enabled":true,
+                    "position":"top",
+                    "ds":{}
+                }
+            }
+        },
+
+        "wrapperDs":{
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false,
+            "description":"round button"
+        },
+
+        "__linkDs":{
+            "defaultValue":{
+                "label":"",
+                "leftIcon":{},
+                "rightIcon":{},
+                "divider":{
+                    "enabled":false,
+                    "position":"bottom",
+                    "ds":{}
+                },
+                "attrs":{
+                    "href":"#"
+                },
+                "theme":{
+                    "colorPairing":{
+                        "hover":"005"
+                    }
+                },
+                "css":{
+                    "class":{
+                        "padding":{
+                            "1":10,
+                            "2":10,
+                            "3":10
+                        }
+                    },
+                    "flags":{
+                        "animation":"anim"
+                    }
+                }
+            }
+        },
+
+        "linkDs":{
+            "type":"object",
+            "defaultValue":{},
+            "isRequired":false,
+            "description":""
+        },
+
+        "listOptions":{
+            "defaultValue":[]
+        }
+    }
+}

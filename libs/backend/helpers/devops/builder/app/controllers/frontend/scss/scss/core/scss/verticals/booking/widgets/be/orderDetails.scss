@@ -1,0 +1,1054 @@
+button#ymDivBar {
+  display: none !important;
+}
+
+.order-details-wrpr {
+  .page-not-found-order {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: rem(100) rem(20) 0;
+    .img-container {
+      margin-bottom: rem(42);
+      max-width: rem(380);
+    }
+    .btn {
+      padding: rem(8) rem(32);
+    }
+  }
+  .order-booking-wrpr {
+    padding: 0 rem(30) rem(50);
+    border: rem(1) solid $color-021;
+
+    ////Blank////
+
+    .blank-banner {
+      width: 100%;
+      height: rem(293);
+    }
+
+    .blank-status {
+      width: 15%;
+      height: rem(40);
+    }
+
+    .blank-itr {
+      width: 25%;
+      height: rem(40);
+    }
+
+    .blank-bottom {
+      width: 95%;
+      height: rem(150);
+    }
+
+    ////Order Banner////
+
+    .order-banner-wrpr {
+      position: relative;
+      margin: 0 rem(-30);
+
+      .order-banner-img {
+        width: 100%;
+        height: rem(294);
+        object-fit: cover;
+      }
+
+      .banner-data {
+        position: absolute;
+        left: 0;
+        bottom: rem(20);
+        width: 100%;
+        padding: 0 rem(20);
+        text-align: center;
+
+        .banner-data-label {
+          color: $color-fff;
+          font-size: rem(24);
+          margin-bottom: rem(10);
+
+          i.ai-arrow {
+            margin-top: rem(-4);
+
+            &::before {
+              font-size: rem(12);
+            }
+          }
+
+          i.ai-roundtrip {
+            margin-top: rem(-1);
+
+            &::before {
+              font-size: rem(20);
+            }
+          }
+        }
+
+        .banner-data-subLabel {
+          color: $color-fff;
+          margin-bottom: 0;
+          font-size: rem(16);
+        }
+      }
+    }
+
+    .order-info-wrpr {
+      .confirmation-trvlr-tabs {
+        .tab-item {
+          .ai-arrow {
+            padding-bottom: rem(15);
+          }
+        }
+      }
+
+      .reward-points-wrpr {
+        .ai-info .tooltiptext {
+          visibility: hidden;
+          width: 202px;
+          background-color: #000;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: rem(12) rem(8);
+          position: absolute;
+          z-index: 1;
+          bottom: 170%;
+          left: 50%;
+          transform: translateX(-50%);
+          &.co-brand {
+            width: rem(440);
+            text-align: left;
+            padding-left: rem(14);
+            padding-right: rem(14);
+          }
+        }
+
+        .ai-info .tooltiptext::after {
+          content: ' ';
+          position: absolute;
+          top: 100%;
+          /* At the bottom of the tooltip */
+          left: 73%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: black transparent transparent transparent;
+        }
+
+        .ai-info:hover .tooltiptext {
+          visibility: visible;
+        }
+      }
+    }
+
+    ////Order Booking Status////
+
+    .order-booking-status-wrpr {
+      margin-top: rem(25);
+
+      .bs-head {
+        font-size: rem(12);
+        color: $color-014;
+        margin-bottom: rem(4);
+      }
+
+      .booking-confirmed,
+      .booking-partially-cancelled,
+      .booking-cancelled,
+      .booking-pending {
+        font-size: rem(12);
+        padding: rem(4) rem(8);
+        border: rem(1);
+        border-radius: rem(8);
+        text-transform: uppercase;
+      }
+
+      .booking-confirmed {
+        color: $color-029;
+        background: $color-072;
+      }
+
+      .booking-partially-cancelled {
+        color: $color-097;
+        background: $color-074;
+      }
+
+      .booking-cancelled {
+        color: $color-046;
+        background: $color-073;
+      }
+
+      .booking-pending {
+        color: $color-062;
+        background: $color-074;
+      }
+    }
+
+    ////Refund Breakup////
+
+    .refund-breakup-wrpr {
+      .refund-info {
+        .refund-breakup {
+          .refund-sep {
+            &:first-child {
+              display: none;
+            }
+          }
+        }
+
+        .mr-t32 {
+          justify-content: space-between;
+        }
+
+        .btn {
+          white-space: nowrap;
+        }
+
+        .support-link {
+          &:hover {
+            color: $color-011;
+          }
+        }
+      }
+    }
+
+    ////Order Flight Segment////
+
+    .order-flight-segment {
+      .mr-t70 {
+        margin-top: rem(40);
+      }
+
+      .confirmation-details {
+        .review-details {
+          .r-org-dest-header {
+            margin-bottom: rem(20);
+
+            .org-dest-date {
+              > li {
+                font-size: rem(18);
+              }
+            }
+          }
+
+          .review-seg-details {
+            .layover-details {
+              margin: rem(18) 0;
+            }
+
+            .confirm-flight-details {
+              .airline-details {
+                width: 15%;
+
+                .lyr-s-40.lyr-alt {
+                  padding-left: 0;
+                  position: relative;
+                  bottom: rem(5);
+
+                  .lyr {
+                    position: unset;
+                  }
+                }
+              }
+
+              .airport-details {
+                width: 60%;
+
+                .details-org-dest {
+                  .du {
+                    padding: rem(5) rem(40) 0 0;
+
+                    .time-duration {
+                      .duration-timing-icon {
+                        top: rem(-4);
+                      }
+                    }
+                  }
+                }
+              }
+
+              .baggage-details {
+                width: 25%;
+                text-align: center;
+
+                ul {
+                  flex-direction: column;
+                }
+              }
+            }
+          }
+
+          .w-50p {
+            width: 100%;
+
+            .fs-11 {
+              font-size: rem(12);
+            }
+
+            .pd-rl10 {
+              padding: rem(4) rem(8);
+            }
+          }
+        }
+      }
+    }
+
+    ////Order Separator////
+
+    .order-separator {
+      width: unset;
+      margin: rem(36) rem(-30) rem(40);
+    }
+
+    ////Order Buttons////
+
+    .order-buttons-wrpr {
+      margin-bottom: rem(50);
+
+      ul {
+        > li {
+          margin-right: rem(20);
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+
+      .btn-000 {
+        &:active {
+          color: $color-011;
+          background: $color-052;
+          border-color: $color-011;
+          transform: scale(0.94);
+          transition: transform 0.1s ease 0s;
+        }
+
+        &:hover {
+          border: rem(1) solid $color-015;
+        }
+      }
+
+      .btn-003 {
+        color: $color-011;
+        background: $color-052;
+
+        .loader {
+          .dot {
+            background-color: $color-011;
+          }
+        }
+      }
+
+      .slider-box-wrpr {
+        .slider-box-content-holder {
+          padding: 0 rem(20);
+
+          .slider-box-sitcky-header {
+            .slider-box-header {
+              .pd-t24 {
+                padding-top: rem(16);
+              }
+            }
+          }
+        }
+      }
+
+      .send-itr-btn {
+        width: 100%;
+        color: $color-fff;
+        background: $color-002;
+        border: rem(1) solid transparent;
+        border-color: $color-002;
+        border-radius: rem(40);
+        padding: rem(10) rem(32);
+        text-align: center;
+        line-height: 1.5;
+
+        &:active {
+          color: $color-fff;
+          background: $color-098;
+          border-color: $color-099;
+          transform: scale(0.94);
+          transition: transform 0.1s ease 0s;
+        }
+      }
+    }
+
+    ////Master Card Banner////
+
+    .master-card-wrpr {
+      margin-bottom: rem(50);
+
+      .master-card-img {
+        width: 100%;
+      }
+    }
+
+    ////Reward Points////
+
+    .reward-points-wrpr {
+      margin-bottom: rem(52);
+
+      .reward-strip {
+        border-radius: rem(4);
+        background: $color-059;
+        padding: rem(8) rem(20);
+
+        ul {
+          > li {
+            margin-bottom: rem(8);
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        .reward-icons {
+          width: rem(20);
+          margin-right: rem(8);
+        }
+
+        .tooltip-box-holder {
+          .ai-info {
+            &::before {
+              font-size: rem(14);
+            }
+          }
+
+          .tooltip-content.pos-tp {
+            right: 58%;
+            top: -80%;
+            max-width: rem(220);
+            padding: rem(10) rem(20);
+            z-index: 198;
+
+            span {
+              font-size: rem(14);
+            }
+          }
+        }
+      }
+    }
+
+    ////Order Breakup////
+
+    .order-breakup {
+      .card-box {
+        border: none;
+        padding: 0;
+
+        ul {
+          li {
+            &:first-child {
+              padding-top: 0;
+            }
+
+            &:last-child {
+              .blank {
+                font-size: rem(18);
+              }
+            }
+          }
+
+          .ptc-tag {
+            padding-top: 0px;
+          }
+        }
+      }
+    }
+
+    ////Paid With////
+
+    .paid-with-wrpr {
+      margin-top: rem(8);
+      background: $color-100;
+
+      .ai-no-emi {
+        position: relative;
+        &::before {
+          position: absolute;
+        }
+      }
+
+      .card-image {
+        width: rem(18);
+        margin-right: rem(12);
+      }
+    }
+
+    ////Contact Details////
+
+    .contact-details-wrpr {
+      margin-top: rem(52);
+
+      > li {
+        display: flex;
+        align-items: center;
+        margin-bottom: rem(16);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    ////Upsell Banner////
+
+    .upsell-banner-wrpr {
+      margin-top: rem(50);
+
+      .upsell-banner-img {
+        width: 100%;
+      }
+    }
+
+    ////Important Info////
+
+    .important-info {
+      margin-top: rem(52);
+
+      .bg-069 {
+        padding: 0;
+        margin-bottom: 0;
+        background: $color-fff;
+      }
+
+      .imp-info {
+        padding-left: rem(5);
+
+        li {
+          font-size: rem(15);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    //FAQ Section
+    .faq-section {
+      .accordion {
+        border-color: $color-021;
+        &:not(:last-child) {
+          border-bottom: none;
+        }
+        .info {
+          background-color: $color-010;
+        }
+      }
+    }
+
+    ////Cleartrip Support////
+
+    .cleartrip-support {
+      margin-top: rem(52);
+
+      .mr-b40 {
+        margin-bottom: 0;
+        padding: rem(15) rem(25);
+      }
+    }
+  }
+
+  .blank-holder.order-booking-wrpr {
+    border: none;
+    padding: 0;
+  }
+
+  .subscribe-container {
+    .tooltip-box-holder {
+      .tooltip-content {
+        transform: translate(-89%, 110%);
+      }
+    }
+
+    .btn-000 {
+      &:active {
+        color: $color-011;
+        background: $color-052;
+        border-color: $color-011;
+        transform: scale(0.94);
+        transition: transform 0.1s ease 0s;
+      }
+
+      &:hover {
+        border: rem(1) solid $color-015;
+      }
+    }
+
+    .btn-003 {
+      color: $color-011;
+      background: $color-052;
+
+      .loader {
+        .dot {
+          background-color: $color-011;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .order-details-wrpr {
+    .page-not-found-order {
+      .img-container {
+        margin-bottom: rem(32);
+        width: 70%;
+      }
+      .btn {
+        padding: rem(8) rem(32);
+      }
+    }
+    .order-booking-wrpr {
+      border: none;
+      padding: 0;
+
+      ////Blank////
+
+      .blank-status {
+        width: 50%;
+        height: rem(35);
+        margin: 0 0 0 rem(16);
+
+        &:last-child {
+          display: none;
+        }
+      }
+
+      .blank-itr {
+        width: 30%;
+        height: rem(35);
+        margin: rem(30) 0 0 rem(16);
+      }
+
+      .blank-bottom {
+        width: 90%;
+        margin: rem(30) rem(16) 0;
+      }
+
+      ////Order Banner////
+
+      .order-banner-wrpr {
+        margin: 0;
+        position: sticky;
+        top: 0;
+        // z-index: -100;
+
+        .order-banner-img {
+          height: rem(326);
+        }
+
+        .banner-data {
+          text-align: start;
+          bottom: rem(2);
+
+          .banner-data-label {
+            font-size: rem(18);
+
+            i.ai-arrow {
+              margin-top: rem(-3);
+
+              &::before {
+                font-size: rem(10);
+              }
+            }
+
+            i.ai-roundtrip {
+              margin-top: rem(0);
+
+              &::before {
+                font-size: rem(16);
+              }
+            }
+          }
+
+          .banner-data-subLabel {
+            font-size: rem(14);
+          }
+        }
+      }
+
+      ////Order Detail////
+
+      .order-info-wrpr {
+        // padding: rem(24) rem(20);
+        background-color: $color-fff;
+        position: relative;
+
+        .reward-points-wrpr {
+          .ai-info {
+            position: relative;
+            display: inline-block;
+          }
+
+          .ai-info .tooltiptext {
+            visibility: hidden;
+            width: 202px;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: rem(12) rem(8);
+            margin-left: -100px;
+            position: absolute;
+            z-index: 1;
+            bottom: 170%;
+            left: auto;
+            right: 10%;
+            transform: translateX(15%);
+            &.co-brand {
+              width: rem(279);
+              text-align: left;
+            }
+          }
+
+          .ai-info .tooltiptext::after {
+            content: ' ';
+            position: absolute;
+            top: 100%;
+            /* At the bottom of the tooltip */
+            left: 81%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+          }
+
+          .ai-info:hover .tooltiptext {
+            visibility: visible;
+          }
+        }
+      }
+
+      ////Order Booking Status////
+
+      .order-booking-status-wrpr {
+        flex-direction: column;
+        margin-top: 0;
+
+        > div {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+
+          &:first-child {
+            display: none;
+          }
+        }
+
+        .mr-r50 {
+          margin-right: 0;
+        }
+
+        .zero-cancel {
+          margin-top: rem(20);
+          padding-top: rem(20);
+          border-top: rem(1) solid $color-021;
+        }
+
+        .bs-head {
+          font-size: rem(15);
+          margin-bottom: rem(0);
+        }
+
+        .booking-confirmed,
+        .booking-partially-cancelled,
+        .booking-cancelled,
+        .booking-pending {
+          font-size: rem(11);
+        }
+      }
+
+      ////Order Separator////
+
+      .order-separator {
+        margin: rem(20) 0 rem(40);
+      }
+
+      ////Refund Breakup////
+
+      .refund-breakup-wrpr {
+        .refund-info {
+          .refund-breakup {
+            border-top: rem(1) solid $color-021;
+            padding-top: rem(20);
+          }
+        }
+      }
+
+      ////Order Flight Segment////
+
+      .order-flight-segment {
+        margin-top: rem(40);
+        margin-bottom: rem(52);
+
+        .review-details {
+          padding: 0;
+          margin-bottom: rem(48);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .r-org-dest-header {
+            padding: 0;
+            border: none;
+            background-color: $color-fff;
+
+            .org-dest-date {
+              > li {
+                font-size: rem(18);
+              }
+            }
+
+            .options {
+              > li {
+                font-size: rem(15);
+              }
+            }
+          }
+
+          .review-seg-details {
+            .mr-la {
+              margin-left: auto;
+              font-size: rem(12);
+
+              .fs-15 {
+                font-size: rem(12);
+              }
+            }
+
+            .layover-details {
+              margin: rem(30) 0 rem(20);
+            }
+
+            .details-org-dest {
+              .du {
+                padding: rem(5) rem(10) 0;
+
+                .time-duration {
+                  .duration-timing-icon {
+                    top: -4px;
+
+                    .ai-18 {
+                      &::before {
+                        font-size: rem(16);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            .baggage-list {
+              padding: rem(12) 0;
+
+              &:last-child {
+                border-bottom: rem(1) solid $color-021;
+              }
+            }
+
+            .baggage-list.border-bottom {
+              display: none;
+            }
+          }
+        }
+      }
+
+      ////Order Buttons////
+
+      .order-buttons-wrpr {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 129;
+        background: $color-101;
+        border-top: rem(1) solid $color-021;
+        margin-bottom: 0;
+
+        ul {
+          justify-content: space-evenly;
+          padding: rem(16) 0;
+
+          > li {
+            margin-right: 0;
+            text-align: center;
+
+            > a {
+              text-decoration: none;
+            }
+          }
+        }
+
+        .bs-holder {
+          .bs-body {
+            padding: 0 rem(16) rem(30);
+          }
+        }
+
+        .loader {
+          display: flex;
+          padding: rem(3) 0;
+          .dot {
+            background-color: $color-011;
+          }
+        }
+
+        .download-opt {
+          padding-top: 0;
+          > li {
+            &:active {
+              background-color: $color-052;
+            }
+          }
+        }
+      }
+
+      ////Reward Points////
+
+      .reward-points-wrpr {
+        .reward-strip {
+          .cb-para {
+            width: 252px;
+          }
+          .tooltip-box-holder {
+            .tooltip-content.pos-tp {
+              right: 480%;
+
+              &::after {
+                right: 19%;
+              }
+            }
+          }
+        }
+      }
+
+      ////Order Breakup////
+
+      .order-breakup {
+        .fare-confirmation {
+          .breakup-list {
+            .m-fafare {
+              padding-top: rem(14);
+              border-bottom: none;
+              font-size: rem(18);
+              font-family: $font-family-rb;
+            }
+          }
+        }
+      }
+
+      ////Paid With////
+
+      .paid-with-wrpr {
+        margin-top: rem(18);
+      }
+
+      ////Contact Details////
+
+      .contact-details-wrpr {
+        margin-top: rem(36);
+
+        .fs-24 {
+          font-size: rem(22);
+        }
+      }
+
+      ////Important Info////
+
+      .important-info {
+        margin-bottom: rem(52);
+
+        .pd-rl20 {
+          padding: 0;
+        }
+
+        .mr-tb50 {
+          margin: 0;
+        }
+
+        .fs-22 {
+          // font-size: rem(16);
+          color: $color-011;
+        }
+
+        .imp-info {
+          .imp-info-label {
+            width: 100%;
+            color: $color-011;
+          }
+        }
+      }
+    }
+  }
+
+  ////Toast////
+
+  .toast-holder {
+    width: 90%;
+    min-width: unset;
+
+    .toast-content {
+      width: unset;
+    }
+  }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 385px) {
+  .order-details-wrpr {
+    .order-info-wrpr {
+      .reward-points-wrpr {
+        .ai-info .tooltiptext {
+          &.co-brand {
+            transform: translateX(40%);
+            &:after {
+              right: 40%;
+              left: auto;
+            }
+            &.at-left {
+              transform: translateX(10%);
+              &:after {
+                right: 10%;
+                left: auto;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 386px) and (max-width: 768px) {
+  .order-details-wrpr {
+    .order-info-wrpr {
+      .reward-points-wrpr {
+        .ai-info .tooltiptext {
+          &.co-brand {
+            transform: translateX(48%);
+            &:after {
+              left: 50%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.orderWrap {
+  button:hover {
+    background: none;
+  }
+}
+
+.payment-mode {
+  text-transform: capitalize;
+}

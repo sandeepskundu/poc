@@ -1,0 +1,20 @@
+Documention >> How to setup ngnix 
+Referal url : https://medium.com/devops-technical-notes-and-manuals/how-to-install-nginx-on-macos-a4b50d63f921
+
+Step 1 ====> brew update
+
+Step 2 ====> brew install nginx
+
+nginx installed sucessfully 
+
+    => Start nginx => brew services start nginx
+    => Stop nginx => brew services stop nginx
+    => nginx config ==> /usr/local/etc/nginx/nginx.conf
+
+
+    include ./../../../../Users/30057943/Documents/tools/nginx/upstream/*.conf
+    include ./../../../../Users/30057943/Documents/tools/nginx/conf.d/*.conf
+    include ./../../../../Users/30057943/Documents/tools/nginx/sites-enabled/*.conf
+
+
+    127.0.0.1 local.aiodeal.com local.internal.aiodeal.com local.api.aiodeal.com local.js.aiodeal.com local.css.aiodeal.com local.fonts.aiodeal.com

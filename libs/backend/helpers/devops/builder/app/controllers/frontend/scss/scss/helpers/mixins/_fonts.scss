@@ -1,0 +1,29 @@
+@mixin aio-font-face($family, $weight:400, $style, $from: 'global', $prefix:'') {
+    @font-face {
+        font-style:$style;
+        font-weight:$weight;
+        font-family:#{$from}-#{$prefix};
+        src:url('#{$fonts-dir-path}/#{$from}/#{$family}.eot?_v=#{$cache-version}&wct=#{$app-web-cache-time}'); // IE9 compat
+        src:url('#{$fonts-dir-path}/#{$from}/#{$family}.eot?_v=#{$cache-version}&wct=#{$app-web-cache-time}#iefix') format('embedded-opentype'), // IE8 and below
+            url('#{$fonts-dir-path}/#{$from}/#{$family}.woff2?_v=#{$cache-version}&wct=#{$app-web-cache-time}') format('woff2'),
+            url('#{$fonts-dir-path}/#{$from}/#{$family}.woff?_v=#{$cache-version}&wct=#{$app-web-cache-time}') format('woff'), // standards
+            url('#{$fonts-dir-path}/#{$from}/#{$family}.ttf?_v=#{$cache-version}&wct=#{$app-web-cache-time}') format('truetype'); // Safari, Android, iOS00 --* /
+    }
+}
+
+@mixin aio-icons-font-face($icons-font-family-name:'', $from: '', $icons-font-family:''){
+    @if $icons-font-family-name != '' {
+        @if $from != '' {
+            @if $icons-font-family != '' {
+                @font-face {
+                    font-family:#{$icons-font-family-name};
+                    src:url('#{$fonts-dir-path}/#{$from}/#{$icons-font-family}.eot?_v=#{$cache-version}&wct=#{$app-web-cache-time}'); // IE9 compat
+                    src:url('#{$fonts-dir-path}/#{$from}/#{$icons-font-family}.eot?_v=#{$cache-version}&wct=#{$app-web-cache-time}#iefix') format('embedded-opentype'), // IE8 and below
+                        url('#{$fonts-dir-path}/#{$from}/#{$icons-font-family}.woff2?_v=#{$cache-version}&wct=#{$app-web-cache-time}') format('woff2'),
+                        url('#{$fonts-dir-path}/#{$from}/#{$icons-font-family}.woff?_v=#{$cache-version}&wct=#{$app-web-cache-time}') format('woff'), // standards
+                        url('#{$fonts-dir-path}/#{$from}/#{$icons-font-family}.ttf?_v=#{$cache-version}&wct=#{$app-web-cache-time}') format('truetype'); // Safari, Android, iOS00 --* /
+                }
+            }
+        }
+    }
+}

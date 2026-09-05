@@ -1,0 +1,230 @@
+const helpers = process.uiHelpers();
+const choice = require('./../choice');
+
+const theme = (arg) => {
+    return {
+        ___:{
+            nested:{
+                theme:helpers.json.merge({}, helpers.json.get(arg || {}, 'theme', {})),
+                predefined:helpers.json.merge({}, {
+                    ___:{
+                        predefined:{
+                            overwirte:helpers.json.get(arg || {}, 'predefined', {})
+                        }
+                    }
+                }),
+                
+            }
+        }
+    }
+}
+
+const holderTheme = (arg) => {
+    arg = arg || {};
+
+    return {
+        ___:{
+            nested:{
+                layer:theme(arg?.layer || {}),
+                content:theme(arg?.content || {}),
+                wrapper:theme(arg?.wrapper || {}),
+                container:theme(arg?.container || {})
+            }
+        }
+    }
+}
+
+module.exports = helpers.json.merge(helpers.json.get(choice, 'props', {}), {
+    mode:null,
+    theme:{
+        type:"nested", 
+        ___:{
+            nested:{
+                default:{
+                    type:"nested",
+                    ___:{
+                        nested:{
+                            holder:holderTheme({
+                                layer:{},
+                                wrapper:{},
+                                container:{},
+                                content:{
+                                    theme:{},
+                                    predefined:{}
+                                }
+                            }),
+                            error:theme({
+                                theme:{},
+                                predefined:{
+                                    color:{},
+                                    background:{}
+                                }
+                            }),
+                            label:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{},
+                                }
+                            }),
+                            description:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            checkbox:theme({
+                                theme:{},
+                                predefined:{
+                                    background:{
+                                        dvalue:'c00000'
+                                    },
+                                    border:{
+                                        dvalue:'c10503'
+                                    }
+                                }
+                            })
+                        }
+                    }
+                },
+                checked:{
+                    type:"nested",
+                    ___:{
+                        nested:{
+                            holder:holderTheme({
+                                layer:{},
+                                wrapper:{},
+                                container:{},
+                                content:{
+                                    theme:{},
+                                    predefined:{}
+                                }
+                            }),
+                            error:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            label:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            description:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            checkbox:theme({
+                                theme:{},
+                                predefined:{
+                                    abackground:null,
+                                    bbackground:{
+                                        dvalue:'c00000'
+                                    },
+                                    background:{},
+                                    border:{}
+                                }
+                            })
+                        }
+                    }
+                },
+                disabled:{
+                    type:"nested",
+                    ___:{
+                        nested:{
+                            holder:holderTheme({
+                                layer:{},
+                                wrapper:{},
+                                container:{},
+                                content:{
+                                    theme:{},
+                                    predefined:{}
+                                }
+                            }),
+                            error:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            label:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            description:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            checkbox:theme({
+                                theme:{},
+                                predefined:{
+                                    bbackground:{},
+                                    abackground:{},
+                                    background:{ },
+                                    border:{}
+                                }
+                            })
+                        }
+                    }
+                },
+                invalid:{
+                    ___:{
+                        nested:{
+                            holder:holderTheme({
+                                layer:{},
+                                wrapper:{},
+                                container:{},
+                                content:{
+                                    theme:{},
+                                    predefined:{}
+                                }
+                            }),
+                            error:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            label:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            description:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{},
+                                    background:{}
+                                }
+                            }),
+                            checkbox:theme({
+                                theme:{},
+                                predefined:{
+                                    border:{}
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
+})

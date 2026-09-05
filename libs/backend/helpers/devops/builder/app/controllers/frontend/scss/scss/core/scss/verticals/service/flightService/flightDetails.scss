@@ -1,0 +1,190 @@
+.airlineDetail,
+.airlineDetailMobile {
+  align-items: center;
+  padding: rem(22);
+  li {
+    width: 16.6666666667%;
+    a {
+      cursor: pointer;
+    }
+  }
+  .airlineCommon,
+  .airlineRed,
+  .airlineGreen {
+    font-size: rem(16);
+    letter-spacing: rem(0.19);
+    line-height: rem(21);
+  }
+  .airlineRed {
+    color: $color-061;
+  }
+  .airlineGreen {
+    color: $color-029;
+  }
+  .airline {
+    display: flex;
+    align-items: center;
+    .airlineName {
+      margin-left: rem(16);
+    }
+  }
+}
+
+.airlineDetailMobile {
+  display: none;
+}
+
+.borderRemoval {
+  border-top: rem(1) solid $color-021;
+  &:hover {
+    background-color: $color-064;
+    border-top-color: transparent;
+    border-radius: 0;
+  }
+}
+.borderRemoval:hover + .borderRemoval {
+  border-top-color: $color-064;
+}
+.borderRemoval:first-child {
+  border-top: none;
+  border-top-left-radius: rem(4);
+  border-top-right-radius: rem(4);
+}
+
+.loadingRemoval {
+  border-top: rem(1) solid $color-021;
+  &:first-child {
+    border-top: none;
+    border-top-left-radius: rem(4);
+    border-top-right-radius: rem(4);
+  }
+}
+
+.shimmer-height {
+  display: flex;
+  min-height: 25px;
+}
+.btn-shimmer {
+  .btn-span {
+    display: flex;
+    min-height: rem(52);
+    color: $color-fff !important;
+    background-color: $color-fff !important;
+  }
+  .blank {
+    &.round {
+      &::after {
+        border-radius: rem(40);
+      }
+    }
+  }
+}
+
+.af-btn {
+  .btn.large{
+      .loader{
+          margin: 0 rem(21);
+      }
+  }
+}
+
+@media only screen and (min-width: rem(320)) and (max-width: rem(767)) {
+  .airlineDetail {
+    display: none;
+  }
+  .airlineDetailMobile {
+    display: flex;
+    padding: 0 0 rem(16) 0;
+    flex-wrap: wrap;
+    li {
+      margin-bottom: rem(8);
+      &:nth-child(2n) {
+        display: flex;
+        justify-content: flex-end;
+      }
+      &:nth-last-child(-n + 2) {
+        margin-bottom: 0;
+      }
+      &:nth-child(3),
+      &:nth-child(4) {
+        margin-bottom: rem(15);
+      }
+    }
+    .airlineCityInfo {
+      display: flex;
+      align-items: center;
+      .airlineCity {
+        font-size: rem(18);
+        margin-right: rem(5);
+      }
+      .cityCode {
+        font-size: rem(18);
+      }
+    }
+    .airlineDataTime {
+      font-size: rem(18);
+    }
+    .airlineDataDetails {
+      display: flex;
+      align-items: center;
+      .airlineName {
+        font-size: rem(13);
+        margin-left: rem(8);
+      }
+    }
+    .airlineStatus {
+      .status {
+        font-size: rem(13);
+      }
+    }
+    .airlineDataNumber {
+      font-size: rem(13);
+    }
+
+    .addToFavButtonMobile {
+      // width: rem(51);
+      // height: rem(40);
+      padding: rem(9) rem(11);
+      border-radius: 4px;
+      border: solid 1px #222;
+      background-color: #ffffff;
+      font-size: 1rem;
+      text-align: center;
+      color: #222;
+      .dot {
+        width: rem(7);
+        height: rem(7);
+      }
+    }
+    .addedToFavButtonMobile {
+      @extend .addToFavButtonMobile;
+      padding: rem(11) rem(17.5);
+      color: #ffffff;
+      background-color: #018849;
+      border: 0;
+    }
+    .airlineDetailsLink {
+      text-decoration: underline;
+    }
+    .w-80 {
+      width: 80%;
+    }
+    .w-20 {
+      width: 20%;
+    }
+    .fs-14 {
+      font-size: rem(14);
+    }
+    .blank-button {
+      padding: rem(12);
+      border-radius: rem(4);
+    }
+  }
+  .borderRemoval {
+    padding: 0 rem(16);
+  }
+  .loadingRemoval {
+    padding: 0 rem(16);
+  }
+}
+

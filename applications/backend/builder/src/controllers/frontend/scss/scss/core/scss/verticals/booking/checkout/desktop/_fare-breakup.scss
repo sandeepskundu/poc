@@ -1,0 +1,165 @@
+.fare-breakup-holder {
+  padding: rem(30) rem(24);
+
+  &.last {
+    .breakup-list {
+      padding-top: rem(24);
+      border-top: 1px solid $color-036;
+    }
+  }
+}
+
+.breakup-list {
+  padding: rem(14) 0 0;
+
+  li {
+    padding: rem(5) 0;
+    font-size: rem(16);
+
+    &.total-fare {
+      font-size: rem(20);
+      margin-top: rem(20);
+      padding: rem(16) 0;
+      border-top: 1px solid $color-036;
+      border-bottom: 1px solid $color-036;
+    }
+  }
+}
+
+.fare-org-dest {
+  margin-top: rem(15);
+  padding: rem(7) rem(24);
+  background-color: $color-010;
+}
+
+.sb-wrpr {
+  .isd-search {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background: #fff;
+  }
+}
+
+.lc {
+  text-transform: lowercase;
+}
+
+.fs-title {
+  display: inline-block;
+}
+
+.fs-detail {
+  float: right;
+}
+
+.flight-airports {
+  position: relative;
+
+  .duration {
+    top: rem(6);
+    left: 50%;
+    width: 5rem;
+    position: absolute;
+    margin-left: -2.5rem;
+  }
+}
+
+.tnc-link {
+  vertical-align: top;
+
+  &:hover {
+    color: $color-009;
+    text-decoration: none;
+  }
+}
+
+.loyalty-banner {
+  background: $color-059;
+  border-radius: rem(4);
+  padding: 10.5px 13px;
+
+  .loyalty-banner-img {
+    height: rem(20);
+    width: rem(20);
+    display: inline-block;
+    vertical-align: top;
+    margin-right: rem(8);
+    margin-top: -4px;
+    margin-left: rem(9);
+  }
+
+  .lottie-style {
+    margin: -0.625rem;
+    width: rem(40);
+    max-width: rem(40);
+  }
+
+  p {
+    font-size: rem(14);
+    padding-left: rem(12);
+    line-height: rem(21);
+  }
+}
+
+.slider-box-content-holder {
+  .breakup-list {
+    li {
+      font-size: rem(16);
+    }
+  }
+
+  .org-dest-date {
+    li {
+      font-size: rem(14);
+    }
+  }
+
+  .fare-breakup-holder {
+    .total-fare {
+      font-size: 18px;
+    }
+  }
+}
+
+.walletImage {
+  display: inherit;
+  margin: auto;
+}
+
+.refundTroubleImg {
+  max-width: rem(115);
+  max-height: rem(65);
+  display: inherit;
+  margin: auto;
+}
+
+.cancellationSteps {
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50px;
+    display: inline-block;
+    background: #666;
+    margin-right: 8px;
+    vertical-align: top;
+    margin-top: 8px;
+  }
+}
+
+.weWrap {
+    button:hover {
+      background: none;
+    }
+    .checkField {
+      .form-check-label {
+        margin-top: 0;
+      }
+      .form-check input[type=checkbox] {
+        top:-2px;
+      }
+      .checkbox_label {
+        margin-top: rem(1);
+      }
+    } 
+} 

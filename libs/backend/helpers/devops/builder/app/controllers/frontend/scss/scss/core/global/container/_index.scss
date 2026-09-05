@@ -1,0 +1,24 @@
+$has-container:has-component('container');
+
+@if $has-container != '' {
+    $container-prefix:get-component-prefix('container');
+    @if $container-prefix != '' {
+        .#{$container-prefix} {
+            width:100%;
+            margin:0 auto;
+            max-width:rem(1440);
+            padding-left:rem(32);
+            padding-right:rem(32);
+
+            &.fluid {
+                max-width:100%;
+            }
+        }
+
+        @media only screen and (min-width: rem(320)) and (max-width: rem(767)) { 
+            .#{$container-prefix} { 
+                padding:rem(16);
+            }
+        }
+    }
+}

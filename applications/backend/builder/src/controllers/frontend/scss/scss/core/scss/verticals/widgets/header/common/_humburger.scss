@@ -1,0 +1,21 @@
+.hmenu-link{
+    &:hover{
+        color:$color-000;
+        background:$color-052;
+    }
+}
+
+.hmenu-brand-logo{
+    max-width:rem(63);
+}
+
+.hmenu-collapsible{
+    .hmenu-collapsible-content{
+        display:none;
+    }
+    &.active{
+        .hmenu-collapsible-content{
+            display:block;
+        }
+    }
+}

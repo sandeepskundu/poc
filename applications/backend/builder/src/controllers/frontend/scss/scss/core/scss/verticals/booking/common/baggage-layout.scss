@@ -1,0 +1,57 @@
+.baggage-layout-wrpr {
+  .baggage-list-section {
+    padding: rem(25) 0;
+    border: rem(1) solid #e2e2e2;
+    border-radius: rem(16);
+    scroll-behavior: smooth !important;
+
+    .separator {
+      border-bottom: rem(1) solid #eaeaea;
+    }
+
+    .addons-baggage-list {
+      display: grid;
+      padding: 0 rem(25);
+      grid-column-gap: rem(30);
+      grid-auto-flow: column;
+      grid-template-rows: auto auto auto;
+      overflow: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth !important;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .product-card-wrpr {
+        &:nth-child(3n) {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .scroll-tab-container {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .blank-holder {
+    .product-card-wrpr {
+      .product-img.blank {
+        &::after {
+          border-radius: rem(9);
+        }
+      }
+
+      .ctr-btn-wrpr.blank {
+        border: none;
+
+        &::after {
+          border-radius: rem(24);
+        }
+      }
+    }
+  }
+}

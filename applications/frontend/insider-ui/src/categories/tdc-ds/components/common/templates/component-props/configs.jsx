@@ -1,0 +1,92 @@
+export default {
+    props:{
+        boolean:{
+            types:{
+                0:{
+                    'id':true,
+                    'label':"True"
+                },
+                2:{
+                    'id':false,
+                    'label':'False'
+                }
+            }
+        },
+        value:{
+            types:{
+                0:{
+                    'id':"static",
+                    'label':"Static"
+                },
+                2:{
+                    'id':'dynamic',
+                    'label':'Dynamic'
+                }
+            }
+        },
+        required:{
+            types:{
+                0:{
+                    id:'ui',
+                    label:"Required on UI"
+                },
+                1:{
+                    id:'server',
+                    label:"Required on server"
+                },
+                3:{
+                    id:'storybook',
+                    label:"Required for storybook"
+                }
+            },
+            options:{
+                0:{
+                    id:'required',
+                    label:'Required'
+                },
+                1:{
+                    id:'optional',
+                    label:'Optional'
+                }
+            }
+        },
+        types:{
+            1:{
+                "id":"string",
+                "label":"String"
+            }, 
+            2:{
+                "id":"design-system",
+                "label":"Design system"
+            },
+            3:{
+                "id":"extended-design-system",
+                "label":"Extended Design system"
+            },
+            4:{
+                "id":"object",
+                "label":"Object"
+            },
+            5:{
+                'id':"boolean",
+                "label":"Boolean"
+            },
+            6:{
+                'id':"function",
+                "label":"Function"
+            },
+            7:{
+                'id':"jsx",
+                "label":"JSX element"
+            },
+            8:{
+                'id':"enum",
+                "label":"Enums"
+            },
+            9:{
+                'id':"number",
+                "label":"Number"
+            }
+        }
+    }
+}

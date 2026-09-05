@@ -1,0 +1,49 @@
+{
+    "storybook":{
+        "parameters":{
+            "layout":"centered",
+            "docs": {
+                "description": {
+                    "component": "Button"
+                }
+            }
+        },
+        "tags": ["autodocs"]
+    },
+    "props":{
+        "callback": {
+            "description":"Callback functions",
+            "type":"object",
+            "defaultValue":{
+                "onClick":null
+            }
+        },
+        "config":{
+            "description":"Default icon",
+            "type":"object",
+            "defaultValue":{
+                "ds":{
+                    "text":{
+                        "default":"c10906"
+                    }
+                },
+                "attrs":{},
+                "type":"font",
+                "svg":{
+                    "style":{},
+                    "src":null,
+                    "size":"24px"
+                },
+                "icon":{
+                    "name":"",
+                    "size":"24",
+                    "family":"g"
+                },
+                "markup": {
+                    "element":"span"
+                }
+            },
+            "isRequired":false
+        }
+    }
+}
