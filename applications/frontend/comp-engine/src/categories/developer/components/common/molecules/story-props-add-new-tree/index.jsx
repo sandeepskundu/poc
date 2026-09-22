@@ -5,8 +5,8 @@ import ComponentPropsInput from 'aio-app-ui-developer-organisms/story-props-inpu
 import StoryPropsAddLink from 'aio-app-ui-developer-molecules/story-props-add-link';
 
 const Comp = (props) => {
-    const propdata = storybook.props.tree.build(helpers.json.get(props, 'data.storybook.propTypes.data', {}));
-    const tree = helpers.json.toIndexTree(propdata);
+    //const propdata = storybook.props.tree.build(helpers.json.get(props, 'data.storybook.propTypes.data', {}));
+    const tree = props.tree;
 
     const ui = () => {
         if(!props.blank){
@@ -92,7 +92,7 @@ const Comp = (props) => {
                                 let sel = helpers.json.get(helpers.json.get(data, 'selected', {}), map.join('.'), '');
 
                                 if(pos === 'before' && helpers.json.get(arg, 'value.last', false) && sel){
-                                    return <ComponentPropsInput item={arg} storybook={props} />
+                                    return <ComponentPropsInput item={arg} storybook={props.storybook} />
                                 }
 
                                 if(pos === 'after' && sel){
@@ -100,22 +100,29 @@ const Comp = (props) => {
                                 }
                             }
                         },
-
-                        treeList_deleted:{
-                            render:(arg, map, index, renderer, iProps, type, data) => {
-                                let sel = helpers.json.get(helpers.json.get(data, 'selected', {}), map.join('.'), '');
-                                if(sel){
+                        treeList:{
+                            render:(arg, map, index, renderer, iProps) => {
+                                if(map && map.length > 0){
+                                    return renderer();
+                                }else{
                                     return renderer({
+                                        callbacks:{
+                                            header:{
+                                                end:{
+                                                    onClick:(a, b, c, d) => {
+                                                        console.log(a, b, c, d, arg, map, index);
+                                                    }
+                                                }
+                                            }
+                                        },
                                         templates:{
                                             header:{
                                                 end:(a, b, c, d) => {
-                                                    return <span><StoryPropsAddLink map={map} item={arg} storybook={props} tree={tree} /></span>
+                                                    return <span className='txt-12 fm-rg'>Remove</span>
                                                 }
                                             }
                                         }
                                     });
-                                }else{
-                                    return renderer();
                                 }
                             }
                         }
@@ -128,4 +135,4 @@ const Comp = (props) => {
     return ui()
 }
 
-export default React.memo(Comp);
+export default Comp;

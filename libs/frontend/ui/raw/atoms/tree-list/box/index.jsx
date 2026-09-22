@@ -199,14 +199,16 @@ const Comp = (dprops) => {
                     if(rcb && helpers.data.type.is(rcb, 'function')){
                         switch (type) {
                             case 'accordion':
-                                return rcb(arg, [...map], i, () => {
-                                    return <Accordion {...accordionProps(arg, [...map], i)} />
-                                })
+                                let iProps = accordionProps(arg, [...map], i);
+                                return rcb(arg, [...map], i, (a) => {
+                                    return <Accordion {...helpers.json.merge(iProps, a || {})} />
+                                }, iProps, type, data)
                             break;
                             case 'item':
-                                return rcb(arg, [...map], i, () => {
-                                    return <Accordion {...accordionProps(arg, [...map], i, true)} />
-                                })
+                                let iProps1 = accordionProps(arg, [...map], i, true);
+                                return rcb(arg, [...map], i, (a) => {
+                                    return <Accordion {...helpers.json.merge(iProps1, a || {})} />
+                                }, iProps1, type, data)
                             break;
                         }
                     }else{

@@ -21,11 +21,11 @@ const enums = async (rval, arg, type, config, req, res, next, flag) => {
     let options = req.helpers.json.get(econfig, 'options', '');
 
     if(from && mapping){
-        rval = req.helpers.json.set(rval, '___.oneOf.from', from, false, true);
-        rval = req.helpers.json.set(rval, '___.oneOf.mapping', mapping, false, true);
+        rval = req.helpers.json.set(rval, '___.enum.from', from, false, true);
+        rval = req.helpers.json.set(rval, '___.enum.mapping', mapping, false, true);
     }
 
-    return req.helpers.json.set(rval, '___.oneOf.options', options || '');
+    return req.helpers.json.set(rval, '___.enum.options', options || '');
 }
 
 const compProps = async (rval, arg, type, config, req, res, next, flag) => {
@@ -33,15 +33,16 @@ const compProps = async (rval, arg, type, config, req, res, next, flag) => {
     let ow = req.helpers.json.get(arg, '___.compProps.overwirte', {});
 
     if(map){
-        return req.helpers.json.set(rval, '___.shape', req.helpers.json.get(await getPropsByTypeAndMap(map, type, ow, config, req, res, next), 'data', {}));
+        return req.helpers.json.set(rval, '___.nested', req.helpers.json.get(await getPropsByTypeAndMap(map, type, ow, config, req, res, next), 'data', {}));
     }else{
-        return req.helpers.json.set(rval, '___.shape', {});
+        return req.helpers.json.set(rval, '___.nested', {});
     }
 }
 
 const predefined = async (rval, arg, type, config, req, res, next, flag) => {
     let from = req.helpers.json.get(arg, '___.predefined.from', '');
     let map = req.helpers.json.get(arg, '___.predefined.mapping', '');
+        rval = editorConfig(rval, arg, req);
 
     if(from && map){
         if(from === 'statics'){
@@ -53,16 +54,14 @@ const predefined = async (rval, arg, type, config, req, res, next, flag) => {
                     let ow = req.helpers.json.get(arg, '___.predefined.overwirte', {});
                         pd = req.helpers.json.merge(pd, ow);
 
-                    let pdl = req.helpers.json.length(pd);
-
-                    if(pdl && pdl > 0){
-                        return req.helpers.json.set(rval, '___.shape', await compile({}, pd, type, config, req, res, next));
-                    }
+                        if(req.helpers.json.length(pd) > 0){
+                            return req.helpers.json.set(rval, '___.nested', await compile({}, pd, type, config, req, res, next));
+                        }
                 }
         }
     }
 
-    return req.helpers.json.set(rval, '___.shape', {});
+    return req.helpers.json.set(rval, '___.nested', {});
 }
 
 const addExtra = async (rval, arg, type, config, req, res, next, flag) => {
@@ -76,7 +75,7 @@ const addExtra = async (rval, arg, type, config, req, res, next, flag) => {
             let rvl = req.helpers.json.length(rv || {});
 
             if(rvl && rvl > 0){
-                rval = req.helpers.json.set(rval, '___.shape', rv || {})
+                rval = req.helpers.json.set(rval, '___.nested', rv || {})
             }
         break;
         case 'enum':
@@ -121,31 +120,41 @@ const parse = async (arg, type, config, req, res, next) => {
             return await getvalue(conf, type, config, req, res, next, 'number')
         break;
         case 'boolean':
-            return await getvalue(conf, type, config, req, res, next, 'bool')
+            return await getvalue(conf, type, config, req, res, next, 'boolean')
         break;
         case 'object':
             return await getvalue(conf, type, config, req, res, next, 'object')
         break;
         case 'function':
-            return await getvalue(conf, type, config, req, res, next, 'func')
+            return await getvalue(conf, type, config, req, res, next, 'function')
         break;
         case 'enum':
-            return await getvalue(conf, type, config, req, res, next, 'oneOf')
+            return await getvalue(conf, type, config, req, res, next, 'enum')
         break;
         case 'jsx':
-            return await getvalue(conf, type, config, req, res, next, 'node')
+            return await getvalue(conf, type, config, req, res, next, 'jsx')
         break;
         case 'nested':
-            return await getvalue(conf, type, config, req, res, next, 'shape');
+            return await getvalue(conf, type, config, req, res, next, 'nested');
         break;
         case 'compProps':
-            return await getvalue(conf, type, config, req, res, next, 'shape');
+            return await getvalue(conf, type, config, req, res, next, 'nested');
         break;
         case 'predefined':
-            return await getvalue(conf, type, config, req, res, next, 'shape');
+            return await getvalue(conf, type, config, req, res, next, 'nested');
         break;
         default:
     }
+}
+
+const editorConfig = (rval, arg, req) => {
+    let editConf = req.helpers.json.get(arg, 'editorConfig', null);
+
+    if(editConf && req.helpers.json.get(arg, 'type', '') && req.helpers.data.type.is(editConf, 'object') && req.helpers.json.length(editConf) > 0){
+        rval = req.helpers.json.set(rval, `___.editorConfig`, editConf)
+    }
+
+    return rval;
 }
 
 const compile = async (rval, props, type, config, req, res, next) => {
@@ -159,7 +168,7 @@ const compile = async (rval, props, type, config, req, res, next) => {
             let val = await parse(props[a], type, config, req, res, next);
 
             if(val != dval){
-                rv[a] = val;
+                rv[a] = editorConfig(val, props[a], req);
             }
         }
 
@@ -170,7 +179,7 @@ const compile = async (rval, props, type, config, req, res, next) => {
 }
 
 const getOneOf = async (rval, arg, type, config, req, res, next, flag) => {
-    let econfig = req.helpers.json.get(arg, '___.oneOf', {});
+    let econfig = req.helpers.json.get(arg, '___.enum', {});
     let from = req.helpers.json.get(econfig, 'from', '');
     let mapping = req.helpers.json.get(econfig, 'mapping', '');
 
@@ -194,10 +203,10 @@ const getEnums = async (rval, respobj, map, type, config, req, res, next) => {
     for(let a in respobj){
         let item = req.helpers.json.get(respobj, a, {});
         let type = req.helpers.json.get(item, 'type', '');
-        if(type === 'shape'){
-            rval = await getEnums(rval, req.helpers.json.get(item, '___.shape', {}), map, type, config, req, res, next);
+        if(type === 'nested'){
+            rval = await getEnums(rval, req.helpers.json.get(item, '___.nested', {}), map, type, config, req, res, next);
         }else{
-            if(type === 'oneOf'){
+            if(type === 'enum'){
                 rval = await getOneOf(rval, item, type, config, req, res, next);
             }
         }

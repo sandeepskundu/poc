@@ -1132,5 +1132,6 @@ exports.setByNodeList = setByNodeList;
 exports.findNodeByValue = findNodeByValue;
 exports.removeDuplicate = removeDuplicate;
 exports.hasAnyCommonKey = hasAnyCommonKey;
+exports.transform = require('./transform');
 exports.prepairApiSchema = prepairApiSchema;
 exports.swapKeysAndValues = swapKeysAndValues;

@@ -5,7 +5,7 @@ const consts = {
     css:['radius', 'shadow', 'className'],
     font:['font__d__size', 'font__d__family', 'font__d__heading'],
     dimension:['size', 'width', 'height', 'minWidth', 'minHeight', 'image__d__thumbnail'],
-    colors:['theme', 'color', 'border', 'pairing', 'background', 'hcolor', 'hborder', 'hpairing', 'hbackground', 'acolor', 'bcolor', 'aborder', 'bborder', 'abackground', 'bbackground', 'hacolor', 'hbcolor', 'haborder', 'hbborder', 'habackground', 'hbbackground']
+    colors:['theme', 'color', 'border', 'pairing', 'background', 'hcolor', 'hborder', 'hpairing', 'hbackground']
 }
 
 const byName = (rval, name) => {

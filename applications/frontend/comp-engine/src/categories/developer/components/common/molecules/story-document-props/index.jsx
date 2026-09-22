@@ -35,7 +35,8 @@ const Comp = (props) => {
 
     const type = (n) => {
         let map = {
-            shape:'object'
+            shape:'object',
+            nested:'object'
         }
         let typ = helpers.json.get(data, `${n}.type`, '');
 

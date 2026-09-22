@@ -1,6 +1,6 @@
+import {useState} from 'react';
 import helpers from 'ui-helpers';
-import { Highlight, themes } from "prism-react-renderer"
-import { useState } from 'react';
+import {Highlight, themes} from "prism-react-renderer";
 
 const Comp = (props) => {
     let  copy = {
@@ -11,8 +11,9 @@ const Comp = (props) => {
 
     const [cache, setCache] = useState(helpers.random.key())
     const [preview, setPreview] = useState((() => {
+        let sb = helpers.json.get(helpers, 'storage.storybook', '');
         let rval = helpers.json.get(props, 'preview.props', {});
-        let sprops = helpers.storage.storybook.get('preview');
+        let sprops = sb?helpers.storage.storybook.get('preview'):{}
             sprops = helpers.json.get(sprops, 'props', {});
             return helpers.json.merge(rval, sprops);
     })());
@@ -34,8 +35,8 @@ const Comp = (props) => {
             return '';
         }
 
-        const indentation = ' '.repeat(spaces);
         const lines = text.split('\n');
+        const indentation = ' '.repeat(spaces);
 
         return lines.map((line, index) => {
             if (index === 0 && !indentFirstLine){

@@ -29,7 +29,7 @@ const Comp = (props) => {
 
     const ui = () => {
         switch (type) {
-            case 'oneOf':
+            case 'enum':
                 return (
                     <OneOf
                         item={props.item}
@@ -41,7 +41,7 @@ const Comp = (props) => {
                     />
                 )
             break;
-            case 'bool':
+            case 'boolean':
                 return (
                     <Toggle
                         checkbox={{
@@ -90,7 +90,7 @@ const Comp = (props) => {
                     />
                 )
             break;
-            case 'func':
+            case 'function':
                 return (
                     <Textarea
                         maxLength={5000}

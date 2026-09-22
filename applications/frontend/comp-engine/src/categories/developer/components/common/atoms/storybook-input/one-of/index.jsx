@@ -2,7 +2,7 @@ import helpers from 'ui-helpers';
 import Select from 'aio-global-raw-ui/atoms/form/select';
 
 const Comp = (props) => {
-    const oneof = helpers.json.get(props, 'item.value.config.___.oneOf', {});
+    const oneof = helpers.json.get(props, 'item.value.config.___.enum', {});
     const options = (() => {
         let from = helpers.json.get(oneof, 'from', '');
         let mapping = helpers.json.get(oneof, 'mapping', '');

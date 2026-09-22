@@ -120,7 +120,7 @@ module.exports = {
             }
         }
     },
-    acolor:{
+    /*--acolor:{
         type:"enum",
         description:"",
         ___:{
@@ -239,7 +239,7 @@ module.exports = {
                 mapping:"global.color"
             }
         }
-    }, 
+    },--*/
     font__d__size:{
         type:"enum",
         description:"",
@@ -322,6 +322,6 @@ module.exports = {
     },
     className:{
         type:"string",
-        description:"",
+        description:""
     }
 }
