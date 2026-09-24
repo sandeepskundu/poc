@@ -1,4 +1,5 @@
 const is = require('./is');
+const schema = require('./schema');
 const dT = require('./../data/type');
 const random = require('./../random');
 const dmerge = require('node-modules/deepmerge');
@@ -1118,6 +1119,7 @@ exports.remove = remove;
 exports.tab = tabFormat;
 exports.extend = extend;
 exports.length = length;
+exports.schema = schema;
 exports.defined = defined;
 exports.prepair = prepair;
 exports.allkeys = allkeys;

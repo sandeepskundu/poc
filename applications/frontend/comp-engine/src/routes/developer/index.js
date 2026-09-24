@@ -9,6 +9,11 @@ const base = {
             view:'documention',
             name:'documention',
             path:'documention/:category?/:subcate?/:hash?',
+        },
+        uicomponent:{
+            view:'ui-component',
+            name:'uicomponent',
+            path:'uicomponent/:category?/:subcate?/:hash?',
         }
     }
 };

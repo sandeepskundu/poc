@@ -7,7 +7,7 @@ import StorybookPropsEditor from 'aio-app-ui-developer-organisms/storybook-props
 const Comp = (props) => {
     const [navbar, setNavbar] = useState({
         viewCode:false,
-        viewEditor:true
+        viewEditor:false
     });
 
     const updateNavbar = (key, val) => {
