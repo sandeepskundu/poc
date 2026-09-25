@@ -68,9 +68,9 @@ const Comp = (props) => {
     }
 
     const button = () => {
-        if((tag && desc) || 1 === 1){
+        if((tag && desc)){
             return (
-                <li>
+                <li key={`${tag}${desc}`}>
                     <Button 
                         button={{
                             content:"Save"
@@ -138,9 +138,7 @@ const Comp = (props) => {
                     body:() => {return content()}
                 }}
                 callbacks={{
-                    onClose:() => {
-                        debugger;
-                    }
+                    onClose:props.onClose
                 }}
             />
         );

@@ -1,5 +1,5 @@
-import {useState} from 'react';
 import helpers from 'ui-helpers';
+import React, {useState} from 'react';
 import Input from 'aio-global-raw-ui/atoms/form/input';
 import Select from 'aio-global-raw-ui/atoms/form/select';
 import Toggle from 'aio-global-raw-ui/atoms/form/toggle';
@@ -9,144 +9,74 @@ const Comp = (props) => {
     const types = helpers.json.get(builder, 'utils.dataType', []);
     const keyRegex = helpers.json.get(builder, 'utils.keyRegex');
     const iconByType = helpers.json.get(builder, 'utils.iconByType');
-    const {node, depth, parentType, index, parentId = 'root', onUpdate, onDelete, onAddChild, entireTree, isSiblingKeyDuplicateFn, onReorder, onReparent, draggedParentType, setDraggedParentType, searchQuery, renderCustomMetaAttribute} = props;
-    
-
-
-
-
+    const {node, depth, parentType, index, onUpdate, onDelete, onAddChild, entireTree, isSiblingKeyDuplicateFn, searchQuery} = props;
     const isObjectOrArray = node.type === 'object' || node.type === 'array';
     const isParentArray = parentType === 'array';
     const [isEditing, setIsEditing] = useState(!node.key && depth === 0);
-    const [dragOverPosition, setDragOverPosition] = useState(null);
 
     // Strict Array Fallbacks preventing 'map of undefined' crashes
-    const safeCustomMeta = node.customMeta || [];
+    const metas = node.metas || [];
     const safeChildren = node.children || [];
     const query = (searchQuery || '').trim().toLowerCase();
     const isMatchInBranch = query?builder.matchesQuery(node, query):true;
     const hasDuplicateError = !isParentArray && isSiblingKeyDuplicateFn(entireTree, node.id, node.key);
     const hasEmptyError = !isParentArray && (!node.key || !node.key.trim());
     const hasError = hasDuplicateError || hasEmptyError;
-    const isDropAllowed = draggedParentType === null || draggedParentType === parentType;
 
-  const handleKeyChange = (val) => {
-    if (keyRegex.test(val)) {
-      onUpdate(node.id, (prev) => ({ ...prev, key:val}));
-    }
-  };
-
-  const handleTypeChange = (type) => {
-    onUpdate(node.id, (prev) => ({
-      ...prev,
-      type:type,
-      isNull:false,
-      dvalue:builder.utils.dvalueByType(type),
-      children:(type === 'object' || type === 'array')?prev.children || []:undefined
-    }));
-  };
-
-  const handleValueChange = (field, val) => {
-    onUpdate(node.id, (prev) => ({ ...prev, [field]: val }));
-  };
-
-  const handleAddMetaItem = () => {
-    const newMeta = { id: Math.random().toString(36).substring(2, 9), key: '', value: '' };
-    onUpdate(node.id, (prev) => ({
-      ...prev,
-      customMeta: [...safeCustomMeta, newMeta],
-    }));
-  };
-
-  const handleUpdateMetaItem = (metaId, metaField, metaVal) => {
-    onUpdate(node.id, (prev) => ({
-      ...prev,
-      customMeta: safeCustomMeta.map((item) => {
-        if (item.id === metaId) {
-          if (metaField === 'key' && !keyRegex.test(metaVal)) return item;
-          return { ...item, [metaField]: metaVal };
+    const handleKeyChange = (val) => {
+        if (keyRegex.test(val)) {
+            onUpdate(node.id, (prev) => ({ ...prev, key:val}));
         }
-        return item;
-      }),
-    }));
-  };
+    };
 
-  const handleDeleteMetaItem = (metaId) => {
-    onUpdate(node.id, (prev) => ({
-      ...prev,
-      customMeta: safeCustomMeta.filter((item) => item.id !== metaId),
-    }));
-  };
+    const handleTypeChange = (type) => {
+        onUpdate(node.id, (prev) => ({
+            ...prev,
+            type:type,
+            isNull:false,
+            dvalue:builder.utils.dvalueByType(type),
+            children:(type === 'object' || type === 'array')?prev.children || []:undefined
+        }));
+    };
 
-  const handleDragStart = (e) => {
-    e.dataTransfer.setData('text/plain', node.id);
-    e.dataTransfer.effectAllowed = 'move';
-    setIsDragging(true);
-    setDraggedParentType(parentType);
-  };
+    const handleValueChange = (field, val) => {
+        onUpdate(node.id, (prev) => ({ ...prev, [field]: val }));
+    };
 
-  const handleDragEnd = () => {
-    setIsDragging(false);
-    setDragOverPosition(null);
-    setDraggedParentType(null);
-  };
+    const handleAddMetaItem = () => {
+        onUpdate(node.id, (prev) => ({...prev, metas:[...metas, {id:helpers.random.key(), key:'', value:''}]}));
+    };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    if (!isDropAllowed) {
-      e.dataTransfer.dropEffect = 'none';
-      return;
-    }
-    e.dataTransfer.dropEffect = 'move';
-    const rect = e.currentTarget.getBoundingClientRect();
-    const relativeY = e.clientY - rect.top;
+    const handleUpdateMetaItem = (metaId, metaField, metaVal) => {
+        onUpdate(node.id, (prev) => ({...prev, metas:metas.map((item) => {
+                if(item.id === metaId){
+                    if(metaField === 'key' && !keyRegex.test(metaVal)){
+                        return item;
+                    }
+                    return {...item, [metaField]:metaVal};
+                }
+                return item;
+            })
+        }));
+    };
 
-    if (isObjectOrArray) {
-      if (relativeY < rect.height * 0.25) setDragOverPosition('before');
-      else if (relativeY > rect.height * 0.75) setDragOverPosition('after');
-      else setDragOverPosition('inside');
-    } else {
-      if (relativeY < rect.height / 2) setDragOverPosition('before');
-      else setDragOverPosition('after');
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const dropAction = dragOverPosition;
-    setDragOverPosition(null);
-    if (!isDropAllowed) return;
-
-    const draggedId = e.dataTransfer.getData('text/plain');
-    if (draggedId === node.id) return;
-
-    if (dropAction === 'inside' && isObjectOrArray) {
-      onReparent(draggedId, node.id);
-    } else {
-      const offset = dropAction === 'after' ? 1 : 0;
-      onReorder(draggedId, parentId, index + offset);
-    }
-  };
-
-    const dragCls = () => {
-        let rval = ['full txt-md bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln']
-
-        return rval.join(' ');
-    }
+    const handleDeleteMetaItem = (metaId) => {
+        onUpdate(node.id, (prev) => ({...prev, metas:metas.filter((item) => item.id !== metaId)}));
+    };
 
     const expendIcon = () => {
         if(isObjectOrArray){
             return (
-                <span className={`mr-t6 mr-r8 ico-12 cp ico-g-${node.isExpanded?'minus':'plus'}`} onClick={() => onUpdate(node.id, (prev) => ({ ...prev, isExpanded: !prev.isExpanded }))}></span>
+                <span className={`mr-t6 mr-r8 ico-12 cp ico-g-${node.isExpanded?'minus':'plus'}`} data-tip-html={node.isExpanded?'Collapse':'Expend'}  onClick={() => onUpdate(node.id, (prev) => ({ ...prev, isExpanded: !prev.isExpanded }))}></span>
             )
         }
     }
 
     const typeIcon = () => {
-        let icos = helpers.json.get(props, 'getIconByType');
+        let icos = helpers.json.get(props, 'icons.byTypes');
 
         if(icos && helpers.data.type.is(icos, 'functions')){
-            return icos(node.type, node)
+            return icos(node)
         }else{
            return (iconByType[node.type] || '📄') 
         }
@@ -190,20 +120,20 @@ const Comp = (props) => {
 
     const addAction = () => {
         if(isObjectOrArray){
-            return <span className='txt-xxs txt-c00105 pd-tb2 pd-rl6 bdr-2 mr-l2 cp' onClick={() => onAddChild(node.id, builder.createNode('', 'string'))}>+ Add</span>
+            return <span className={`mr-l16 ico-16 cp ico-g-plus`} data-tip-html="Add" onClick={() => onAddChild(node.id, builder.createNode('', 'string'))} />
         }
     }
 
     const doneOrEditAction = () => {
         if(isEditing){
-            return <span className='txt-xxs txt-c00105 pd-tb2 pd-rl6 bdr-2 mr-l2 cp' onClick={() => setIsEditing(!isEditing)}>Done</span>
+            return <span className={`mr-l16 ico-16 cp ico-g-check`} data-tip-html="Done" onClick={() => setIsEditing(!isEditing)} />
         }else{
-            return <span className='txt-xxs txt-c00105 pd-tb2 pd-rl6 bdr-2 mr-l2 cp' onClick={() => setIsEditing(!isEditing)}>Edit</span>
+            return <span className={`mr-l16 ico-12 cp ico-g-edit`} data-tip-html="Edit" onClick={() => setIsEditing(!isEditing)} />
         }
     }
 
     const deleteAction = () => {
-        return <span className='txt-xxs txt-c00105 pd-tb2 pd-rl6 bdr-2 mr-l2 cp' onClick={() => onDelete(node.id)}>Delete</span>
+        return <span className={`mr-l16 ico-12 cp ico-g-delete`} data-tip-html="Delete" onClick={() => onDelete(node.id)} />
     }
 
     const nested = () => {
@@ -217,18 +147,13 @@ const Comp = (props) => {
                             depth={depth + 1}
                             parentType={node.type}
                             index={idx}
-                            parentId={node.id}
                             onUpdate={onUpdate}
                             onDelete={onDelete}
                             onAddChild={onAddChild}
                             entireTree={entireTree}
+                            templates={props.templates}
                             isSiblingKeyDuplicateFn={isSiblingKeyDuplicateFn}
-                            onReorder={onReorder}
-                            onReparent={onReparent}
-                            draggedParentType={draggedParentType}
-                            setDraggedParentType={setDraggedParentType}
                             searchQuery={searchQuery}
-                            renderCustomMetaAttribute={renderCustomMetaAttribute}
                             getIconByType={props.getIconByType}
                             builder={props.builder}
                         />
@@ -430,7 +355,7 @@ const Comp = (props) => {
     }
 
     const attrsHeader = () => {
-        if(safeCustomMeta.length > 0){
+        if(metas.length > 0){
             return (
                 <div className='flx-sb flx-vc mr-t20'>
                     <span className='txt-xs fm-md'>Custom Metadata Attributes</span>
@@ -447,65 +372,154 @@ const Comp = (props) => {
         }
     }
 
-    const attrsList = () => {
-        if(safeCustomMeta.length > 0){
-            return safeCustomMeta.map((meta) => {
-                const metaKeyEmpty = !meta.key || !meta.key.trim();
-                const customTemplate = renderCustomMetaAttribute?renderCustomMetaAttribute({
-                      meta,
-                      node,
-                      onChangeValue: (newVal) => handleUpdateMetaItem(meta.id, 'value', newVal),
-                      onChangeKey: (newKey) => handleUpdateMetaItem(meta.id, 'key', newKey),
-                      onDelete: () => handleDeleteMetaItem(meta.id),
-                    })
-                  : null;
+    const metaKey = (meta) => {
+        return (
+            <Input 
+                _label="Attr name"
+                placeholder="name"
+                value={meta.key || ''}
+                invalid={!meta.key || !meta.key.trim()}
+                callback={{
+                    onChange:(val) => {
+                        handleUpdateMetaItem(meta.id, 'key', val)
+                    }
+                }}
+            />
+        )
+    }
 
+    const metaAttrKeyTemplate = (meta) => {
+        const temp = helpers.json.get(props, 'templates.metaAttrs.key', '');
+        if(temp && helpers.data.type.is(temp, 'function')){
+            return temp(meta, node, {
+                template:() => {return metaKey(meta)},
+                onDelete:() => handleDeleteMetaItem(meta.id),
+                onKeyChange:(val) => handleUpdateMetaItem(meta.id, 'key', val),
+                onValueChange:(val) => handleUpdateMetaItem(meta.id, 'value', val)
+            })
+        }else{
+            return metaKey(meta)
+        }
+    }
+
+    const metaValue = (meta) => {
+        return (
+            <Input 
+                _label="Attr value"
+                placeholder="Value"
+                value={meta.value || ''}
+                callback={{
+                    onChange:(val) => {
+                        handleUpdateMetaItem(meta.id, 'value', val)
+                    }
+                }}
+            />
+        )
+    }
+
+    const metaAttrValueTemplate = (meta) => {
+        const temp = helpers.json.get(props, 'templates.metaAttrs.value', '');
+        if(temp && helpers.data.type.is(temp, 'function')){
+            return temp(meta, node, {
+                template:() => {return metaValue(meta)},
+                onDelete:() => handleDeleteMetaItem(meta.id),
+                onKeyChange:(val) => handleUpdateMetaItem(meta.id, 'key', val),
+                onValueChange:(val) => handleUpdateMetaItem(meta.id, 'value', val)
+            })
+        }else{
+            return metaValue(meta);
+        }
+    }
+
+    const metaDelete = (meta) => {
+        return (
+            <span className='mr-t14 mr-l16 ico-16 ico-g-delete cp' data-tip-html="Delete" onClick={() => handleDeleteMetaItem(meta.id)}></span>
+        )
+    }
+
+    const metaAttrDeleteTemplate = (meta) => {
+        const temp = helpers.json.get(props, 'templates.metaAttrs.delete', '');
+
+        if(temp && helpers.data.type.is(temp, 'function')){
+            return temp(meta, node, {
+                template:() => {return metaDelete(meta)},
+                onDelete:() => handleDeleteMetaItem(meta.id),
+                onKeyChange:(val) => handleUpdateMetaItem(meta.id, 'key', val),
+                onValueChange:(val) => handleUpdateMetaItem(meta.id, 'value', val)
+            })
+        }else{
+            return metaDelete(meta)
+        }
+    }
+
+    const metaRow = (meta) => {
+        return (
+            <div className='full bxs grid-wrapper flx-full'>
+                <div className='grid-w4 pd-t14 pd-b4 pd-r18 bxs'>
+                    {metaAttrKeyTemplate(meta)}
+                </div>
+                <div className='grid-w7 pd-t14 pd-b4 bxs'>
+                    {metaAttrValueTemplate(meta)}
+                </div>
+                <div className='grid-w1 pd-t14 pd-b4 pd-l10 bxs'>
+                    {metaAttrDeleteTemplate(meta)}
+                </div>
+            </div>
+        );
+    }
+
+    const attrItemTemp = (meta) => {
+        const temp = helpers.json.get(props, 'templates.metaAttrs.row', '');
+        if(temp && helpers.data.type.is(temp, 'function')){
+            return temp(meta, node, {
+                keyTemplate:metaKey,
+                valueTemplate:metaValue,
+                deleteTemplate:metaDelete,
+                template:() => {return metaRow(meta)},
+                onDelete:() => handleDeleteMetaItem(meta.id),
+                onKeyChange:(val) => handleUpdateMetaItem(meta.id, 'key', val),
+                onValueChange:(val) => handleUpdateMetaItem(meta.id, 'value', val)
+            })
+        }else{
+            return metaRow(meta)
+        }
+    }
+
+    const attrsList = () => {
+        if(metas.length > 0){
+            return metas.map((meta) => {
                 return (
-                    <div key={meta.id} className='full bxs grid-wrapper flx-full'>
-                        <div className='grid-w4 pd-t14 pd-b4 pd-r18 bxs'>
-                            <Input 
-                                _label="Attr name"
-                                placeholder="name"
-                                value={meta.key || ''}
-                                invalid={metaKeyEmpty}
-                                callback={{
-                                    onChange:(val) => {
-                                        handleUpdateMetaItem(meta.id, 'key', val)
-                                    }
-                                }}
-                            />
-                        </div>
-                        <div className='grid-w7 pd-t14 pd-b4 bxs'>
-                            {customTemplate?(customTemplate):(
-                                <Input 
-                                    _label="Attr value"
-                                    placeholder="Value"
-                                    value={meta.value || ''}
-                                    callback={{
-                                        onChange:(val) => {
-                                            handleUpdateMetaItem(meta.id, 'value', val)
-                                        }
-                                    }}
-                                />
-                            )}
-                        </div>
-                        <div className='grid-w1 pd-t14 pd-b4 pd-l10 bxs'>
-                            <span className='mr-t14 mr-l16 ico-16 ico-g-delete cp' data-tip-html="Delete" onClick={() => handleDeleteMetaItem(meta.id)}></span>
-                        </div>
-                  </div>
-                );
+                    <React.Fragment key={meta.id}>
+                        {attrItemTemp(meta)}
+                    </React.Fragment>
+                )
             })
         }
     }
 
+    const attrsUi = () => {
+        return (
+            <div className='full bxs pd-rl16 pd-b20 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln'>
+                {attrsHeader()}
+                {attrsList()}
+            </div>
+        )
+    }
+
     const attribute = () => {
         if(node.key && !node.isNull){
-            return (
-                <div className='full bxs pd-rl16 pd-b20 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln'>
-                    {attrsHeader()}
-                    {attrsList()}
-                </div>
-            )
+            const temp = helpers.json.get(props, 'templates.metaAttrs.viewport', '');
+            if(temp && helpers.data.type.is(temp, 'function')){
+                return temp(metas, node, {
+                    addNewMeta:handleAddMetaItem,
+                    template:() => {return attrsUi()},
+                    keyTemplate:metaAttrKeyTemplate,
+                    valueTemplate:metaAttrValueTemplate,
+                    deleteTemplate:metaAttrDeleteTemplate
+                })
+            }else{
+                return attrsUi()
+            }
         }
     }
 
@@ -529,44 +543,76 @@ const Comp = (props) => {
         return null
     }
 
+    const headerUi = () => {
+        return (
+            <ul className='full bxs flx-vc flx-sb pd-tb8 pd-rl12 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln'>
+                <li className='flx-vc'>
+                    <div className='fl'>
+                        {expendIcon()}
+                        <span className='mr-r8 hide' title={`Type: ${node.type}`}>{typeIcon()}</span>
+                        {arrayBadge()}
+                        {typeBadge()}
+                        {requiredBadge()}
+                        {nullBadge()}
+                        {childCount()}
+                    </div>
+                </li>
+                <li>
+                    <div className='flx'>
+                        {addAction()}
+                        {doneOrEditAction()}
+                        {deleteAction()}
+                    </div>
+                </li>
+            </ul>
+        )
+    }
+
+    const header = () => {
+        const temp = helpers.json.get(props, 'templates.node.header.viewport', '');
+        if(temp && helpers.data.type.is(temp, 'function')){
+            return temp(node, {
+                template:() => {return headerUi()}
+            })
+        }else{
+            return headerUi();
+        }
+    }
+
     return (
         <div className='full bxs'>
-            {dragOverPosition === 'before' && isDropAllowed && <div className='sandeep-kundu' style={dropIndicatorStyle} />}
-            <div draggable="false" onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragOver={handleDragOver} onDragLeave={() => setDragOverPosition(null)} onDrop={handleDrop} className={dragCls()}>
-                <ul className='full bxs flx-vc flx-sb pd-tb4'>
-                    <li className='flx-vc'>
-                        <div className='fl'>
-                            <span className='hide' style={dragHandleStyle}>⣿</span>
-                            {expendIcon()}
-                            <span className='mr-r8 hide' title={`Type: ${node.type}`}>{typeIcon()}</span>
-                            {arrayBadge()}
-                            {typeBadge()}
-                            {requiredBadge()}
-                            {nullBadge()}
-                            {childCount()}
-                        </div>
-                    </li>
-                    <li>
-                        <div className='flx'>
-                            {addAction()}
-                            {doneOrEditAction()}
-                            {deleteAction()}
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            {dragOverPosition === 'after' && isDropAllowed && <div style={dropIndicatorStyle} />}
+            {header()}
+            <ul className='full bxs flx-vc flx-sb pd-tb8 pd-rl12 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln'>
+                <li className='flx-vc'>
+                    <div className='fl'>
+                        {expendIcon()}
+                        <span className='mr-r8 hide' title={`Type: ${node.type}`}>{typeIcon()}</span>
+                        {arrayBadge()}
+                        {typeBadge()}
+                        {requiredBadge()}
+                        {nullBadge()}
+                        {childCount()}
+                    </div>
+                </li>
+                <li>
+                    <div className='flx'>
+                        {addAction()}
+                        {doneOrEditAction()}
+                        {deleteAction()}
+                    </div>
+                </li>
+            </ul>
             {editor()}
 
       {/* --- EXPANDED EDIT DRAWER --- */}
       {isEditing && (
-        <div style={editDrawerStyle} className='hide'>
+        <div className='hide'>
 
           <div style={{ display: 'flex', gap: '12px', marginBottom: '12px', flexWrap: 'wrap' }}>
             <div className='hide' style={{ flex: 1.5, minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
               
               {node.isNull ? (
-                <div style={nullValuePlaceholderStyle}>
+                <div>
                   <code>null</code>
                   <span style={{ fontSize: '11px', color: '#64748b', marginLeft: '8px' }}>
                     (Value is explicitly set to null)
@@ -627,17 +673,6 @@ const Comp = (props) => {
     );
 };
 
-const nullValuePlaceholderStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  padding: '6px 10px',
-  backgroundColor: '#f1f5f9',
-  border: '1px dashed #94a3b8',
-  borderRadius: '4px',
-  fontSize: '12px',
-  color: '#0f172a',
-};
-
 const editDrawerStyle = {
   background: '#f8fafc',
   padding: '12px 16px',
@@ -645,28 +680,6 @@ const editDrawerStyle = {
   border: '1px solid #cbd5e1',
   borderTop: 'none',
   marginTop: '-1px',
-};
-
-const fieldLabelStyle = {
-  fontSize: '11px',
-  fontWeight: 600,
-  color: '#64748b',
-};
-
-const dragHandleStyle = {
-  cursor: 'grab',
-  paddingRight: '4px',
-  userSelect: 'none',
-  fontSize: '15px',
-  color: '#94a3b8',
-};
-
-const dropIndicatorStyle = {
-  height: '4px',
-  backgroundColor: '#3b82f6',
-  borderRadius: '4px',
-  margin: '6px 0',
-  animation: 'pulseGlow 1.5s infinite ease-in-out',
 };
 
 const inputStyle = {

@@ -16,23 +16,56 @@ const Comp = (dprops) => {
     console.log(builder);
 
     return (
-        <ul className='grid-wrapper grid-layout-2 full bxs mr-t60'>
-            <li className='grid bxs pd-r14'>
+        <div className='full bxs grid-wrapper grid-layout-2 pd-20'>
+            <div className='grid pd-r10 bxs'>
                 <Json 
                     builder={builder}
                     onChange={(json, tree, valid) => {
                         console.log(json, tree, valid);
-                    /*--setJson({
-                        json:json,
-                        valid:valid
-                    })--*/
+                        /*--setJson({
+                            json:json,
+                            valid:valid
+                        })--*/
+                    }}
+
+                    icons={{
+                        byTypes:(node) => {
+
+                        }
+                    }}
+
+                    templates={{
+                        node:{
+                            header:{
+                                viewport:(node, callbacks) => {
+                                    console.log(node)
+                                }
+                            }
+                        },
+                        metaAttrs:{
+                            key:(meta, node, callbacks) => {
+                                return callbacks.template()
+                            },
+                            value:(meta, node, callbacks) => {
+                                return callbacks.template()
+                            },
+                            delete:(meta, node, callbacks) => {
+                                return callbacks.template()
+                            },
+                            row:(meta, node, callbacks) => {
+                                return callbacks.template()
+                            },
+                            viewport:(metas, node, callbacks) => {
+                                return callbacks.template()
+                            }
+                        }
                     }}
                 />
-            </li>
-            <li className='grid pd-l14 bxs'>
-                <Output />
-            </li>
-        </ul>
+            </div>
+            <div className='grid pd-l10 bxs'>
+                <Output builder={builder} />
+            </div>
+        </div>
     )
 
 }

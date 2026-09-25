@@ -1,10 +1,11 @@
 import {useState} from 'react';
 import helpers from 'ui-helpers';
-import {serializeSchemaDefinition, serializeEvaluatedData} from './schemaTree';
 
 const Comp = (dprops) => {
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
 
+    const builder = props.builder;
+    const [preview, setPreview] = useState(false);
     const [mode, setMode] = useState('definition');
     const [data, setData] = useState({
         json:{},
@@ -14,15 +15,24 @@ const Comp = (dprops) => {
     const update = (a) => {
         a.tree = helpers.json.copy(a.json || {});
         if (mode === 'definition') {
-            a.json = serializeSchemaDefinition(a.json, 'object');
+            a.json = builder.serializeDefinition(a.json, 'object');
         } else {
-            a.json = serializeEvaluatedData(a.json, 'object');
+            a.json = builder.serializeEvaluatedData(a.json, 'object');
         };
         setData(a);
     }
 
-    helpers.react.hooks.event.off('PREVIEW_JSON_DATA', update);
-    helpers.react.hooks.event.on('PREVIEW_JSON_DATA', update);
+    const togglePreviw = (arg) => {
+        setPreview(arg.preview);
+    }
+
+    const bindEvent = (name, cb) => {
+        helpers.react.hooks.event.off(name, cb);
+        helpers.react.hooks.event.on(name, cb);
+    }
+
+    bindEvent(builder.id, update);
+    bindEvent(builder.utils.eventNames.preview, togglePreviw);
 
     const valid = () => {
         if(data && data.valid){
@@ -68,18 +78,26 @@ const Comp = (dprops) => {
         }
     }
 
-    return (
-        <div className='full bsx'>
-            <div className='full bxs pd-10 bdr-1 bdr-c00104 bdr-t8 bg-c00103 flx-sb flx-vc'>
-                <span className='dib txt-sm fm-md'>Schema Definition Output</span>
-                {valid()}
-                {modes()}
-            </div>
-            <div className='full bg-c00110 txt-c00000 pd-20 bdr-b8 bxs txt-xs' >
-                {view()}
-            </div>
-        </div>
-    )
+    const ui = () => {
+        if(preview){
+            return (
+                <div className='full bsx'>
+                    <div className='full bxs pd-10 bdr-1 bdr-c00104 bdr-t8 bg-c00103 flx-sb flx-vc'>
+                        <span className='dib txt-sm fm-md'>Schema Definition Output</span>
+                        {valid()}
+                        {modes()}
+                    </div>
+                    <div className='full bg-c00110 txt-c00000 pd-20 bdr-b8 bxs txt-xs' >
+                        {view()}
+                    </div>
+                </div>
+            )
+        }else{
+            return <></>
+        }
+    }
+
+    return ui();
 }
 
 export default Comp;

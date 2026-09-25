@@ -34,22 +34,30 @@ const buildUtils = (arg) => {
     }
 }
 
-const version = (name, arg) => {
-    return versioning.init(`${name}_${json.get(arg, 'utils.storageKey', json.get(utils, 'storageKey', 'SCHEMA_BUILDER'))}`)
+const version = (name, arg, id) => {
+    return versioning.init(`js_${id}`)
+}
+
+const events = (arg, id) => {
+    return {
+        preview:`${id}Preview`
+    }
 }
 
 class SchemaManager {
     constructor(name, arg) {
         this.name = name;
         this.utils = buildUtils(arg);
-        this.version = version(name, arg);
+        this.id = arg.id || 'jsonBuilder';
+        this.version = version(name, arg, this.id);
+        this.utils.eventNames = events(arg, this.id);
     }
 
     sanitize = (node) => {
         if(!node) {
             return node;
         }else{
-            let rval = {...node, customMeta:node.customMeta || []};
+            let rval = {...node, metas:node.metas || []};
             if (rval.children) {
                 rval.children = rval.children.map(child => this.sanitize(child));
             }
@@ -65,7 +73,7 @@ class SchemaManager {
             dvalue:dval,
             isNull:false,
             required:false,
-            customMeta: [], // Array of { id, key, value }
+            metas: [], // Array of { id, key, value }
             id:random.key(),
             isExpanded:false,
             showMetaSettings:false,
@@ -137,7 +145,7 @@ class SchemaManager {
                 }
             }
 
-            if ((node.customMeta || []).some((meta) => !meta.key || !meta.key.trim())) {
+            if ((node.metas || []).some((meta) => !meta.key || !meta.key.trim())) {
                 return false;
             }
             
@@ -149,87 +157,6 @@ class SchemaManager {
         return true;
     }
 
-    extractNode = (nodes, targetId) => {
-        let draggedNode = null;
-        let filterTree = (list) => {
-            return (list || []).filter((node) => {
-                if(node.id === targetId) {
-                    draggedNode = this.sanitize(node);
-                    return false;
-                }
-                return true;
-            }).map((node) => {
-                if (node.children) {
-                    return { ...node, children:filterTree(node.children) };
-                }
-                return node;
-            });
-        };
-        return {draggedNode, cleanedTree:filterTree(nodes)};
-    }
-
-    insertAtActiveLevel = (nodes, targetParentId, draggedNode, targetIndex) => {
-        if(targetParentId === 'root') {
-            return [...(nodes || [])].splice(targetIndex, 0, this.sanitize(draggedNode));
-        }
-
-        return (nodes || []).map((node) => {
-            if(node.id === targetParentId) {
-                return {...node, children:[...(node.children || [])].splice(targetIndex, 0, this.sanitize(draggedNode))};
-            };
-
-            if (node.children) {
-                return {...node, children:insertAtActiveLevel(node.children, targetParentId, draggedNode, targetIndex)};
-            }
-
-            return node;
-        });
-    }
-
-    sanitizeForParent = (node, destinationType) => {
-        if(!node){
-            return node
-        }
-
-        let rval = this.sanitize(node);
-
-        if(destinationType === 'array') {
-            return {...rval, key:''};
-        };
-
-        if(destinationType === 'object' && (!clean.key || !clean.key.trim())) {
-            return {...rval, key:`prop_${Math.random().toString(36).substring(2, 6)}`};
-        };
-
-        return rval;
-    };
-
-    reparentNode = (nodes, draggedId, targetParentId) => {
-        const {cleanedTree, draggedNode} = this.extractNode(nodes, draggedId);
-
-        if (!draggedNode){
-            return nodes;
-        }
-    
-        if (targetParentId === 'root') {
-            return [...cleanedTree, this.sanitizeForParent(draggedNode, 'object')];
-        }
-    
-        let insertRecursive = (treeList) => {
-            return (treeList || []).map((node) => {
-                if (node.id === targetParentId) {
-                    return {...node, isExpanded: true, children: [...(node.children || []), this.sanitizeForParent(draggedNode, node.type)]};
-                }
-                if (node.children) {
-                    return { ...node, children:insertRecursive(node.children) };
-                }
-                return node;
-            });
-        };
-    
-        return insertRecursive(cleanedTree);
-    };
-
     matchesQuery = (node, query) => {
         if (!query) {
             return true;
@@ -240,7 +167,7 @@ class SchemaManager {
         const keyMatch = (node.key || '').toLowerCase().includes(q);
         const typeMatch = (node.type || '').toLowerCase().includes(q);
         const valueMatch = String(node.value || '').toLowerCase().includes(q);
-        const metaMatch = (node.customMeta || []).some((meta) => (meta.key || '').toLowerCase().includes(q) || String(meta.value || '').toLowerCase().includes(q));
+        const metaMatch = (node.metas || []).some((meta) => (meta.key || '').toLowerCase().includes(q) || String(meta.value || '').toLowerCase().includes(q));
 
         if (keyMatch || typeMatch || valueMatch || metaMatch){
             return true
@@ -266,6 +193,128 @@ class SchemaManager {
             return node;
         })
     }
+
+    parseMetaValue = (val) => {
+        let trimmed = String(val).trim();
+        
+        if(trimmed.toLowerCase() === 'true') {
+            return true;
+        };
+
+        if(trimmed.toLowerCase() === 'false') {
+            return false;
+        };
+
+        if(!isNaN(trimmed) && trimmed !== '') {
+            return Number(trimmed);
+        };
+
+        return val;
+    };
+
+    serializeDefinition = (nodes, parentType = 'object') => {
+        const activeNodes = nodes || [];
+
+        if(parentType === 'array') {
+            return activeNodes.map((child) => {
+                if (child.isNull) {
+                    return null;
+                }
+    
+                const base = {
+                    type:child.type,
+                    dvalue:child.dvalue,
+                    required:Boolean(child.required),
+                };
+    
+          const metaArray = child.metas || [];
+          if (metaArray.length > 0) {
+            metaArray.forEach((meta) => {
+              if (meta.key && meta.key.trim()) {
+                base[meta.key.trim()] = this.parseMetaValue(meta.value);
+              }
+            });
+          }
+    
+          if (child.type === 'object') {
+            const nestedProps = this.serializeDefinition(child.children || [], 'object');
+            Object.assign(base, nestedProps);
+          } else if (child.type === 'array') {
+            base.items = this.serializeDefinition(child.children || [], 'array');
+          } else if (child.type === 'function') {
+            base.code = child.value;
+          } else if (child.type === 'jsx') {
+            base.template = child.value;
+          } else {
+            base.value = child.value;
+          }
+    
+          return base;
+        });
+      }
+    
+      const result = {};
+      for (const node of activeNodes) {
+        const key = (node.key || '').trim() || `unnamed_${node.id.slice(0, 4)}`;
+    
+        // STRICT NULL OVERRIDE
+        if (node.isNull) {
+          result[key] = null;
+          continue;
+        }
+    
+        const definition = {
+          type: node.type,
+          required: Boolean(node.required),
+          dvalue: node.dvalue,
+        };
+    
+        const metaArray = node.metas || [];
+        if (metaArray.length > 0) {
+          metaArray.forEach((meta) => {
+            if (meta.key && meta.key.trim()) {
+              definition[meta.key.trim()] = this.parseMetaValue(meta.value);
+            }
+          });
+        }
+    
+        if (node.type === 'object') {
+          const nestedChildren = this.serializeDefinition(node.children || [], 'object');
+          Object.assign(definition, nestedChildren);
+        } else if (node.type === 'array') {
+          definition.items = this.serializeDefinition(node.children || [], 'array');
+        } else if (node.type === 'function') {
+          definition.code = node.value;
+        } else if (node.type === 'jsx') {
+          definition.template = node.value;
+        } else {
+          definition.value = node.value;
+        }
+    
+        result[key] = definition;
+      }
+      return result;
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 const registry = {};
