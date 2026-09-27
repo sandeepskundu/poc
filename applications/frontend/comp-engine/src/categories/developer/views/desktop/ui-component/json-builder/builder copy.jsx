@@ -1,9 +1,6 @@
 import Json from './json';
 import Output from './output';
 import helpers from 'ui-helpers';
-import Highlighter from 'aio-global-raw-ui/atoms/typography/highlighter';
-
-import {VirtualizedSearchDashboard} from './filter/demo'
 
 const Comp = (dprops) => {
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
@@ -59,90 +56,8 @@ const Comp = (dprops) => {
 
     console.log(builder);
 
-    const isObjOrArray = (node) => {
-        return (node.type === 'object' || node.type === 'array');
-    }
-
-    const addIcon = (node, arg) => {
-        if(isObjOrArray(node)){
-            return <span className={`mr-l16 ico-14 cp ico-g-plus`} data-comp-hd-target="actions" data-tip-html="Add" onClick={() => {arg.actions.add()}} />
-        }
-    }
-
-    const modify = (node, arg) => {
-        if(arg.states.is.editing){
-            return <span className={`mr-l16 ico-14 cp ico-g-check`} data-tip-html="Done" onClick={() => {arg.actions.modify()}} />
-        }else{
-            return <span className={`mr-l16 ico-14 cp ico-g-edit`} data-comp-hd-target="actions" data-tip-html="Edit" onClick={() => {arg.actions.modify()}} />
-        }
-    }
-
-    const remove = (node, arg) => {
-        return <span className={`mr-l16 ico-14 cp ico-g-delete`} data-comp-hh-target="actions" data-tip-html="Delete" onClick={() => {arg.actions.delete()}} />
-    }
-
-    const expend = (node, arg) => {
-        if(isObjOrArray(node)){
-            return <span className={`mr-r8 ico-14 cp ico-g-${node.isExpanded?'minus':'plus'}`} data-tip-html={node.isExpanded?'Collapse':'Expend'}  onClick={() => arg.actions.expend()} />
-        }
-    }
-
-    const highlight = (node) => {
-        if(node.key){
-            if(node._offsets){
-                return (
-                    <Highlighter 
-                        text={node.key}
-                        offsets={node._offsets['key']}
-                    />
-                )
-            }else{
-                return node.key;
-            }
-        }else{
-            return '<unnamed_key>'
-        }
-    }
-
-    const label = (node, arg) => {
-        return (
-            <>
-                <span className='txt-12 fm-md'>{highlight(node)}</span>
-                {arg.states.errors.hasError && (<span className='txt-xxs txt-c00306 mr-l8'>{arg.states.errors.hasEmptyError?'⚠️ (Key required)':'⚠️ (Duplicate)'}</span>)}
-            </>
-        )
-    }
-
-    const childCount = (node, arg) => {
-        if(isObjOrArray(node)){
-            return <span className='txt-xxs txt-c00105 pd-tb2 pd-rl6 bdr-2 mr-l2'>({node.children.length} {node.type === 'array' ? 'items' : 'props'})</span>   
-        }
-    }
-
-    const header = (node, arg) => {
-        return (
-            <ul className='full bxs flx-vc flx-sb pd-10 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln' data-comp-hh="actions">
-                <li className='flx-vc'>
-                    {expend(node, arg)}
-                    {label(node, arg)}
-                    {childCount(node, arg)}
-                </li>
-                <li>
-                    <div className='flx'>
-                        {addIcon(node, arg)}
-                        {modify(node, arg)}
-                        {remove(node, arg)}
-                    </div>
-                </li>
-            </ul>
-        )
-    }
-
     return (
         <div className='full bxs grid-wrapper grid-layout-2 pd-20'>
-            <div className='full hide'>
-                <VirtualizedSearchDashboard />
-            </div>
             <div className='grid pd-r10 bxs'>
                 <Json 
                     builder={builder}
@@ -164,7 +79,7 @@ const Comp = (dprops) => {
                         node:{
                             header:{
                                 viewport:(node, callbacks) => {
-                                    return header(node, callbacks);
+                                    console.log(node)
                                 }
                             }
                         },

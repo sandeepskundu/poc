@@ -1,40 +1,103 @@
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import Input from './input';
 import NodeRow from './node-row';
 import Versions from './versions';
-import Input from 'aio-global-raw-ui/atoms/form/input';
-import {useState, useMemo, useEffect, useCallback} from 'react';
 
 const Comp = (props) => {
-    const builder = props.builder;
-    const {initialNodes, onChange, getIconByType} = props;
+    const { builder, onChange, getIconByType, templates } = props;
+    const qEngine = useRef(null);
 
-    const dTree = useMemo(() => [
-        builder.createNode('userId', 'number', {required: true, dvalue: 1001, isExpanded:true, metas:[{id:'sss', key:'sandeep', value:'kundu'}]}),
+    // --- Search States ---
+    const [isSearching, setIsSearching] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState(null);
+
+    // --- Initial Schema Data Seed ---
+    const initialTree = useMemo(() => [
+        builder.createNode('userIduser', 'number', {
+            required:true,
+            dvalue:1001,
+            isExpanded:true,
+            metas: [{id:'sss', key:'sandeep', value:'kundu'}],
+        }),
         {
-            ...builder.createNode('userConfig', 'object', { required: true }),
-            children:[
-                builder.createNode('theme_mode', 'string', { required: false, dvalue: 'dark'}),
+            ...builder.createNode('userConfig', 'object', { required: true, isExpanded: true }),
+            children: [
+                builder.createNode('theme_mode_for_user_userId_', 'string', { required: false, dvalue: 'dark' }),
             ],
         },
-    ], []);
+    ], [builder]);
 
-    const [history, setHistory] = useState([dTree]);
+    // --- History & Active State Management ---
+    const [history, setHistory] = useState([initialTree]);
     const [historyIndex, setHistoryIndex] = useState(0);
-    const [searchQuery, setSearchQuery] = useState('');
+    const activeTree = history[historyIndex] || [];
+
+    // --- Versioning & UI Toggles ---
     const [showVersions, setShowVersions] = useState(false);
-    const [versions, setVersions] = useState(() => builder.version.load());
-    const tree = history[historyIndex] || [];
+    const [versions, setVersions] = useState(() => (builder.version?.load ? builder.version.load() : []));
+    const [preview, setPreview] = useState(true);
 
-    const [preview, setPreview] = useState(true)
-
-    const commitTreeChange = useCallback((newTree) => {
-        setHistory((prevHistory) => {
-            return [...prevHistory.slice(0, historyIndex + 1), newTree];
+    // --- Initialize Search Filter Engine ---
+    if (!qEngine.current && window.helpers?.plugins?.filter) {
+        qEngine.current = window.helpers.plugins.filter.init(initialTree, {
+            debounceDelay:5
         });
+    }
+
+    // Cleanup Search Filter Engine
+    useEffect(() => {
+        return () => {
+            if (qEngine.current?.destroy) {
+                qEngine.current.destroy();
+            }
+        };
+    }, []);
+
+    // Update query engine's target data index when activeTree changes
+    useEffect(() => {
+        if (qEngine.current?.setData) {
+            qEngine.current.setData(activeTree);
+        }
+    }, [activeTree]);
+
+    // --- Debounced Search Query Handling ---
+    useEffect(() => {
+        const val = searchQuery.trim();
+        setIsSearching(true);
+
+        if (qEngine.current?.filterTree) {
+            let resp = qEngine.current.filterTree({
+                $and:[{
+                    key:{
+                        highlight:true,
+                        value:val || '',
+                        operator:'startswith'
+                    }
+                }]
+            }, {
+                highlight:true,
+                searchChildren:true,         // If false, children are ignored and only top-level roots are evaluated
+                childKey:'children',  
+                treeConfig: {
+                    maxDepth:Infinity,  // Recursion limit cutoff to prevent call-stack overflows
+                    keepAncestors:true, // If child matches, preserve and render the parent path to root
+                    keepDescendantsOnParentMatch:false, // If parent matches, retain all its children unconditionally
+                }
+            });
+            setSearchResults(resp);
+            setIsSearching(false);
+        }
+    }, [searchQuery, activeTree]);
+
+    // --- Tree Commit / History Mutations ---
+    const commitTreeChange = useCallback((newTree) => {
+        setHistory((prevHistory) => [...prevHistory.slice(0, historyIndex + 1), newTree]);
         setHistoryIndex((prevIndex) => prevIndex + 1);
     }, [historyIndex]);
 
     const handleUndo = useCallback(() => {
-        if (historyIndex > 0){
+        if (historyIndex > 0) {
             setHistoryIndex((prev) => prev - 1);
         }
     }, [historyIndex]);
@@ -45,15 +108,16 @@ const Comp = (props) => {
         }
     }, [historyIndex, history.length]);
 
+    // --- Keyboard Shortcuts (Ctrl+Z / Ctrl+Y) ---
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
                 if (e.shiftKey){
                     handleRedo();
                 }else{
                     handleUndo();
                 }
-            }else if((e.ctrlKey || e.metaKey) && e.key === 'y') {
+            } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
                 handleRedo();
             }
         };
@@ -61,144 +125,169 @@ const Comp = (props) => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [handleUndo, handleRedo]);
 
+    // Persist versions
     useEffect(() => {
-        builder.version.save(versions);
-    }, [versions]);
-
-    const handleSearchChange = (e) => {
-        const q = e.target.value;
-        setSearchQuery(q);
-        if(q.trim()) {
-            commitTreeChange(builder.expandMatching(tree, q));
+        if (builder.version?.save) {
+            builder.version.save(versions);
         }
-    };
+    }, [versions, builder]);
 
-    const isValid = useMemo(() => builder.isTreeValid(tree), [tree]);
+    // Tree validity
+    const isValid = useMemo(() => builder.isTreeValid(activeTree), [builder, activeTree]);
 
+    // --- External Event & Change Propagation ---
     useEffect(() => {
-        helpers.react.hooks.event.emit(builder.id, {
-            json:tree,
-            valid:isValid
-        });
-
-        if(onChange){
-            //onChange(res, tree, isValid);
+        if (window.helpers?.react?.hooks?.event?.emit) {
+            window.helpers.react.hooks.event.emit(builder.id, {
+                json: activeTree,
+                valid: isValid,
+            });
         }
-    }, [tree, isValid, onChange]);
 
+        if (onChange) {
+            onChange(activeTree, isValid);
+        }
+    }, [activeTree, isValid, builder.id, onChange]);
+
+    // Preview event propagation
     useEffect(() => {
-        helpers.react.hooks.event.emit(builder.utils.eventNames.preview, {
-            preview:preview
-        });
-    }, [preview])
+        const previewEvent = builder.utils?.eventNames?.preview || 'preview:toggle';
+        if (window.helpers?.react?.hooks?.event?.emit) {
+            window.helpers.react.hooks.event.emit(previewEvent, { preview });
+        }
+    }, [preview, builder]);
 
+    // --- Action Handlers ---
     const handleUpdate = (id, updater) => {
-        commitTreeChange(builder.updateNode(tree, id, updater));
+        commitTreeChange(builder.updateNode(activeTree, id, updater));
     };
 
     const handleDelete = (id) => {
-        commitTreeChange(builder.deleteNode(tree, id));
+        commitTreeChange(builder.deleteNode(activeTree, id));
     };
 
     const handleAddChild = (parentId, child) => {
-        commitTreeChange(builder.addChildNode(tree, parentId, child));
+        commitTreeChange(builder.addChildNode(activeTree, parentId, child));
     };
 
     const handleAddRootField = () => {
-        commitTreeChange([...tree, builder.createNode('', 'string')]);
+        commitTreeChange([...activeTree, builder.createNode('', 'string')]);
     };
 
-    const versionUi = () => {
-        if(showVersions){
-            return (
-                <Versions
-                    tree={tree}
-                    show={showVersions}
-                    builder={props.builder}
-                    onChange={(arg) => {
-                        setVersions(arg);
-                    }}
-                    onClose={() => {
-                        setShowVersions(false)
-                    }}
-                    onRestore={(arg) => {
-                        commitTreeChange(arg);
-                        setShowVersions(false)
-                    }}
-                />
-            )
-        }
-    }
-
-    const previewIcon = () => {
-        return <span className={`mr-l10 ico-18 cp ico-g-eye${preview?'-off':''}`} data-tip-html={preview?`Off preview`:'Preview'} onClick={() => {setPreview(!preview)}} />
-    }
-
-    const addIcon = () => {
-        return <span className={`mr-l10 ico-18 cp ico-g-plus`} data-tip-html="Add Root Field" onClick={handleAddRootField} />   
-    }
+    // Determine which list of nodes to render (search filtered vs full tree)
+    const displayNodes = searchResults !== null ? searchResults : activeTree;
 
     return (
-        <div className='full bxs bg-c00101 pd-16 bdr-1 bdr-c00104 bdr-8'>
-            <div className='full bxs pd-b16'>
-                <div className='full flx-full'>
-                    <h3 className='bxs txt-sm fm-md flx-full full'>Schema Field Editor</h3>
-                    <ul className='flx'>
-                        <li className='fl'>{addIcon()}</li>
-                        <li className='fl'>{previewIcon()}</li>
+        <div className="full bxs bg-c00101 pd-16 bdr-1 bdr-c00104 bdr-8">
+            {/* Header Bar */}
+            <div className="full bxs pd-b16">
+                <div className="full flx-full flx-sb">
+                    <h3 className="bxs txt-sm fm-md flx-full">Schema Field Editor</h3>
+                    <ul className="flx flx-vc gap-8">
+                        <li className="fl">
+                            <span
+                                className="ico-18 cp ico-g-plus"
+                                data-tip-html="Add Root Field"
+                                onClick={handleAddRootField}
+                            />
+                        </li>
+                        <li className="fl">
+                            <span
+                                className={`ico-18 cp ico-g-eye${preview ? '-off' : ''}`}
+                                data-tip-html={preview ? 'Hide Preview' : 'Show Preview'}
+                                onClick={() => setPreview((prev) => !prev)}
+                            />
+                        </li>
                     </ul>
                 </div>
-                {!isValid && (<span className='txt-xxs mr-t8 txt-c00306'>⚠️ Resolve empty or duplicate keys before compiling</span>)}
+                {!isValid && (
+                    <span className="txt-xxs mr-t8 txt-c00306 db">
+                        ⚠️ Resolve empty or duplicate keys before compiling
+                    </span>
+                )}
             </div>
-            <div className='full flx-vc grid-wrapper'>
-                <div className='grid-w6 hide'>
+
+            {/* Control Strip: Search & History */}
+            <div className="full flx-vc grid-wrapper pd-b12">
+                <div className="grid-w6">
                     <Input
                         clearable={true}
                         value={searchQuery}
                         placeholder="Search schema..."
                         callback={{
-                            onChangeStart:(val) => {
-                                handleSearchChange({
-                                    target:{
-                                        value:val
-                                    }
-                                })
-                            }
+                            onChangeStart: (val) => setSearchQuery(val || ''),
                         }}
                     />
                 </div>
-                <div className='grid-w6 flx-sb bxs pd-rl16 hide'>
-                    <span className={`cp txt-xs txt-${(historyIndex === 0)?'c00104':"c00107"}`} onClick={handleUndo}>Undo</span>
-                    <span className={`cp txt-xs txt-${(historyIndex >= history.length - 1)?'c00104':"c00107"}`} onClick={handleRedo}>Redo</span>
-                    <span className={`cp txt-xs txt-c00107 link`} onClick={() => setShowVersions(true)}> Versions ({versions.length})</span>
-                    {addIcon()}
-                    {previewIcon()}
+                <div className="grid-w6 flx-sb flx-vc bxs pd-rl16">
+                    <div className="flx gap-12">
+                        <span
+                            className={`cp txt-xs ${historyIndex === 0 ? 'txt-c00104 not-allowed' : 'txt-c00107'}`}
+                            onClick={handleUndo}
+                        >
+                            Undo
+                        </span>
+                        <span
+                            className={`cp txt-xs ${historyIndex >= history.length - 1 ? 'txt-c00104 not-allowed' : 'txt-c00107'}`}
+                            onClick={handleRedo}
+                        >
+                            Redo
+                        </span>
+                    </div>
+
+                    <span
+                        className="cp txt-xs txt-c00107 link"
+                        onClick={() => setShowVersions(true)}
+                    >
+                        Versions ({versions.length})
+                    </span>
                 </div>
             </div>
 
-            <div className='full bxs'>
-                {(tree || []).map((node, index) => (
-                    <NodeRow
-                        depth={0}
-                        node={node}
-                        key={node.id}
-                        index={index}
-                        entireTree={tree}
-                        parentType="object"
-                        builder={props.builder}
-                        onUpdate={handleUpdate}
-                        onDelete={handleDelete}
-                        templates={props.templates}
-                        onAddChild={handleAddChild}
-                        searchQuery={searchQuery}
-                        getIconByType={getIconByType}
-                        isSiblingKeyDuplicateFn={builder.isDuplicate}
-                    />
-                ))}
+            {/* Node Rows List */}
+            <div className="full bxs">
+                {displayNodes.length === 0 ? (
+                    <div className="full txt-c pd-20 txt-xs txt-c00104">
+                        {isSearching ? 'Searching...' : 'No matching fields found.'}
+                    </div>
+                ) : (
+                    displayNodes.map((node, index) => (
+                        <NodeRow
+                            depth={0}
+                            key={node.id}
+                            node={node}
+                            index={index}
+                            parentType="object"
+                            builder={builder}
+                            entireTree={activeTree}
+                            onUpdate={handleUpdate}
+                            onDelete={handleDelete}
+                            onAddChild={handleAddChild}
+                            templates={templates}
+                            searchQuery={searchQuery}
+                            getIconByType={getIconByType}
+                            isSiblingKeyDuplicateFn={builder.isDuplicate}
+                        />
+                    ))
+                )}
             </div>
-            {versionUi()}
-    </div>
-  );
+
+            {/* Versions Modal */}
+            {showVersions && (
+                <Versions
+                    show={showVersions}
+                    tree={activeTree}
+                    builder={builder}
+                    onChange={(newVersions) => setVersions(newVersions)}
+                    onClose={() => setShowVersions(false)}
+                    onRestore={(restoredTree) => {
+                        commitTreeChange(restoredTree);
+                        setShowVersions(false);
+                    }}
+                />
+            )}
+        </div>
+    );
 };
 
 export default Comp;

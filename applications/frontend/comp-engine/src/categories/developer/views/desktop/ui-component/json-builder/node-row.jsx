@@ -16,9 +16,8 @@ const Comp = (props) => {
 
     // Strict Array Fallbacks preventing 'map of undefined' crashes
     const metas = node.metas || [];
-    const safeChildren = node.children || [];
+    const childs = node.children || [];
     const query = (searchQuery || '').trim().toLowerCase();
-    const isMatchInBranch = query?builder.matchesQuery(node, query):true;
     const hasDuplicateError = !isParentArray && isSiblingKeyDuplicateFn(entireTree, node.id, node.key);
     const hasEmptyError = !isParentArray && (!node.key || !node.key.trim());
     const hasError = hasDuplicateError || hasEmptyError;
@@ -30,13 +29,12 @@ const Comp = (props) => {
     };
 
     const handleTypeChange = (type) => {
-        onUpdate(node.id, (prev) => ({
-            ...prev,
+        onUpdate(node.id, (prev) => (builder.onNodeUpdate({
             type:type,
             isNull:false,
-            dvalue:builder.utils.dvalueByType(type),
+            dvalue:builder.dvalueByType(type),
             children:(type === 'object' || type === 'array')?prev.children || []:undefined
-        }));
+        }, prev)));
     };
 
     const handleValueChange = (field, val) => {
@@ -64,10 +62,14 @@ const Comp = (props) => {
         onUpdate(node.id, (prev) => ({...prev, metas:metas.filter((item) => item.id !== metaId)}));
     };
 
+    const expendToggle = () => {
+        onUpdate(node.id, (prev) => ({...prev, isExpanded:!prev.isExpanded}))
+    }
+
     const expendIcon = () => {
         if(isObjectOrArray){
             return (
-                <span className={`mr-t6 mr-r8 ico-12 cp ico-g-${node.isExpanded?'minus':'plus'}`} data-tip-html={node.isExpanded?'Collapse':'Expend'}  onClick={() => onUpdate(node.id, (prev) => ({ ...prev, isExpanded: !prev.isExpanded }))}></span>
+                <span className={`mr-t6 mr-r8 ico-12 cp ico-g-${node.isExpanded?'minus':'plus'}`} data-tip-html={node.isExpanded?'Collapse':'Expend'}  onClick={() => expendToggle()}></span>
             )
         }
     }
@@ -114,50 +116,66 @@ const Comp = (props) => {
 
     const childCount = () => {
         if(isObjectOrArray){
-            return <span className='txt-xxs txt-c00105 pd-tb2 pd-rl6 bdr-2 mr-l2'>({safeChildren.length} {node.type === 'array' ? 'items' : 'props'})</span>   
+            return <span className='txt-xxs txt-c00105 pd-tb2 pd-rl6 bdr-2 mr-l2'>({childs.length} {node.type === 'array' ? 'items' : 'props'})</span>   
         }
+    }
+
+    const addNew = () => {
+        onAddChild(node.id, builder.createNode('', 'string'))
     }
 
     const addAction = () => {
         if(isObjectOrArray){
-            return <span className={`mr-l16 ico-16 cp ico-g-plus`} data-tip-html="Add" onClick={() => onAddChild(node.id, builder.createNode('', 'string'))} />
+            return <span className={`mr-l16 ico-16 cp ico-g-plus`} data-tip-html="Add" onClick={() => addNew()} />
         }
+    }
+
+    const modifyToggle = () => {
+        setIsEditing(!isEditing)
     }
 
     const doneOrEditAction = () => {
         if(isEditing){
-            return <span className={`mr-l16 ico-16 cp ico-g-check`} data-tip-html="Done" onClick={() => setIsEditing(!isEditing)} />
+            return <span className={`mr-l16 ico-16 cp ico-g-check`} data-tip-html="Done" onClick={() => modifyToggle()} />
         }else{
-            return <span className={`mr-l16 ico-12 cp ico-g-edit`} data-tip-html="Edit" onClick={() => setIsEditing(!isEditing)} />
+            return <span className={`mr-l16 ico-12 cp ico-g-edit`} data-tip-html="Edit" onClick={() => modifyToggle()} />
         }
     }
 
-    const deleteAction = () => {
-        return <span className={`mr-l16 ico-12 cp ico-g-delete`} data-tip-html="Delete" onClick={() => onDelete(node.id)} />
+    const deleteNode = () => {
+        onDelete(node.id)
     }
 
+    const deleteAction = () => {
+        return <span className={`mr-l16 ico-12 cp ico-g-delete`} data-tip-html="Delete" onClick={() => deleteNode()} />
+    }
+
+    console.log(childs);
+
     const nested = () => {
-        if(isObjectOrArray && node.isExpanded && safeChildren.length > 0){
+        if(isObjectOrArray && node.isExpanded && childs.length > 0){
             return (
-                <div className='bxs pd-l8 bdr-1 bdr-tn bdr-bn bdr-rn bdr-c00104'>
-                    {safeChildren.map((child, idx) => (
-                        <Comp
-                            key={child.id}
-                            node={child}
-                            depth={depth + 1}
-                            parentType={node.type}
-                            index={idx}
-                            onUpdate={onUpdate}
-                            onDelete={onDelete}
-                            onAddChild={onAddChild}
-                            entireTree={entireTree}
-                            templates={props.templates}
-                            isSiblingKeyDuplicateFn={isSiblingKeyDuplicateFn}
-                            searchQuery={searchQuery}
-                            getIconByType={props.getIconByType}
-                            builder={props.builder}
-                        />
-                    ))}
+                <div className='bxs pd-l4 bg-c00104 anim'>
+                    <div className='full bdr-1 bdr-tn bdr-bn bdr-rn bdr-c00104'>
+                        {childs.map((child, idx) => (
+                            <Comp
+                                key={child.id}
+                                node={child}
+                                depth={depth + 1}
+                                parentType={node.type}
+                                index={idx}
+                                onUpdate={onUpdate}
+                                onDelete={onDelete}
+                                onAddChild={onAddChild}
+                                entireTree={entireTree}
+                                templates={props.templates}
+                                isSiblingKeyDuplicateFn={isSiblingKeyDuplicateFn}
+                                searchQuery={searchQuery}
+                                getIconByType={props.getIconByType}
+                                builder={props.builder}
+                            />
+                        ))}
+                    </div>
                 </div>
             )
         }
@@ -526,7 +544,7 @@ const Comp = (props) => {
     const editor = () => {
         if(isEditing){
             return (
-                <div className='full bxs'>
+                <div className='full bxs bg-c00101'>
                     <ul className='full bxs pd-tb30 pd-rl16 grid-wrapper grid-layout-4'>
                         {keyName()}
                         {nullable()}
@@ -539,7 +557,7 @@ const Comp = (props) => {
         }
     }
 
-    if(query && !isMatchInBranch){
+    if(query && !node.isExpanded){
         return null
     }
 
@@ -572,7 +590,24 @@ const Comp = (props) => {
         const temp = helpers.json.get(props, 'templates.node.header.viewport', '');
         if(temp && helpers.data.type.is(temp, 'function')){
             return temp(node, {
-                template:() => {return headerUi()}
+                template:() => {return headerUi()},
+                states:{
+                    errors:{
+                        hasError:hasError,
+                        hasEmptyError:hasEmptyError
+                    },
+                    is:{
+                        editing:isEditing,
+                        parentArray:isParentArray,
+                        isObjOrArray:isObjectOrArray
+                    }
+                },
+                actions:{
+                    delete:deleteNode,
+                    expend:expendToggle,
+                    modify:modifyToggle,
+                    add:(isObjectOrArray?addNew:null),
+                }
             })
         }else{
             return headerUi();
@@ -582,7 +617,7 @@ const Comp = (props) => {
     return (
         <div className='full bxs'>
             {header()}
-            <ul className='full bxs flx-vc flx-sb pd-tb8 pd-rl12 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln'>
+            <ul className='full bxs flx-vc flx-sb pd-tb8 pd-rl12 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln hide'>
                 <li className='flx-vc'>
                     <div className='fl'>
                         {expendIcon()}

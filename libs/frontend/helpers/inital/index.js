@@ -4,7 +4,8 @@ const initializer = (n, h) => {
   window[n || 'helpers'] = h;
 
   setTimeout(() => {comps.bind(h)}, 200);
-  h.plugins.tooltip.bind()
+  h.plugins.hd.bind();
+  h.plugins.tooltip.bind();
 };
 
 
