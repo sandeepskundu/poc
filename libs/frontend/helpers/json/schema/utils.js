@@ -1,6 +1,15 @@
 exports.storageKey = 'SCHEMA_BUILDER';
 exports.keyRegex = /^[a-zA-Z0-9_]*$/;
+exports.keyReplaceRegex = /[^a-zA-Z0-9_]/g;
 exports.dataType = ['string', 'number', 'boolean', 'object', 'array', 'function', 'jsx', 'sandeep', 'mandeep'];
+exports.dataTypeFlags = {
+    array:['array'],
+    object:['object']
+}
+
+exports.keysmap = {
+    arrayChilds:'item'
+} 
 
 exports.iconByType = {
     string:'🔤',

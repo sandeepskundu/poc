@@ -1,404 +1,163 @@
 import helpers from 'ui-helpers';
-import React, {useState} from 'react';
 import Input from 'aio-global-raw-ui/atoms/form/input';
 import Select from 'aio-global-raw-ui/atoms/form/select';
 import Toggle from 'aio-global-raw-ui/atoms/form/toggle';
 
+const booleans = (() => {
+    let ops = ['true', 'false'].map((a, i) => {
+        return {
+            id: a,
+            label: a
+        }
+    })
+    return helpers.array.toIndexJson(ops, {});
+})();
+
 const Comp = (props) => {
     const builder = props.builder;
-    const types = helpers.json.get(builder, 'utils.dataType', []);
     const keyRegex = helpers.json.get(builder, 'utils.keyRegex');
-    const iconByType = helpers.json.get(builder, 'utils.iconByType');
-    const {node, depth, parentType, index, onUpdate, onDelete, onAddChild, entireTree, isSiblingKeyDuplicateFn, searchQuery} = props;
-    const isObjectOrArray = node.type === 'object' || node.type === 'array';
-    const isParentArray = parentType === 'array';
-    const [isEditing, setIsEditing] = useState(!node.key && depth === 0);
+    const keyReplaceRegex = helpers.json.get(builder, 'utils.keyReplaceRegex');
 
-    // Strict Array Fallbacks preventing 'map of undefined' crashes
-    const metas = node.metas || [];
-    const childs = node.children || [];
-    const query = (searchQuery || '').trim().toLowerCase();
-    const hasDuplicateError = !isParentArray && isSiblingKeyDuplicateFn(entireTree, node.id, node.key);
-    const hasEmptyError = !isParentArray && (!node.key || !node.key.trim());
-    const hasError = hasDuplicateError || hasEmptyError;
+    const node = props.node;
+    const childs = node.__.children || [];
+    const { depth, onUpdate, onDelete, onAddChild, entireTree, isKeyDuplicate, query } = props;
+
+    const datatTypes = (() => {
+        let ops = (helpers.json.get(builder, 'utils.dataType', [])).map((a, i) => {
+            return {
+                id: a,
+                label: a
+            }
+        })
+        return helpers.array.toIndexJson(ops, {});
+    })();
+
+    const validateKey = (val) => {
+        if (val && keyReplaceRegex) {
+            val = val.replace(keyReplaceRegex, '');
+        };
+
+        if (keyRegex && keyRegex.test(val)) {
+            return true;
+        }
+
+        return false;
+    }
 
     const handleKeyChange = (val) => {
-        if (keyRegex.test(val)) {
-            onUpdate(node.id, (prev) => ({ ...prev, key:val}));
+        if (validateKey(val)) {
+            onUpdate(node.__.id, (prev) => ({
+                ...prev,
+                __: {
+                    ...prev.__, // Safely preserve sibling metadata (id, expanded, etc.)
+                    key: val    // Safely update or override only the targeted key
+                }
+            }));
         }
     };
 
     const handleTypeChange = (type) => {
-        onUpdate(node.id, (prev) => (builder.onNodeUpdate({
-            type:type,
-            isNull:false,
-            dvalue:builder.dvalueByType(type),
-            children:(type === 'object' || type === 'array')?prev.children || []:undefined
-        }, prev)));
-    };
-
-    const handleValueChange = (field, val) => {
-        onUpdate(node.id, (prev) => ({ ...prev, [field]: val }));
-    };
-
-    const handleAddMetaItem = () => {
-        onUpdate(node.id, (prev) => ({...prev, metas:[...metas, {id:helpers.random.key(), key:'', value:''}]}));
-    };
-
-    const handleUpdateMetaItem = (metaId, metaField, metaVal) => {
-        onUpdate(node.id, (prev) => ({...prev, metas:metas.map((item) => {
-                if(item.id === metaId){
-                    if(metaField === 'key' && !keyRegex.test(metaVal)){
-                        return item;
-                    }
-                    return {...item, [metaField]:metaVal};
+        onUpdate(node.__.id, (prev) => {
+            const meta = prev?.__ || {};
+            return builder.onNodeUpdate({
+                ...prev,
+                __: {
+                    ...meta,
+                    type: type,
+                    isNull: false,
+                    ...((builder.isDataType(type, 'object') || builder.isDataType(type, 'array')) ? { children: meta.children || [] } : {})
                 }
-                return item;
-            })
-        }));
+            }, prev);
+        });
     };
+
+    const handleAddMetaItem = (arg) => {
+        onUpdate(node.__.id, (prev) => {
+            return {
+                ...prev,
+                __: {
+                    ...prev?.__,
+                    metas: [
+                        ...prev?.__?.metas || [],
+                        {
+                            ...{
+                                key: '',
+                                value: '',
+                                id: helpers.random.key()
+                            }, ...(arg || {})
+                        }
+                    ]
+                }
+            }
+        })
+    }
+
+    const handleUpdateMetaItem = (id, field, value) => {
+        if (id && field) {
+            onUpdate(node.__.id, (prev) => {
+                return {
+                    ...prev,
+                    __: {
+                        ...prev?.__,
+                        metas: (prev?.__?.metas || []).map((item) => {
+                            if (item.id !== id) {
+                                return item;
+                            }
+
+                            if (field === 'key' && !validateKey(value)) {
+                                return item;
+                            }
+
+                            return {
+                                ...item,
+                                [field]: value
+                            };
+                        })
+                    }
+                }
+            })
+        }
+    }
 
     const handleDeleteMetaItem = (metaId) => {
-        onUpdate(node.id, (prev) => ({...prev, metas:metas.filter((item) => item.id !== metaId)}));
+        if (metaId) {
+            onUpdate(node.__.id, (prev) => {
+                return {
+                    ...prev,
+                    __: {
+                        ...prev?.__,
+                        metas: (prev?.__?.metas || []).filter((item) => item.id !== metaId)
+                    }
+                }
+            })
+        }
     };
 
-    const expendToggle = () => {
-        onUpdate(node.id, (prev) => ({...prev, isExpanded:!prev.isExpanded}))
-    }
-
-    const expendIcon = () => {
-        if(isObjectOrArray){
-            return (
-                <span className={`mr-t6 mr-r8 ico-12 cp ico-g-${node.isExpanded?'minus':'plus'}`} data-tip-html={node.isExpanded?'Collapse':'Expend'}  onClick={() => expendToggle()}></span>
-            )
-        }
-    }
-
-    const typeIcon = () => {
-        let icos = helpers.json.get(props, 'icons.byTypes');
-
-        if(icos && helpers.data.type.is(icos, 'functions')){
-            return icos(node)
-        }else{
-           return (iconByType[node.type] || '📄') 
-        }
-    }
-
-    const arrayBadge = () => {
-        if(isParentArray){
-            return <span className='txt-12'>[{index}]</span>
-        }else{
-            return (
-                <>
-                    <span className='txt-12'>{node.key || '<unnamed_key>'}</span>
-                    {hasError && (<span className='txt-xxs txt-c00306'>{hasEmptyError ? '⚠️ (Key required)' : '⚠️ (Duplicate)'}</span>)}
-                </>
-            )
-        }
-    }
-
-    const typeBadge = () => {
-        return <span className='txt-xxs bg-c00103 pd-tb2 pd-rl6 bdr-2 bdr-1 bdr-c00104 mr-l8'>{node.type}</span>
-    }
-
-    const requiredBadge = () => {
-        if(node.required){
-            return <span className='txt-xxs bg-c00402 pd-tb2 pd-rl6 bdr-2 bdr-1 bdr-c00406 txt-c00408 mr-l8'>required</span>
-        }
-        
-    }
-
-    const nullBadge = () => {
-        if(node.isNull){
-            return <span className='txt-xxs bg-c00302 pd-tb2 pd-rl6 bdr-2 bdr-1 bdr-c00306 txt-c00308 mr-l8 fm-md'>null</span>
-        }
-    }
-
-    const childCount = () => {
-        if(isObjectOrArray){
-            return <span className='txt-xxs txt-c00105 pd-tb2 pd-rl6 bdr-2 mr-l2'>({childs.length} {node.type === 'array' ? 'items' : 'props'})</span>   
-        }
-    }
-
-    const addNew = () => {
-        onAddChild(node.id, builder.createNode('', 'string'))
-    }
-
-    const addAction = () => {
-        if(isObjectOrArray){
-            return <span className={`mr-l16 ico-16 cp ico-g-plus`} data-tip-html="Add" onClick={() => addNew()} />
-        }
-    }
-
-    const modifyToggle = () => {
-        setIsEditing(!isEditing)
-    }
-
-    const doneOrEditAction = () => {
-        if(isEditing){
-            return <span className={`mr-l16 ico-16 cp ico-g-check`} data-tip-html="Done" onClick={() => modifyToggle()} />
-        }else{
-            return <span className={`mr-l16 ico-12 cp ico-g-edit`} data-tip-html="Edit" onClick={() => modifyToggle()} />
-        }
-    }
-
-    const deleteNode = () => {
-        onDelete(node.id)
-    }
-
-    const deleteAction = () => {
-        return <span className={`mr-l16 ico-12 cp ico-g-delete`} data-tip-html="Delete" onClick={() => deleteNode()} />
-    }
-
-    console.log(childs);
-
-    const nested = () => {
-        if(isObjectOrArray && node.isExpanded && childs.length > 0){
-            return (
-                <div className='bxs pd-l4 bg-c00104 anim'>
-                    <div className='full bdr-1 bdr-tn bdr-bn bdr-rn bdr-c00104'>
-                        {childs.map((child, idx) => (
-                            <Comp
-                                key={child.id}
-                                node={child}
-                                depth={depth + 1}
-                                parentType={node.type}
-                                index={idx}
-                                onUpdate={onUpdate}
-                                onDelete={onDelete}
-                                onAddChild={onAddChild}
-                                entireTree={entireTree}
-                                templates={props.templates}
-                                isSiblingKeyDuplicateFn={isSiblingKeyDuplicateFn}
-                                searchQuery={searchQuery}
-                                getIconByType={props.getIconByType}
-                                builder={props.builder}
-                            />
-                        ))}
-                    </div>
-                </div>
-            )
-        }
-    }
-
-    const keyName = () => {
-        if(!isParentArray){
-            return (
-                <li className='grid pd-r16 bxs'>
-                    <Input 
-                        label="Key Name"
-                        placeholder="key_name"
-                        value={node.key || ''}
-                        callback={{
-                            onChange:handleKeyChange
-                        }}
-                    />
-                </li>
-            )
-        }
-    }
-
-    const nullable = () => {
-        if(node.key){
-            return (
-                <li className='grid pd-r16 bxs pd-t12 pd-l16'>
-                    <Toggle 
-                        label={{
-                            text:"Set null"
-                        }}
-                        checkbox={{
-                            checked:node.isNull
-                        }}
-                        callback={{
-                            input: {
-                                onChange:(checked, b, c) => {
-                                    onUpdate(node.id, (prev) => ({...prev, isNull:checked}));
-                                }
-                            }
-                        }}
-                    />
-                </li>
-            )
-        }
-
-        return <></>
-    }
-
-    const required = () => {
-        if(node.key && node.type && !node.isNull){
-            return (
-                <li className='grid pd-r16 bxs pd-t12 pd-l16'>
-                    <Toggle 
-                        label={{
-                            text:"Required"
-                        }}
-                        checkbox={{
-                            checked:node.required
-                        }}
-                        callback={{
-                            input: {
-                                onChange:(checked, b, c) => {
-                                    onUpdate(node.id, (prev) => ({...prev, required:checked}))
-                                }
-                            }
-                        }}
-                    />
-                </li>
-            )
-        }
-
-        return <></>
-    }
-
-    const nodeType = () => {
-        const options = (() => {
-            let ops = types.map((a, i) => {
-                return {
-                    id:a,
-                    label:a
+    const toggle = (key, value) => {
+        onUpdate(node.__.id, (prev) => {
+            const meta = prev?.__ || {};
+            return {
+                ...prev,
+                __: {
+                    ...meta,
+                    [key]: (typeof value != 'undefined' ? value : !meta[key]) // Safely toggle the state while preserving all other keys
                 }
-            })
-            return helpers.array.toIndexJson(ops, {});
-        })();
+            };
+        }, true);
+    }
 
+    const metaKey = (meta, label, placeholder) => {
         return (
-            <li className='fl bxs'>
-                <Select 
-                    input={{
-                        label:"Data type"
-                    }}
-                    mapping={{
-                        selected:{
-                            0:'id'
-                        }
-                    }}
-                    closeOn={{
-                        blur:false
-                    }}
-                    callback={{
-                        onSelect:(a, b, c, d) => {
-                            handleTypeChange(helpers.json.get(a, '0.id'));
-                        }
-                    }}
-                    data={{
-                        selected:{
-                            0:{
-                                id:node.type || 'string',
-                                label:node.type || 'string'
-                            }
-                        },
-                        list:options
-                    }}
-                />
-            </li>
-        )
-    }
-
-    const booleanType = () => {
-        const options = (() => {
-            let ops = ['true', 'false'].map((a, i) => {
-                return {
-                    id:a,
-                    label:a
-                }
-            })
-            return helpers.array.toIndexJson(ops, {});
-        })();
-
-        return (
-            <li className='fl bxs pd-l20'>
-                <Select 
-                    input={{
-                        label:"Default value"
-                    }}
-                    mapping={{
-                        selected:{
-                            0:'id'
-                        }
-                    }}
-                    closeOn={{
-                        blur:false
-                    }}
-                    callback={{
-                        onSelect:(a, b, c, d) => {
-                            handleValueChange('dvalue', (helpers.json.get(a, '0.id') === 'true'))
-                        }
-                    }}
-                    data={{
-                        selected:{
-                            0:{
-                                id:String(node.dvalue),
-                                label:String(node.dvalue)
-                            }
-                        },
-                        list:options
-                    }}
-                />
-            </li>
-        )
-    }
-
-    const dvalue = () => {
-        if(!isObjectOrArray){
-            if(node.type === 'boolean'){
-                return booleanType()
-            }else{
-                return (
-                    <li className='full pd-l16 bxs flx-full fl'>
-                        <Input 
-                            label="Default value"
-                            placeholder="Default value"
-                            value={node.dvalue || ''}
-                            callback={{
-                                onChange:(val) => {
-                                    handleValueChange('dvalue', (node.type === 'number'?Number(val) :val))
-                                }
-                            }}
-                        />
-                    </li>
-                )
-            }
-        }
-    }
-
-    const details = () => {
-        if(node.key && !node.isNull){
-            return (
-                <ul className='full bxs pd-rl16 flx-full'>
-                    {nodeType()}
-                    {dvalue()}
-                </ul>
-            )
-        }
-    }
-
-    const attrsHeader = () => {
-        if(metas.length > 0){
-            return (
-                <div className='flx-sb flx-vc mr-t20'>
-                    <span className='txt-xs fm-md'>Custom Metadata Attributes</span>
-                    <span className="txt-xxs txt-c00105 pd-tb2 bdr-2 mr-l2 cp" onClick={handleAddMetaItem}>+ Add Attribute</span>
-                </div>
-            )
-        }else{
-            return (
-                <div className='full ac pd-14 txt-c00207 bg-c00200 bxs bdr-1 bdr-c00203 bdr-6 mr-t20'>
-                    <p className='txt-xs fm-md'>No custom attributes added yet.</p>
-                    <span className="txt-xxs pd-tb2 bdr-2 mr-l2 cp" onClick={handleAddMetaItem}>+ Add Attribute</span>
-                </div>
-            )
-        }
-    }
-
-    const metaKey = (meta) => {
-        return (
-            <Input 
-                _label="Attr name"
-                placeholder="name"
+            <Input
+                label={label || ''}
                 value={meta.key || ''}
+                placeholder={placeholder || ''}
                 invalid={!meta.key || !meta.key.trim()}
                 callback={{
-                    onChange:(val) => {
+                    onChange: (val) => {
+                        if (val && keyReplaceRegex) {
+                            val = val.replace(keyReplaceRegex, '');
+                        };
                         handleUpdateMetaItem(meta.id, 'key', val)
                     }
                 }}
@@ -406,345 +165,192 @@ const Comp = (props) => {
         )
     }
 
-    const metaAttrKeyTemplate = (meta) => {
-        const temp = helpers.json.get(props, 'templates.metaAttrs.key', '');
-        if(temp && helpers.data.type.is(temp, 'function')){
-            return temp(meta, node, {
-                template:() => {return metaKey(meta)},
-                onDelete:() => handleDeleteMetaItem(meta.id),
-                onKeyChange:(val) => handleUpdateMetaItem(meta.id, 'key', val),
-                onValueChange:(val) => handleUpdateMetaItem(meta.id, 'value', val)
-            })
-        }else{
-            return metaKey(meta)
-        }
-    }
-
-    const metaValue = (meta) => {
+    const metaValue = (meta, key, label, placeholder) => {
         return (
-            <Input 
-                _label="Attr value"
-                placeholder="Value"
-                value={meta.value || ''}
+            <Input
+                label={label || ''}
+                placeholder={placeholder || ''}
+                value={(typeof meta[key] != 'undefined' ? meta[key] : '')}
                 callback={{
-                    onChange:(val) => {
-                        handleUpdateMetaItem(meta.id, 'value', val)
+                    onChange: (val) => {
+                        handleUpdateMetaItem(meta.id, key, val)
                     }
                 }}
             />
         )
     }
 
-    const metaAttrValueTemplate = (meta) => {
-        const temp = helpers.json.get(props, 'templates.metaAttrs.value', '');
-        if(temp && helpers.data.type.is(temp, 'function')){
-            return temp(meta, node, {
-                template:() => {return metaValue(meta)},
-                onDelete:() => handleDeleteMetaItem(meta.id),
-                onKeyChange:(val) => handleUpdateMetaItem(meta.id, 'key', val),
-                onValueChange:(val) => handleUpdateMetaItem(meta.id, 'value', val)
-            })
-        }else{
-            return metaValue(meta);
+    const nested = () => {
+        if (node.__.expanded && childs.length > 0) {
+            debugger;
+            return childs.map((child, idx) => (
+                <Comp
+                    index={idx}
+                    node={child}
+                    query={query}
+                    depth={depth + 1}
+                    key={child.__.id}
+                    onUpdate={onUpdate}
+                    onDelete={onDelete}
+                    onAddChild={onAddChild}
+                    entireTree={entireTree}
+                    builder={props.builder}
+                    parentType={node.__.type}
+                    templates={props.templates}
+                    isKeyDuplicate={isKeyDuplicate}
+                />
+            ))
         }
     }
 
-    const metaDelete = (meta) => {
+    const keyName = (label, placeholder) => {
         return (
-            <span className='mr-t14 mr-l16 ico-16 ico-g-delete cp' data-tip-html="Delete" onClick={() => handleDeleteMetaItem(meta.id)}></span>
+            <Input
+                value={node.__.key || ''}
+                label={(label || "Key Name")}
+                placeholder={(placeholder || "key_name")}
+                callback={{ onChange: handleKeyChange }}
+            />
         )
     }
 
-    const metaAttrDeleteTemplate = (meta) => {
-        const temp = helpers.json.get(props, 'templates.metaAttrs.delete', '');
-
-        if(temp && helpers.data.type.is(temp, 'function')){
-            return temp(meta, node, {
-                template:() => {return metaDelete(meta)},
-                onDelete:() => handleDeleteMetaItem(meta.id),
-                onKeyChange:(val) => handleUpdateMetaItem(meta.id, 'key', val),
-                onValueChange:(val) => handleUpdateMetaItem(meta.id, 'value', val)
-            })
-        }else{
-            return metaDelete(meta)
-        }
-    }
-
-    const metaRow = (meta) => {
-        return (
-            <div className='full bxs grid-wrapper flx-full'>
-                <div className='grid-w4 pd-t14 pd-b4 pd-r18 bxs'>
-                    {metaAttrKeyTemplate(meta)}
-                </div>
-                <div className='grid-w7 pd-t14 pd-b4 bxs'>
-                    {metaAttrValueTemplate(meta)}
-                </div>
-                <div className='grid-w1 pd-t14 pd-b4 pd-l10 bxs'>
-                    {metaAttrDeleteTemplate(meta)}
-                </div>
-            </div>
-        );
-    }
-
-    const attrItemTemp = (meta) => {
-        const temp = helpers.json.get(props, 'templates.metaAttrs.row', '');
-        if(temp && helpers.data.type.is(temp, 'function')){
-            return temp(meta, node, {
-                keyTemplate:metaKey,
-                valueTemplate:metaValue,
-                deleteTemplate:metaDelete,
-                template:() => {return metaRow(meta)},
-                onDelete:() => handleDeleteMetaItem(meta.id),
-                onKeyChange:(val) => handleUpdateMetaItem(meta.id, 'key', val),
-                onValueChange:(val) => handleUpdateMetaItem(meta.id, 'value', val)
-            })
-        }else{
-            return metaRow(meta)
-        }
-    }
-
-    const attrsList = () => {
-        if(metas.length > 0){
-            return metas.map((meta) => {
-                return (
-                    <React.Fragment key={meta.id}>
-                        {attrItemTemp(meta)}
-                    </React.Fragment>
-                )
-            })
-        }
-    }
-
-    const attrsUi = () => {
-        return (
-            <div className='full bxs pd-rl16 pd-b20 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln'>
-                {attrsHeader()}
-                {attrsList()}
-            </div>
-        )
-    }
-
-    const attribute = () => {
-        if(node.key && !node.isNull){
-            const temp = helpers.json.get(props, 'templates.metaAttrs.viewport', '');
-            if(temp && helpers.data.type.is(temp, 'function')){
-                return temp(metas, node, {
-                    addNewMeta:handleAddMetaItem,
-                    template:() => {return attrsUi()},
-                    keyTemplate:metaAttrKeyTemplate,
-                    valueTemplate:metaAttrValueTemplate,
-                    deleteTemplate:metaAttrDeleteTemplate
-                })
-            }else{
-                return attrsUi()
-            }
-        }
-    }
-
-    const editor = () => {
-        if(isEditing){
+    const nullable = () => {
+        if (node.__.key) {
             return (
-                <div className='full bxs bg-c00101'>
-                    <ul className='full bxs pd-tb30 pd-rl16 grid-wrapper grid-layout-4'>
-                        {keyName()}
-                        {nullable()}
-                        {required()}
-                    </ul>
-                    {details()}
-                    {attribute()}
-                </div>
+                <Toggle
+                    label={{
+                        text: "Set null"
+                    }}
+                    checkbox={{
+                        checked: node.__.isNull
+                    }}
+                    callback={{
+                        input: {
+                            onChange: (checked, b, c) => {
+                                onUpdate(node.__.id, (prev) => ({ ...prev, __: { ...prev?.__, isNull: checked } }));
+                            }
+                        }
+                    }}
+                />
+            )
+        }
+
+        return <></>
+    }
+
+    const nodeType = () => {
+        return (
+            <Select
+                input={{
+                    label: "Data type"
+                }}
+                mapping={{
+                    selected: {
+                        0: 'id'
+                    }
+                }}
+                closeOn={{
+                    blur: false
+                }}
+                callback={{
+                    onSelect: (a, b, c, d) => {
+                        handleTypeChange(helpers.json.get(a, '0.id'));
+                    }
+                }}
+                data={{
+                    list: datatTypes,
+                    selected: {
+                        0: {
+                            id: node.__.type || 'string',
+                            label: node.__.type || 'string'
+                        }
+                    }
+                }}
+            />
+        )
+    }
+
+    const valueChange = (field, val) => {
+        onUpdate(node.__.id, (prev) => ({ ...prev, [field]: val }))
+    }
+
+    const booleanType = (key, label, placeholder) => {
+        if (key) {
+            return (
+                <Select
+                    input={{
+                        label: (label || ''),
+                        placeholder: (placeholder || '')
+                    }}
+                    mapping={{
+                        selected: {
+                            0: 'id'
+                        }
+                    }}
+                    closeOn={{
+                        blur: false
+                    }}
+                    callback={{
+                        onSelect: (a, b, c, d) => {
+                            valueChange(key, (helpers.json.get(a, '0.id') === 'true'))
+                        }
+                    }}
+                    data={{
+                        list: booleans,
+                        selected: {
+                            0: {
+                                id: String(node[key]),
+                                label: String(node[key])
+                            }
+                        }
+                    }}
+                />
             )
         }
     }
 
-    if(query && !node.isExpanded){
-        return null
-    }
-
-    const headerUi = () => {
-        return (
-            <ul className='full bxs flx-vc flx-sb pd-tb8 pd-rl12 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln'>
-                <li className='flx-vc'>
-                    <div className='fl'>
-                        {expendIcon()}
-                        <span className='mr-r8 hide' title={`Type: ${node.type}`}>{typeIcon()}</span>
-                        {arrayBadge()}
-                        {typeBadge()}
-                        {requiredBadge()}
-                        {nullBadge()}
-                        {childCount()}
-                    </div>
-                </li>
-                <li>
-                    <div className='flx'>
-                        {addAction()}
-                        {doneOrEditAction()}
-                        {deleteAction()}
-                    </div>
-                </li>
-            </ul>
-        )
-    }
-
-    const header = () => {
-        const temp = helpers.json.get(props, 'templates.node.header.viewport', '');
-        if(temp && helpers.data.type.is(temp, 'function')){
-            return temp(node, {
-                template:() => {return headerUi()},
-                states:{
-                    errors:{
-                        hasError:hasError,
-                        hasEmptyError:hasEmptyError
+    const ui = () => {
+        if (props.templates && props.templates.tree && helpers.data.type.is(props.templates.tree, 'function')) {
+            return props.templates.tree({
+                props: props,
+                __: {
+                    templates: {
+                        boolean: booleanType,
+                        meta: {
+                            key: metaKey,
+                            value: metaValue
+                        },
+                        node: {
+                            key: keyName,
+                            nested: nested,
+                            type: nodeType,
+                            nullable: nullable
+                        }
                     },
-                    is:{
-                        editing:isEditing,
-                        parentArray:isParentArray,
-                        isObjOrArray:isObjectOrArray
+                    callbacks: {
+                        node: {
+                            valueChange: valueChange,
+                            validateKey: validateKey,
+                            keyChange: handleKeyChange,
+                            typeChange: handleTypeChange,
+                            edit: () => { toggle('editing') },
+                            expend: () => { toggle('expanded') },
+                            delete: () => { onDelete(node.__.id) },
+                            addNew: (type) => { onAddChild(node.__.id, builder.createNode('', (typeof type != 'undefined' ? type : 'string'))) }
+                        },
+                        metas: {
+                            validateKey: validateKey,
+                            addNewMeta: handleAddMetaItem,
+                            deleteMeta: handleDeleteMetaItem,
+                            updateMetaDetailsByKey: handleUpdateMetaItem
+                        }
                     }
-                },
-                actions:{
-                    delete:deleteNode,
-                    expend:expendToggle,
-                    modify:modifyToggle,
-                    add:(isObjectOrArray?addNew:null),
                 }
             })
-        }else{
-            return headerUi();
         }
     }
 
-    return (
-        <div className='full bxs'>
-            {header()}
-            <ul className='full bxs flx-vc flx-sb pd-tb8 pd-rl12 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln hide'>
-                <li className='flx-vc'>
-                    <div className='fl'>
-                        {expendIcon()}
-                        <span className='mr-r8 hide' title={`Type: ${node.type}`}>{typeIcon()}</span>
-                        {arrayBadge()}
-                        {typeBadge()}
-                        {requiredBadge()}
-                        {nullBadge()}
-                        {childCount()}
-                    </div>
-                </li>
-                <li>
-                    <div className='flx'>
-                        {addAction()}
-                        {doneOrEditAction()}
-                        {deleteAction()}
-                    </div>
-                </li>
-            </ul>
-            {editor()}
-
-      {/* --- EXPANDED EDIT DRAWER --- */}
-      {isEditing && (
-        <div className='hide'>
-
-          <div style={{ display: 'flex', gap: '12px', marginBottom: '12px', flexWrap: 'wrap' }}>
-            <div className='hide' style={{ flex: 1.5, minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              
-              {node.isNull ? (
-                <div>
-                  <code>null</code>
-                  <span style={{ fontSize: '11px', color: '#64748b', marginLeft: '8px' }}>
-                    (Value is explicitly set to null)
-                  </span>
-                </div>
-              ) : (
-                <>
-                  {node.type === 'string' && (
-                    <input
-                      type="text"
-                      value={node.value ?? ''}
-                      placeholder="e.g. ashok"
-                      onChange={(e) => handleValueChange('value', e.target.value)}
-                      style={inputStyle}
-                    />
-                  )}
-                  {node.type === 'number' && (
-                    <input
-                      type="number"
-                      value={node.value ?? 0}
-                      onChange={(e) => handleValueChange('value', Number(e.target.value))}
-                      style={inputStyle}
-                    />
-                  )}
-                  {node.type === 'boolean' && (
-                    <select
-                      value={String(node.value)}
-                      onChange={(e) => handleValueChange('value', e.target.value === 'true')}
-                      style={selectStyle}
-                    >
-                      <option value="true">true</option>
-                      <option value="false">false</option>
-                    </select>
-                  )}
-                  {(node.type === 'function' || node.type === 'jsx') && (
-                    <textarea
-                      rows={3}
-                      value={node.value ?? ''}
-                      placeholder={`Enter raw ${node.type} code...`}
-                      onChange={(e) => handleValueChange('value', e.target.value)}
-                      style={codeTextAreaStyle}
-                    />
-                  )}
-                  {isObjectOrArray && (
-                    <span style={{ fontSize: '11px', color: '#64748b', lineHeight: '30px' }}>
-                      (Value of Object/Array defined via nested children)
-                    </span>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-            {nested()}
-        </div>
-    );
-};
-
-const editDrawerStyle = {
-  background: '#f8fafc',
-  padding: '12px 16px',
-  borderRadius: '0 0 6px 6px',
-  border: '1px solid #cbd5e1',
-  borderTop: 'none',
-  marginTop: '-1px',
-};
-
-const inputStyle = {
-  padding: '6px 8px',
-  borderRadius: '4px',
-  border: '1px solid #cbd5e1',
-  fontSize: '12px',
-  fontFamily: 'monospace',
-  boxSizing: 'border-box',
-};
-
-const selectStyle = {
-  padding: '6px 8px',
-  borderRadius: '4px',
-  border: '1px solid #cbd5e1',
-  fontSize: '12px',
-  backgroundColor: '#ffffff',
-  boxSizing: 'border-box',
-};
-
-const codeTextAreaStyle = {
-  width: '100%',
-  fontFamily: 'monospace',
-  fontSize: '11px',
-  padding: '6px 8px',
-  borderRadius: '4px',
-  border: '1px solid #cbd5e1',
-  backgroundColor: '#ffffff',
-  resize: 'vertical',
-  boxSizing: 'border-box',
+    return ui()
 };
 
 export default Comp;

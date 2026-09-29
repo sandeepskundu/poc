@@ -1,9 +1,13 @@
 /**
  * @file UniversalCollectionQueryEngine.js
  * @description Enterprise-grade query, search, multi-field sorting, compound indexing, chunk ingestion, 
- * streaming, pagination, path/type-safety validation, relevance scoring with field boosting, 
- * multi-word offset extraction, conjunctive/disjunctive faceted search, and hierarchical 
- * tree-pruning search engine with asynchronous debouncing for Browser, Mobile, React Native, and Node.js.
+ * streaming, dual pagination (offset & relay cursor), path/type-safety validation, 
+ * relevance scoring with field boosting, multi-word offset extraction, conjunctive/disjunctive 
+ * faceted search, and hierarchical tree-pruning search engine with asynchronous debouncing 
+ * supporting nested dot-path child keys.
+ * 
+ * Target Environments: Browser (Desktop, Mobile, Tablet WebViews), React Native, and Node.js.
+ * Dependencies: Zero external npm dependencies.
  */
 
 // =========================================================================
@@ -54,9 +58,9 @@ const cooperativeYield = async () => {
 
 class SearchEngine {
     /**
-     * @param {Array<Object>} [dataset=[]] - Initial array of objects.
-     * @param {Object} [config={}] - Engine configuration.
-     * @param {'auto'|'mobile'|'desktop'|'node'} [config.platform='auto'] - Environment profile.
+     * @param {Array<Object>} [dataset=[]] - Initial array of objects or root tree nodes.
+     * @param {Object} [config={}] - Engine configuration options.
+     * @param {'auto'|'mobile'|'desktop'|'node'} [config.platform='auto'] - Environment runtime profile.
      * @param {number} [config.debounceDelay=250] - Keystroke debounce delay in ms.
      * @param {number} [config.maxCacheSize=100] - LRU cache size cap (mobile/memory protection).
      * @param {number} [config.targetFrameTime=8] - Target max execution time per frame (ms) for mobile streaming.
@@ -281,7 +285,7 @@ class SearchEngine {
     }
 
     // =========================================================================
-    // 3. BOUNDED CACHE & PATH EXTRACTION
+    // 3. BOUNDED CACHE, PATH EXTRACTION & DEEP IMMUTABLE SETTER
     // =========================================================================
 
     getNestedValue(obj, path) {
@@ -305,6 +309,24 @@ class SearchEngine {
             current = current[parts[i]];
         }
         return current;
+    }
+
+    /**
+     * Safely sets a deep nested property on an object immutably without mutating source data.
+     */
+    _setNestedValue(target, path, value) {
+        const keys = path.split('.');
+        const cloned = { ...target };
+        let current = cloned;
+
+        for (let i = 0; i < keys.length - 1; i++) {
+            const k = keys[i];
+            current[k] = current[k] && typeof current[k] === 'object' ? { ...current[k] } : {};
+            current = current[k];
+        }
+
+        current[keys[keys.length - 1]] = value;
+        return cloned;
     }
 
     _getCachedRegex(pattern, flags = 'i') {
@@ -579,19 +601,23 @@ class SearchEngine {
             const token = tokens[t];
             if (!token) continue;
 
+            // 1. Exact Match (Score: 100)
             if (str === token) {
                 fieldScore += 100;
                 continue;
             }
+            // 2. Starts With / Prefix (Score: 50)
             if (str.startsWith(token)) {
                 fieldScore += 50;
                 continue;
             }
+            // 3. Word Boundary (Score: 30)
             const wordBoundaryRx = this._getCachedRegex(`\\b${token}\\b`, 'i');
             if (wordBoundaryRx && wordBoundaryRx.test(str)) {
                 fieldScore += 30;
                 continue;
             }
+            // 4. Substring / Includes (Score: 10)
             if (str.includes(token)) {
                 fieldScore += 10;
                 continue;
@@ -852,7 +878,7 @@ class SearchEngine {
     }
 
     // =========================================================================
-    // 8. RECURSIVE AST QUERY EVALUATION (FIXED MULTI-PASS LOGIC)
+    // 8. RECURSIVE AST QUERY EVALUATION (MULTI-PASS OFFSET PRESERVATION)
     // =========================================================================
 
     evaluateNode(item, node, offsetCollector = null, globalHighlight = false) {
@@ -1189,11 +1215,25 @@ class SearchEngine {
     }
 
     // =========================================================================
-    // 12. HIERARCHICAL TREE FILTERING (Configurable Child Matching & Pruning)
+    // 12. HIERARCHICAL TREE FILTERING (Configurable Child Matching & Dot-Path Support)
     // =========================================================================
 
     /**
      * Recursively filters a hierarchical tree structure with configurable child handling.
+     * Supports nested dot-paths in childKey (e.g., 'metadata.items').
+     * 
+     * @param {Object} query - Root/default AST query object.
+     * @param {Object} [options={}] - Tree search and pruning configuration.
+     * @param {boolean} [options.searchChildren=false] - Searching of child elements is OFF by default.
+     * @param {string} [options.childKey] - Custom name for the child property (defaults to constructor defaultChildKey).
+     * @param {Object} [options.childQuery] - Specific query override applied only to child elements.
+     * @param {Object} [options.treeConfig={}] - Advanced tree behaviors.
+     * @param {boolean} [options.treeConfig.keepAncestors=true] - If child matches, preserve the chain of parents up to root.
+     * @param {boolean} [options.treeConfig.keepDescendantsOnParentMatch=false] - If parent matches, retain all its children.
+     * @param {number} [options.treeConfig.maxDepth=Infinity] - Maximum recursion depth limit.
+     * @param {boolean} [options.highlight=false] - Extract match offsets on matching nodes.
+     * @param {Array<Object>} [options.customTree=null] - Optional override dataset.
+     * @returns {Array<Object>} Pruned hierarchical tree.
      */
     filterTree(query = {}, options = {}) {
         const {
@@ -1221,9 +1261,14 @@ class SearchEngine {
             const offsetCollector = {};
             const selfMatches = this.evaluateNode(node, activeQuery, offsetCollector, highlight);
 
-            const rawChildren = node[childKey];
+            // Support nested dot-paths in childKey reading
+            const rawChildren = childKey.includes('.')
+                ? this.getNestedValue(node, childKey)
+                : node[childKey];
+
             const hasChildren = rawChildren !== undefined && rawChildren !== null;
 
+            // Leaf or recursion disabled
             if (!searchChildren || depth >= maxDepth || !hasChildren) {
                 if (selfMatches) {
                     const hasOffsets = Object.keys(offsetCollector).length > 0;
@@ -1236,6 +1281,7 @@ class SearchEngine {
                 return null;
             }
 
+            // If parent matches and keepDescendantsOnParentMatch is enabled, keep entire subtree
             if (selfMatches && keepDescendantsOnParentMatch) {
                 const hasOffsets = Object.keys(offsetCollector).length > 0;
                 return {
@@ -1245,6 +1291,7 @@ class SearchEngine {
                 };
             }
 
+            // Normalize children into array for recursion (handling both Array and single Object formats)
             let childArray = [];
             if (Array.isArray(rawChildren)) {
                 childArray = rawChildren;
@@ -1252,6 +1299,7 @@ class SearchEngine {
                 childArray = [rawChildren];
             }
 
+            // Recursively prune child elements
             const matchingChildren = [];
             for (let i = 0; i < childArray.length; i++) {
                 const pruned = pruneNode(childArray[i], depth + 1, true);
@@ -1262,6 +1310,7 @@ class SearchEngine {
 
             const hasMatchingChild = matchingChildren.length > 0;
 
+            // Keep node if self matches or if child matched (under keepAncestors)
             if (selfMatches || (hasMatchingChild && keepAncestors)) {
                 const hasOffsets = Object.keys(offsetCollector).length > 0;
 
@@ -1272,13 +1321,21 @@ class SearchEngine {
                     resolvedChildren = matchingChildren[0] || null;
                 }
 
-                return {
+                let reconstructed = {
                     ...node,
                     ...(hasOffsets && { _offsets: offsetCollector }),
                     _selfMatched: Boolean(selfMatches),
-                    _hasMatchingChild: hasMatchingChild,
-                    [childKey]: resolvedChildren
+                    _hasMatchingChild: hasMatchingChild
                 };
+
+                // Support nested dot-paths in childKey writing
+                if (childKey.includes('.')) {
+                    reconstructed = this._setNestedValue(reconstructed, childKey, resolvedChildren);
+                } else {
+                    reconstructed[childKey] = resolvedChildren;
+                }
+
+                return reconstructed;
             }
 
             return null;
@@ -1296,14 +1353,42 @@ class SearchEngine {
     }
 
     // =========================================================================
-    // 13. ASYNC CANCELABLE DEBOUNCED TREE SEARCH (UI Helper)
+    // 13. ASYNC CANCELABLE DEBOUNCED SEARCHES (Flat & Tree UI Helpers)
     // =========================================================================
+
+    /**
+     * Evaluates flat queries with cancellation and debouncing.
+     */
+    findDebounced(query = {}, options = {}, customDelay = null) {
+        const delay = customDelay !== null ? customDelay : this.debounceDelay;
+
+        if (this._debounceTimeout) clearTimeout(this._debounceTimeout);
+        if (this._activeResolve) {
+            this._activeResolve({ cancelled: true, data: [], pagination: null });
+        }
+
+        return new Promise((resolve) => {
+            this._activeResolve = resolve;
+            this._debounceTimeout = setTimeout(() => {
+                try {
+                    const results = this.find(query, options);
+                    if (resolve === this._activeResolve) {
+                        resolve({ cancelled: false, ...results });
+                        this._activeResolve = null;
+                    }
+                } catch (error) {
+                    resolve({ cancelled: false, data: [], error });
+                    this._activeResolve = null;
+                }
+            }, delay);
+        });
+    }
 
     /**
      * Evaluates tree queries progressively with cancellation and debouncing.
      * Prevents UI race conditions when users type rapidly in hierarchical explorers.
      */
-    findDebounced(query = {}, options = {}, customDelay = null) {
+    filterTreeDebounced(query = {}, options = {}, customDelay = null) {
         const delay = customDelay !== null ? customDelay : this.debounceDelay;
 
         if (this._debounceTimeout) {

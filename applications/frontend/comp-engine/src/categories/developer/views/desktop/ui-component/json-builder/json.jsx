@@ -1,84 +1,63 @@
-import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
-import Input from './input';
+
 import NodeRow from './node-row';
+import helpers from 'ui-helpers';
 import Versions from './versions';
+import Input from 'aio-global-raw-ui/atoms/form/input';
+import {useState, useMemo, useEffect, useCallback, useRef} from 'react';
 
 const Comp = (props) => {
-    const { builder, onChange, getIconByType, templates } = props;
     const qEngine = useRef(null);
+    const {builder, onChange, templates, data} = props;
 
-    // --- Search States ---
-    const [isSearching, setIsSearching] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [query, setQuery] = useState('');
+    const initial = useMemo(() => data, [builder, data]);
+    const [searching, setSearching] = useState(false);
     const [searchResults, setSearchResults] = useState(null);
 
-    // --- Initial Schema Data Seed ---
-    const initialTree = useMemo(() => [
-        builder.createNode('userIduser', 'number', {
-            required:true,
-            dvalue:1001,
-            isExpanded:true,
-            metas: [{id:'sss', key:'sandeep', value:'kundu'}],
-        }),
-        {
-            ...builder.createNode('userConfig', 'object', { required: true, isExpanded: true }),
-            children: [
-                builder.createNode('theme_mode_for_user_userId_', 'string', { required: false, dvalue: 'dark' }),
-            ],
-        },
-    ], [builder]);
-
-    // --- History & Active State Management ---
-    const [history, setHistory] = useState([initialTree]);
+    const [history, setHistory] = useState([initial]);
     const [historyIndex, setHistoryIndex] = useState(0);
-    const activeTree = history[historyIndex] || [];
+    const [activeTree, setActiveTree] = useState(history[historyIndex] || []);
 
-    // --- Versioning & UI Toggles ---
     const [showVersions, setShowVersions] = useState(false);
     const [versions, setVersions] = useState(() => (builder.version?.load ? builder.version.load() : []));
     const [preview, setPreview] = useState(true);
 
-    // --- Initialize Search Filter Engine ---
-    if (!qEngine.current && window.helpers?.plugins?.filter) {
-        qEngine.current = window.helpers.plugins.filter.init(initialTree, {
+    if (!qEngine.current) {
+        qEngine.current = helpers.plugins.filter.init(initial, {
             debounceDelay:5
         });
     }
 
-    // Cleanup Search Filter Engine
     useEffect(() => {
         return () => {
-            if (qEngine.current?.destroy) {
+            if(qEngine.current?.destroy) {
                 qEngine.current.destroy();
             }
         };
     }, []);
 
-    // Update query engine's target data index when activeTree changes
     useEffect(() => {
         if (qEngine.current?.setData) {
             qEngine.current.setData(activeTree);
         }
     }, [activeTree]);
 
-    // --- Debounced Search Query Handling ---
     useEffect(() => {
-        const val = searchQuery.trim();
-        setIsSearching(true);
+        setSearching(true);
 
         if (qEngine.current?.filterTree) {
             let resp = qEngine.current.filterTree({
                 $and:[{
-                    key:{
+                    '__.key':{
                         highlight:true,
-                        value:val || '',
-                        operator:'startswith'
+                        operator:'startswith',
+                        value:(query.trim() || '')
                     }
                 }]
             }, {
-                highlight:true,
+                highlight:false,
                 searchChildren:true,         // If false, children are ignored and only top-level roots are evaluated
-                childKey:'children',  
+                childKey:'__.children',  
                 treeConfig: {
                     maxDepth:Infinity,  // Recursion limit cutoff to prevent call-stack overflows
                     keepAncestors:true, // If child matches, preserve and render the parent path to root
@@ -86,70 +65,72 @@ const Comp = (props) => {
                 }
             });
             setSearchResults(resp);
-            setIsSearching(false);
+            setSearching(false);
         }
-    }, [searchQuery, activeTree]);
+    }, [query, activeTree]);
 
-    // --- Tree Commit / History Mutations ---
-    const commitTreeChange = useCallback((newTree) => {
-        setHistory((prevHistory) => [...prevHistory.slice(0, historyIndex + 1), newTree]);
-        setHistoryIndex((prevIndex) => prevIndex + 1);
+    const onTreeChange = useCallback((newTree, skipHistory) => {
+        setActiveTree(newTree);
+       
+        if (!skipHistory) {
+            setHistory((prevHistory) => { return [...prevHistory.slice(0, historyIndex + 1), newTree]});
+            setHistoryIndex((prevIndex) => prevIndex + 1);
+        }
     }, [historyIndex]);
 
-    const handleUndo = useCallback(() => {
+    const undo = useCallback(() => {
         if (historyIndex > 0) {
-            setHistoryIndex((prev) => prev - 1);
+            const prevIndex = historyIndex - 1;
+            setHistoryIndex(prevIndex);
+            setActiveTree(history[prevIndex]);
         }
-    }, [historyIndex]);
+    }, [historyIndex, history]);
 
-    const handleRedo = useCallback(() => {
+    const redo = useCallback(() => {
         if (historyIndex < history.length - 1) {
-            setHistoryIndex((prev) => prev + 1);
+            const nextIndex = historyIndex + 1;
+            setHistoryIndex(nextIndex);
+            setActiveTree(history[nextIndex]);
         }
-    }, [historyIndex, history.length]);
+    }, [historyIndex, history]);
 
-    // --- Keyboard Shortcuts (Ctrl+Z / Ctrl+Y) ---
     useEffect(() => {
         const handleKeyDown = (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
                 if (e.shiftKey){
-                    handleRedo();
+                    redo();
                 }else{
-                    handleUndo();
+                    undo();
                 }
             } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
-                handleRedo();
+                redo();
             }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [handleUndo, handleRedo]);
+    }, [undo, redo]);
 
-    // Persist versions
     useEffect(() => {
         if (builder.version?.save) {
             builder.version.save(versions);
         }
     }, [versions, builder]);
 
-    // Tree validity
     const isValid = useMemo(() => builder.isTreeValid(activeTree), [builder, activeTree]);
 
-    // --- External Event & Change Propagation ---
     useEffect(() => {
         if (window.helpers?.react?.hooks?.event?.emit) {
             window.helpers.react.hooks.event.emit(builder.id, {
-                json: activeTree,
-                valid: isValid,
+                valid:isValid,
+                json:activeTree,
             });
         }
 
         if (onChange) {
             onChange(activeTree, isValid);
         }
-    }, [activeTree, isValid, builder.id, onChange]);
+    }, [activeTree]);
 
-    // Preview event propagation
     useEffect(() => {
         const previewEvent = builder.utils?.eventNames?.preview || 'preview:toggle';
         if (window.helpers?.react?.hooks?.event?.emit) {
@@ -157,25 +138,24 @@ const Comp = (props) => {
         }
     }, [preview, builder]);
 
-    // --- Action Handlers ---
-    const handleUpdate = (id, updater) => {
-        commitTreeChange(builder.updateNode(activeTree, id, updater));
+    const onUpdate = (id, updater, skipHistory) => {
+        setQuery('');
+        onTreeChange(builder.updateNode(activeTree, id, updater), skipHistory);
     };
 
-    const handleDelete = (id) => {
-        commitTreeChange(builder.deleteNode(activeTree, id));
+    const onDelete = (id) => {
+        onTreeChange(builder.deleteNode(activeTree, id));
     };
 
-    const handleAddChild = (parentId, child) => {
-        commitTreeChange(builder.addChildNode(activeTree, parentId, child));
+    const onAddChild = (parentId, child) => {
+        onTreeChange(builder.addChildNode(activeTree, parentId, child));
     };
 
-    const handleAddRootField = () => {
-        commitTreeChange([...activeTree, builder.createNode('', 'string')]);
+    const addRootField = () => {
+        onTreeChange([...activeTree, builder.createNode('', 'string')]);
     };
 
-    // Determine which list of nodes to render (search filtered vs full tree)
-    const displayNodes = searchResults !== null ? searchResults : activeTree;
+    const tree = (searchResults !== null ? searchResults : activeTree);
 
     return (
         <div className="full bxs bg-c00101 pd-16 bdr-1 bdr-c00104 bdr-8">
@@ -188,7 +168,7 @@ const Comp = (props) => {
                             <span
                                 className="ico-18 cp ico-g-plus"
                                 data-tip-html="Add Root Field"
-                                onClick={handleAddRootField}
+                                onClick={addRootField}
                             />
                         </li>
                         <li className="fl">
@@ -212,24 +192,19 @@ const Comp = (props) => {
                 <div className="grid-w6">
                     <Input
                         clearable={true}
-                        value={searchQuery}
+                        value={query}
                         placeholder="Search schema..."
                         callback={{
-                            onChangeStart: (val) => setSearchQuery(val || ''),
+                            onChangeStart: (val) => setQuery(val || ''),
                         }}
                     />
                 </div>
                 <div className="grid-w6 flx-sb flx-vc bxs pd-rl16">
                     <div className="flx gap-12">
-                        <span
-                            className={`cp txt-xs ${historyIndex === 0 ? 'txt-c00104 not-allowed' : 'txt-c00107'}`}
-                            onClick={handleUndo}
-                        >
-                            Undo
-                        </span>
+                        <span className={`cp mr-r20 txt-xs ${historyIndex === 0 ? 'txt-c00104 not-allowed' : 'txt-c00107'}`} onClick={undo}>Undo</span>
                         <span
                             className={`cp txt-xs ${historyIndex >= history.length - 1 ? 'txt-c00104 not-allowed' : 'txt-c00107'}`}
-                            onClick={handleRedo}
+                            onClick={redo}
                         >
                             Redo
                         </span>
@@ -246,27 +221,29 @@ const Comp = (props) => {
 
             {/* Node Rows List */}
             <div className="full bxs">
-                {displayNodes.length === 0 ? (
-                    <div className="full txt-c pd-20 txt-xs txt-c00104">
-                        {isSearching ? 'Searching...' : 'No matching fields found.'}
+                {tree.length === 0 ? (
+                    <div className="full bxs">
+                        {searching ? 'Searching...' : 'No matching fields found.'}
                     </div>
                 ) : (
-                    displayNodes.map((node, index) => (
+                    tree.map((node, index) => (
                         <NodeRow
                             depth={0}
-                            key={node.id}
                             node={node}
                             index={index}
-                            parentType="object"
+                            query={query}
+                            key={node.__.id}
                             builder={builder}
-                            entireTree={activeTree}
-                            onUpdate={handleUpdate}
-                            onDelete={handleDelete}
-                            onAddChild={handleAddChild}
+                            parentType="object"
                             templates={templates}
-                            searchQuery={searchQuery}
-                            getIconByType={getIconByType}
-                            isSiblingKeyDuplicateFn={builder.isDuplicate}
+                            entireTree={activeTree}
+                            onUpdate={onUpdate}
+                            onDelete={onDelete}
+                            onAddChild={onAddChild}
+                            validation={{
+                                isValidTree:isValid
+                            }}
+                            isKeyDuplicate={builder.isDuplicate}
                         />
                     ))
                 )}
@@ -278,10 +255,10 @@ const Comp = (props) => {
                     show={showVersions}
                     tree={activeTree}
                     builder={builder}
-                    onChange={(newVersions) => setVersions(newVersions)}
+                    onChange={(arg) => setVersions(arg)}
                     onClose={() => setShowVersions(false)}
                     onRestore={(restoredTree) => {
-                        commitTreeChange(restoredTree);
+                        onTreeChange(restoredTree);
                         setShowVersions(false);
                     }}
                 />

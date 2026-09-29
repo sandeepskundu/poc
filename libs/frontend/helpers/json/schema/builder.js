@@ -1,4 +1,3 @@
-
 const utils = require('./utils');
 const json = require('./../index');
 const dT = require('./../../data/type');
@@ -10,27 +9,40 @@ const dataType = (arg) => {
     return (dt && dt.length > 0) ? dt : json.get(utils, 'dataType', []);
 }
 
-const dvalueByType = (arg) => {
-    let dvByType = json.get(arg, 'utils.dvalueByType');
-    return (dvByType && dT.is(dvByType, 'function')) ? dvByType : json.get(utils, 'dvalueByType')
-}
-
 const keyRegex = (arg) => {
     let kr = json.get(arg, 'utils.keyRegex');
     return (kr ? kr : json.get(utils, 'keyRegex', ''));
 }
 
-const iconByType = (arg) => {
-    let ibt = json.get(arg, 'utils.iconByType');
-    return (ibt ? ibt : json.get(utils, 'iconByType', ''));
+const keyReplaceRegex = (arg) => {
+    let kr = json.get(arg, 'utils.keyReplaceRegex');
+    return (kr ? kr : json.get(utils, 'keyReplaceRegex', ''));
+}
+
+const dataTypeFlags = (arg) => {
+    let rval = {};
+    let flags = json.merge(json.get(utils, 'dataTypeFlags', {}), json.get(arg, 'utils.dataTypeFlags', {}));
+
+    for(let a in flags){
+        if(flags[a] && dT.is(flags[a], 'list') && flags[a].length > 0){
+            rval[a] = new Set(flags[a])
+        }
+    }
+
+    return rval;
+}
+
+const keysmap = (arg) => {
+    return json.merge(json.get(utils, 'keysmap', {}), json.get(arg, 'utils.keysmap', {}));
 }
 
 const buildUtils = (arg) => {
     return {
-        dataType: dataType(arg),
-        keyRegex: keyRegex(arg),
-        iconByType: iconByType(arg),
-        dvalueByType: dvalueByType(arg)
+        keysmap:keysmap(arg),
+        dataType:dataType(arg),
+        keyRegex:keyRegex(arg),
+        dataTypeFlags:dataTypeFlags(arg),
+        keyReplaceRegex:keyReplaceRegex(arg),
     }
 }
 
@@ -54,43 +66,61 @@ class SchemaManager {
         this.utils.eventNames = events(arg, this.id);
     }
 
+    isDataType = (list, type) => {
+        let options = this.utils.dataTypeFlags[type];
+
+        if(options){
+            return (Array.isArray(list)?list:[list]).some(type => options.has(type));
+        }
+
+        return false;
+    }
+
     sanitize = (node) => {
         if (!node) {
             return node;
         } else {
-            let rval = { ...node, metas: node.metas || [] };
-            if (rval.children) {
-                rval.children = rval.children.map(child => this.sanitize(child));
-            }
+            const rval = {...node,
+                __: {
+                    ...node?.__,
+                    metas:node?.__?.metas || []
+                }
+            };
+
+            if (Array.isArray(rval.__.children)) {
+                rval.__.children = rval.__.children.map(child => this.sanitize(child));
+            };
+
             return rval;
         }
     };
 
-    dvalueByType = (type) => {
-        let cb = json.get(this, 'callbacks.dvalueByType');
-        if (cb && dT.is(cb, 'function')) {
-            return cb(type);
-        } else {
-            return this.utils.dvalueByType(type);
-        }
-    }
-
-    createNode = (key = '', type = 'string', overrides = {}, expended = true) => {
-        let dval = this.dvalueByType(type)
-        let cb = json.get(this, 'callbacks.createNode');
+    createNode(key, type, overrides = {}, expended = false, editing = false) {
+        const cb = json.get(this, 'callbacks.onNodeCreate');
+        const hasChild = (this.isDataType(type, 'object') || this.isDataType(type, 'array'));
         let rval = {
-            metas:[], // Array of { id, key, value }
-            key:key,
-            type:type,
-            dvalue:dval,
-            isNull:false,
-            required:false,
-            id:random.key(),
-            isExpanded:expended,
-            showMetaSettings:false,
-            children:(type === 'object' || type === 'array')?[]:undefined,
-            ...overrides,
+            __:{
+                metas:[],
+                key:key,
+                type:type,
+                isNull:false,
+                id:random.key(),
+                editing:editing,
+                expanded:expended,
+                ...(hasChild && { children: [] })
+            }
         };
+
+        if (overrides) {
+            rval = {
+                ...rval,
+                ...overrides,
+                __: {
+                    ...rval.__,
+                    ...(overrides.__ || {})
+                }
+            };
+        }
 
         if (cb && dT.is(cb, 'function')) {
             return cb(rval);
@@ -99,8 +129,9 @@ class SchemaManager {
         return rval;
     }
 
+
     onNodeUpdate = (node, prev) => {
-        let rval = { ...prev, ...node };
+        let rval = {...prev, ...node};
         let cb = json.get(this, 'callbacks.onNodeUpdate');
         if (cb && dT.is(cb, 'function')) {
             return cb(rval, prev);
@@ -109,37 +140,107 @@ class SchemaManager {
         return rval;
     }
 
-    updateNode = (nodes, targetId, updater) => {
-        return (nodes || []).map((node) => {
-            if (node.id === targetId) {
-                return this.sanitize(updater(node));
-            };
+    updateNode = (nodes = [], targetId, updater) => {
+        return nodes.map((node) => {
+            const meta = node.__ || {};
 
-            if (node.children) {
-                return { ...node, children: this.updateNode(node.children, targetId, updater) };
-            };
+            // 1. Found the target node to update
+            if (meta.id === targetId) {
+                return this.sanitize(updater(node));
+            }
+
+            // 2. Recursively search children inside the metadata block
+            if (Array.isArray(meta.children)) {
+                const updatedChildren = this.updateNode(meta.children, targetId, updater);
+                if (updatedChildren !== meta.children) {
+                    return {
+                        ...node,
+                        __: {
+                            ...meta, // Safely preserve sibling metadata (id, key, expended, editing, etc.)
+                            children: updatedChildren // Consistently write back to the metadata block
+                        }
+                    };
+                }
+            }
+
+            // 3. Return original node reference if no changes occurred in this branch
+            return node;
+        });
+    }
+
+    deleteNode = (nodes = [], targetId) => {
+        return nodes.filter((node) => node.__?.id !== targetId).map((node) => {
+            const meta = node.__ || {};
+
+            if (Array.isArray(meta.children)) {
+                const updatedChildren = this.deleteNode(meta.children, targetId);
+                if (updatedChildren !== meta.children) {
+                    return {
+                        ...node,
+                        __: {
+                            ...meta,
+                            children: updatedChildren
+                        }
+                    };
+                }
+            }
+            return node;
+        });
+    }
+
+
+    addChildNode(nodes = [], parentId, newNode) {
+        return nodes.map((node) => {
+            const meta = node.__ || {};
+
+            // Scenario 1: Found the target parent node
+            if (meta.id === parentId) {
+                // Check 'type' from root level (or fallback safely)
+                const isArrayType = node.type === 'array';
+
+                const preparedChild = {
+                    ...newNode,
+                    __: {
+                        ...newNode.__,
+                        editing:true,
+                        key: isArrayType ? '' : (newNode.__?.key ?? '')
+                    }
+                };
+
+                return {
+                    ...node,
+                    __: {
+                        ...meta,
+                        editing:false,
+                        expanded:true,
+                        children: [
+                            ...(meta.children || []),
+                            this.sanitize(preparedChild)
+                        ]
+                    }
+                };
+            }
+
+            // Scenario 2: Recursive traversal of sub-trees
+            if (Array.isArray(meta.children)) {
+                const updatedChildren = this.addChildNode(meta.children, parentId, newNode);
+
+                // Optimization: Compare updatedChildren against meta.children
+                if (updatedChildren !== meta.children) {
+                    return {
+                        ...node,
+                        __: {
+                            ...meta,
+                            children:updatedChildren
+                        }
+                    };
+                }
+            }
 
             return node;
         });
     }
 
-    deleteNode = (nodes, targetId) => {
-        return (nodes || []).filter((node) => node.id !== targetId).map((node) => ({ ...node, children: node.children ? this.deleteNode(node.children, targetId) : undefined }));
-    }
-
-    addChildNode = (nodes, parentId, newNode) => {
-        return (nodes || []).map((node) => {
-            if (node.id === parentId) {
-                return { ...node, isExpanded: true, children: [...(node.children || []), this.sanitize({ ...newNode, key: (node.type === 'array') ? '' : newNode.key })] };
-            }
-
-            if (node.children) {
-                return { ...node, children: this.addChildNode(node.children, parentId, newNode) };
-            }
-
-            return node;
-        })
-    }
 
     isDuplicate = (nodes, targetId, name) => {
         name = (name || '').trim();
@@ -149,14 +250,14 @@ class SchemaManager {
         }
 
         let active = nodes || [];
-        let index = active.findIndex((node) => node.id === targetId);
+        let index = active.findIndex((node) => node.__.id === targetId);
 
         if (index !== -1) {
-            return active.some((node) => node.id !== targetId && (node.key || '').trim() === name);
+            return active.some((node) => node.__.id !== targetId && (node.__.key || '').trim() === name);
         }
 
         for (let node of active) {
-            if (node.children && this.isDuplicate(node.children, targetId, name)) {
+            if (node.__.children && this.isDuplicate(node.__.children, targetId, name)) {
                 return true;
             }
         }
@@ -166,18 +267,18 @@ class SchemaManager {
 
     isTreeValid = (nodes, parentType = 'object') => {
         for (let node of (nodes || [])) {
-            if (parentType !== 'array') {
-                if ((!node.key || !node.key.trim()) || (this.isDuplicate(nodes, node.id, node.key))) {
+            if (this.isDataType(parentType, 'object')) {
+                if((!node.__.key || !node.__.key.trim()) || (this.isDuplicate(nodes, node.__.id, node.__.key))) {
                     return false;
                 }
             }
 
-            if ((node.metas || []).some((meta) => !meta.key || !meta.key.trim())) {
+            if ((node.__.metas || []).some((meta) => !meta.key || !meta.key.trim())) {
                 return false;
             }
 
-            if ((node.children && (node.type === 'object' || node.type === 'array')) && (!this.isTreeValid(node.children, node.type))) {
-                return false;
+            if ((node.__.children && (this.isDataType(node.__.type, 'array') || this.isDataType(node.__.type, 'object')))) {
+                return this.isTreeValid(node.__.children, node.__.type);
             }
         }
 
@@ -189,11 +290,14 @@ class SchemaManager {
             return nodes;
         }else{
             return (nodes || []).map((node) => {
-                if(node.children) {
+                if(node.__.children) {
                     return { 
-                        ...node, 
-                        isExpanded:expended, // Force open so matching children are visible
-                        children:this.expandMatching(node.children, query, expended) 
+                        ...node,
+                        __:{
+                            expended:expended,
+                            children:this.expandMatching(node.__.children, query, expended) 
+                        },
+                        
                     };
                 }
                 return node;
@@ -202,118 +306,82 @@ class SchemaManager {
     }
 
     parseMetaValue = (val) => {
-        let trimmed = String(val).trim();
+        if (val === null || val === undefined || typeof val === 'object') {
+            return val;
+        }
 
-        if (trimmed.toLowerCase() === 'true') {
-            return true;
-        };
+        const trimmed = String(val).trim();
 
-        if (trimmed.toLowerCase() === 'false') {
-            return false;
-        };
+        // 2. Boolean evaluation
+        const lower = trimmed.toLowerCase();
+        if (lower === 'true') return true;
+        if (lower === 'false') return false;
 
-        if (!isNaN(trimmed) && trimmed !== '') {
+        // 3. Strict Numeric Check (retains string format for decimals ending with . or containing 0x hex)
+        if (trimmed !== '' && !isNaN(Number(trimmed)) && !trimmed.startsWith('0x')) {
             return Number(trimmed);
-        };
+        }
 
         return val;
     };
 
-    serializeDefinition = (nodes, parentType = 'object') => {
-        const activeNodes = nodes || [];
+    serializeNode = (node) => {
+        const __ = node?.__ || {};
 
-        if (parentType === 'array') {
-            return activeNodes.map((child) => {
-                if (child.isNull) {
-                    return null;
-                }
-
-                const base = {
-                    type: child.type,
-                    dvalue: child.dvalue,
-                    required: Boolean(child.required),
-                };
-
-                const metaArray = child.metas || [];
-                if (metaArray.length > 0) {
-                    metaArray.forEach((meta) => {
-                        if (meta.key && meta.key.trim()) {
-                            base[meta.key.trim()] = this.parseMetaValue(meta.value);
-                        }
-                    });
-                }
-
-                if (child.type === 'object') {
-                    const nestedProps = this.serializeDefinition(child.children || [], 'object');
-                    Object.assign(base, nestedProps);
-                } else if (child.type === 'array') {
-                    base.items = this.serializeDefinition(child.children || [], 'array');
-                } else if (child.type === 'function') {
-                    base.code = child.value;
-                } else if (child.type === 'jsx') {
-                    base.template = child.value;
-                } else {
-                    base.value = child.value;
-                }
-
-                return base;
-            });
+        if (__.isNull || !__.type) {
+            return null;
         }
 
-        const result = {};
-        for (const node of activeNodes) {
-            const key = (node.key || '').trim() || `unnamed_${node.id.slice(0, 4)}`;
+        const base = {
+            type: __.type,
+        };
 
-            // STRICT NULL OVERRIDE
-            if (node.isNull) {
-                result[key] = null;
-                continue;
+        const metas = __.metas || [];
+
+        for (const meta of metas) {
+            const key = meta?.key?.trim();
+            if (key && meta.value !== undefined) {
+                base[key] = this.parseMetaValue(meta.value);
             }
-
-            const definition = {
-                type: node.type,
-                required: Boolean(node.required),
-                dvalue: node.dvalue,
-            };
-
-            const metaArray = node.metas || [];
-            if (metaArray.length > 0) {
-                metaArray.forEach((meta) => {
-                    if (meta.key && meta.key.trim()) {
-                        definition[meta.key.trim()] = this.parseMetaValue(meta.value);
-                    }
-                });
-            }
-
-            if (node.type === 'object') {
-                const nestedChildren = this.serializeDefinition(node.children || [], 'object');
-                Object.assign(definition, nestedChildren);
-            } else if (node.type === 'array') {
-                definition.items = this.serializeDefinition(node.children || [], 'array');
-            } else if (node.type === 'function') {
-                definition.code = node.value;
-            } else if (node.type === 'jsx') {
-                definition.template = node.value;
-            } else {
-                definition.value = node.value;
-            }
-
-            result[key] = definition;
         }
-        return result;
-    }
+
+        if (this.isDataType(__.type, 'object')) {
+            Object.assign(base, this.serializeDefinition(__.children || [], 'object'));
+        }
+        if (this.isDataType(__.type, 'array')) {
+            base[json.get(this.utils, 'keysmap.arrayChilds', 'items')] = this.serializeDefinition(__.children || [], 'array');
+        }
+
+        return base;
+    };
+
+    serializeDefinition = (nodes = [], parentType = 'object') => {
+        if (this.isDataType(parentType, 'array')) {
+            return nodes.map(node => this.serializeNode(node));
+        }
+
+        return nodes.reduce((acc, node) => {
+            const key = node?.__?.key?.trim();
+
+            if (key) {
+                acc[key] = this.serializeNode(node);
+            }
+
+            return acc;
+        }, {});
+    };
 }
 
-const registry = {};
+const inst = {};
 
-registry.init = (name, arg) => {
-    if (registry[name]) {
-        return registry[name];
+inst.init = (name, arg) => {
+    if (inst[name]) {
+        return inst[name];
     }
 
-    registry[name] = new SchemaManager(name, arg);
+    inst[name] = new SchemaManager(name, arg);
 
-    return registry[name];
+    return inst[name];
 };
 
-module.exports = registry;
+module.exports = inst;

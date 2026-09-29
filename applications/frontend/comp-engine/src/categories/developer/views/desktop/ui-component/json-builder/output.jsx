@@ -13,13 +13,11 @@ const Comp = (dprops) => {
     });
     
     const update = (a) => {
-        a.tree = helpers.json.copy(a.json || {});
-        if (mode === 'definition') {
-            a.json = builder.serializeDefinition(a.json, 'object');
-        } else {
-            a.json = builder.serializeEvaluatedData(a.json, 'object');
-        };
-        setData(a);
+        a.tree = helpers.json.copy(a.json || []);
+        if (mode === 'definition' && helpers.data.type.is(a.json, 'list')) {
+            a.json = builder.serializeDefinition(a.json || [], 'object');
+            setData(a);
+        }
     }
 
     const togglePreviw = (arg) => {
