@@ -14,12 +14,11 @@ const booleans = (() => {
 })();
 
 const Comp = (props) => {
+    const node = props.node;
     const builder = props.builder;
+    const childs = node.__.children || [];
     const keyRegex = helpers.json.get(builder, 'utils.keyRegex');
     const keyReplaceRegex = helpers.json.get(builder, 'utils.keyReplaceRegex');
-
-    const node = props.node;
-    const childs = node.__.children || [];
     const { depth, onUpdate, onDelete, onAddChild, entireTree, isKeyDuplicate, query } = props;
 
     const datatTypes = (() => {
@@ -119,6 +118,62 @@ const Comp = (props) => {
         }
     }
 
+    /**
+     * Atomically updates multiple meta items strictly matching their unique IDs.
+     *
+     * @param {Record<string, Record<string, any>>} updates - Map of meta ID to its field-value changes.
+     * 
+     * Example input structure:
+     * {
+     *   "meta-id-required": { value: true },
+     *   "meta-id-from": { value: "statics" },
+     *   "meta-id-overwrite": { value: { theme: null } }
+     * }
+     */
+    const handleUpdateMultipleMetasById = (updates) => {
+        if (!updates || !node?.__?.id) return;
+
+        onUpdate(node.__.id, (prevNode) => {
+            const currentMetas = prevNode?.__?.metas || [];
+
+            // Map over all metas in a single state-modifier loop
+            const updatedMetas = currentMetas.map((item) => {
+                const itemUpdates = updates[item.id];
+
+                // If this meta item doesn't have any updates registered under its ID, keep it as-is
+                if (!itemUpdates) {
+                    return item;
+                }
+
+                // Merge the updates onto the meta item
+                const nextItem = { ...item };
+                let isValid = true;
+
+                Object.entries(itemUpdates).forEach(([field, value]) => {
+                    // Enforce validations if updating the meta key
+                    if (field === 'key' && typeof validateKey === 'function' && !validateKey(value)) {
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        nextItem[field] = value;
+                    }
+                });
+
+                return isValid ? nextItem : item;
+            });
+
+            return {
+                ...prevNode,
+                __: {
+                    ...prevNode?.__,
+                    metas: updatedMetas
+                }
+            };
+        });
+    };
+
+
     const handleDeleteMetaItem = (metaId) => {
         if (metaId) {
             onUpdate(node.__.id, (prev) => {
@@ -182,7 +237,6 @@ const Comp = (props) => {
 
     const nested = () => {
         if (node.__.expanded && childs.length > 0) {
-            debugger;
             return childs.map((child, idx) => (
                 <Comp
                     index={idx}
@@ -207,19 +261,19 @@ const Comp = (props) => {
         return (
             <Input
                 value={node.__.key || ''}
-                label={(label || "Key Name")}
-                placeholder={(placeholder || "key_name")}
                 callback={{ onChange: handleKeyChange }}
+                label={((typeof label != 'undefined')?label:'Key Name')}
+                placeholder={((typeof placeholder != 'undefined')?placeholder:'key_name')}
             />
         )
     }
 
-    const nullable = () => {
+    const nullable = (label) => {
         if (node.__.key) {
             return (
                 <Toggle
                     label={{
-                        text: "Set null"
+                        text:((typeof label != 'undefined')?label:'Set null')
                     }}
                     checkbox={{
                         checked: node.__.isNull
@@ -238,11 +292,12 @@ const Comp = (props) => {
         return <></>
     }
 
-    const nodeType = () => {
+    const nodeType = (label) => {
         return (
             <Select
                 input={{
-                    label: "Data type"
+                    label:((typeof label != 'undefined')?label:"Type"),
+                    placeholder:((typeof placeholder != 'undefined')?placeholder:"")
                 }}
                 mapping={{
                     selected: {
@@ -272,6 +327,10 @@ const Comp = (props) => {
 
     const valueChange = (field, val) => {
         onUpdate(node.__.id, (prev) => ({ ...prev, [field]: val }))
+    }
+
+    const toggleMetas = () => {
+        onUpdate(node.__.id, (prev) => ({...prev, __:{...prev?.__, showMetas:!prev?.__.showMetas}}))
     }
 
     const booleanType = (key, label, placeholder) => {
@@ -329,6 +388,7 @@ const Comp = (props) => {
                     },
                     callbacks: {
                         node: {
+                            toggleMetas:toggleMetas,
                             valueChange: valueChange,
                             validateKey: validateKey,
                             keyChange: handleKeyChange,
@@ -342,7 +402,8 @@ const Comp = (props) => {
                             validateKey: validateKey,
                             addNewMeta: handleAddMetaItem,
                             deleteMeta: handleDeleteMetaItem,
-                            updateMetaDetailsByKey: handleUpdateMetaItem
+                            updateMetaDetailsByKey: handleUpdateMetaItem,
+                            updateMultipleMetasById:handleUpdateMultipleMetasById
                         }
                     }
                 }

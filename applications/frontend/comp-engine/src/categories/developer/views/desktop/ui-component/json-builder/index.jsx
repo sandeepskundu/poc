@@ -7,7 +7,26 @@ import helpers from 'ui-helpers';
 const Comp = (dprops) => {
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
 
+    const getTemplate = (map) => {
+        let rval =  helpers.json.get(props, map, null);
+
+        if(rval && helpers.data.type.is(rval, 'function')){
+            return rval;
+        }
+
+        return null;   
+    }
+
+    const ntemplate = getTemplate('templates.item.nested.layout');
+    const editorTemplate = getTemplate('templates.editor.layout');
+    const jsonOutput = getTemplate('templates.editor.jsonOutput');
+    const jsonTreeTemplate = getTemplate('templates.editor.jsonTree');
+
     const nested = (arg) => {
+        if(ntemplate){
+            return ntemplate(arg, arg.__.templates.node.nested);
+        };
+
         return (
             <div className='bxs bdr-c00104 anim' style={{ borderLeftWidth: "4px", borderLeftStyle: 'solid' }}>
                 <div className='full bdr-1 bdr-tn bdr-bn bdr-rn bdr-c00104'>
@@ -18,21 +37,27 @@ const Comp = (dprops) => {
     }
 
     const header = (arg) => {
-        return <Header {...arg} />
+        return <Header {...arg} templates={helpers.json.get(props, 'templates.item.header', {})} />
     }
 
     const details = (arg) => {
-        return <Editor {...arg} />
+        return <Editor {...arg} templates={helpers.json.get(props, 'templates.item.details', {})} />
     }
 
     const tree = (arg) => {
+        if(jsonTreeTemplate){
+            return jsonTreeTemplate(arg, {
+                nested:nested,
+                header:header,
+                details:details
+            });
+        };
+
         return (
             <div className='full'>
                 {header(arg)}
                 {details(arg)}
-                <div className='full bxs'>
-                    {nested(arg)}
-                </div>
+                {nested(arg)}
             </div>
         )
     }
@@ -42,7 +67,6 @@ const Comp = (dprops) => {
             <Json
                 data={props.data}
                 builder={props.builder}
-                onChange={(json, valid) => { }}
                 templates={{
                     tree:(arg) => {
                         return tree(arg);
@@ -53,22 +77,21 @@ const Comp = (dprops) => {
     }
 
     const output = () => {
-        return <Output builder={props.builder} />
+        if(jsonOutput){
+            return jsonOutput({
+                template:() => {
+                    return <Output builder={props.builder} onChange={(json, valid) => {console.log(json, valid)}} />;
+                }
+            })
+        }
+        return <Output builder={props.builder} onChange={(json, valid) => {console.log(json, valid)}} />
     }
 
     const ui = () => {
-        if (props.render && helpers.data.type.is(props.render, 'function')) {
-            return props.render({
-                __: {
-                    templates: {
-                        editor: {
-                            root:json
-                        },
-                        output: {
-                            display: output
-                        },
-                    }
-                }
+        if (editorTemplate) {
+            return editorTemplate({
+                jsonTree:json,
+                jsonOutput:output
             })
         }
     }

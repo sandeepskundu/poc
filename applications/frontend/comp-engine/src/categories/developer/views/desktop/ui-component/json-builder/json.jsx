@@ -1,4 +1,3 @@
-
 import NodeRow from './node-row';
 import helpers from 'ui-helpers';
 import Versions from './versions';
@@ -6,21 +5,22 @@ import Input from 'aio-global-raw-ui/atoms/form/input';
 import {useState, useMemo, useEffect, useCallback, useRef} from 'react';
 
 const Comp = (props) => {
+    const data = props.data;
     const qEngine = useRef(null);
-    const {builder, onChange, templates, data} = props;
-
+    const builder = props.builder;
+    const onChange = props.onChange;
+    const templates = props.templates;
     const [query, setQuery] = useState('');
-    const initial = useMemo(() => data, [builder, data]);
+    const initial = useMemo(() => data, [data]);
     const [searching, setSearching] = useState(false);
-    const [searchResults, setSearchResults] = useState(null);
-
     const [history, setHistory] = useState([initial]);
     const [historyIndex, setHistoryIndex] = useState(0);
+    const [searchResults, setSearchResults] = useState(null);
     const [activeTree, setActiveTree] = useState(history[historyIndex] || []);
 
-    const [showVersions, setShowVersions] = useState(false);
-    const [versions, setVersions] = useState(() => (builder.version?.load ? builder.version.load() : []));
     const [preview, setPreview] = useState(true);
+    const [showVersions, setShowVersions] = useState(false);
+    const [versions, setVersions] = useState(() => (builder.version?.load ? builder.version.load() : []));    
 
     if (!qEngine.current) {
         qEngine.current = helpers.plugins.filter.init(initial, {
@@ -152,7 +152,7 @@ const Comp = (props) => {
     };
 
     const addRootField = () => {
-        onTreeChange([...activeTree, builder.createNode('', 'string')]);
+        onTreeChange([...activeTree, builder.createNode('', 'string', {}, false, true)]);
     };
 
     const tree = (searchResults !== null ? searchResults : activeTree);

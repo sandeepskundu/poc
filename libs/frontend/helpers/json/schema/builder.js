@@ -93,9 +93,9 @@ class SchemaManager {
 
             return rval;
         }
-    };
+    }
 
-    createNode(key, type, overrides = {}, expended = false, editing = false) {
+    createNode = (key, type, overrides = {}, expended = false, editing = false) => {
         const cb = json.get(this, 'callbacks.onNodeCreate');
         const hasChild = (this.isDataType(type, 'object') || this.isDataType(type, 'array'));
         let rval = {
@@ -128,7 +128,6 @@ class SchemaManager {
 
         return rval;
     }
-
 
     onNodeUpdate = (node, prev) => {
         let rval = {...prev, ...node};
@@ -188,8 +187,7 @@ class SchemaManager {
         });
     }
 
-
-    addChildNode(nodes = [], parentId, newNode) {
+    addChildNode = (nodes = [], parentId, newNode) => {
         return nodes.map((node) => {
             const meta = node.__ || {};
 
@@ -240,7 +238,6 @@ class SchemaManager {
             return node;
         });
     }
-
 
     isDuplicate = (nodes, targetId, name) => {
         name = (name || '').trim();

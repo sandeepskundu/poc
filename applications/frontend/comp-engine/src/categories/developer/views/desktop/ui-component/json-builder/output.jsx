@@ -11,12 +11,20 @@ const Comp = (dprops) => {
         json:{},
         valid:true
     });
+
+    const onUpdate = (a) => {
+        debugger;
+        if(props.onChange){
+            props.onChange(a.json, a.valid);
+        }
+    }
     
     const update = (a) => {
         a.tree = helpers.json.copy(a.json || []);
         if (mode === 'definition' && helpers.data.type.is(a.json, 'list')) {
             a.json = builder.serializeDefinition(a.json || [], 'object');
             setData(a);
+            onUpdate(a)
         }
     }
 
@@ -85,7 +93,7 @@ const Comp = (dprops) => {
                         {valid()}
                         {modes()}
                     </div>
-                    <div className='full bg-c00110 txt-c00000 pd-20 bdr-b8 bxs txt-xs' >
+                    <div className='full bg-c00110 txt-c00000 pd-20 bdr-b8 bxs txt-xs oa' >
                         {view()}
                     </div>
                 </div>
