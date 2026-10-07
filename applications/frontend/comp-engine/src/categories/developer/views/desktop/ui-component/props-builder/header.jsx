@@ -7,20 +7,19 @@ const Comp = (dprops) => {
     const builder = props.builder || {};
     const templates = props.templates || {};
     const raw = node.__ || {};
+    const excludeActions = helpers.json.get(raw, 'excludeActions', {});
     
     const canadd = (() => {
         let enabled = {
-            and:true,
-            nested:true
+            any:true,
+            nested:false
         }
         let sh = templates.actions.add.show;
         let type = helpers.json.get(raw, 'type', '');
         return (sh && type && enabled[type]);
     })();
 
-    const error = () => {
-
-    }
+    const error = () => {}
 
     const label = () => {
         return (
@@ -34,7 +33,7 @@ const Comp = (dprops) => {
     const expend = () => {
         const show = helpers.json.get(templates, 'actions.expend.show');
 
-        if(show){
+        if(show && !excludeActions.expend){
             return templates.actions.expend.ui();
         }
     }
@@ -44,13 +43,15 @@ const Comp = (dprops) => {
     }
 
     const addIcon = () => {
-        if(canadd){
+        if(canadd && !excludeActions.add){
             return templates.actions.add.ui()
         }
     }
 
     const modify = () => {
-        return templates.actions.edit.ui()
+        if(!excludeActions.edit){
+            return templates.actions.edit.ui()
+        }
     }
 
     const remove = () => {
@@ -58,6 +59,11 @@ const Comp = (dprops) => {
     }
 
     const ui = () => {
+
+        if(raw.hideHeader){
+            return <></>
+        };
+
         return (
             <ul className='full bxs flx-vc flx-sb pd-10 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln' data-comp-hh="_actions">
                 <li className='flx-vc'>

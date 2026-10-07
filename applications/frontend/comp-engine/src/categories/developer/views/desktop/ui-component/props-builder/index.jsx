@@ -58,7 +58,8 @@ const Comp = () => {
             ___:{
                 enum:{
                     from:'statics',
-                    mapping:"slideDrawer.directions"
+                    mapping:"slideDrawer.directions",
+                    options:'s|a'
                 }
             }
         },
@@ -140,7 +141,27 @@ const Comp = () => {
                 nested:{
                     sandeep:{
                         type:'string',
+                    },
+                    compProps1:{
+            type:'compProps',
+            description:"",
+            ___:{
+                asroot:true,
+                compProps:{
+                    from:'statics',
+                    mapping:'raw/atoms/icons',
+                    overwirte:{
+                        config:{
+                            a:{
+                                a:{
+                                    name:'sandeep'
+                                }
+                            }
+                        }
                     }
+                }
+            }
+        },
                 }
             }
         }

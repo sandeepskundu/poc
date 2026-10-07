@@ -110,7 +110,6 @@ const blankHeader = (key, value, type = 'string', options = {}, overrides = {}) 
     // Group config properties directly and cleanly
     Object.assign(rval.__, {
         type:type,
-        hideHeader:true,
         nonEditable:true,
     });
 
@@ -157,12 +156,26 @@ const setChilds = (rval, childs) => {
  **/
 
 const nested = (rval, key, value, options) => {
+    let base = {
+        editing:true,
+        expanded:true,
+        hideHeader:true,
+        excludeActions:{
+            add:true,
+            edit:true,
+            expend:true
+        }
+    }
     // Extract nested child items safely using utility helper
     let childs = helpers.json.get(value, '___.nested', {});
 
     // Generate blank header wrappers
-    let h = blankHeader('___', false, 'nested', options);
-    let ns = blankHeader('nested', false, 'asEditorObject', options);
+    let h = blankHeader('___', false, 'asEditorObject', options, {
+        ...base
+    });
+    let ns = blankHeader('nested', false, 'asEditorObject', options, {
+        ...base
+    });
 
     // Determine valid child representation
     const hasChilds = helpers.data.type.is(childs, 'object') && helpers.json.length(childs) > 0;
@@ -175,20 +188,32 @@ const nested = (rval, key, value, options) => {
     return setChilds(rval, [h]);
 };
 
+
+
 const compProps = (rval, key, value, options) => {
+    let base = {
+        editing:true,
+        expanded:true,
+        showMetas:true,
+        hideHeader:true,
+        editorDataType:'compProps',
+        excludeActions:{
+            add:true,
+            edit:true,
+            expend:true
+        }
+    }
     let childs = helpers.json.get(value, '___.compProps', {});
     let header = blankHeader('___', false, 'asEditorObject', options, {
-        showMetas:true,
-        editorDataType:'compProps',
+        ...base,
         metas:[
             metaByKey({}, 'asroot', helpers.json.get(value, '___.asroot', false))
         ]
     });
 
     let cProps = blankHeader('compProps', false, 'asEditorObject', options, {
-        showMetas:true,
+        ...base,
         key:'compProps',
-        editorDataType:'compProps',
         metas:[
             metaByKey(childs, 'from', ''),
             metaByKey(childs, 'mapping', ''),
@@ -202,9 +227,20 @@ const compProps = (rval, key, value, options) => {
 }
 
 const predefined = (rval, key, value, options) => {
+    let base = {
+        editing:true,
+        expanded:true,
+        hideHeader:true,
+        excludeActions:{
+            add:true,
+            edit:true,
+            expend:true
+        }
+    }
     let childs = helpers.json.get(value, '___.predefined', {});
-    let header = blankHeader('___', false, 'asEditorObject', options, {});
+    let header = blankHeader('___', false, 'asEditorObject', options, base);
     let predefinedProps = blankHeader('predefined', false, 'asEditorObject', options, {
+        ...base,
         showMetas:true,
         editorDataType:'predefined',
         metas:[
@@ -220,9 +256,20 @@ const predefined = (rval, key, value, options) => {
 }
 
 const enums = (rval, key, value, options) => {
+    let base = {
+        editing:true,
+        expanded:true,
+        hideHeader:true,
+        excludeActions:{
+            add:true,
+            edit:true,
+            expend:true
+        }
+    }
     let childs = helpers.json.get(value, '___.enum', {});
-    let header = blankHeader('___', false, 'asEditorObject', options, {});
+    let header = blankHeader('___', false, 'asEditorObject', options, {...base});
     let enumProps = blankHeader('enum', false, 'asEditorObject', options, {
+        ...base,
         showMetas:true,
         editorDataType:'enum',
         metas:[
