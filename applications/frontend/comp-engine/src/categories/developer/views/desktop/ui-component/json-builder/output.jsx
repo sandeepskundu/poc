@@ -13,7 +13,6 @@ const Comp = (dprops) => {
     });
 
     const onUpdate = (a) => {
-        debugger;
         if(props.onChange){
             props.onChange(a.json, a.valid);
         }

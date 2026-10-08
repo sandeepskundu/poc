@@ -1,8 +1,8 @@
-import helpers from 'ui-helpers';
-import JsonBuilder from './../json-builder';
+import Header from './header';
 import parser from './helpers';
 import Details from './details';
-import Header from './header';
+import helpers from 'ui-helpers';
+import JsonBuilder from './../json-builder';
 
 const Comp = () => {
     const types = ['any', 'string', 'number', 'boolean', 'object', 'function', 'enum', 'jsx', 'nested', 'compProps', 'predefined'];
@@ -13,7 +13,7 @@ const Comp = () => {
             dataType:types,
             dataTypeFlags:{
                 array:[],
-                object:['any', 'object', 'nested', 'compProps', 'predefined', 'enum', 'asEditorObject']
+                object:['nested', 'compProps', 'predefined', 'enum', 'asEditorObject']
             },
             keysmap:{
                 arrayChilds:'sandeep'
@@ -22,13 +22,10 @@ const Comp = () => {
         callbacks:{
             onNodeCreate:(arg) => {
                 arg.__.metas = parser.getBaseMetas(arg.__.key, arg.__, {});
-
-                debugger;
                 return arg;
             },
             onNodeUpdate:(arg, prev) => {
-                debugger;
-                //arg.__.metas = parser.getBaseMetas(arg.__.key, arg.__, {});
+                arg.__.metas = parser.getBaseMetas(arg.__.key, arg.__, {});
                 return arg;
             }
         }
@@ -167,7 +164,8 @@ const Comp = () => {
         }
     }, {
         sortPath:'__.type',
-        sortOrder:['compProps', 'nested',  'predefined', 'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx']
+        sortOrder:['string', 'jsx', 'boolean', 'object', 'any', 'compProps', 'nested',  'predefined', 'enum',  'number', 'function'],
+        _sortOrder:['boolean', 'compProps', 'nested',  'predefined', 'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx']
     });
 
     const data = nodedata || [

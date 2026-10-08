@@ -18,7 +18,7 @@ const dvalueByType = {
     any: '',
     jsx: '',
     enum: '',
-    object: {},
+    object:{a:{b:{c:true}}},
     //nested:'',
     string: '',
     number: '',

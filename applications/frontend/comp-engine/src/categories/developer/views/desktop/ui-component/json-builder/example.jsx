@@ -1,5 +1,5 @@
 import helpers from 'ui-helpers';
-import JsonBuilder from './json-builder';
+import JsonBuilder from './';
 
 const Comp = () => {
 

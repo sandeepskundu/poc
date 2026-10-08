@@ -281,7 +281,9 @@ const Comp = (props) => {
                     callback={{
                         input: {
                             onChange: (checked, b, c) => {
-                                onUpdate(node.__.id, (prev) => ({ ...prev, __: { ...prev?.__, isNull: checked } }));
+                                onUpdate(node.__.id, (prev) => {
+                                    return builder.onNodeUpdate({...prev, __:{...prev?.__, isNull:checked}}, prev);
+                                });
                             }
                         }
                     }}

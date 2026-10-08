@@ -19,7 +19,9 @@ const Comp = (dprops) => {
         return (sh && type && enabled[type]);
     })();
 
-    const error = () => {}
+    const error = () => {
+        return templates.label.error.ui();
+    }
 
     const label = () => {
         return (

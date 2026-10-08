@@ -146,8 +146,6 @@ const Comp = forwardRef((dprops, pref) => {
 		d.selected = rv;
 		setData(d);
 
-		debugger;
-
 		if(onSelect){
 			onSelect(rv, cbArgs());
 		};

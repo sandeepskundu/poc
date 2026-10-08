@@ -1,4 +1,5 @@
 import Metas from './metas';
+import Dvalue from './dvalue';
 import helpers from 'ui-helpers';
 import Textarea from 'aio-global-ui/atoms/form/textarea';
 import Toggle from 'aio-global-raw-ui/atoms/form/toggle';
@@ -12,6 +13,8 @@ const Comp = (dprops) => {
     const templates = props.templates || {};
     const types = helpers.json.get(configs, 'types', []);
     const editable = !helpers.json.get(node, '__.nonEditable', false);
+
+    console.log(node.__)
 
     const metas = (() => {
         let rval = {
@@ -131,21 +134,32 @@ const Comp = (dprops) => {
         )
     }
 
+    const dvalue = () => {
+        let has = helpers.json.get(metas, 'base.dvalue.id', '');
+
+        if(has){
+            return (
+                <div className='full bxs pd-t24'>
+                    <Dvalue node={node} meta={metas.base.dvalue} builder={props.builder} templates={props.templates}  />
+                </div>
+            )
+        }
+    }
+
     const ui = () => {
         if(editable){
             return (
                 <div className='full bxs pd-l16 pd-b16 bdr-c00104 bdr-1 bdr-tn bdr-rn bdr-bn'>
                     {keyAndType()}
                     {description()}
+                    {dvalue()}
                     {flags()}
                     <Metas {...props} metas={metas.nonbase} />
                 </div>
-                
             )
         }else{
             return <Metas {...props} metas={metas.nonbase} />
         }
-        
     }
 
     return ui();
