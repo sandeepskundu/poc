@@ -1,5 +1,6 @@
 let rval = {
-    details:require('./details')
+    details:require('./details'),
+    configs:require('./configs')
 };
 
 module.exports = (() => {

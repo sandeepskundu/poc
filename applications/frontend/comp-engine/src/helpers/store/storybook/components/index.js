@@ -1,3 +1,5 @@
 module.exports = {
-    list:require('./list')
+    tree:require('./tree'),
+    list:require('./list'),
+    props:require('./props')
 }

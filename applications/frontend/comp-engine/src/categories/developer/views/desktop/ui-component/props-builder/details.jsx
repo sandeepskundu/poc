@@ -9,13 +9,9 @@ const Comp = (dprops) => {
 
     const node = props.node || {};
     const configs = props.configs || {};
-    const builder = props.builder || {};
     const templates = props.templates || {};
     const types = helpers.json.get(configs, 'types', []);
     const editable = !helpers.json.get(node, '__.nonEditable', false);
-
-    console.log(node.__)
-
     const metas = (() => {
         let rval = {
             base:{},
@@ -125,6 +121,7 @@ const Comp = (dprops) => {
             <Textarea 
                 label="Description"
                 placeholder="Description"
+                value={helpers.json.get(metas, 'base.description.value', '')}
                 callback={{
                     onChange:(a, b, c) => {
                         templates.item.meta.item.actions.updateByKey(metas.base.description.id, 'value', a)

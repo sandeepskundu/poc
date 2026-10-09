@@ -1,8 +1,10 @@
 import Header from './header';
-import parser from './helpers';
+import parser from './parser';
 import Details from './details';
 import helpers from 'ui-helpers';
+import appHelpers from 'app-helpers';
 import JsonBuilder from './../json-builder';
+import {useEffect, useState, useRef} from "react";
 
 const Comp = () => {
     const types = ['any', 'string', 'number', 'boolean', 'object', 'function', 'enum', 'jsx', 'nested', 'compProps', 'predefined'];
@@ -21,187 +23,82 @@ const Comp = () => {
         },
         callbacks:{
             onNodeCreate:(arg) => {
-                arg.__.metas = parser.getBaseMetas(arg.__.key, arg.__, {});
+                arg.__.metas = parser.data.getBaseMetas(arg.__.key, arg.__, {});
                 return arg;
             },
             onNodeUpdate:(arg, prev) => {
-                arg.__.metas = parser.getBaseMetas(arg.__.key, arg.__, {});
+                arg.__.metas = parser.data.getBaseMetas(arg.__.key, arg.__, {});
                 return arg;
             }
         }
     });
 
-    const nodedata = parser.init({
-        jsx1:null,
-        jsx:{
-            dvalue:'',
-            type:"jsx",
-            description:""
-        },
-        ksksk:{
-            dvalue:{},
-            type:'object',
-            description:''
-        },
-        boolean:{
-            dvalue:true,
-            type:'boolean',
-            description:''
-        },
-        enum:{
-            type:"enum",
-            dvalue:'right',
-            description:"",
-            ___:{
-                enum:{
-                    from:'statics',
-                    mapping:"slideDrawer.directions",
-                    options:'s|a'
-                }
-            }
-        },
-        predefined:{
-            type:'predefined',
-            ___:{
-                predefined:{
-                    from:'statics',
-                    mapping:'ds.preset',
-                    overwirte:{
-                        theme:null
-                    }
-                }
-            }
-        },
-        compProps:{
-            type:'compProps',
-            description:"",
-            ___:{
-                asroot:true,
-                compProps:{
-                    from:'statics',
-                    mapping:'raw/atoms/icons',
-                    overwirte:{
-                        config:{
-                            a:{
-                                a:{
-                                    name:'sandeep'
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        compProps1:{
-            type:'compProps',
-            description:"",
-            ___:{
-                asroot:true,
-                compProps:{
-                    from:'statics',
-                    mapping:'raw/atoms/icons',
-                    overwirte:{
-                        config:{
-                            a:{
-                                a:{
-                                    name:'sandeep'
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        any:{
-            dvalue:'',
-            type:"any",
-            description:""
-        },
-        string:{
-            dvalue:'',
-            type:"string",
-            description:""
-        },
-        number:{
-            dvalue:100,
-            type:"number",
-            description:""
-        },
-        function:{
-            dvalue:null,
-            type:'function',
-            description:""
-        },
-        nested:{
-            type:'nested',
-            ___:{
-                nested:{
-                    sandeep:{
-                        type:'string',
-                    },
-                    compProps1:{
-            type:'compProps',
-            description:"",
-            ___:{
-                asroot:true,
-                compProps:{
-                    from:'statics',
-                    mapping:'raw/atoms/icons',
-                    overwirte:{
-                        config:{
-                            a:{
-                                a:{
-                                    name:'sandeep'
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-                }
+    const [details, setDetails] = useState({
+        blank:'',
+        data:[],
+        cache:helpers.random.key()
+    })
+
+    const onPropResponse = (resp, arg) => {
+        debugger;
+        setDetails({
+            blank:false,
+            cache:helpers.random.key(),
+            enums:helpers.json.get(resp, 'enums', {}),
+            raw:helpers.json.get(resp, 'propsDetails', {}),
+            compTree:helpers.json.get(resp, 'compTree', {}),
+            predefined:helpers.json.get(resp, 'predefined', {}),
+            data:parser.data.init(helpers.json.get(resp, 'propsDetails.props', {}), {
+                sortPath:'__.type',
+                _sortOrder:['string', 'jsx', 'boolean', 'object', 'any', 'compProps', 'nested',  'predefined', 'enum',  'number', 'function'],
+                sortOrder:['boolean', 'compProps', 'nested',  'predefined', 'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx']
+            })
+        });
+    }
+
+    const getConfigs = () => {
+        return {
+            types:types,
+            enums:helpers.json.get(details, 'enums', {}),
+            compTree:helpers.json.get(details, 'compTree', {}),
+            predefined:helpers.json.get(details, 'predefined', {})
+        }
+    }
+
+    const reqConfig = (url) => {
+        return {
+            name:url,
+            request:{
+                options:{},
+                request:{}
             }
         }
-    }, {
-        sortPath:'__.type',
-        sortOrder:['string', 'jsx', 'boolean', 'object', 'any', 'compProps', 'nested',  'predefined', 'enum',  'number', 'function'],
-        _sortOrder:['boolean', 'compProps', 'nested',  'predefined', 'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx']
+    }
+
+    const onResp = (resp, arg) => {
+        let id = 'cf9e5d8c7889089707f6bf27dbf6c1391';
+        let map = helpers.json.get(resp, `components.${id}`, '');
+            appHelpers.store.get([{
+                name:'storybook.components.props.detailsByMap',
+                request:{
+                    options:{},
+                    request:{
+                        data:{
+                            map:map.toLowerCase()
+                        }
+                    }
+                }
+            },
+            reqConfig('storybook.ds.enums'),
+            reqConfig('storybook.ds.predefined'),
+            reqConfig('storybook.components.tree')], onPropResponse);
+    }
+
+    helpers.react.hooks.onmount(useRef(false), useEffect, () => {
+        appHelpers.store.get([reqConfig('storybook.components.list.map')], onResp);
     });
 
-    const data = nodedata || [
-        builder.createNode('userIduser', 'number', {
-            __:{
-                editing:false,
-                expanded:true,
-                metas:[{
-                    id:'sss', key:'sandeep', value:'kundu'     
-                }, {
-                    id:'ssssls', key:'required', value:false
-                }, {
-                    id:'lskslksl', key:'description', value:'description text'
-                }]
-            }}), {
-            ...builder.createNode('userConfig', 'object', {
-                __:{
-                    editing:false,
-                    expanded:true,
-                    children: [
-                        builder.createNode('theme_mode_for_user_userId_', 'string', {
-                            __:{
-                                editing:true,
-                                expanded:false,
-                                metas:[{
-                                    id:'sss', key:'sandeep', value:'kundu'
-                                }, {
-                                    id:'ssssls', key:'required', value:false
-                                }]
-                            }
-                        }),
-                    ]
-                }
-            })
-        },
-    ]
+    //const overwirtes = parser.overwrite.map.get(cdata);    
 
     const propsConfigs = {
         types:types
@@ -210,11 +107,11 @@ const Comp = () => {
     const render = (arg) => {
         return (
             <div className='full bxs grid-wrapper grid-layout-2 pd-20'>
-                <div className='grid pd-r10 bxs'>
+                <div className='grid pd-r10 bxs' key={details.cache}>
                     {arg.jsonTree()}
                 </div>
                 <div className='grid pd-l10 bxs oa'>
-                    {arg.jsonOutput()}
+                    {arg.jsonOutput(details.cache)}
                 </div>
             </div>
         )
@@ -291,11 +188,11 @@ const Comp = () => {
 
         -----*/
 
-        return <Header templates={arg} node={props.node} builder={builder} configs={propsConfigs} />
+        return <Header templates={arg} node={props.node} builder={builder} configs={getConfigs()} />
     }
 
     const itemDetailsLayout = (arg, props) => {
-        return <Details templates={arg} node={props.node} builder={builder} configs={propsConfigs} />
+        return <Details templates={arg} node={props.node} builder={builder} configs={getConfigs()} />
         /*-- arg ===> 
             {
                 layout:{ => 
@@ -367,48 +264,57 @@ const Comp = () => {
         --*/
     }
 
-    return (
-        <JsonBuilder
-            data={data}
-            builder={builder}
-            filters={{
-                query:{
-                    $and:[{
-                        '__.key':{
-                            highlight:true,
-                            operator:'startswith',
-                            //value:(query.trim() || '')
+    const ui = () =>{
+        
+        if(details.blank){
+
+        }else{
+            return (
+                <JsonBuilder
+                    data={details.data}
+                    builder={builder}
+                    filters={{
+                        query:{
+                            $and:[{
+                                '__.key':{
+                                    highlight:true,
+                                    operator:'startswith',
+                                    //value:(query.trim() || '')
+                                }
+                            }]
+                        },
+                        configs:{
+                            highlight:false,
+                            searchChildren:true, // If false, children are ignored and only top-level roots are evaluated
+                            childKey:'__.children',  
+                            treeConfig:{
+                                maxDepth:Infinity,  // Recursion limit cutoff to prevent call-stack overflows
+                                keepAncestors:true, // If child matches, preserve and render the parent path to root
+                                keepDescendantsOnParentMatch:false // If parent matches, retain all its children unconditionally
+                            }
                         }
-                    }]
-                },
-                configs:{
-                    highlight:false,
-                    searchChildren:true, // If false, children are ignored and only top-level roots are evaluated
-                    childKey:'__.children',  
-                    treeConfig:{
-                        maxDepth:Infinity,  // Recursion limit cutoff to prevent call-stack overflows
-                        keepAncestors:true, // If child matches, preserve and render the parent path to root
-                        keepDescendantsOnParentMatch:false // If parent matches, retain all its children unconditionally
-                    }
-                }
-            }}
-            templates={{
-                editor:{
-                    layout:render,
-                    jsonTree:jsonTree,
-                    jsonOutput:jsonOutput
-                },
-                item:{
-                    header:{
-                        layout:itemHeaderLayout,
-                    },
-                    details:{
-                        layout:itemDetailsLayout
-                    }
-                }
-            }}
-        />
-    )
+                    }}
+                    templates={{
+                        editor:{
+                            layout:render,
+                            jsonTree:jsonTree,
+                            jsonOutput:jsonOutput
+                        },
+                        item:{
+                            header:{
+                                layout:itemHeaderLayout,
+                            },
+                            details:{
+                                layout:itemDetailsLayout
+                            }
+                        }
+                    }}
+                />
+            )
+        }
+    }
+
+    return ui();
 }
 
 export default Comp;

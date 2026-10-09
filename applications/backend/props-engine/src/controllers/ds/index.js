@@ -1,6 +1,7 @@
 let rval = {
     enums:require('./enums'),
-    colors:require('./colors')
+    colors:require('./colors'),
+    predefined:require('./predefined')
 };
 
 module.exports = (() => {

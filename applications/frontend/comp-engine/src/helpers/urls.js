@@ -4,9 +4,17 @@ module.exports = {
             details:'http://localhost:5200/comp-engine/storybook/components/details/byHashId/:_hash_:'
         },
         components:{
+            tree:'http://localhost:5000/api/props-engine/component/tree/v1/details/fetch',
             list:{
                 map:'http://localhost:5200/comp-engine/storybook/components/list/map'   
+            },
+            props:{
+                detailsByMap:'http://localhost:5000/api/props-engine/props/configs/v1/byMap/fetch'
             }
+        },
+        ds:{
+            enums:'http://localhost:5000/api/props-engine/ds/enums/v1/data/fetch',
+            predefined:'http://localhost:5000/api/props-engine/ds/predefined/v1/data/fetch'
         }
     }
 }

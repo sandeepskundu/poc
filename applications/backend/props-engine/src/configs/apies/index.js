@@ -1,10 +1,12 @@
+const ds = require('./ds');
 const props = require('./props');
+const component = require('./component');
 
 
 const buildInternal = async (rval, appConfig, req) => {
+    rval = await ds.get(rval, appConfig, req);
     rval = await props.get(rval, appConfig, req);
-
-    debugger;
+    rval = await component.get(rval, appConfig, req);
 
     return rval;
 }

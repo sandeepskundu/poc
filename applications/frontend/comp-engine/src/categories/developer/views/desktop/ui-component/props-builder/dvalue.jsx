@@ -61,7 +61,7 @@ const Comp = (dprops) => {
                 return JSON.stringify(v || {}, null, 4)
             break;
             default:
-                return `${v || ''}`
+                return `${v}`
         }
     })();
 
