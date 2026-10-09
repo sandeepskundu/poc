@@ -1,56 +1,19 @@
 import helpers from 'ui-helpers';
-import appHelpers from 'app-helpers';
-import React, {useEffect, useState, useRef} from "react";
 import Select from 'aio-global-raw-ui/atoms/form/select';
 
 const Comp = (dprops) => { 
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
 
-    const [list, setList] = useState({});
-    const [cache, setChache] = useState(helpers.random.key());
+    const cache = helpers.random.key();
+    const list = helpers.json.get(props, 'configs.enums', {});
 
-    const parse = (input) => {
-        let root = {};
-
-        if (!input || typeof input !== 'object') {
-            return root;
-        }
-
-        Object.values(input).forEach((path) => {
-            if (typeof path !== 'string' || !path.trim()) {
-                return;
-            }
-
-            let current = root;
-            let segments = path.split('/').map(seg => seg.toLowerCase().trim());
-            
-
-            segments.forEach((segment, index) => {
-                const isLast = index === segments.length - 1;
-
-                if (isLast) {
-                    // Set the leaf node value directly to true
-                    current[segment] = true;
-                } else {
-                    // If the key doesn't exist, or is set to true (e.g., from an overlapping path),
-                    // initialize it as a nested object.
-                    if (current[segment] === undefined || current[segment] === true) {
-                        current[segment] = {};
-                    }
-                    current = current[segment];
-                }
-            });
-        });
-
-        return root;
-    };
 
     const mapping = (() => {
         let rval = [];
         let path = helpers.json.get(props, 'data.value', '');
 
         if (path || typeof path == 'string'){
-            let segs = path.split('/').map(seg => seg.trim()).filter(Boolean);
+            let segs = path.split('.').map(seg => seg.trim()).filter(Boolean);
         
                 for (const seg of segs) {
                     rval.push(seg);
@@ -59,21 +22,6 @@ const Comp = (dprops) => {
 
         return rval;
     })();
-
-    const onResp = (resp, arg) => {
-        setList(parse(helpers.json.get(resp, 'components', {})));
-        setChache(helpers.random.key());
-    }
-
-    helpers.react.hooks.onmount(useRef(false), useEffect, () => {
-        appHelpers.store.get([{
-            name:'storybook.components.list.map',
-            request:{
-                options:{},
-                request:{}
-            }
-        }], onResp);
-    });
 
     const options = (map) => {
         let m = map.join('.');
@@ -106,7 +54,7 @@ const Comp = (dprops) => {
                 }}
                 callback={{
                     onSelect: (a, b, c, d) => {
-                        props.onChange([...map, helpers.json.get(a, '0.id')].join('/'));
+                        props.onChange([...map, helpers.json.get(a, '0.id')].join('.'));
                     }
                 }}
                 data={{
@@ -122,12 +70,22 @@ const Comp = (dprops) => {
         )
     } 
 
+    const hasNested = (obj) => {
+        if (helpers.data.type.is(obj, 'object')) {
+            return Object.values(obj).some((value) => {
+                return helpers.data.type.is(value, 'object')
+            });
+        }
+
+        return false;        
+    };
+
     const next = (map, last) => {
         if(last){
             let m = map.join('.');
             let d = m?helpers.json.get(list, m, {}):list;
 
-            if(d && helpers.json.length(d) > 0){
+            if(d && helpers.json.length(d) > 0 && hasNested(d)){
                 return (
                     <li className='bxs pd-r20 pd-t20 grid fl'>
                         {selectbox(map, '')}
@@ -144,8 +102,8 @@ const Comp = (dprops) => {
                 let map = [...old];
                     old.push(arg);
                 return (
-                    <React.Fragment key={`${cache}${i}`}>
-                        <li className='bxs pd-r20 pd-t20 grid fl'>
+                    <React.Fragment key={`${cache}${i}${arg}`}>
+                        <li className='bxs pd-r20 pd-t20 grid'>
                             {selectbox(map, arg)}
                         </li>
                         {next(old, (mapping.length === i+1))}
@@ -158,7 +116,7 @@ const Comp = (dprops) => {
     }
 
     return (
-        <ul className='bxs full grid-wrapper grid-layout-4'>
+        <ul className='bxs full grid-wrapper grid-layout-5'>
             {ui()}
         </ul>
     )

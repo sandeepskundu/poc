@@ -55,7 +55,8 @@ const Comp = (dprops) => {
             <div className='full bxs pd-16'>
                 <div className='full bxs pd-t8'>
                     {from()}
-                    <Mapping 
+                    <Mapping
+                        configs={props.configs}
                         data={helpers.json.get(metas, 'mapping', {})} 
                         onChange={(value) => {
                             let mId = helpers.json.get(metas, 'mapping.id', '');

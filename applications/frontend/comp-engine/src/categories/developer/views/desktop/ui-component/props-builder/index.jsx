@@ -40,7 +40,6 @@ const Comp = () => {
     })
 
     const onPropResponse = (resp, arg) => {
-        debugger;
         setDetails({
             blank:false,
             cache:helpers.random.key(),
@@ -51,7 +50,7 @@ const Comp = () => {
             data:parser.data.init(helpers.json.get(resp, 'propsDetails.props', {}), {
                 sortPath:'__.type',
                 _sortOrder:['string', 'jsx', 'boolean', 'object', 'any', 'compProps', 'nested',  'predefined', 'enum',  'number', 'function'],
-                sortOrder:['boolean', 'compProps', 'nested',  'predefined', 'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx']
+                sortOrder:['compProps', 'boolean', 'nested',  'predefined', 'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx']
             })
         });
     }

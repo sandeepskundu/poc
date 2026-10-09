@@ -6,44 +6,8 @@ import Select from 'aio-global-raw-ui/atoms/form/select';
 const Comp = (dprops) => { 
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
 
-    const [list, setList] = useState({});
     const [cache, setChache] = useState(helpers.random.key());
-
-    const parse = (input) => {
-        let root = {};
-
-        if (!input || typeof input !== 'object') {
-            return root;
-        }
-
-        Object.values(input).forEach((path) => {
-            if (typeof path !== 'string' || !path.trim()) {
-                return;
-            }
-
-            let current = root;
-            let segments = path.split('/').map(seg => seg.toLowerCase().trim());
-            
-
-            segments.forEach((segment, index) => {
-                const isLast = index === segments.length - 1;
-
-                if (isLast) {
-                    // Set the leaf node value directly to true
-                    current[segment] = true;
-                } else {
-                    // If the key doesn't exist, or is set to true (e.g., from an overlapping path),
-                    // initialize it as a nested object.
-                    if (current[segment] === undefined || current[segment] === true) {
-                        current[segment] = {};
-                    }
-                    current = current[segment];
-                }
-            });
-        });
-
-        return root;
-    };
+    const list = helpers.json.get(props, 'configs.compTree', {});
 
     const mapping = (() => {
         let rval = [];
@@ -59,22 +23,7 @@ const Comp = (dprops) => {
 
         return rval;
     })();
-
-    const onResp = (resp, arg) => {
-        setList(parse(helpers.json.get(resp, 'components', {})));
-        setChache(helpers.random.key());
-    }
-
-    helpers.react.hooks.onmount(useRef(false), useEffect, () => {
-        appHelpers.store.get([{
-            name:'storybook.components.list.map',
-            request:{
-                options:{},
-                request:{}
-            }
-        }], onResp);
-    });
-
+   
     const options = (map) => {
         let m = map.join('.');
         let d = m?helpers.json.get(list, m, {}):list;
@@ -120,7 +69,15 @@ const Comp = (dprops) => {
                 }}
             />
         )
-    } 
+    }
+
+    const hasIndex = (d) => {
+        if(d && d.index === true){
+            return 'index';
+        }else{
+            return ''
+        }
+    }
 
     const next = (map, last) => {
         if(last){
@@ -130,7 +87,7 @@ const Comp = (dprops) => {
             if(d && helpers.json.length(d) > 0){
                 return (
                     <li className='bxs pd-r20 pd-t20 grid fl'>
-                        {selectbox(map, '')}
+                        {selectbox(map, hasIndex(d))}
                     </li>
                 )
             }
@@ -144,7 +101,7 @@ const Comp = (dprops) => {
                 let map = [...old];
                     old.push(arg);
                 return (
-                    <React.Fragment key={`${cache}${i}`}>
+                    <React.Fragment key={`${cache}${i}${arg}`}>
                         <li className='bxs pd-r20 pd-t20 grid fl'>
                             {selectbox(map, arg)}
                         </li>

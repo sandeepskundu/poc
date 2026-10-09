@@ -6,51 +6,15 @@ import Select from 'aio-global-raw-ui/atoms/form/select';
 const Comp = (dprops) => { 
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
 
-    const [list, setList] = useState({});
-    const [cache, setChache] = useState(helpers.random.key());
-
-    const parse = (input) => {
-        let root = {};
-
-        if (!input || typeof input !== 'object') {
-            return root;
-        }
-
-        Object.values(input).forEach((path) => {
-            if (typeof path !== 'string' || !path.trim()) {
-                return;
-            }
-
-            let current = root;
-            let segments = path.split('/').map(seg => seg.toLowerCase().trim());
-            
-
-            segments.forEach((segment, index) => {
-                const isLast = index === segments.length - 1;
-
-                if (isLast) {
-                    // Set the leaf node value directly to true
-                    current[segment] = true;
-                } else {
-                    // If the key doesn't exist, or is set to true (e.g., from an overlapping path),
-                    // initialize it as a nested object.
-                    if (current[segment] === undefined || current[segment] === true) {
-                        current[segment] = {};
-                    }
-                    current = current[segment];
-                }
-            });
-        });
-
-        return root;
-    };
+    const cache = helpers.random.key();
+    const list = helpers.json.get(props, 'configs.predefined', {});    
 
     const mapping = (() => {
         let rval = [];
         let path = helpers.json.get(props, 'data.value', '');
 
         if (path || typeof path == 'string'){
-            let segs = path.split('/').map(seg => seg.trim()).filter(Boolean);
+            let segs = path.split('.').map(seg => seg.trim()).filter(Boolean);
         
                 for (const seg of segs) {
                     rval.push(seg);
@@ -59,21 +23,6 @@ const Comp = (dprops) => {
 
         return rval;
     })();
-
-    const onResp = (resp, arg) => {
-        setList(parse(helpers.json.get(resp, 'components', {})));
-        setChache(helpers.random.key());
-    }
-
-    helpers.react.hooks.onmount(useRef(false), useEffect, () => {
-        appHelpers.store.get([{
-            name:'storybook.components.list.map',
-            request:{
-                options:{},
-                request:{}
-            }
-        }], onResp);
-    });
 
     const options = (map) => {
         let m = map.join('.');
@@ -106,7 +55,7 @@ const Comp = (dprops) => {
                 }}
                 callback={{
                     onSelect: (a, b, c, d) => {
-                        props.onChange([...map, helpers.json.get(a, '0.id')].join('/'));
+                        props.onChange([...map, helpers.json.get(a, '0.id')].join('.'));
                     }
                 }}
                 data={{
@@ -126,6 +75,8 @@ const Comp = (dprops) => {
         if(last){
             let m = map.join('.');
             let d = m?helpers.json.get(list, m, {}):list;
+
+            console.log(d, list);
 
             if(d && helpers.json.length(d) > 0){
                 return (

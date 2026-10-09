@@ -2,7 +2,7 @@ import helpers from 'ui-helpers';
 import Select from 'aio-global-raw-ui/atoms/form/select';
 
 const options = (() => {
-    let ops = ['statics', 'false'].map((a, i) => {
+    let ops = ['statics'].map((a, i) => {
         return {
             id: a,
             label: a

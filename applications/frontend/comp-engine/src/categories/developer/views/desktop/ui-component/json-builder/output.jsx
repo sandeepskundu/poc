@@ -92,7 +92,7 @@ const Comp = (dprops) => {
                         {valid()}
                         {modes()}
                     </div>
-                    <div className='full bg-c00110 txt-c00000 pd-20 bdr-b8 bxs txt-xs oa' >
+                    <div className='full bg-c00110 txt-c00000 pd-20 bdr-b8 bxs txt-xs oa' style={{maxHeight:'600px'}} >
                         {view()}
                     </div>
                 </div>
