@@ -71,17 +71,23 @@ const Comp = (dprops) => {
         )
     } 
 
-    const next = (map, last) => {
+    const hasIndex = (d) => {
+        if(d && d.index){
+            return 'index';
+        }else{
+            return ''
+        }
+    }
+
+    const next = (map, last, prev) => {
         if(last){
             let m = map.join('.');
             let d = m?helpers.json.get(list, m, {}):list;
 
-            console.log(d, list);
-
-            if(d && helpers.json.length(d) > 0){
+            if(d && helpers.json.length(d) > 1 && prev != 'index'){
                 return (
                     <li className='bxs pd-r20 pd-t20 grid fl'>
-                        {selectbox(map, '')}
+                        {selectbox(map, hasIndex(d))}
                     </li>
                 )
             }
@@ -99,7 +105,7 @@ const Comp = (dprops) => {
                         <li className='bxs pd-r20 pd-t20 grid fl'>
                             {selectbox(map, arg)}
                         </li>
-                        {next(old, (mapping.length === i+1))}
+                        {next(old, (mapping.length === i+1), arg)}
                     </React.Fragment>
                 )
             })

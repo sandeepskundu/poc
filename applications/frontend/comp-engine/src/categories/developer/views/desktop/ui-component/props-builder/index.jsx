@@ -75,7 +75,7 @@ const Comp = () => {
     }
 
     const onResp = (resp, arg) => {
-        let id = 'cf9e5d8c7889089707f6bf27dbf6c1391';
+        let id = 'c5c54d4a7b97784bee2e9d7d2f2e8e7dd';
         let map = helpers.json.get(resp, `components.${id}`, '');
             appHelpers.store.get([{
                 name:'storybook.components.props.detailsByMap',

@@ -24,7 +24,6 @@ const excludeThemeAndPredefined = () => {
     }
 }
 
-
 const themeColors = (desc, arg) => {
     return {
         type:'nested',
