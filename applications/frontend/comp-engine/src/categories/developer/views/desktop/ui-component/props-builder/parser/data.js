@@ -83,7 +83,7 @@ const node = (key, value, options = {}, overrides = {}) => {
             key:key,
             type:'string', // Ensure structural mapping mirrors null override
             editing:false,
-            expanded:false,
+            expanded:true,
             isNull:isNullState,
             id:helpers.random.key(),
             metas:metas(key, value, options),

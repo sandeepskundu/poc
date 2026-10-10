@@ -1,6 +1,7 @@
 import From from './from';
 import Mapping from './mapping';
 import helpers from 'ui-helpers';
+import Overwrite from './overwrite';
 
 const Comp = (dprops) => { 
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
@@ -52,6 +53,11 @@ const Comp = (dprops) => {
                                 }
                             });
                         }}
+                    />
+                    <Overwrite 
+                        {...props}
+                        data={helpers.json.get(metas, 'overwirte', {})}
+                        mapping={helpers.json.get(metas, 'mapping.value', '')}
                     />
                 </div> 
             </div>

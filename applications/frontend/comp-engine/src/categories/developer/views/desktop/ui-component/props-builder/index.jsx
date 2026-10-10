@@ -116,6 +116,10 @@ const Comp = () => {
         )
     }
 
+    const jsonTreeHeader = (arg, temp) => {
+        return arg.template.layout();
+    }
+
     const jsonTree = (arg, temp) => {
         return (
             <div className='full'>
@@ -270,8 +274,8 @@ const Comp = () => {
         }else{
             return (
                 <JsonBuilder
-                    data={details.data}
                     builder={builder}
+                    data={details.data}
                     filters={{
                         query:{
                             $and:[{
@@ -297,7 +301,8 @@ const Comp = () => {
                         editor:{
                             layout:render,
                             jsonTree:jsonTree,
-                            jsonOutput:jsonOutput
+                            jsonOutput:jsonOutput,
+                            jsonTreeHeader:jsonTreeHeader,
                         },
                         item:{
                             header:{

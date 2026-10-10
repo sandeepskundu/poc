@@ -157,75 +157,136 @@ const Comp = (props) => {
 
     const tree = (searchResults !== null ? searchResults : activeTree);
 
+    const addRootNode = (ttip) => {
+        return <span className="ico-18 cp ico-g-plus" data-tip-html={ttip || "Add Root Field"} onClick={addRootField} />
+    }
+
+    const previewIcon = () => {
+        return <span className={`ico-18 cp ico-g-eye${preview ? '-off' : ''}`} data-tip-html={preview ? 'Hide Preview' : 'Show Preview'} onClick={() => setPreview((prev) => !prev)} />
+    }
+
+    const searchInput = () => {
+        return (
+            <Input
+                clearable={true}
+                value={query}
+                placeholder="Search schema..."
+                callback={{
+                    onChangeStart: (val) => setQuery(val || ''),
+                }}
+            />
+        )
+    }
+
+    const undoUi = () => {
+        return  <span className={`cp mr-r20 txt-xs ${historyIndex === 0 ? 'txt-c00104 not-allowed' : 'txt-c00107'}`} onClick={undo}>Undo</span>
+    }
+
+    const redoUi = () => {
+        return  <span className={`cp txt-xs ${historyIndex >= history.length - 1 ? 'txt-c00104 not-allowed' : 'txt-c00107'}`} onClick={redo}>Redo</span>
+    }
+
+    const version = () => {
+        return <span className="cp txt-xs txt-c00107 link" onClick={() => setShowVersions(true)}>Versions ({versions.length})</span>
+    }
+
+    const errorMessage = () => {
+        if(isValid){
+            return <></>
+        }
+        return <span className="txt-xxs mr-t8 txt-c00306 db">⚠️ Resolve empty or duplicate keys before compiling</span>
+    }
+
+    const headerTemplate = () => {
+        return (
+            <div className='full bxs'>
+                <div className="full bxs pd-b16">
+                    <div className="full flx-full flx-sb">
+                        <h3 className="bxs txt-sm fm-md flx-full">Schema Field Editor</h3>
+                        <ul className="flx flx-vc gap-8">
+                            <li className="fl">
+                                {addRootNode()}
+                            </li>
+                            <li className="fl">
+                                {previewIcon()}
+                            </li>
+                        </ul>
+                    </div>
+                    {errorMessage()}
+                </div>
+                <div className="full flx-vc grid-wrapper pd-b12">
+                    <div className="grid-w6">
+                        {searchInput()}
+                    </div>
+                    <div className="grid-w6 flx-sb flx-vc bxs pd-rl16">
+                        <div className="flx gap-12">
+                            {undoUi()}
+                            {redoUi()}
+                        </div>
+                        {version()}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const header = () => {
+        if (props.templates && props.templates.header && helpers.data.type.is(props.templates.header, 'function')) {
+            return props.templates.header({
+                template:{
+                    layout:headerTemplate,
+                    partials:{
+                        errorMsg:{
+                            show:isValid,
+                            ui:errorMessage
+                        },
+                        addRootNode:{
+                            ui:addRootNode,
+                            method:addRootField,
+                        },
+                        preview:{
+                            ui:previewIcon,
+                            method:setPreview,
+                        },
+                        input:{
+                            value:query,
+                            ui:searchInput,
+                            methods:{
+                                setQuery:setQuery
+                            }
+                        },
+                        undo:{
+                            ui:undoUi,
+                            method:undo,
+                            disabled:(historyIndex === 0)
+                        },
+                        redo:{
+                            ui:redoUi,
+                            method:redo,
+                            disabled:(historyIndex >= history.length - 1)
+                        },
+                        version:{
+                            label:{
+                                ui:version,
+                                counts:versions.length,
+                                method:{
+                                    toggle:setShowVersions
+                                }
+                            }
+                        }
+                    }
+                }
+            }, {})
+        }else{
+            return headerTemplate()
+        }
+    }
+
     return (
         <div className="full bxs bg-c00101 pd-16 bdr-1 bdr-c00104 bdr-8">
-            {/* Header Bar */}
-            <div className="full bxs pd-b16">
-                <div className="full flx-full flx-sb">
-                    <h3 className="bxs txt-sm fm-md flx-full">Schema Field Editor</h3>
-                    <ul className="flx flx-vc gap-8">
-                        <li className="fl">
-                            <span
-                                className="ico-18 cp ico-g-plus"
-                                data-tip-html="Add Root Field"
-                                onClick={addRootField}
-                            />
-                        </li>
-                        <li className="fl">
-                            <span
-                                className={`ico-18 cp ico-g-eye${preview ? '-off' : ''}`}
-                                data-tip-html={preview ? 'Hide Preview' : 'Show Preview'}
-                                onClick={() => setPreview((prev) => !prev)}
-                            />
-                        </li>
-                    </ul>
-                </div>
-                {!isValid && (
-                    <span className="txt-xxs mr-t8 txt-c00306 db">
-                        ⚠️ Resolve empty or duplicate keys before compiling
-                    </span>
-                )}
-            </div>
-
-            {/* Control Strip: Search & History */}
-            <div className="full flx-vc grid-wrapper pd-b12">
-                <div className="grid-w6">
-                    <Input
-                        clearable={true}
-                        value={query}
-                        placeholder="Search schema..."
-                        callback={{
-                            onChangeStart: (val) => setQuery(val || ''),
-                        }}
-                    />
-                </div>
-                <div className="grid-w6 flx-sb flx-vc bxs pd-rl16">
-                    <div className="flx gap-12">
-                        <span className={`cp mr-r20 txt-xs ${historyIndex === 0 ? 'txt-c00104 not-allowed' : 'txt-c00107'}`} onClick={undo}>Undo</span>
-                        <span
-                            className={`cp txt-xs ${historyIndex >= history.length - 1 ? 'txt-c00104 not-allowed' : 'txt-c00107'}`}
-                            onClick={redo}
-                        >
-                            Redo
-                        </span>
-                    </div>
-
-                    <span
-                        className="cp txt-xs txt-c00107 link"
-                        onClick={() => setShowVersions(true)}
-                    >
-                        Versions ({versions.length})
-                    </span>
-                </div>
-            </div>
-
-            {/* Node Rows List */}
+            {header()}
             <div className="full bxs">
-                {tree.length === 0 ? (
-                    <div className="full bxs">
-                        {searching ? 'Searching...' : 'No matching fields found.'}
-                    </div>
-                ) : (
+                {tree.length === 0 ? (<div className="full bxs">{searching ? 'Searching...' : 'No matching fields found.'}</div>):(
                     tree.map((node, index) => (
                         <NodeRow
                             depth={0}
