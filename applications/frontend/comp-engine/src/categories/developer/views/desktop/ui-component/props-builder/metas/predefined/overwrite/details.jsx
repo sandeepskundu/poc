@@ -1,7 +1,6 @@
-//import Metas from './metas';
-//import Dvalue from './dvalue';
+import Dvalue from './dvalue';
+import Overwrite from './index';
 import helpers from 'ui-helpers';
-import Textarea from 'aio-global-ui/atoms/form/textarea';
 import Toggle from 'aio-global-raw-ui/atoms/form/toggle';
 
 const Comp = (dprops) => { 
@@ -11,15 +10,24 @@ const Comp = (dprops) => {
     const configs = props.configs || {};
     const templates = props.templates || {};
     const types = helpers.json.get(configs, 'types', []);
+    const ptype = helpers.json.get(node, '__.editorDataType', '');
     const editable = !helpers.json.get(node, '__.nonEditable', false);
+
+    const update = (id, field, value) => {
+        templates.item.meta.item.actions.updateByKey(id, field, value);
+    }
+
     const metas = (() => {
         let rval = {
             base:{},
             nonbase:[]
         }
         let base = {
+            from:true,
             dvalue:true,
+            mapping:true,
             required:true,
+            overwirte:true,
             description:true
         };
         let list = helpers.json.get(node, '__.metas', []);
@@ -39,29 +47,9 @@ const Comp = (dprops) => {
         return rval;
     })();
 
-    const key = () => {
-        let show = helpers.json.get(templates, 'item.key.show', false);
-
-        if(show){
-            return (
-                <li className='grid bxs'>
-                    {templates.item.key.input('Key name', '')}
-                </li>
-            )
-        }
-    }
-
-    const type = () => {
-        return (
-            <li className='grid pd-l24 bxs'>
-                {templates.item.type.input('Data type', '')}
-            </li>
-        )
-    }
-
     const required = () => {
         return (
-            <li className='pd-r24 bxs'>
+            <li className='pd-r24 bxs hide'>
                 <Toggle
                     label={{
                         text: "Required"
@@ -72,7 +60,13 @@ const Comp = (dprops) => {
                     callback={{
                         input: {
                             onChange: (checked, b, c) => {
-                                templates.item.meta.item.actions.updateByKey(metas.base.required.id, 'value', checked)
+                                let id = helpers.json.get(metas, 'base.required.id', '');
+
+                                if(id){
+                                    templates.item.meta.item.actions.updateByKey(id, 'value', checked)
+                                }else{
+                                    templates.item.meta.item.actions.add({value:checked, key:'required'})
+                                }
                             }
                         }
                     }}
@@ -96,49 +90,17 @@ const Comp = (dprops) => {
                 {setnull()}
             </ul>
         )
-    }
+    };
 
-    const showKeyAndType = (() => {
-        return types.includes(helpers.json.get(node, '__.type', ''))
-    })();
-
-    const keyAndType = () => {
-        if(showKeyAndType){
+    const overwitres = () => {
+        if(ptype === 'predefined'){
             return (
-                <>
-                    <ul className="full bxs grid-wrapper grid-layout-2 pd-tb24 bxs">
-                        {key()}
-                        {type()}
-                    </ul>
-                </>
-                
-            )
-        }
-    }
-
-    const description = () => {
-        return (
-            <Textarea 
-                label="Description"
-                placeholder="Description"
-                value={helpers.json.get(metas, 'base.description.value', '')}
-                callback={{
-                    onChange:(a, b, c) => {
-                        templates.item.meta.item.actions.updateByKey(metas.base.description.id, 'value', a)
-                    }
-                }}
-            />
-        )
-    }
-
-    const dvalue = () => {
-        let has = helpers.json.get(metas, 'base.dvalue.id', '');
-
-        if(has){
-            return (
-                <div className='full bxs pd-t24'>
-                    {/*--<Dvalue node={node} meta={metas.base.dvalue} builder={props.builder} templates={props.templates}  />--*/}
-                </div>
+                <Overwrite 
+                    {...props}
+                    data={helpers.json.get(metas, 'base.overwirte', {})}
+                    mapping={helpers.json.get(metas, 'base.mapping.value', '')}
+                    onChange={(value) => { update(helpers.json.get(metas, 'base.overwirte.id', ''), 'value', value)}}
+                />
             )
         }
     }
@@ -146,16 +108,16 @@ const Comp = (dprops) => {
     const ui = () => {
         if(editable){
             return (
-                <div className='full bxs pd-l16 pd-b16 bdr-c00104 bdr-1 bdr-tn bdr-rn bdr-bn'>
-                    {keyAndType()}
-                    {description()}
-                    {dvalue()}
-                    {flags()}
-                    {/*--<Metas {...props} metas={metas.nonbase} />--*/}
-                </div>
+                <>
+                    <div className='full bxs pd-l16 pd-b16 bdr-c00104 bdr-1 bdr-tn bdr-rn bdr-bn'>
+                        <Dvalue {...props} node={node} metas={metas} />
+                        {flags()}
+                    </div>
+                    {overwitres()}
+                </>
             )
         }else{
-            return <></> //<Metas {...props} metas={metas.nonbase} />
+            return overwitres();
         }
     }
 

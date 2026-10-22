@@ -6,15 +6,17 @@ import JsonBuilder from './../../../../json-builder';
 
 const Comp = (dprops) => { 
 
+    const id = helpers.json.get(data, 'id', helpers.random.key());
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
-    const types = ['any', 'string', 'number', 'boolean', 'object', 'function', 'enum', 'jsx', 'nested'];
-    const builder = helpers.json.schema.builder.init('props', {
+    const types = ['any', 'string', 'number', 'boolean', 'object', 'function', 'enum', 'jsx', 'nested', 'predefined'];
+    const builder = helpers.json.schema.builder.init(id, {
+        id:id,
         utils:{
             keyRegex:null,
             dataType:types,
             dataTypeFlags:{
                 array:[],
-                object:['nested', 'enum', 'asEditorObject']
+                object:['nested', '_enum', 'predefined', 'asEditorObject']
             },
             keysmap:{} 
         },
@@ -37,19 +39,14 @@ const Comp = (dprops) => {
         return map.join('.')            
     })();
 
-
-    debugger;
-
+    let predefined = helpers.json.get(props, `configs.predefined.${pdmap}`, {});
     let data = parser.init((() => {
-        let oval = helpers.json.get(props, 'data.value', {});
-        let pd = helpers.json.get(props, 'configs.predefined', {});
-            pd = helpers.json.get(pd, pdmap, {});
-
-        return helpers.json.merge(pd, oval);
+        return helpers.json.merge(predefined, helpers.json.get(props, 'data.value', {}));
     })(), {
         sortPath:'__.type',
-        sortOrder:['boolean', 'nested',  'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx']
-    })
+        uitls:props.configs,
+        sortOrder:['boolean', 'nested',  'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx', 'predefined']
+    });
 
     const getConfigs = () => {
         return {
@@ -78,10 +75,17 @@ const Comp = (dprops) => {
         )
     }
 
+    const header = (arg) => {
+        return <h3 className="bxs txt-xs fm-md flx-full pd-rl10 pd-tb8 bg-c00103">Overwrite</h3>
+    }
+
     const render = (arg) => {
         return (
             <div className='full bxs'>
                 {arg.jsonTree()}
+                <div className="full hide">
+                     {arg.jsonOutput()}
+                </div>
             </div>
         )
     }
@@ -94,7 +98,7 @@ const Comp = (dprops) => {
                 editor:{
                     layout:render,
                     jsonTree:jsonTree,
-                    jsonTreeHeader:() => {},
+                    jsonTreeHeader:header,
                     //jsonOutput:jsonOutput
                 },
                 item:{
@@ -103,6 +107,34 @@ const Comp = (dprops) => {
                     },
                     details:{
                         layout:itemDetailsLayout
+                    }
+                }
+            }}
+            callbacks={{
+                onJsonTreeChange:(json, valid) => {
+                    props.onChange(helpers.json.removeDuplicate(helpers.json.deleteAllNestedKeyByVal(json, 'type', 'asEditorObject'), predefined));
+                }
+            }}
+            configs={{
+                json:{
+                    editor:{
+                        wrapper:{
+                            ds:{
+                                theme:null,
+                                css:{
+                                    class:{
+                                        border:null,
+                                        radius:null,
+                                        padding:null,
+                                        margin:{
+                                            1:0,
+                                            2:0,
+                                            3:0
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }}

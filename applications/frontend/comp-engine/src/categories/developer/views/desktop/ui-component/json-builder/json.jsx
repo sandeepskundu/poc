@@ -197,12 +197,14 @@ const Comp = (props) => {
         return <span className="txt-xxs mr-t8 txt-c00306 db">⚠️ Resolve empty or duplicate keys before compiling</span>
     }
 
+    const title = helpers.json.get(props, 'content.json.editor.title', '')
+
     const headerTemplate = () => {
         return (
             <div className='full bxs'>
                 <div className="full bxs pd-b16">
                     <div className="full flx-full flx-sb">
-                        <h3 className="bxs txt-sm fm-md flx-full">Schema Field Editor</h3>
+                        {title && <h3 className="bxs txt-sm fm-md flx-full">{title}</h3>}
                         <ul className="flx flx-vc gap-8">
                             <li className="fl">
                                 {addRootNode()}
@@ -282,8 +284,12 @@ const Comp = (props) => {
         }
     }
 
+    const treeWrapper = () => {
+        return helpers.element.jsx.attrs(helpers.json.get(props, 'configs.json.editor.wrapper', {}), 'full bxs');
+    }
+
     return (
-        <div className="full bxs bg-c00101 pd-16 bdr-1 bdr-c00104 bdr-8">
+        <div {...treeWrapper()}>
             {header()}
             <div className="full bxs">
                 {tree.length === 0 ? (<div className="full bxs">{searching ? 'Searching...' : 'No matching fields found.'}</div>):(

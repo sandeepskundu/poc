@@ -75,7 +75,7 @@ const Comp = () => {
     }
 
     const onResp = (resp, arg) => {
-        let id = 'c5c54d4a7b97784bee2e9d7d2f2e8e7dd';
+        let id = 'c5c54d4a7b97784bee2e9d7d2f2e8e7dd' //'cf9e5d8c7889089707f6bf27dbf6c1391';
         let map = helpers.json.get(resp, `components.${id}`, '');
             appHelpers.store.get([{
                 name:'storybook.components.props.detailsByMap',
@@ -96,12 +96,6 @@ const Comp = () => {
     helpers.react.hooks.onmount(useRef(false), useEffect, () => {
         appHelpers.store.get([reqConfig('storybook.components.list.map')], onResp);
     });
-
-    //const overwirtes = parser.overwrite.map.get(cdata);    
-
-    const propsConfigs = {
-        types:types
-    }
 
     const render = (arg) => {
         return (
@@ -268,7 +262,6 @@ const Comp = () => {
     }
 
     const ui = () =>{
-        
         if(details.blank){
 
         }else{

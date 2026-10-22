@@ -34,30 +34,35 @@ const Comp = (dprops) => {
 
     const ui = () => {
         return (
-            <div className='full bxs pd-16'>
+            <div className='full bxs pd-t16 pd-ln'>
                 <div className='full bxs pd-t8'>
-                    {from()}
-                    <Mapping
-                        configs={props.configs} 
-                        data={helpers.json.get(metas, 'mapping', {})} 
-                        onChange={(value) => {
-                            let mId = helpers.json.get(metas, 'mapping.id', '');
-                            let oId = helpers.json.get(metas, 'overwirte.id', '');
+                    <div className='full pd-l16 bxs pd-b16'>
+                        {from()}
+                        <Mapping
+                            configs={props.configs} 
+                            data={helpers.json.get(metas, 'mapping', {})} 
+                            onChange={(value) => {
+                                let mId = helpers.json.get(metas, 'mapping.id', '');
+                                let oId = helpers.json.get(metas, 'overwirte.id', '');
 
-                            templates.item.meta.item.actions.updateMetaDetailsByKey({
-                                [mId]:{
-                                   value:value 
-                                },
-                                [oId]:{
-                                    value:{}
-                                }
-                            });
-                        }}
-                    />
+                                templates.item.meta.item.actions.updateMetaDetailsByKey({
+                                    [mId]:{
+                                    value:value 
+                                    },
+                                    [oId]:{
+                                        value:{}
+                                    }
+                                });
+                            }}
+                        />
+                    </div>
                     <Overwrite 
                         {...props}
                         data={helpers.json.get(metas, 'overwirte', {})}
                         mapping={helpers.json.get(metas, 'mapping.value', '')}
+                        onChange={(value) => {
+                            update(helpers.json.get(metas, 'overwirte.id', ''), 'value', value)}
+                        }
                     />
                 </div> 
             </div>

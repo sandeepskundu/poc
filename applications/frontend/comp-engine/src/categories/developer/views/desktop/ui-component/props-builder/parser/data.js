@@ -1,17 +1,17 @@
 import helpers from 'ui-helpers';
 
 const types = {
-    any: true,
-    jsx: true,
-    enum: true,
-    object: true,
-    string: true,
-    number: true,
-    nested: true,
-    boolean: true,
-    function: true,
-    compProps: true,
-    predefined: true,
+    any:true,
+    jsx:true,
+    enum:true,
+    object:true,
+    string:true,
+    number:true,
+    nested:true,
+    boolean:true,
+    function:true,
+    compProps:true,
+    predefined:true
 }
 
 const dvalueByType = {
@@ -83,7 +83,7 @@ const node = (key, value, options = {}, overrides = {}) => {
             key:key,
             type:'string', // Ensure structural mapping mirrors null override
             editing:false,
-            expanded:true,
+            expanded:false,
             isNull:isNullState,
             id:helpers.random.key(),
             metas:metas(key, value, options),

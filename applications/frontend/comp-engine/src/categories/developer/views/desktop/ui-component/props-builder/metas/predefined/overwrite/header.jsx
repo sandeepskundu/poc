@@ -82,7 +82,6 @@ const Comp = (dprops) => {
                 </li>
             </ul>
         )
-        
     }
 
     return ui();

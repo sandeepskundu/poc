@@ -5,7 +5,53 @@ import Output from './output';
 import helpers from 'ui-helpers';
 
 const Comp = (dprops) => {
-    const props = helpers.element.jsx.props.define({}, dprops, helpers);
+    const props = helpers.element.jsx.props.define({
+        configs:{
+            json:{
+                editor:{
+                    wrapper:{
+                        ds:{
+                            theme:{
+                                colorPairing:{
+                                    default:""
+                                },
+                                background:{
+                                    default:"c00101",
+                                },
+                                text:{
+                                    default:"",
+                                },
+                                border:{
+                                    default:"c00104"
+                                },
+                            },
+
+                            css:{
+                                class:{
+                                    radius:{
+                                        1:8,
+                                        2:8
+                                    },
+                                    padding:{
+                                        1:16,
+                                        2:16
+                                    },
+                                    border:1,
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        content:{
+            json:{
+                editor:{
+                    title:'Schema Field Editor = Sandeep Kundu'
+                }
+            }
+        },
+    }, dprops, helpers);
 
     const getTemplate = (map) => {
         let rval =  helpers.json.get(props, map, null);
@@ -20,6 +66,7 @@ const Comp = (dprops) => {
     const ntemplate = getTemplate('templates.item.nested.layout');
     const editorTemplate = getTemplate('templates.editor.layout');
     const jsonOutput = getTemplate('templates.editor.jsonOutput');
+    const onTreeChange = getTemplate('callbacks.onJsonTreeChange');
     const jsonTreeTemplate = getTemplate('templates.editor.jsonTree');
     const jsonTreeHeaderTemplate = getTemplate('templates.editor.jsonTreeHeader');
 
@@ -29,8 +76,8 @@ const Comp = (dprops) => {
         };
 
         return (
-            <div className='bxs bdr-c00104 anim' style={{ borderLeftWidth:"4px", borderLeftStyle:'solid' }}>
-                <div className='full bdr-1 bdr-tn bdr-bn bdr-rn bdr-c00104'>
+            <div className='full bxs bdr-c00104 anim' style={{ borderLeftWidth:"2px", borderLeftStyle:'solid' }}>
+                <div className='full bdr-1 bdr-tn bdr-bn bdr-rn bdr-c00104 bxs'>
                     {arg.__.templates.node.nested()}
                 </div>
             </div>
@@ -74,6 +121,7 @@ const Comp = (dprops) => {
     const json = () => {
         return (
             <Json
+                {...props}
                 data={props.data}
                 builder={props.builder}
                 templates={{
@@ -96,7 +144,7 @@ const Comp = (dprops) => {
                 }
             })
         }
-        return <Output builder={props.builder} onChange={(json, valid) => {console.log(json, valid)}} />
+        return <Output builder={props.builder} onChange={onTreeChange} />
     }
 
     const ui = () => {
