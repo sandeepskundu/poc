@@ -137,7 +137,7 @@ const Comp = (dprops) => {
         if(has){
             return (
                 <div className='full bxs pd-t24'>
-                    <Dvalue node={node} meta={metas.base.dvalue} builder={props.builder} templates={props.templates}  />
+                    <Dvalue {...props} node={node} meta={metas.base.dvalue} builder={props.builder} templates={props.templates}  />
                 </div>
             )
         }
@@ -146,7 +146,7 @@ const Comp = (dprops) => {
     const ui = () => {
         if(editable){
             return (
-                <div className='full bxs pd-l16 pd-b16 bdr-c00104 bdr-1 bdr-tn bdr-rn bdr-bn'>
+                <div className='full bxs pd-l16 pd-b16 bdr-c00104 bdr-1 bdr-tn bdr-rn bdr-bn' key={node.__.id}>
                     {keyAndType()}
                     {description()}
                     {dvalue()}
@@ -155,7 +155,7 @@ const Comp = (dprops) => {
                 </div>
             )
         }else{
-            return <Metas {...props} metas={metas.nonbase} />
+            return <Metas {...props} metas={metas.nonbase} key={node.__.id} />
         }
     }
 

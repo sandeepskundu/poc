@@ -1,350 +1,320 @@
 import helpers from 'ui-helpers';
 
-const types = {
-    any:true,
-    jsx:true,
-    enum:true,
-    object:true,
-    string:true,
-    number:true,
-    nested:true,
-    boolean:true,
-    function:true,
-    compProps:true,
-    predefined:true
-}
+const TYPES = {
+    any: true,
+    jsx: true,
+    enum: true,
+    object: true,
+    string: true,
+    number: true,
+    nested: true,
+    boolean: true,
+    function: true,
+    compProps: true,
+    predefined: true
+};
 
-const dvalueByType = {
+const DVALUE_BY_TYPE = {
     any: '',
     jsx: '',
     enum: '',
-    object:{a:{b:{c:true}}},
-    //nested:'',
+    object: {},
     string: '',
     number: '',
-    //compProps:'',
-    //predefined:'',
     boolean: false,
-    function: null,
-}
+    function: null
+};
 
+/**
+ * Creates standard metadata properties safely without heavy lookup overhead.
+ */
 const metaByKey = (arg, key, fallback, overrides = {}) => {
+    const value = arg && typeof arg[key] !== 'undefined' ? arg[key] : fallback;
     return {
         key: key,
         id: helpers.random.key(),
-        value: helpers.json.get(arg, key, fallback),
+        value: value,
         ...overrides
-    }
-}
-
-const dvalByType = (rval, type, key, value, options) => {
-    if (type && typeof dvalueByType[type] != 'undefined') {
-        rval.push(metaByKey(value, 'dvalue', dvalueByType[type]))
-    }
-
-    return rval;
-}
-
-const getBaseMetas = (key, value, options) => {
-    let type = helpers.json.get(value, 'type', '');
-    let rval = [
-        metaByKey(value, 'required', false),
-        metaByKey(value, 'description', '')
-    ]
-
-    rval = dvalByType(rval, type, key, value, options);
-
-    return rval;
-}
-
-const metas = (key, value, options) => {
-    let rval = getBaseMetas(key, value, options);
-
-    return rval;
-}
+    };
+};
 
 /**
-    * Factory utility creating standard node structural objects for the Schema Builder.
-    * Directly exports standard JS functional utilities to maintain maximum reliability.
-    * 
-    * @param {string} key - Schema attribute key.
-    * @param {any} value - Input value to parse/evaluate.
-    * @param {Object} options - Builder framework configurations.
-    * @param {Object} overrides - Object containing explicit overrides (e.g., from blankHeader).
-    * @returns {Object} A fresh builder schema node object.
-**/
+ * Appends 'dvalue' metadata matching the data type's signature.
+ */
+const dvalByType = (rval, type, key, value, options) => {
+    if (type && typeof DVALUE_BY_TYPE[type] !== 'undefined') {
+        rval.push(metaByKey(value, 'dvalue', DVALUE_BY_TYPE[type]));
+    }
+    return rval;
+};
 
-const node = (key, value, options = {}, overrides = {}) => {
-    // Resolve 'Set Null' conditions. If value is null, the field serializes as key: null.
+/**
+ * Public utility resolving baseline metadata arrays (Required, Description, Defaults).
+ */
+const getBaseMetas = (key, value, options) => {
+    const type = value && value.type ? value.type : '';
+    const rval = [
+        metaByKey(value, 'required', false),
+        metaByKey(value, 'description', '')
+    ];
+
+    return dvalByType(rval, type, key, value, options);
+};
+
+const metas = (key, value, options) => {
+    return getBaseMetas(key, value, options);
+};
+
+/**
+ * Baseline factory returning a fully initialized Schema Builder node object.
+ */
+const createNode = (key, value, options = {}, overrides = {}) => {
+    // If 'Set Null' is active, override representation & serialize key: null directly.
     const isNullState = value === null || overrides.isNull === true;
 
     return {
         __: {
-            key:key,
-            type:'string', // Ensure structural mapping mirrors null override
-            editing:false,
-            expanded:false,
-            isNull:isNullState,
-            id:helpers.random.key(),
-            metas:metas(key, value, options),
-            ...overrides // Overrides are spread last so callers can modify defaults securely
+            key: key,
+            type: 'string', // Default mirror layout type mapping
+            editing: false,
+            expanded: false,
+            nonEditable:false,
+            isNull: isNullState,
+            id: helpers.random.key(),
+            metas: metas(key, value, options),
+            ...overrides
         }
     };
 };
 
 /**
-    * Generates a non-editable, auto-expanded structural header node.
-    * 
-    * @param {string} key - Node property identifier.
-    * @param {any} value - Default fallback evaluation value.
-    * @param {string} type - DataType categorization (defaults to 'string').
-    * @param {Object} options - Custom compiler options passed to standard node creation.
-    * @returns {Object} A fully configured wrapper header node.
-**/
+ * Helper generating wrapper containers with standardized exclusions and editable properties.
+ */
+const createBlankHeader = (key, value, type = 'string', options = {}, overrides = {}) => {
+    const rval = createNode(key, value, options);
 
-const blankHeader = (key, value, type = 'string', options = {}, overrides = {}) => {
-    const rval = node(key, value, options);
-
-    // Initialize private metadata branch safely
     rval.__ = rval.__ || {};
-    // Group config properties directly and cleanly
-    Object.assign(rval.__, {
-        type:type,
-        nonEditable:true,
-    });
+    rval.__.type = type;
+    rval.__.nonEditable = true;
 
-    // Safely clean up unused meta descriptors
-    if (rval.__?.metas) {
+    if (rval.__.metas) {
         delete rval.__.metas;
     }
 
-    Object.assign(rval.__, {...overrides}); // Overrides are spread last so callers can modify defaults securely
+    if (overrides) {
+        Object.assign(rval.__, overrides);
+    }
 
-    
     return rval;
 };
 
 /**
-    * Set nested child nodes safely using an immutable pattern to support React reactive states.
-    * 
-    * @param {Object} rval - The target node object.
-    * @param {Array} childs - The list of children to append.
-    * @returns {Object} A shallow copy of the updated node.
-**/
-
+ * Immutable children setter matching React reactive rendering environments.
+ */
 const setChilds = (rval, childs) => {
     const currentMeta = rval.__ || {};
-
     return {
         ...rval,
         __: {
             ...currentMeta,
-            children: childs,
-        },
+            children: childs
+        }
     };
 };
 
 /**
-    * Processes nested nodes for the React JSON Schema Builder.
-    * Maps dynamic child nodes under the standard evaluation tree.
-    * 
-    * @param {Object} rval - The accumulator tree node.
-    * @param {string} key - Node property identifier.
-    * @param {Object} value - The active node representation.
-    * @param {Object} options - Decoupled compiler & builder settings.
-    * @returns {Object} Updated accumulator layout structure.
- **/
-
-const nested = (rval, key, value, options) => {
-    let base = {
-        editing:true,
-        expanded:true,
-        hideHeader:true,
-        excludeActions:{
-            add:true,
-            edit:true,
-            expend:true
+ * Layout Processors for Complex Schema Structs
+ */
+const processNestedType = (rval, key, value, options) => {
+    const baseLayout = {
+        editing: true,
+        expanded: true,
+        hideHeader: true,
+        excludeActions: {
+            edit: true,
+            expend: true
         }
-    }
-    // Extract nested child items safely using utility helper
-    let childs = helpers.json.get(value, '___.nested', {});
+    };
 
-    // Generate blank header wrappers
-    let h = blankHeader('___', false, 'asEditorObject', options, {
-        ...base
-    });
-    let ns = blankHeader('nested', false, 'asEditorObject', options, {
-        ...base
-    });
+    const childs = value && value.___ && value.___.nested ? value.___.nested : {};
 
-    // Determine valid child representation
+    let wrapperHeader = createBlankHeader('___', false, 'asEditorObject', options, baseLayout);
+    let nestedPropsHeader = createBlankHeader('nested', false, 'asEditorObject', options, baseLayout);
+
     const hasChilds = helpers.data.type.is(childs, 'object') && helpers.json.length(childs) > 0;
     const childTree = hasChilds ? start(childs, options) : [];
 
-    // Compose the nested layout tree elegantly
-    ns = setChilds(ns, childTree);
-    h = setChilds(h, [ns]);
+    nestedPropsHeader = setChilds(nestedPropsHeader, childTree);
+    wrapperHeader = setChilds(wrapperHeader, [nestedPropsHeader]);
 
-    return setChilds(rval, [h]);
+    return setChilds(rval, [wrapperHeader]);
 };
 
-
-
-const compProps = (rval, key, value, options) => {
-    let base = {
-        editing:true,
-        expanded:true,
-        showMetas:true,
-        hideHeader:true,
-        editorDataType:'compProps',
-        excludeActions:{
-            add:true,
-            edit:true,
-            expend:true
+const processCompPropsType = (rval, key, value, options) => {
+    const baseLayout = {
+        editing: true,
+        expanded: true,
+        showMetas: true,
+        hideHeader: true,
+        editorDataType: 'compProps',
+        excludeActions: {
+            add: true,
+            edit: true,
+            expend: true
         }
-    }
-    let childs = helpers.json.get(value, '___.compProps', {});
-    let header = blankHeader('___', false, 'asEditorObject', options, {
-        ...base,
-        metas:[
-            metaByKey({}, 'asroot', helpers.json.get(value, '___.asroot', false))
+    };
+
+    const childs = value && value.___ && value.___.compProps ? value.___.compProps : {};
+    const isRootVal = value && value.___ && typeof value.___.asroot !== 'undefined' ? value.___.asroot : false;
+
+    let wrapperHeader = createBlankHeader('___', false, 'asEditorObject', options, {
+        ...baseLayout,
+        metas: [
+            metaByKey({}, 'asroot', isRootVal)
         ]
     });
 
-    let cProps = blankHeader('compProps', false, 'asEditorObject', options, {
-        ...base,
-        key:'compProps',
-        metas:[
+    const componentPropsHeader = createBlankHeader('compProps', false, 'asEditorObject', options, {
+        ...baseLayout,
+        key: 'compProps',
+        metas: [
+            metaByKey(childs, 'from', ''),
+            metaByKey(childs, 'mapping', ''),
+            metaByKey(childs, 'overwirte', {}) // Keeps consistent spelling schema with existing mappings
+        ]
+    });
+
+    wrapperHeader = setChilds(wrapperHeader, [componentPropsHeader]);
+
+    return setChilds(rval, [wrapperHeader]);
+};
+
+const processPredefinedType = (rval, key, value, options) => {
+    const baseLayout = {
+        editing: true,
+        expanded: true,
+        hideHeader: true,
+        excludeActions: {
+            add: true,
+            edit: true,
+            expend: true
+        }
+    };
+
+    const childs = value && value.___ && value.___.predefined ? value.___.predefined : {};
+
+    let wrapperHeader = createBlankHeader('___', false, 'asEditorObject', options, baseLayout);
+    const predefinedPropsHeader = createBlankHeader('predefined', false, 'asEditorObject', options, {
+        ...baseLayout,
+        showMetas: true,
+        editorDataType: 'predefined',
+        metas: [
             metaByKey(childs, 'from', ''),
             metaByKey(childs, 'mapping', ''),
             metaByKey(childs, 'overwirte', {})
         ]
     });
 
-    header = setChilds(header, [cProps]);
+    wrapperHeader = setChilds(wrapperHeader, [predefinedPropsHeader]);
 
-    return setChilds(rval, [header]);
-}
+    return setChilds(rval, [wrapperHeader]);
+};
 
-const predefined = (rval, key, value, options) => {
-    let base = {
-        editing:true,
-        expanded:true,
-        hideHeader:true,
-        excludeActions:{
-            add:true,
-            edit:true,
-            expend:true
+const processEnumType = (rval, key, value, options) => {
+    const baseLayout = {
+        editing: true,
+        expanded: true,
+        hideHeader: true,
+        excludeActions: {
+            edit: true,
+            expend: true
         }
-    }
-    let childs = helpers.json.get(value, '___.predefined', {});
-    let header = blankHeader('___', false, 'asEditorObject', options, base);
-    let predefinedProps = blankHeader('predefined', false, 'asEditorObject', options, {
-        ...base,
-        showMetas:true,
-        editorDataType:'predefined',
-        metas:[
-            metaByKey(childs, 'from', ''),
-            metaByKey(childs, 'mapping', ''),
-            metaByKey(childs, 'overwirte', {})
-        ]
-    });
+    };
 
-    header = setChilds(header, [predefinedProps]);
+    const childs = value && value.___ && value.___.enum ? value.___.enum : {};
 
-    return setChilds(rval, [header]);
-}
-
-const enums = (rval, key, value, options) => {
-    let base = {
-        editing:true,
-        expanded:true,
-        hideHeader:true,
-        excludeActions:{
-            add:true,
-            edit:true,
-            expend:true
-        }
-    }
-    let childs = helpers.json.get(value, '___.enum', {});
-    let header = blankHeader('___', false, 'asEditorObject', options, {...base});
-    let enumProps = blankHeader('enum', false, 'asEditorObject', options, {
-        ...base,
-        showMetas:true,
-        editorDataType:'enum',
-        metas:[
+    let wrapperHeader = createBlankHeader('___', false, 'asEditorObject', options, baseLayout);
+    const enumPropsHeader = createBlankHeader('enum', false, 'asEditorObject', options, {
+        ...baseLayout,
+        showMetas: true,
+        editorDataType: 'enum',
+        metas: [
             metaByKey(childs, 'from', ''),
             metaByKey(childs, 'mapping', ''),
             metaByKey(childs, 'options', '')
         ]
     });
 
-    header = setChilds(header, [enumProps]);
-    return setChilds(rval, [header]);
-}
+    wrapperHeader = setChilds(wrapperHeader, [enumPropsHeader]);
+    return setChilds(rval, [wrapperHeader]);
+};
 
-const childs = (rval, key, value, options) => {
-    let type = helpers.json.get(value, 'type', '');
+/**
+ * Route structures dynamically into type-specific processors
+ */
+const routeChildTree = (rval, key, value, options) => {
+    const type = value && value.type ? value.type : '';
 
     switch (type) {
         case 'nested':
-            rval = nested(rval, key, value, options);
-        break;
+            return processNestedType(rval, key, value, options);
         case 'compProps':
-            rval = compProps(rval, key, value, options);
-        break;
+            return processCompPropsType(rval, key, value, options);
         case 'predefined':
-            rval = predefined(rval, key, value, options);
-        break;
+            return processPredefinedType(rval, key, value, options);
         case 'enum':
-            rval = enums(rval, key, value, options);
-        break;
+            return processEnumType(rval, key, value, options);
         default:
+            return rval;
     }
+};
 
-    return rval;
-}
+/**
+ * Standard leaf transformation logic
+ */
+const transformNode = (rval, key, value, options) => {
+    const type = value && value.type ? value.type : '';
 
-const transform = (rval, key, value, options) => {
-    let type = helpers.json.get(value, 'type', '');
-
-    if (value === null || types[type]) {
-        let d = node(key, value, options);
+    if (value === null || TYPES[type]) {
+        let freshNode = createNode(key, value, options);
 
         if (type && value) {
-            d = helpers.json.merge(d, {
-                __: {
-                    type: type
-                }
-            });
+            freshNode.__ = freshNode.__ || {};
+            freshNode.__.type = type; // Performant native inline assignment over deep-merging
 
-            d = childs(d, key, value, options);
+            freshNode = routeChildTree(freshNode, key, value, options);
         }
 
-        rval.push(d);
+        rval.push(freshNode);
     }
 
     return rval;
-}
+};
 
+/**
+ * Compiles and sorts tree-node structures based on specified schema rules.
+ */
 const start = (arg, options) => {
     if (!arg || typeof arg !== 'object') {
         return [];
     }
 
-    let rval = [];
+    const rval = [];
 
-
-    for (let a in arg) {
-        rval = transform(rval, a, arg[a], options)
+    for (const attributeKey in arg) {
+        if (Object.prototype.hasOwnProperty.call(arg, attributeKey)) {
+            transformNode(rval, attributeKey, arg[attributeKey], options);
+        }
     }
+
+    console.log(rval);
 
     return helpers.array.sortByOrder(rval, helpers.json.get(options, 'sortOrder', []), {
         path: helpers.json.get(options, 'sortPath', '__.type')
     });
-}
+};
 
 export default {
     init: start,
     getBaseMetas: getBaseMetas
-}
+};

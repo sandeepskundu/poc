@@ -1,3 +1,4 @@
+import Enums from './enums';
 import helpers from 'ui-helpers';
 import Input from 'aio-global-raw-ui/atoms/form/input';
 import Textarea from 'aio-global-ui/atoms/form/textarea';
@@ -17,8 +18,10 @@ const Comp = (dprops) => {
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
 
     const enabled = {
+        
         any:true,
         jsx:true,
+        enum:true,
         number:true,
         string:true,
         object:true,
@@ -147,6 +150,10 @@ const Comp = (dprops) => {
         )
     }
 
+    const enums = () => {
+        return <Enums {...props} />
+    }
+
     const ui = () => {
         if(type && enabled[type]){
             switch (type){
@@ -170,6 +177,9 @@ const Comp = (dprops) => {
                 break;
                 case 'function':
                     return textare();
+                break;
+                case 'enum':
+                    return enums();
                 break;
                 default: 
                     return <></>

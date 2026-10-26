@@ -1,10 +1,12 @@
 import From from './from';
+import {useState} from 'react'
 import Mapping from './mapping';
 import helpers from 'ui-helpers';
 import Textarea from 'aio-global-ui/atoms/form/textarea';
 
 const Comp = (dprops) => { 
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
+    const [cache, setCache] = useState(helpers.random.id());
 
     const node = props.node || {};
     const templates = props.templates || {};
@@ -19,6 +21,12 @@ const Comp = (dprops) => {
         return rv;
     })();
 
+    const refesh = () => {
+        setTimeout(() => {
+            setCache(helpers.random.id());
+        });
+    }
+
     const update = (id, field, value) => {
         templates.item.meta.item.actions.updateByKey(id, field, value)
     }
@@ -27,7 +35,10 @@ const Comp = (dprops) => {
         return (
             <From
                 selected={helpers.json.get(metas, 'from.value', '')}
-                onChange={(value) => { update(helpers.json.get(metas, 'from.id', ''), 'value', value)}}
+                onChange={(value) => {
+                    update(helpers.json.get(metas, 'from.id', ''), 'value', value)
+                    refesh()
+                }}
             />
         )
     }
@@ -41,7 +52,8 @@ const Comp = (dprops) => {
                     value={helpers.json.get(metas, 'options.value', '')}
                     callback={{
                         onChange:(a, b, c) => {
-                            update(helpers.json.get(metas, 'options.id', ''), 'value', a)
+                            update(helpers.json.get(metas, 'options.id', ''), 'value', a);
+                            refesh();
                         }
                     }}
                 />
