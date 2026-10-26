@@ -4,10 +4,16 @@ import Details from './details';
 import helpers from 'ui-helpers';
 import appHelpers from 'app-helpers';
 import JsonBuilder from './../json-builder';
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useState, useRef, useCallback} from "react";
 
 const Comp = () => {
+    
     const types = ['any', 'string', 'number', 'boolean', 'object', 'function', 'enum', 'jsx', 'nested', 'compProps', 'predefined'];
+    const parserConfigs = {
+        sortPath:'__.type',
+        _sortOrder:['string', 'jsx', 'boolean', 'object', 'any', 'compProps', 'nested',  'predefined', 'enum',  'number', 'function'],
+        sortOrder:['compProps', 'boolean', 'nested',  'predefined', 'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx']
+    };
 
     const builder = helpers.json.schema.builder.init('props', {
         utils:{
@@ -40,19 +46,16 @@ const Comp = () => {
     })
 
     const onPropResponse = (resp, arg) => {
-        setDetails({
-            blank:false,
-            cache:helpers.random.key(),
-            enums:helpers.json.get(resp, 'enums', {}),
-            raw:helpers.json.get(resp, 'propsDetails', {}),
-            compTree:helpers.json.get(resp, 'compTree', {}),
-            predefined:helpers.json.get(resp, 'predefined', {}),
-            data:parser.data.init(helpers.json.get(resp, 'propsDetails.props', {}), {
-                sortPath:'__.type',
-                _sortOrder:['string', 'jsx', 'boolean', 'object', 'any', 'compProps', 'nested',  'predefined', 'enum',  'number', 'function'],
-                sortOrder:['compProps', 'boolean', 'nested',  'predefined', 'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx']
-            })
-        });
+        setDetails((prev) => {
+            return {...prev, ...{
+                blank:false,
+                cache:helpers.random.key(),
+                enums:helpers.json.get(resp, 'enums', {}),
+                raw:helpers.json.get(resp, 'propsDetails', {}),
+                compTree:helpers.json.get(resp, 'compTree', {}),
+                predefined:helpers.json.get(resp, 'predefined', {}),
+                data:parser.data.init(helpers.json.get(resp, 'propsDetails.props', {}), parserConfigs)
+        }}});
     }
 
     const getConfigs = () => {
@@ -75,7 +78,7 @@ const Comp = () => {
     }
 
     const onResp = (resp, arg) => {
-        let id = 'c5c54d4a7b97784bee2e9d7d2f2e8e7dd' //'cf9e5d8c7889089707f6bf27dbf6c1391';
+        let id = 'c6fdedc3ba1a0486f904e789938c7d7d8'; //'c5c54d4a7b97784bee2e9d7d2f2e8e7dd' //'cf9e5d8c7889089707f6bf27dbf6c1391';
         let map = helpers.json.get(resp, `components.${id}`, '');
             appHelpers.store.get([{
                 name:'storybook.components.props.detailsByMap',
@@ -129,136 +132,40 @@ const Comp = () => {
     }
 
     const itemHeaderLayout = (arg, props) => {
-        const nh = helpers.json.get(props, 'node.__.hideHeader', false);
-        /*-- arg ===>
-        {
-            layout:{
-                ui:layout
-            },
-            actions:{
-                expend:{
-                    ui:expend,
-                    show:isObjOrArray,
-                    state:node.__.expanded,
-                    method:callbacks.expend
-                },
-                edit:{
-                    ui:modify,
-                    state:node.__.editing,
-                    method:callbacks.edit
-                },
-                remove:{
-                    ui:remove,
-                    method:callbacks.remove
-                },
-                add:{
-                    ui:addIcon,
-                    show:isObjOrArray,
-                    method:callbacks.addNew
-                }
-            },
-            count:{
-                ui:childCount,
-                show:isObjOrArray,
-                text:childCountLabel()
-            },
-            label:{
-                ui:label,
-                text:highlight(true),
-                highlighter:highlighter,
-                error:{
-                    ui:error,
-                    label:errorLabel(),
-                    state:{
-                        show:hasError,
-                        empty:hasEmptyError,
-                        duplicate:hasDuplicateError
-                    }
-                }
-            }
-        }
-
-        props = {
-            node:node,
-            editor:editor
-        }
-
-        -----*/
-
         return <Header templates={arg} node={props.node} builder={builder} configs={getConfigs()} />
     }
 
     const itemDetailsLayout = (arg, props) => {
         return <Details templates={arg} node={props.node} builder={builder} configs={getConfigs()} />
-        /*-- arg ===> 
-            {
-                layout:{ => 
-                    ui:layout
-                },
-                item:{
-                    node:node,
-                    key:{
-                        ui:key,
-                        input:editor.templates.node.key,
-                        show:!isType('array', details.parentType)
-                    },
-                    type:{
-                        ui:type,
-                        input:editor.templates.node.type
-                    },
-                    nullable:{
-                        input:editor.templates.node.nullable
-                    },
-                    actions:{
-                        edit:editor.callbacks.node.edit,
-                        add:editor.callbacks.node.addNew,
-                        remove:editor.callbacks.node.delete,
-                        expend:editor.callbacks.node.expend,
-                        onKeyChange:editor.callbacks.node.keyChange,
-                        onTypeChange:editor.callbacks.node.typeChange,
-                        toggleMetas:editor.callbacks.node.toggleMetas,
-                        validateKeyName:editor.callbacks.node.validateKey,
-                        changeValueByKey:editor.callbacks.node.valueChange
-                    },
-                    meta:{
-                        show:showMeta,
-                        list:{
-                            data:metas,
-                            ui:metalist,
-                        },
-                        item:{
-                            ui:metaItem,
-                            inputs:{
-                                key:{
-                                    ui:metaKey,
-                                    input:editor.templates.meta.key,
-                                },
-                                value:{
-                                    ui:metaValue,
-                                    input:editor.templates.meta.value,
-                                }
-                            },
-                            actions:{
-                                remove:{
-                                    ui:deleteMeta,
-                                    method:editor.callbacks.metas.deleteMeta,
-                                },
-                                add:editor.callbacks.metas.addNewMeta,
-                                validateKey:editor.callbacks.metas.validateKey,
-                                updateByKey:editor.callbacks.metas.updateMetaDetailsByKey,
-                            }
-                        }
+    }
+
+    useEffect(() => {
+        //console.log(details.data);
+    }, [details])
+
+    
+    const onChange = useCallback((json, valid) => {
+        if(valid){
+            setDetails((prev) => {
+                let d = helpers.json.copy(prev);
+                let p = helpers.json.get(d, 'raw.props', {});
+                let pd = helpers.json.deleteAllNestedKeyByVal(json, 'type', 'asEditorObject');
+                let dpd = parser.data.init(pd, parserConfigs);
+
+                if(!helpers.json.is.same(p, json)){
+                    return {
+                        ...prev,
+                        data:parser.data.init(pd, parserConfigs)
                     }
+                }else{
+                    return prev;
                 }
-            }
-        /*-- arg  
-
-        props = {
-            node:node,
-            editor:editor
+            });
         }
+    }, []);
 
-        --*/
+    const outputParser = (json, valid) => {
+        return helpers.json.removeWrapperKeys(json, {stripKeys:'___blank___', removePrimitive:true});
     }
 
     const ui = () =>{
@@ -269,6 +176,11 @@ const Comp = () => {
                 <JsonBuilder
                     builder={builder}
                     data={details.data}
+                    cache={details.cache}
+                    callbacks={{
+                        onChange:onChange,
+                        outputParser:outputParser
+                    }}
                     filters={{
                         query:{
                             $and:[{

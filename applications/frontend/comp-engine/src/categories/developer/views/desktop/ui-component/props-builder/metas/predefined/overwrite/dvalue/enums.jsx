@@ -12,7 +12,13 @@ const Comp = (dprops) => {
 
     const enumMap = (() => {
         let rv = {};
+        let type =  helpers.json.get(node, '__.editorDataType', '');
         let m = helpers.json.get(node, '__.children.0.__.children.0.__.metas', []);
+
+        if(type === 'enum'){
+            m = helpers.json.get(node, '__.metas', []);
+        }
+
 
         for(let a in m){
             let i = m[a];
@@ -56,16 +62,6 @@ const Comp = (dprops) => {
 
         return rv;
     })();
-
-    console.log(props.configs.predefined.ds, options);
-
-    const update = (val) => {
-        if(metaId){
-            templates.item.meta.item.actions.updateByKey(metaId, 'value', parse(val))
-        }else{
-            templates.item.meta.item.actions.add({value:val, key:'dvalue'})
-        }
-    }
 
     return (
         <ul className='full grid-wrapper grid-layout-2'>

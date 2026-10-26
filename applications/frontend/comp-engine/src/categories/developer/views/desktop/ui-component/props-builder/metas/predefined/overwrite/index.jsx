@@ -32,17 +32,14 @@ const Comp = (dprops) => {
 
     const pdmap = (() => {
         let map = helpers.json.get(props, 'mapping', '');
-            map = map.replace(/\/index$/, '');
+            map = map.replace(/.index$/, '');
             map = map.split('.');
             map.push('index');
-
-        return map.join('.')            
+        return map.join('.');          
     })();
 
     let predefined = helpers.json.get(props, `configs.predefined.${pdmap}`, {});
-    let data = parser.init((() => {
-        return helpers.json.merge(predefined, helpers.json.get(props, 'data.value', {}));
-    })(), {
+    let data = parser.init(helpers.json.merge(predefined, helpers.json.get(props, 'data.value', {})), {
         sortPath:'__.type',
         uitls:props.configs,
         sortOrder:['boolean', 'nested',  'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx', 'predefined']

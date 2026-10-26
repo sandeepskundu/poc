@@ -25,6 +25,17 @@ const dvalueByType = {
     predefined:{}
 }
 
+const blankBase = {
+    editing:true,
+    expanded:true,
+    hideHeader:true,
+    excludeActions:{
+        add:true,
+        edit:true,
+        expend:true
+    }
+}
+
 const metaByKey = (arg, key, fallback, overrides = {}) => {
     return {
         key:key,
@@ -96,16 +107,7 @@ const setChilds = (rval, childs) => {
 };
 
 const nested = (rval, key, value, options) => {
-    let base = {
-        editing:true,
-        expanded:true,
-        hideHeader:true,
-        excludeActions:{
-            add:true,
-            edit:true,
-            expend:true
-        }
-    }
+    let base = {...blankBase};
     // Extract nested child items safely using utility helper
     let childs = helpers.json.get(value, '___.nested', {});
     let hasChilds = helpers.data.type.is(childs, 'object') && helpers.json.length(childs) > 0;
@@ -123,17 +125,7 @@ const nested = (rval, key, value, options) => {
 };
 
 const enums = (rval, key, value, options) => {
-    let base = {
-        editing:true,
-        expanded:true,
-        hideHeader:true,
-        excludeActions:{
-            add:true,
-            edit:true,
-            expend:true
-        }
-    };
-
+    let base = {...blankBase};
     let childs = helpers.json.get(value, '___.enum', {});
     let header = blankHeader('___', false, 'asEditorObject', options, {...base});
     let enumProps = blankHeader('enum', false, 'asEditorObject', options, {
@@ -160,16 +152,7 @@ const enums = (rval, key, value, options) => {
 }
 
 const predefined = (rval, key, value, options) => {
-    let base = {
-        editing:true,
-        expanded:true,
-        hideHeader:true,
-        excludeActions:{
-            add:true,
-            edit:true,
-            expend:true
-        }
-    }
+    let base = {...blankBase};
     let childs = helpers.json.get(value, '___.predefined', {});
     let header = blankHeader('___', false, 'asEditorObject', options, base);
     let predefinedProps = blankHeader('predefined', false, 'asEditorObject', options, {
@@ -206,6 +189,7 @@ const childs = (rval, key, value, options) => {
             rval = predefined(rval, key, value, options);
         break;
         default:
+            //rval = node(key, value, options, {});
     }
 
     return rval;
@@ -231,6 +215,32 @@ const transform = (rval, key, value, options) => {
     return rval;
 }
 
+const transformRoot = (rval, value, options) => {
+    let type = helpers.json.get(value, 'type', '');
+    let h = blankHeader('___blank___', false, 'asEditorObject', options, {
+        ...blankBase
+    });
+
+    switch (type) {
+        case 'nested':
+            rval.push(setChilds(h, [nested(h, '', value, options)]));
+        break;
+        case 'enum':
+            rval.push(setChilds(h, [enums(h, '', value, options)]));
+        break;
+        case 'predefined':
+            rval.push(setChilds(h, [predefined(h, '', value, options)]));
+        break;
+        default:
+            h.__.type = type;
+            h.__.nonEditable = false;
+            h.__.metas = metas('', value, options);
+            rval.push(h);
+    }
+
+    return rval;
+}
+
 const start = (arg, options, map = []) => {
     if (!arg || typeof arg !== 'object') {
         return [];
@@ -238,9 +248,15 @@ const start = (arg, options, map = []) => {
 
     let rval = [];
 
-    for (let a in arg) {
-        rval = transform(rval, a, arg[a], options, map)
+    if(arg.type){
+        rval = transformRoot(rval, arg, options)
+    }else{
+        for (let a in arg) {
+            rval = transform(rval, a, arg[a], options)
+        }
     }
+
+    console.log(rval);
 
     return helpers.array.sortByOrder(rval, helpers.json.get(options, 'sortOrder', []), {
         path: helpers.json.get(options, 'sortPath', '__.type')

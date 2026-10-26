@@ -2,8 +2,10 @@ import From from './from';
 import Mapping from './mapping';
 import helpers from 'ui-helpers';
 import Overwrite from './overwrite';
+import { useState } from 'react';
 
 const Comp = (dprops) => { 
+    const [cache, setCache] = useState(helpers.random.id());
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
 
     const node = props.node || {};
@@ -44,20 +46,25 @@ const Comp = (dprops) => {
                             onChange={(value) => {
                                 let mId = helpers.json.get(metas, 'mapping.id', '');
                                 let oId = helpers.json.get(metas, 'overwirte.id', '');
-
                                 templates.item.meta.item.actions.updateMetaDetailsByKey({
                                     [mId]:{
-                                    value:value 
+                                        value:value 
                                     },
                                     [oId]:{
                                         value:{}
                                     }
                                 });
+
+                                setTimeout(() => {
+                                    setCache(helpers.random.id());
+                                    setCache(helpers.random.id());
+                                }, 10);
                             }}
                         />
                     </div>
                     <Overwrite 
                         {...props}
+                        key={cache}
                         data={helpers.json.get(metas, 'overwirte', {})}
                         mapping={helpers.json.get(metas, 'mapping.value', '')}
                         onChange={(value) => {

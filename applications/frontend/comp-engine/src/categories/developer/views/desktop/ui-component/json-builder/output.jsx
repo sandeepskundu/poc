@@ -6,7 +6,6 @@ const Comp = (dprops) => {
 
     const builder = props.builder;
     const [preview, setPreview] = useState(false);
-    const [mode, setMode] = useState('definition');
     const [data, setData] = useState({
         json:{},
         valid:true
@@ -17,11 +16,21 @@ const Comp = (dprops) => {
             props.onChange(a.json, a.valid);
         }
     }
+
+    const outputParser = (a) => {
+        if(props.outputParser){
+            a.json = props.outputParser(a.json, a.valid);
+        }
+
+        return a;
+    }
     
+
     const update = (a) => {
         a.tree = helpers.json.copy(a.json || []);
-        if (mode === 'definition' && helpers.data.type.is(a.json, 'list')) {
+        if (helpers.data.type.is(a.json, 'list')) {
             a.json = builder.serializeDefinition(a.json || [], 'object');
+            a = outputParser(a);
             setData(a);
             onUpdate(a)
         }

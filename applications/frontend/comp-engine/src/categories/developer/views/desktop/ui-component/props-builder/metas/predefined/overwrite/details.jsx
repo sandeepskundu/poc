@@ -11,7 +11,11 @@ const Comp = (dprops) => {
     const templates = props.templates || {};
     const types = helpers.json.get(configs, 'types', []);
     const ptype = helpers.json.get(node, '__.editorDataType', '');
-    const editable = !helpers.json.get(node, '__.nonEditable', false);
+    const editable = (() => {
+        if(!helpers.json.get(node, '__.nonEditable', false) || helpers.json.get(node, '__.showMetas', false)){
+            return true;
+        }
+    })();
 
     const update = (id, field, value) => {
         templates.item.meta.item.actions.updateByKey(id, field, value);

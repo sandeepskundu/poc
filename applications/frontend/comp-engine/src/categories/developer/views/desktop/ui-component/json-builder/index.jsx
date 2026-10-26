@@ -47,7 +47,7 @@ const Comp = (dprops) => {
         content:{
             json:{
                 editor:{
-                    title:'Schema Field Editor = Sandeep Kundu'
+                    title:'Schema Field Editor'
                 }
             }
         },
@@ -63,12 +63,14 @@ const Comp = (dprops) => {
         return null;   
     }
 
+    const onChangeCb = getTemplate('callbacks.onChange');
+    const outputParserCb = getTemplate('callbacks.outputParser');
     const ntemplate = getTemplate('templates.item.nested.layout');
     const editorTemplate = getTemplate('templates.editor.layout');
     const jsonOutput = getTemplate('templates.editor.jsonOutput');
     const onTreeChange = getTemplate('callbacks.onJsonTreeChange');
     const jsonTreeTemplate = getTemplate('templates.editor.jsonTree');
-    const jsonTreeHeaderTemplate = getTemplate('templates.editor.jsonTreeHeader');
+    const jsonTreeHeaderTemplate = getTemplate('templates.editor.jsonTreeHeader'); 
 
     const nested = (arg) => {
         if(ntemplate){
@@ -136,11 +138,25 @@ const Comp = (dprops) => {
         )
     }
 
+    const onChange = (json, valid) => {
+        if(onChangeCb){
+            onChangeCb(json, valid)
+        }
+    }
+
+    const outputParser = (json, valid) => {
+        if(outputParserCb){
+            return outputParserCb(json, valid);
+        }else{
+            return json;
+        }
+    }
+
     const output = () => {
         if(jsonOutput){
             return jsonOutput({
                 template:() => {
-                    return <Output builder={props.builder} onChange={(json, valid) => {console.log(json, valid)}} />;
+                    return <Output builder={props.builder} onChange={onChange} outputParser={outputParser}  />;
                 }
             })
         }

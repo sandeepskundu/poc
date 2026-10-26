@@ -33,8 +33,9 @@ const Comp = (dprops) => {
     const builder = props.builder || {};
     const templates = props.templates || {};
     
-    const type = helpers.json.get(node, '__.type', '');
+    
     const meta = helpers.json.get(metas, 'base.dvalue', {});
+    const type =  helpers.json.get(node, '__.editorDataType', helpers.json.get(node, '__.type', ''));
 
     const isFunction = (str) => {
         if (typeof str !== 'string' || !str.trim()){
