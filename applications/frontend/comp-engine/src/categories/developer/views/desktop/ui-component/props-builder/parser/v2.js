@@ -15,21 +15,21 @@ const TYPES = {
 };
 
 const DVALUE_BY_TYPE = {
-    any:'',
-    jsx:'',
-    enum:'',
-    object:{},
-    string:'',
-    number:'',
-    boolean:false,
-    function:null
+    any: '',
+    jsx: '',
+    enum: '',
+    object: {},
+    string: '',
+    number: '',
+    boolean: false,
+    function: null
 };
 
 const metaByKey = (arg, key, fallback, overrides = {}) => {
     return helpers.json.merge({
-        key:key,
-        id:helpers.random.key(),
-        value:(arg && typeof arg[key] !== 'undefined' ? arg[key] : fallback)
+        key: key,
+        id: helpers.random.key(),
+        value: (arg && typeof arg[key] !== 'undefined' ? arg[key] : fallback)
     }, overrides);
 };
 
@@ -56,31 +56,31 @@ const metas = (key, value, options) => {
 
 const createNode = (key, value, options = {}, overrides = {}) => {
     return {
-        __:helpers.json.merge({
-            actions:{
-                edit:true
+        __: helpers.json.merge({
+            actions: {
+                edit: true
             },
-            key:key,
-            type:'string',
-            editing:false,
-            expanded:false,
-            id:helpers.random.key(),
-            metas:metas(key, value, options),
-            isNull:(value === null || overrides.isNull === true)
+            key: key,
+            type: 'string',
+            editing: false,
+            expanded: false,
+            id: helpers.random.key(),
+            metas: metas(key, value, options),
+            isNull: (value === null || overrides.isNull === true)
         }, overrides)
     }
 };
 
 const blank = (key, value, type = 'string', options = {}, overrides = {}) => {
     let rval = createNode(key, value, options);
-        rval.__ = rval.__ || {};
-        rval.__.type = type;
-        rval.__.nonEditable = true;
-        rval.__ = helpers.json.merge(rval.__, overrides || {});
+    rval.__ = rval.__ || {};
+    rval.__.type = type;
+    rval.__.nonEditable = true;
+    rval.__ = helpers.json.merge(rval.__, overrides || {});
 
-        if (rval.__.metas) {
-            delete rval.__.metas;
-        }
+    if (rval.__.metas) {
+        delete rval.__.metas;
+    }
 
     return rval;
 };
@@ -91,7 +91,7 @@ const setChilds = (rval, childs) => {
         ...rval,
         __: {
             ...currentMeta,
-            children:childs
+            children: childs
         }
     };
 };
@@ -138,20 +138,20 @@ const processCompPropsType = (rval, key, value, options) => {
 const predefined = (rval, key, value, options) => {
     const childs = helpers.json.get(value, '___.predefined', {});
     const metas = {
-        from:metaByKey(childs, 'from', ''),
-        mapping:metaByKey(childs, 'mapping', ''),
-        overwirte:metaByKey(childs, 'overwirte', {})
+        from: metaByKey(childs, 'from', ''),
+        mapping: metaByKey(childs, 'mapping', ''),
+        overwirte: metaByKey(childs, 'overwirte', {})
     }
 
     const base = {
-        editing:true,
-        expanded:true,
-        hideHeader:true
+        editing: true,
+        expanded: true,
+        hideHeader: true
     };
 
-    let props = blank('predefined', false, 'asEditorObject', options, {...base, metaMap:metas});
-        props.__.metas = [metas.from, metas.mapping, metas.overwirte];
-        rval.__.details = props;
+    let props = blank('predefined', false, 'asEditorObject', options, { ...base, metaMap: metas });
+    props.__.metas = [metas.from, metas.mapping, metas.overwirte];
+    rval.__.details = props;
 
     return setChilds(rval, [setChilds(blank('___', false, 'asEditorObject', options, base), [props])]);
 };
@@ -160,40 +160,40 @@ const nested = (rval, key, value, options) => {
     const childs = helpers.json.get(value, '___.nested', {});
     const hasChilds = helpers.data.type.is(childs, 'object') && helpers.json.length(childs) > 0;
     const base = {
-        editing:true,
-        expanded:true,
-        hideHeader:true
+        editing: true,
+        expanded: true,
+        hideHeader: true
     };
 
     let props = blank('nested', false, 'asEditorObject', options, {
         ...base,
-        asHeader:true,
-        hideHeader:false,
-        actions:{
-            add:true,
-            edit:false,
+        asHeader: true,
+        hideHeader: false,
+        actions: {
+            add: true,
+            edit: false,
         }
     });
 
-    return setChilds(rval, [setChilds(blank('___', false, 'asEditorObject', options, base), [setChilds(props, (hasChilds?start(childs, options) : []))])]);
+    return setChilds(rval, [setChilds(blank('___', false, 'asEditorObject', options, base), [setChilds(props, (hasChilds ? start(childs, options) : []))])]);
 };
 
 
 const enums = (rval, key, value, options) => {
     const map = helpers.json.get(value, '___.enum', {});
     const metas = {
-        from:metaByKey(map, 'from', ''),
-        mapping:metaByKey(map, 'mapping', '')
+        from: metaByKey(map, 'from', ''),
+        mapping: metaByKey(map, 'mapping', '')
     }
     const base = {
-        editing:true,
-        expanded:true,
-        hideHeader:true
+        editing: true,
+        expanded: true,
+        hideHeader: true
     };
 
     let props = blank('enum', false, 'asEditorObject', options, {
         ...base,
-        metaMap:metas
+        metaMap: metas
     });
 
     props.__.metas = [metas.from, metas.mapping];
@@ -202,17 +202,14 @@ const enums = (rval, key, value, options) => {
     return setChilds(rval, [setChilds(blank('___', false, 'asEditorObject', options, base), [props])]);
 };
 
-/**
- * Route structures dynamically into type-specific processors
- */
-const routeChildTree = (rval, key, value, options) => {
+const childTree = (rval, key, value, options) => {
     const type = value && value.type ? value.type : '';
 
     switch (type) {
         case 'nested':
             return nested(rval, key, value, options);
         case 'compProps':
-            // return processCompPropsType(rval, key, value, options);
+        // return processCompPropsType(rval, key, value, options);
         case 'predefined':
             return predefined(rval, key, value, options);
         case 'enum':
@@ -222,7 +219,7 @@ const routeChildTree = (rval, key, value, options) => {
     }
 };
 
-const transformNode = (rval, key, value, options) => {
+const transform = (rval, key, value, options) => {
     const type = value && value.type ? value.type : '';
 
     if (value === null || TYPES[type]) {
@@ -231,7 +228,7 @@ const transformNode = (rval, key, value, options) => {
         if (type && value) {
             node.__ = node.__ || {};
             node.__.type = type;
-            node = routeChildTree(node, key, value, options);
+            node = childTree(node, key, value, options);
         }
 
         rval.push(node);
@@ -249,7 +246,7 @@ const start = (arg, options) => {
 
     for (const attributeKey in arg) {
         if (Object.prototype.hasOwnProperty.call(arg, attributeKey)) {
-            transformNode(rval, attributeKey, arg[attributeKey], options);
+            transform(rval, attributeKey, arg[attributeKey], options);
         }
     }
 
@@ -261,7 +258,7 @@ const start = (arg, options) => {
 const onCreate = (arg) => {
     if (arg?.__) {
         arg.__.actions = {
-            edit:true
+            edit: true
         };
         arg.__.metas = getBaseMetas(arg.__.key, arg.__, {});
     };
@@ -277,26 +274,26 @@ const onUpdate = (arg, prev, options) => {
         switch (nt) {
             case 'nested':
                 return nested(arg, arg.__.key, arg.__, options);
-            break;
+                break;
             case 'compProps':
                 // return processCompPropsType(rval, key, value, options);
-            break;
+                break;
             case 'predefined':
                 return predefined(arg, arg.__.key, arg.__, options);
-            break;
+                break;
             case 'enum':
                 return enums(arg, arg.__.key, arg.__, options);
-            break;
+                break;
             default:
                 arg.__.metas = getBaseMetas(arg.__.key, arg.__, {});
         }
     };
-                   
+
     return arg;
 }
 
 export default {
-    init:start,
-    onCreate:onCreate,
-    onUpdate:onUpdate
+    init: start,
+    onCreate: onCreate,
+    onUpdate: onUpdate
 };
