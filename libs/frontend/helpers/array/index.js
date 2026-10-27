@@ -78,6 +78,7 @@ const sortByOrder = (arr, orders, options) => {
     return arr;
 }
 
+
 exports.has = require('./has');
 exports.sortByOrder = sortByOrder;
 exports.toIndexJson = toIndexJson;

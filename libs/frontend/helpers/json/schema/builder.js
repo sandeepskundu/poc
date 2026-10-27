@@ -23,8 +23,8 @@ const dataTypeFlags = (arg) => {
     let rval = {};
     let flags = json.merge(json.get(utils, 'dataTypeFlags', {}), json.get(arg, 'utils.dataTypeFlags', {}));
 
-    for(let a in flags){
-        if(flags[a] && dT.is(flags[a], 'list') && flags[a].length > 0){
+    for (let a in flags) {
+        if (flags[a] && dT.is(flags[a], 'list') && flags[a].length > 0) {
             rval[a] = new Set(flags[a])
         }
     }
@@ -38,11 +38,11 @@ const keysmap = (arg) => {
 
 const buildUtils = (arg) => {
     return {
-        keysmap:keysmap(arg),
-        dataType:dataType(arg),
-        keyRegex:keyRegex(arg),
-        dataTypeFlags:dataTypeFlags(arg),
-        keyReplaceRegex:keyReplaceRegex(arg),
+        keysmap: keysmap(arg),
+        dataType: dataType(arg),
+        keyRegex: keyRegex(arg),
+        dataTypeFlags: dataTypeFlags(arg),
+        keyReplaceRegex: keyReplaceRegex(arg),
     }
 }
 
@@ -69,8 +69,8 @@ class SchemaManager {
     isDataType = (list, type) => {
         let options = this.utils.dataTypeFlags[type];
 
-        if(options){
-            return (Array.isArray(list)?list:[list]).some(type => options.has(type));
+        if (options) {
+            return (Array.isArray(list) ? list : [list]).some(type => options.has(type));
         }
 
         return false;
@@ -80,10 +80,11 @@ class SchemaManager {
         if (!node) {
             return node;
         } else {
-            const rval = {...node,
+            const rval = {
+                ...node,
                 __: {
                     ...node?.__,
-                    metas:node?.__?.metas || []
+                    metas: node?.__?.metas || []
                 }
             };
 
@@ -99,14 +100,14 @@ class SchemaManager {
         const cb = json.get(this, 'callbacks.onNodeCreate');
         const hasChild = (this.isDataType(type, 'object') || this.isDataType(type, 'array'));
         let rval = {
-            __:{
-                metas:[],
-                key:key,
-                type:type,
-                isNull:false,
-                id:random.key(),
-                editing:editing,
-                expanded:expended,
+            __: {
+                metas: [],
+                key: key,
+                type: type,
+                isNull: false,
+                id: random.key(),
+                editing: editing,
+                expanded: expended,
                 ...(hasChild && { children: [] })
             }
         };
@@ -130,7 +131,7 @@ class SchemaManager {
     }
 
     onNodeUpdate = (node, prev) => {
-        let rval = {...prev, ...node};
+        let rval = { ...prev, ...node };
         let cb = json.get(this, 'callbacks.onNodeUpdate');
         if (cb && dT.is(cb, 'function')) {
             return cb(rval, prev);
@@ -193,14 +194,13 @@ class SchemaManager {
 
             // Scenario 1: Found the target parent node
             if (meta.id === parentId) {
-                // Check 'type' from root level (or fallback safely)
                 const isArrayType = node.type === 'array';
 
                 const preparedChild = {
                     ...newNode,
                     __: {
                         ...newNode.__,
-                        editing:true,
+                        editing: true,
                         key: isArrayType ? '' : (newNode.__?.key ?? '')
                     }
                 };
@@ -209,8 +209,7 @@ class SchemaManager {
                     ...node,
                     __: {
                         ...meta,
-                        editing:false,
-                        expanded:true,
+                        expanded: true,
                         children: [
                             ...(meta.children || []),
                             this.sanitize(preparedChild)
@@ -229,7 +228,7 @@ class SchemaManager {
                         ...node,
                         __: {
                             ...meta,
-                            children:updatedChildren
+                            children: updatedChildren
                         }
                     };
                 }
@@ -265,7 +264,7 @@ class SchemaManager {
     isTreeValid = (nodes, parentType = 'object') => {
         for (let node of (nodes || [])) {
             if (this.isDataType(parentType, 'object')) {
-                if((!node.__.key || !node.__.key.trim()) || (this.isDuplicate(nodes, node.__.id, node.__.key))) {
+                if ((!node.__.key || !node.__.key.trim()) || (this.isDuplicate(nodes, node.__.id, node.__.key))) {
                     return false;
                 }
             }
@@ -283,18 +282,18 @@ class SchemaManager {
     }
 
     expendNodes = (nodes, query, expended = true) => {
-        if(!query){
+        if (!query) {
             return nodes;
-        }else{
+        } else {
             return (nodes || []).map((node) => {
-                if(node.__.children) {
-                    return { 
+                if (node.__.children) {
+                    return {
                         ...node,
-                        __:{
-                            expended:expended,
-                            children:this.expandMatching(node.__.children, query, expended) 
+                        __: {
+                            expended: expended,
+                            children: this.expandMatching(node.__.children, query, expended)
                         },
-                        
+
                     };
                 }
                 return node;
