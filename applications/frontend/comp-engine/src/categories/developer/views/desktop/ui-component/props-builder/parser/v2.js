@@ -149,16 +149,11 @@ const predefined = (rval, key, value, options) => {
         hideHeader:true
     };
 
-    let header = blank('___', false, 'asEditorObject', options, base);
-    let props = blank('predefined', false, 'asEditorObject', options, {
-        ...base,
-        metaMap:metas
-    });
+    let props = blank('predefined', false, 'asEditorObject', options, {...base, metaMap:metas});
+        props.__.metas = [metas.from, metas.mapping, metas.overwirte];
+        rval.__.details = props;
 
-    props.__.metas = [metas.from, metas.mapping, metas.overwirte];
-    rval.__.details = props;
-
-    return setChilds(rval, [setChilds(header, [props])]);
+    return setChilds(rval, [setChilds(blank('___', false, 'asEditorObject', options, base), [props])]);
 };
 
 const nested = (rval, key, value, options) => {
@@ -170,7 +165,6 @@ const nested = (rval, key, value, options) => {
         hideHeader:true
     };
 
-    let header = blank('___', false, 'asEditorObject', options, base);
     let props = blank('nested', false, 'asEditorObject', options, {
         ...base,
         asHeader:true,
@@ -181,7 +175,7 @@ const nested = (rval, key, value, options) => {
         }
     });
 
-    return setChilds(rval, [setChilds(header, [setChilds(props, (hasChilds?start(childs, options) : []))])]);
+    return setChilds(rval, [setChilds(blank('___', false, 'asEditorObject', options, base), [setChilds(props, (hasChilds?start(childs, options) : []))])]);
 };
 
 
@@ -197,7 +191,6 @@ const enums = (rval, key, value, options) => {
         hideHeader:true
     };
 
-    let header = blank('___', false, 'asEditorObject', options, base);
     let props = blank('enum', false, 'asEditorObject', options, {
         ...base,
         metaMap:metas
@@ -206,7 +199,7 @@ const enums = (rval, key, value, options) => {
     props.__.metas = [metas.from, metas.mapping];
     rval.__.details = props;
 
-    return setChilds(rval, [setChilds(header, [props])]);
+    return setChilds(rval, [setChilds(blank('___', false, 'asEditorObject', options, base), [props])]);
 };
 
 /**
@@ -229,23 +222,19 @@ const routeChildTree = (rval, key, value, options) => {
     }
 };
 
-/**
- * Standard leaf transformation logic
- */
 const transformNode = (rval, key, value, options) => {
     const type = value && value.type ? value.type : '';
 
     if (value === null || TYPES[type]) {
-        let freshNode = createNode(key, value, options);
+        let node = createNode(key, value, options);
 
         if (type && value) {
-            freshNode.__ = freshNode.__ || {};
-            freshNode.__.type = type; // Performant native inline assignment over deep-merging
-
-            freshNode = routeChildTree(freshNode, key, value, options);
+            node.__ = node.__ || {};
+            node.__.type = type;
+            node = routeChildTree(node, key, value, options);
         }
 
-        rval.push(freshNode);
+        rval.push(node);
     }
 
     return rval;

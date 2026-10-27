@@ -1,6 +1,7 @@
 import Enums from './enum';
 import Common from './common';
 import helpers from 'ui-helpers';
+import CompProps from './comp-props';
 import Predefined from './predefined';
 
 const Comp = (dprops) => { 
@@ -44,6 +45,9 @@ const Comp = (dprops) => {
             break;
             case 'jsx':
                 return <Common {...props} />
+            break;
+            case '':
+                return <CompProps {...props} />
             break;
             default:
         }
