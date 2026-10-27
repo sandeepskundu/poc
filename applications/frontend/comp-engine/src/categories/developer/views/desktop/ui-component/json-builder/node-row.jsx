@@ -62,7 +62,7 @@ const Comp = (props) => {
                 ...prev,
                 __: {
                     ...meta,
-                    type: type,
+                    type:type,
                     isNull: false,
                     ...((builder.isDataType(type, 'object') || builder.isDataType(type, 'array')) ? { children: meta.children || [] } : {})
                 }
@@ -91,14 +91,16 @@ const Comp = (props) => {
         })
     }
 
-    const handleUpdateMetaItem = (id, field, value) => {
-        if (id && field) {
-            onUpdate(node.__.id, (prev) => {
+    const handleUpdateMetaItem = (id, field, value, nodeId) => {
+        if ((id || nodeId) && field) {
+            onUpdate((nodeId || node.__.id), (prev) => {
                 return {
                     ...prev,
                     __: {
                         ...prev?.__,
                         metas: (prev?.__?.metas || []).map((item) => {
+
+                            debugger;
                             if (item.id !== id) {
                                 return item;
                             }
@@ -106,6 +108,8 @@ const Comp = (props) => {
                             if (field === 'key' && !validateKey(value)) {
                                 return item;
                             }
+
+                            debugger;
 
                             return {
                                 ...item,
@@ -130,10 +134,12 @@ const Comp = (props) => {
      *   "meta-id-overwrite": { value: { theme: null } }
      * }
      */
-    const handleUpdateMultipleMetasById = (updates) => {
-        if (!updates || !node?.__?.id) return;
+    const handleUpdateMultipleMetasById = (updates, nodeId) => {
+        if (!updates || (!node?.__?.id && !nodeId)){
+            return;
+        }
 
-        onUpdate(node.__.id, (prevNode) => {
+        onUpdate((nodeId || node.__.id), (prevNode) => {
             const currentMetas = prevNode?.__?.metas || [];
 
             // Map over all metas in a single state-modifier loop
@@ -235,8 +241,8 @@ const Comp = (props) => {
         )
     }
 
-    const nested = () => {
-        if (node.__.expanded && childs.length > 0) {
+    const nested = (skipExpandedCheck) => {
+        if ((node.__.expanded || skipExpandedCheck) && childs.length > 0) {
             return childs.map((child, idx) => (
                 <Comp
                     index={idx}
@@ -294,7 +300,7 @@ const Comp = (props) => {
         return <></>
     }
 
-    const nodeType = (label) => {
+    const nodeType = (label, onTypeChange) => {
         return (
             <Select
                 input={{
@@ -312,6 +318,10 @@ const Comp = (props) => {
                 callback={{
                     onSelect: (a, b, c, d) => {
                         handleTypeChange(helpers.json.get(a, '0.id'));
+
+                        if(onTypeChange && typeof onTypeChange === 'function'){
+                            onTypeChange();
+                        }
                     }
                 }}
                 data={{

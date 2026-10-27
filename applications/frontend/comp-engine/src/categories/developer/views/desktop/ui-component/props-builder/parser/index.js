@@ -1,5 +1,7 @@
 import data from './data';
+import v2 from './v2';
 
 export default {
-    data:data
+    v2:v2,
+    data:v2
 }

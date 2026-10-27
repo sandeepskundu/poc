@@ -1,60 +1,48 @@
-import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import Header from './header';
 import parser from './parser';
 import Details from './details';
 import helpers from 'ui-helpers';
 import appHelpers from 'app-helpers';
 import JsonBuilder from './../json-builder';
+import {useEffect, useState, useRef, useCallback, useMemo} from "react";
 
-// 1. Hoist static constants to avoid re-allocation on every render
-const TYPES = [
-    'any', 'string', 'number', 'boolean', 'object',
-    'function', 'enum', 'jsx', 'nested', 'compProps', 'predefined'
-];
-
+const TYPES = ['any', 'string', 'number', 'boolean', 'object', 'function', 'enum', 'jsx', 'nested', 'compProps', 'predefined'];
 const PARSER_CONFIGS = {
-    sortPath: '__.type',
-    sortOrder: [
-        'compProps', 'boolean', 'nested', 'predefined',
-        'object', 'any', 'enum', 'string', 'number', 'function', 'jsx'
-    ]
+    sortPath:'__.type',
+    sortOrder:['compProps', 'boolean', 'nested', 'predefined', 'object', 'any', 'enum', 'string', 'number', 'function', 'jsx']
 };
 
 const reqConfig = (url) => ({
-    name: url,
+    name:url,
     request: {
         options: {},
         request: {}
     }
 });
 
-const Comp = () => {
+const Comp = (dprops) => {
     const refreshTimerRef = useRef(null);
 
+    const props = helpers.element.jsx.props.define({}, dprops, helpers);
     const [details, setDetails] = useState({
-        blank: true,
-        data: [],
-        cache: helpers.random.key(),
-        enums: {},
-        compTree: {},
-        predefined: {},
-        raw: {}
+        raw:{},
+        data:[],
+        enums:{},
+        blank:true,
+        compTree:{},
+        predefined:{},
+        cache:helpers.random.key()
     });
 
-    // Safe debounced refresh helper
     const refresh = useCallback(() => {
         if (refreshTimerRef.current) {
             clearTimeout(refreshTimerRef.current);
         }
         refreshTimerRef.current = setTimeout(() => {
-            setDetails((prev) => ({
-                ...prev,
-                cache: helpers.random.key()
-            }));
+            setDetails((prev) => ({...prev, cache: helpers.random.key()}));
         }, 60);
     }, []);
 
-    // Clean up timer on unmount
     useEffect(() => {
         return () => {
             if (refreshTimerRef.current) {
@@ -63,39 +51,30 @@ const Comp = () => {
         };
     }, []);
 
-    // 2. Stable schema builder instance (Initialized ONCE per lifecycle)
     const builder = useMemo(() => {
         return helpers.json.schema.builder.init('props', {
             utils: {
-                keyRegex: null,
-                dataType: TYPES,
+                keyRegex:null,
+                dataType:TYPES,
                 dataTypeFlags: {
                     array: [],
                     object: ['nested', 'compProps', 'predefined', 'enum', 'asEditorObject']
                 },
                 keysmap: {
-                    arrayChilds: 'sandeep'
+                    arrayChilds:'sandeep'
                 }
             },
             callbacks: {
                 onNodeCreate: (arg) => {
-                    if (arg?.__) {
-                        arg.__.metas = parser.data.getBaseMetas(arg.__.key, arg.__, {});
-                    }
-                    return arg;
+                    return parser.data.onCreate(arg);
                 },
                 onNodeUpdate: (arg, prev) => {
-                    if (arg?.__) {
-                        arg.__.metas = parser.data.getBaseMetas(arg.__.key, arg.__, {});
-                    }
-                    refresh();
-                    return arg;
+                    return parser.data.onUpdate(arg, prev, PARSER_CONFIGS);
                 }
             }
         });
     }, [refresh]);
 
-    // 3. Memoized configs passed to node layouts
     const configs = useMemo(() => ({
         types: TYPES,
         enums: details.enums || {},
@@ -103,25 +82,25 @@ const Comp = () => {
         predefined: details.predefined || {}
     }), [details.enums, details.compTree, details.predefined]);
 
-    // API Data Response Handlers
+
     const onPropResponse = useCallback((resp) => {
         const propsData = helpers.json.get(resp, 'propsDetails.props', {});
         const parsedData = parser.data.init(propsData, PARSER_CONFIGS);
 
         setDetails((prev) => ({
             ...prev,
-            blank: false,
-            cache: helpers.random.key(),
-            enums: helpers.json.get(resp, 'enums', {}),
-            raw: helpers.json.get(resp, 'propsDetails', {}),
-            compTree: helpers.json.get(resp, 'compTree', {}),
-            predefined: helpers.json.get(resp, 'predefined', {}),
-            data: parsedData
+            blank:false,
+            data:parsedData,
+            cache:helpers.random.key(),
+            enums:helpers.json.get(resp, 'enums', {}),
+            raw:helpers.json.get(resp, 'propsDetails', {}),
+            compTree:helpers.json.get(resp, 'compTree', {}),
+            predefined:helpers.json.get(resp, 'predefined', {})
         }));
     }, []);
 
     const onResp = useCallback((resp) => {
-        const id = 'c5c54d4a7b97784bee2e9d7d2f2e8e7dd';
+        const id = 'c6fdedc3ba1a0486f904e789938c7d7d8';
         const map = helpers.json.get(resp, `components.${id}`, '');
 
         appHelpers.store.get(
@@ -147,21 +126,14 @@ const Comp = () => {
 
     // Initial mount trigger
     const isMountedRef = useRef(false);
-    helpers.react.hooks.onmount(isMountedRef, useEffect, () => {
-        appHelpers.store.get([reqConfig('storybook.components.list.map')], onResp);
-    });
+    helpers.react.hooks.onmount(isMountedRef, useEffect, () => { appHelpers.store.get([reqConfig('storybook.components.list.map')], onResp)});
 
     // 4. Optimized onChange callback with single-pass transformation
     const onChange = useCallback((json, valid) => {
         if (!valid) return;
 
         setDetails((prev) => {
-            const prevProps = helpers.json.get(prev, 'raw.props', {});
-
-            console.log(JSON.stringify(prevProps));
-
-            // If output hasn't functionally changed, prevent re-render
-            if (helpers.json.is.same(prevProps, json)) {
+            if (helpers.json.is.same(helpers.json.get(prev, 'raw.props', {}), json)) {
                 return prev;
             }
 
@@ -194,6 +166,20 @@ const Comp = () => {
         </div>
     ), [details.cache]);
 
+    const nested = (arg, temp) => {
+        let type = helpers.json.get(arg, 'props.node.__.type');
+        let editing = helpers.json.get(arg, 'props.node.__.editing', false);
+        let hideHeader = helpers.json.get(arg, 'props.node.__.hideHeader', false);
+
+        if(type != 'predefined' && (editing)){
+            return (
+                <div className={hideHeader?'':'full bxs bdr-c00104 bdr-1 bdr-tn bdr-rn bdr-bn'}>
+                    {temp(true)}
+                </div>
+            )
+        }
+    }
+
     const jsonTree = useCallback((arg, temp) => (
         <div className='full'>
             {temp.header(arg)}
@@ -205,15 +191,14 @@ const Comp = () => {
     const jsonTreeHeader = useCallback((arg) => arg.template.layout(), []);
     const jsonOutput = useCallback((arg) => arg.template(), []);
 
-    const itemHeaderLayout = useCallback((arg, props) => (
-        <Header templates={arg} node={props.node} builder={builder} configs={configs} />
+    const itemHeaderLayout = useCallback((arg, prps) => (
+        <Header templates={arg} node={prps.node} builder={builder} configs={configs} utils={props.configs} />
     ), [builder, configs]);
 
-    const itemDetailsLayout = useCallback((arg, props) => (
-        <Details templates={arg} node={props.node} builder={builder} configs={configs} />
+    const itemDetailsLayout = useCallback((arg, prps) => (
+        <Details templates={arg} node={prps.node} builder={builder} configs={configs} utils={props.configs} />
     ), [builder, configs]);
 
-    // Static filter query configuration
     const filterConfigs = useMemo(() => ({
         query: {
             $and: [
@@ -252,7 +237,7 @@ const Comp = () => {
             filters={filterConfigs}
             templates={{
                 editor: {
-                    layout: renderLayout,
+                    layout:renderLayout,
                     jsonTree,
                     jsonOutput,
                     jsonTreeHeader
@@ -263,6 +248,9 @@ const Comp = () => {
                     },
                     details: {
                         layout: itemDetailsLayout
+                    },
+                    nested:{
+                        layout:nested
                     }
                 }
             }}

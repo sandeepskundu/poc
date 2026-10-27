@@ -1,23 +1,21 @@
 import helpers from 'ui-helpers';
 
-const Comp = (dprops) => { 
+const Comp = (dprops) => {
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
     const node = props.node || {};
+    const type = helpers.json.get(props, 'node.__.type', '');
+    const actions = helpers.json.get(props, 'node.__.actions', {});
+    const asHeader = helpers.json.get(props, 'node.__.asHeader', false);
+
+    const isRoot = helpers.json.get(props, 'utils.isRoot', false);
+    const details = helpers.json.get(props, 'node.__.details.__', {});
+
+
     const configs = props.configs || {};
     const builder = props.builder || {};
     const templates = props.templates || {};
     const raw = node.__ || {};
     const excludeActions = helpers.json.get(raw, 'excludeActions', {});
-    
-    const canadd = (() => {
-        let enabled = {
-            any:true,
-            nested:true
-        }
-        let sh = templates.actions.add.show;
-        let type = helpers.json.get(raw, 'type', '');
-        return (sh && type && enabled[type]);
-    })();
 
     const error = () => {
         return templates.label.error.ui();
@@ -32,26 +30,23 @@ const Comp = (dprops) => {
         )
     }
 
-    const expend = () => {
-        const show = helpers.json.get(templates, 'actions.expend.show');
-
-        if(show && !excludeActions.expend){
-            return templates.actions.expend.ui();
-        }
-    }
-
     const childCount = () => {
 
     }
 
+    const canAdd = () => {
+        debugger;
+        console.log(node);
+    }
+
     const addIcon = () => {
-        if(canadd && !excludeActions.add){
-            return templates.actions.add.ui()
+        if(isRoot && actions.add){
+            return templates.actions.add.ui();
         }
     }
 
     const modify = () => {
-        if(!excludeActions.edit){
+        if(actions.edit){
             return templates.actions.edit.ui()
         }
     }
@@ -66,9 +61,8 @@ const Comp = (dprops) => {
         };
 
         return (
-            <ul className='full bxs flx-vc flx-sb pd-10 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln' key={raw.id}>
+            <ul className={`full bxs flx-vc flx-sb pd-10 bg-c00101 bdr-1 bdr-c00104 bdr-tn bdr-rn bdr-ln ${asHeader?' bg-c00103':''}`} key={raw.id}>
                 <li className='flx-vc'>
-                    {expend()}
                     {label()}
                     {childCount()}
                 </li>

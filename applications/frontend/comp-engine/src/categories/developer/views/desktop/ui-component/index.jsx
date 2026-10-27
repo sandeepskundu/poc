@@ -4,7 +4,14 @@ import PropsBuilder from './props-builder';
 const Comp = (props) => {
     return (
         <>
-            <PropsBuilder />
+            <PropsBuilder 
+
+                configs={{
+                    isRoot:true
+                }}
+            
+            
+            />
             {/*--<UiComponent />--*/}
         </>
        

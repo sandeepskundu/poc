@@ -72,7 +72,7 @@ const Comp = (dprops) => {
     const jsonTreeTemplate = getTemplate('templates.editor.jsonTree');
     const jsonTreeHeaderTemplate = getTemplate('templates.editor.jsonTreeHeader'); 
 
-    const nested = (arg) => {
+    const nested = (arg, skipExpandedCheck) => {
         if(ntemplate){
             return ntemplate(arg, arg.__.templates.node.nested);
         };
@@ -80,7 +80,7 @@ const Comp = (dprops) => {
         return (
             <div className='full bxs bdr-c00104 anim' style={{ borderLeftWidth:"2px", borderLeftStyle:'solid' }}>
                 <div className='full bdr-1 bdr-tn bdr-bn bdr-rn bdr-c00104 bxs'>
-                    {arg.__.templates.node.nested()}
+                    {arg.__.templates.node.nested(skipExpandedCheck)}
                 </div>
             </div>
         )
