@@ -96,45 +96,6 @@ const setChilds = (rval, childs) => {
     };
 };
 
-const processCompPropsType = (rval, key, value, options) => {
-    const baseLayout = {
-        editing: true,
-        expanded: true,
-        showMetas: true,
-        hideHeader: true,
-        editorDataType: 'compProps',
-        excludeActions: {
-            add: true,
-            edit: true,
-            expend: true
-        }
-    };
-
-    const childs = value && value.___ && value.___.compProps ? value.___.compProps : {};
-    const isRootVal = value && value.___ && typeof value.___.asroot !== 'undefined' ? value.___.asroot : false;
-
-    let wrapperHeader = createBlankHeader('___', false, 'asEditorObject', options, {
-        ...baseLayout,
-        metas: [
-            metaByKey({}, 'asroot', isRootVal)
-        ]
-    });
-
-    const componentPropsHeader = createBlankHeader('compProps', false, 'asEditorObject', options, {
-        ...baseLayout,
-        key: 'compProps',
-        metas: [
-            metaByKey(childs, 'from', ''),
-            metaByKey(childs, 'mapping', ''),
-            metaByKey(childs, 'overwirte', {}) // Keeps consistent spelling schema with existing mappings
-        ]
-    });
-
-    wrapperHeader = setChilds(wrapperHeader, [componentPropsHeader]);
-
-    return setChilds(rval, [wrapperHeader]);
-};
-
 const predefined = (rval, key, value, options) => {
     const childs = helpers.json.get(value, '___.predefined', {});
     const metas = {
@@ -167,9 +128,9 @@ const nested = (rval, key, value, options) => {
 
     let props = blank('nested', false, 'asEditorObject', options, {
         ...base,
-        asHeader: true,
-        hideHeader: false,
-        actions: {
+        asHeader:true,
+        hideHeader:false,
+        actions:{
             add: true,
             edit: false,
         }
@@ -202,6 +163,38 @@ const enums = (rval, key, value, options) => {
     return setChilds(rval, [setChilds(blank('___', false, 'asEditorObject', options, base), [props])]);
 };
 
+
+const compProps = (rval, key, value, options) => {
+    const map = helpers.json.get(value, '___.compProps', {});
+    const isRootVal = helpers.json.get(value, '___.asroot', false);
+    const metas = {
+        from:metaByKey(map, 'from', ''),
+        mapping:metaByKey(map, 'mapping', ''),
+        overwirte:metaByKey(map, 'overwirte', {})
+    }
+    const base = {
+        editing: true,
+        expanded: true,
+        hideHeader: true
+    };
+
+    let asRootMeta = metaByKey({}, 'asroot', isRootVal);
+    let header = blank('___', false, 'asEditorObject', options, {...base, asRootMeta});
+    let props = blank('compProps', false, 'asEditorObject', options, {
+        ...base,
+        key:'compProps',
+        metaMap:metas
+    });
+
+
+    header.__.metas = [asRootMeta];
+    props.__.metas = [metas.from, metas.mapping, metas.overwirte];
+    rval.__.root = header;
+    rval.__.details = props;
+
+    return setChilds(rval, [setChilds(header, [props])]);
+};
+
 const childTree = (rval, key, value, options) => {
     const type = value && value.type ? value.type : '';
 
@@ -209,7 +202,7 @@ const childTree = (rval, key, value, options) => {
         case 'nested':
             return nested(rval, key, value, options);
         case 'compProps':
-        // return processCompPropsType(rval, key, value, options);
+            return compProps(rval, key, value, options);
         case 'predefined':
             return predefined(rval, key, value, options);
         case 'enum':

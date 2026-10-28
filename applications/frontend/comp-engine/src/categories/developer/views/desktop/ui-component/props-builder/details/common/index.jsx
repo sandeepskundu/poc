@@ -10,7 +10,10 @@ const Comp = (dprops) => {
     const templates = props.templates || {};
     const types = helpers.json.get(configs, 'types', []);
     const keyval = helpers.json.get(node, '__.key', '');
+    const dtype = helpers.json.get(node, '__.type', '');
     const editable = !helpers.json.get(node, '__.nonEditable', false);
+    const desc = helpers.json.get(metas, 'base.description.value', '')
+    const isroot = helpers.json.get(props, 'editorProps.editorConfigs.utils.isRoot');
     const metas = (() => {
         let rval = {
             base:{},
@@ -42,21 +45,30 @@ const Comp = (dprops) => {
         let show = helpers.json.get(templates, 'item.key.show', false);
 
         if(show){
-            return (
-                <li className='grid bxs'>
-                    {templates.item.key.input('Key name', '')}
-                </li>
-            )
+
+            if(isroot){
+                return (
+                    <li className='grid bxs'>
+                        {templates.item.key.input('Key name', '')}
+                    </li>
+                )
+            }else{
+                return <li className='grid bxs txt-xs'><span className='fm-sb txt-sm'>Name:</span> {keyval}</li>
+            }
         }
     }
 
     const type = () => {
         if(keyval){
-            return (
-                <li className='grid pd-l24 bxs'>
-                    {templates.item.type.input('Data type')}
-                </li>
-            )
+            if(isroot){
+                return (
+                    <li className='grid pd-l24 bxs'>
+                        {templates.item.type.input('Data type')}
+                    </li>
+                )
+            }else{
+                return <li className='grid bxs txt-xs'><span className='fm-sb txt-sm'>Data type:</span> {dtype}</li>
+            }
         }
     }
 
@@ -111,7 +123,7 @@ const Comp = (dprops) => {
         if(showKeyAndType){
             return (
                 <>
-                    <ul className="full bxs grid-wrapper grid-layout-2 pd-tb24 bxs">
+                    <ul className="full bxs grid-wrapper grid-layout-2 pd-t24 bxs">
                         {key()}
                         {type()}
                     </ul>
@@ -122,18 +134,26 @@ const Comp = (dprops) => {
 
     const description = () => {
         if(keyval){
-            return (
-                <Textarea 
-                    label="Description"
-                    placeholder="Description"
-                    value={helpers.json.get(metas, 'base.description.value', '')}
-                    callback={{
-                        onChange:(a, b, c) => {
-                            templates.item.meta.item.actions.updateByKey(metas.base.description.id, 'value', a)
-                        }
-                    }}
-                />
-            )
+            if(isroot){
+                return (
+                    <div className='full bxs pd-t24'>
+                        <Textarea 
+                            label="Description"
+                            placeholder="Description"
+                            value={helpers.json.get(metas, 'base.description.value', '')}
+                            callback={{
+                                onChange:(a, b, c) => {
+                                    templates.item.meta.item.actions.updateByKey(metas.base.description.id, 'value', a)
+                                }
+                            }}
+                        />
+                    </div>
+                )
+            }else{
+                if(desc){
+                    return <p className='full bxs txt-xs pd-t16'><span className='fm-sb txt-sm'>Description:</span> {desc}</p>
+                }
+            }
         }
     }
 

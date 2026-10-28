@@ -1,0 +1,230 @@
+import Header from './header';
+import parser from './parser';
+import Details from './details';
+import helpers from 'ui-helpers';
+import appHelpers from 'app-helpers';
+import JsonBuilder from './../json-builder';
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
+
+const Comp = (dprops) => {
+    const props = helpers.element.jsx.props.define({}, dprops, helpers);
+    const utils = helpers.json.get(props, 'editorConfigs.utils', {});
+    const TYPES = helpers.json.get(props, 'editorConfigs.TYPES', []);
+    const overwrite = helpers.json.get(props, 'editorDetails.overwrite', {});
+    const componentMap = helpers.json.get(props, 'editorDetails.componentMap', '');
+    const filterConfigs = helpers.json.get(props, 'editorConfigs.filtersConfig', {});
+    const PARSER_CONFIGS = helpers.json.get(props, 'editorConfigs.PARSER_CONFIGS', {});
+    
+
+    const onChangeCb = (() => {
+        let cb = helpers.json.get(props, 'editorConfigs.callbacks.onChange', null);
+
+        if(cb && helpers.data.type.is(cb, 'function')){
+            return cb;
+        };
+
+        return null;
+    })()
+
+    
+    const [details, setDetails] = useState({
+        raw: {},
+        data: [],
+        blank: true,
+        cache: helpers.random.key()
+    });
+
+    const dRef = useRef(details);
+
+    useEffect(() => {
+        dRef.current = details;
+    }, [details]);
+
+    const builder = useMemo(() => {
+        let d = helpers.json.merge(helpers.json.get(props, 'editorConfigs.builder', {}), {
+            callbacks: {
+                onNodeCreate: (arg) => {
+                    return parser.data.onCreate(arg);
+                },
+                onNodeUpdate: (arg, prev) => {
+                    return parser.data.onUpdate(arg, prev, PARSER_CONFIGS);
+                }
+            }
+        });
+        return helpers.json.schema.builder.init(d.id, d);
+    }, []);
+
+    const configs = useMemo(() => ({
+        types:TYPES,
+        enums: helpers.json.get(props, 'editorDetails.enums', {}),
+        compTree: helpers.json.get(props, 'editorDetails.compTree', {}),
+        predefined: helpers.json.get(props, 'editorDetails.predefined', {})
+    }), [props.editorDetails.enums, props.editorDetails.compTree, props.editorDetails.predefined]);
+
+    const onPropResponse = useCallback((resp) => {
+        let data = helpers.json.get(resp, 'propsDetails.props', {});
+            data = helpers.json.merge(data, overwrite);
+            data = parser.data.init(data, PARSER_CONFIGS);
+
+            console.log(data);
+            setDetails((prev) => ({
+                ...prev,
+                blank:false,
+                data:data,
+                cache:helpers.random.key(),
+                raw:helpers.json.get(resp, 'propsDetails', {}),
+            }));
+    }, []);
+
+    helpers.react.hooks.onmount(useRef(false), useEffect, () => {
+        appHelpers.store.get([{
+            name: 'storybook.components.props.detailsByMap',
+            request: {
+                options: {},
+                request: {
+                    data: {
+                        map:(componentMap).toLowerCase()
+                    }
+                }
+            }
+        }], onPropResponse)
+    });
+
+    const onChange = useCallback((json, valid) => {
+        if (!valid) {
+            return
+        }
+
+        setDetails((prev) => {
+            if (helpers.json.is.same(helpers.json.get(prev, 'raw.props', {}), json)) {
+                return prev;
+            }
+
+            console.log(utils, helpers.json.deleteAllNestedKeyByVal(json, 'type', 'asEditorObject'));
+
+            return {
+                ...prev,
+                data:parser.data.init(helpers.json.deleteAllNestedKeyByVal(json, 'type', 'asEditorObject'), PARSER_CONFIGS)
+            };
+        });
+    }, []);
+
+
+    const onOutputChange = (arg) => {
+        if (onChangeCb) {
+            if(utils.isRoot){
+                onChangeCb(arg);
+            }else{
+                let or = helpers.json.get(dRef, 'current.raw.props', {});
+                let rv = helpers.json.deleteAllNestedKeyByVal(arg, 'type', 'asEditorObject');
+                    rv = helpers.json.removeDuplicate(arg, or);
+                    onChangeCb(rv);
+            }
+        }
+    };
+
+    const outputParser = (json) => {
+        let rval = helpers.json.removeWrapperKeys(json, {stripKeys: '___blank___', removePrimitive: true});
+            onOutputChange(rval);
+        return rval;
+    };
+
+    const layout = (arg) => {
+        if(utils.isRoot){
+            return (
+                <div className='full bxs grid-wrapper grid-layout-2 pd-20'>
+                    <div className='grid pd-r10 bxs' key={details.cache}>
+                        {arg.jsonTree()}
+                    </div>
+                    <div className='grid pd-l10 bxs oa'>
+                        {arg.jsonOutput(details.cache)}
+                    </div>
+                </div>
+            )
+        }else{
+            return (
+                <div className='full bxs'>
+                    <div className='full' key={details.cache}>
+                        {arg.jsonTree()}
+                    </div>
+                    <div className='full hide'>
+                        {arg.jsonOutput(details.cache)}
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    const jsonTreeHeader = (arg) => {
+        if(utils.isRoot){
+            return arg.template.layout()
+        }
+    };
+
+    const nested = (arg, temp) => {
+        let type = helpers.json.get(arg, 'props.node.__.type');
+        let editing = helpers.json.get(arg, 'props.node.__.editing', false);
+        let hideHeader = helpers.json.get(arg, 'props.node.__.hideHeader', false);
+
+        if (type != 'predefined' && (editing)) {
+            return (
+                <div className={hideHeader ? '' : 'full bxs bdr-c00104 bdr-1 bdr-tn bdr-rn bdr-bn'}>
+                    {temp(true)}
+                </div>
+            )
+        }
+    }
+
+    const jsonTree = useCallback((arg, temp) => (
+        <div className='full'>
+            {temp.header(arg)}
+            {temp.details(arg)}
+            {temp.nested(arg)}
+        </div>
+    ), []);
+
+    const jsonOutput = useCallback((arg) => arg.template(), []);
+    
+
+    const itemHeaderLayout = useCallback((arg, prps) => (
+        <Header editorProps={props} templates={arg} node={prps.node} builder={builder} configs={configs} utils={utils} />
+    ), [builder, configs]);
+
+    const itemDetailsLayout = useCallback((arg, prps) => (
+        <Details editorProps={props} templates={arg} node={prps.node} builder={builder} configs={configs} utils={utils} />
+    ), [builder, configs]);
+
+    return (
+        <JsonBuilder
+            builder={builder}
+            data={details.data}
+            callbacks={{
+                onChange,
+                outputParser
+            }}
+            configs={helpers.json.get(props, 'editorConfigs.layoutConfig', {})}
+            filters={filterConfigs}
+            templates={{
+                editor: {
+                    layout,
+                    jsonTree,
+                    jsonOutput,
+                    jsonTreeHeader
+                },
+                item: {
+                    header: {
+                        layout: itemHeaderLayout
+                    },
+                    details: {
+                        layout: itemDetailsLayout
+                    },
+                    nested: {
+                        layout: nested
+                    }
+                }
+            }}
+        />
+    );
+};
+
+export default Comp;

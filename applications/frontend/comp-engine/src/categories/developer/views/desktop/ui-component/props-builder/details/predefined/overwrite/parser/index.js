@@ -241,22 +241,20 @@ const transformRoot = (rval, value, options) => {
     return rval;
 }
 
-const start = (arg, options, map = []) => {
+const start = (arg, options) => {
     if (!arg || typeof arg !== 'object') {
         return [];
     }
 
     let rval = [];
 
-    if(arg.type){
+    if(arg.type && typeof arg.type === 'string'){
         rval = transformRoot(rval, arg, options)
     }else{
         for (let a in arg) {
             rval = transform(rval, a, arg[a], options)
         }
     }
-
-    console.log(rval);
 
     return helpers.array.sortByOrder(rval, helpers.json.get(options, 'sortOrder', []), {
         path: helpers.json.get(options, 'sortPath', '__.type')

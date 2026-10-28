@@ -6,13 +6,7 @@ import Predefined from './predefined';
 
 const Comp = (dprops) => { 
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
-
-    const node = props.node || {};
-    const type = helpers.json.get(node, '__.type', '');
-
-    console.log(helpers.json.get(node, '__.type', ''), helpers.json.get(node, '__.key', ''));
-
-    // 'compProps', '', '', '', '', '', '', '', '', '', ''
+    const type = helpers.json.get(props, 'node.__.type', '');
 
     const ui = () => {
         switch (type){
@@ -46,7 +40,7 @@ const Comp = (dprops) => {
             case 'jsx':
                 return <Common {...props} />
             break;
-            case '':
+            case 'compProps':
                 return <CompProps {...props} />
             break;
             default:

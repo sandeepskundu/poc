@@ -34,11 +34,6 @@ const Comp = (dprops) => {
 
     }
 
-    const canAdd = () => {
-        debugger;
-        console.log(node);
-    }
-
     const addIcon = () => {
         if(isRoot && actions.add){
             return templates.actions.add.ui();

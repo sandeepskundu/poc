@@ -39,11 +39,15 @@ const Comp = (dprops) => {
     })();
 
     let predefined = helpers.json.get(props, `configs.predefined.${pdmap}`, {});
-    let data = parser.init(helpers.json.merge(predefined, helpers.json.get(props, 'data.value', {})), {
-        sortPath:'__.type',
-        uitls:props.configs,
-        sortOrder:['boolean', 'nested',  'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx', 'predefined']
-    });
+    let overwirte = helpers.json.get(props, 'data.value', {});
+    let data = helpers.json.merge(predefined, overwirte);
+        data = parser.init(helpers.json.merge(predefined, overwirte), {
+            sortPath:'__.type',
+            uitls:props.configs,
+            sortOrder:['boolean', 'nested',  'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx', 'predefined']
+        });
+
+    console.log(data);
 
     const getConfigs = () => {
         return {

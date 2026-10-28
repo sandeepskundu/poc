@@ -12,9 +12,15 @@ const Comp = (dprops) => {
     const node = props.node || {};
     const templates = props.templates || {};
     const details = helpers.json.get(node, '__.details.__', {});
+    const isroot = helpers.json.get(props, 'editorProps.editorConfigs.utils.isRoot');
     const [metas, setMetas] = useState(helpers.json.get(details, 'metaMap', {}));
 
+    const fromval = helpers.json.get(metas, 'from.value', '');
+    const mappingval = helpers.json.get(metas, 'mapping.value', '');
+
     const updateMetas = (type, value) => {
+
+        console.log(metas);
         let m = helpers.json.copy(metas);
             m[type].value = value;
             setMetas(m);
@@ -25,42 +31,63 @@ const Comp = (dprops) => {
     }
 
     const from = () => {
-        return (
-            <From
-                selected={helpers.json.get(metas, 'from.value', '')}
-                onChange={(value) => {
-                    update(helpers.json.get(metas, 'from.id', ''), 'value', value)}
-                }
-            />
-        )
+
+        if(isroot){
+            return (
+                <From
+                    selected={fromval}
+                    onChange={(value) => {
+                        update(helpers.json.get(metas, 'from.id', ''), 'value', value)}
+                    }
+                />
+            )
+        }else{
+            if(fromval){
+                return <li className='full bxs txt-xs'><span className='fm-sb txt-sm'>From:</span> {fromval}</li>
+            }
+        }
     }
 
     const key = () => {
-        return helpers.json.get(metas, 'mapping.value', '')+helpers.json.get(metas, 'from.value', '')
+        return helpers.json.get(metas, 'mapping.value', '')+fromval
+    }
+
+    const mapping = () => {
+        if(isroot){
+            return (
+                <div className='full bxs pd-t8'>
+                    <Mapping
+                        configs={props.configs} 
+                        data={helpers.json.get(metas, 'mapping', {})} 
+                        onChange={(value) => {
+                            templates.item.meta.item.actions.updateMetaDetailsByKey({
+                                [helpers.json.get(metas, 'mapping.id', '')]:{
+                                    value:value 
+                                },
+                                [helpers.json.get(metas, 'overwirte.id', '')]:{
+                                    value:{}
+                                }
+                            }, details.id);
+                            updateMetas('overwirte', {});
+                            updateMetas('mapping', value)
+                        }}
+                    />
+                </div>
+            )
+        }else{
+            if(mappingval){
+                return <li className='full bxs txt-xs mr-t6'><span className='fm-sb txt-sm'>Mapping:</span> {mappingval}</li>
+            }
+        }
     }
 
     const mapui = () => {
         return (
             <div className='full bxs pd-ln'>
-                <div className='full bxs pd-t8'>
+                <div className='full bxs'>
                     <div className='full pd-l16 bxs pd-b16'>
                         {from()}
-                        <Mapping
-                            configs={props.configs} 
-                            data={helpers.json.get(metas, 'mapping', {})} 
-                            onChange={(value) => {
-                                templates.item.meta.item.actions.updateMetaDetailsByKey({
-                                    [helpers.json.get(metas, 'mapping.id', '')]:{
-                                        value:value 
-                                    },
-                                    [helpers.json.get(metas, 'overwirte.id', '')]:{
-                                        value:{}
-                                    }
-                                }, details.id);
-                                updateMetas('overwirte', {});
-                                updateMetas('mapping', value)
-                            }}
-                        />
+                        {mapping()}
                     </div>
                     <Overwrite 
                         {...props}
@@ -68,8 +95,9 @@ const Comp = (dprops) => {
                         data={helpers.json.get(metas, 'overwirte', {})}
                         mapping={helpers.json.get(metas, 'mapping.value', '')}
                         onChange={(value) => {
-                            update(helpers.json.get(metas, 'overwirte.id', ''), 'value', value)}
-                        }
+                            update(helpers.json.get(metas, 'overwirte.id', ''), 'value', value);
+                            updateMetas('overwirte', value);
+                        }}
                     />
                 </div> 
             </div>
@@ -81,9 +109,7 @@ const Comp = (dprops) => {
             <Common {...props} />
             {mapui()}
         </div>
-        
     )
 }
-
 
 export default Comp;
