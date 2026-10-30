@@ -18,7 +18,7 @@ module.exports = {
                         compProps:{
                             from:'statics',
                             mapping:'raw/atoms/avatar',
-                            overwirte:{
+                            overwrite:{
                                 enable:{
                                     dvalue:false,
                                     type:'boolean'
@@ -35,7 +35,7 @@ module.exports = {
                         compProps:{
                             from:'statics',
                             mapping:'raw/atoms/avatar',
-                            overwirte:{
+                            overwrite:{
                                 enable:{
                                     dvalue:false,
                                     type:'boolean'
@@ -61,11 +61,11 @@ module.exports = {
                         compProps:{
                             from:'statics',
                             mapping:'raw/atoms/icons',
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 icon:{
                                                     ___:{
                                                         nested:{
@@ -91,11 +91,11 @@ module.exports = {
                         compProps:{
                             from:'statics',
                             mapping:'raw/atoms/icons',
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 icon:{
                                                     ___:{
                                                         nested:{
@@ -129,7 +129,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{
@@ -145,7 +145,7 @@ module.exports = {
                                             predefined:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             color:{},
                                                             background:{}
                                                         }
@@ -166,7 +166,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{
@@ -182,7 +182,7 @@ module.exports = {
                                             predefined:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             radius:{
                                                                 dvalue:'round'
                                                             },

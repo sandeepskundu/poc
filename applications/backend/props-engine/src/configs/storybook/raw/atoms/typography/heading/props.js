@@ -5,7 +5,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     markup:{
                         type:'nested',
                         ___:{

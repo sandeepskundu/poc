@@ -8,7 +8,7 @@ module.exports = helpers.json.merge(helpers.json.get(avatar, 'props', {}), {
     dsTheme:{
         ___:{
             predefined:{
-                overwirte:{
+                overwrite:{
                     radius:{
                         dvalue:'round'
                     },
@@ -25,11 +25,11 @@ module.exports = helpers.json.merge(helpers.json.get(avatar, 'props', {}), {
     icon:{
         ___:{
             compProps:{
-                overwirte:{
+                overwrite:{
                     config:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     svg:{
                                         ___:{
                                             nested:{
@@ -62,7 +62,7 @@ module.exports = helpers.json.merge(helpers.json.get(avatar, 'props', {}), {
                 wrapper:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 content:null,
                                 markup:{
                                     ___:{

@@ -14,7 +14,6 @@ const Comp = (dprops) => {
     const componentMap = helpers.json.get(props, 'editorDetails.componentMap', '');
     const filterConfigs = helpers.json.get(props, 'editorConfigs.filtersConfig', {});
     const PARSER_CONFIGS = helpers.json.get(props, 'editorConfigs.PARSER_CONFIGS', {});
-    
 
     const onChangeCb = (() => {
         let cb = helpers.json.get(props, 'editorConfigs.callbacks.onChange', null);
@@ -26,7 +25,6 @@ const Comp = (dprops) => {
         return null;
     })()
 
-    
     const [details, setDetails] = useState({
         raw: {},
         data: [],
@@ -62,11 +60,14 @@ const Comp = (dprops) => {
     }), [props.editorDetails.enums, props.editorDetails.compTree, props.editorDetails.predefined]);
 
     const onPropResponse = useCallback((resp) => {
+        if(!utils.isRoot){
+                debugger;
+            }
         let data = helpers.json.get(resp, 'propsDetails.props', {});
             data = helpers.json.merge(data, overwrite);
             data = parser.data.init(data, PARSER_CONFIGS);
 
-            console.log(data);
+            
             setDetails((prev) => ({
                 ...prev,
                 blank:false,
@@ -100,7 +101,9 @@ const Comp = (dprops) => {
                 return prev;
             }
 
-            console.log(utils, helpers.json.deleteAllNestedKeyByVal(json, 'type', 'asEditorObject'));
+            if(utils.isRoot){
+                console.log('root-on-changed', helpers.json.deleteAllNestedKeyByVal(json, 'type', 'asEditorObject'));
+            }
 
             return {
                 ...prev,
@@ -113,6 +116,7 @@ const Comp = (dprops) => {
     const onOutputChange = (arg) => {
         if (onChangeCb) {
             if(utils.isRoot){
+                console.log('root--output-changed', arg);
                 onChangeCb(arg);
             }else{
                 let or = helpers.json.get(dRef, 'current.raw.props', {});

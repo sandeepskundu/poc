@@ -6,7 +6,7 @@ const ds = (elm) => {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     markup:{
                         ___:{
                             nested:{
@@ -22,7 +22,7 @@ const ds = (elm) => {
                                 predefined:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 color:{},
                                                 background:{}
                                             }

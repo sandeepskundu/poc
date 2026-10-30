@@ -11,7 +11,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.preset',
-                overwirte:{
+                overwrite:{
                     outer:{
                         type:'enum',
                         ___:{
@@ -38,7 +38,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 content:null,
                             }
                         }
@@ -52,7 +52,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 content:null,
                             }
                         }

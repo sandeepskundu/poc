@@ -17,6 +17,8 @@ const Comp = (dprops) => {
     const [metas, setMetas] = useState(helpers.json.get(details, 'metaMap', {}));
     const isroot = helpers.json.get(props, 'editorProps.editorConfigs.utils.isRoot');
 
+    console.log('metas', metas);
+
     const updateMetas = (type, value) => {
         let m = helpers.json.copy(metas);
             m[type].value = value;
@@ -69,11 +71,11 @@ const Comp = (dprops) => {
                                 [helpers.json.get(metas, 'mapping.id', '')]:{
                                     value:value 
                                 },
-                                [helpers.json.get(metas, 'overwirte.id', '')]:{
+                                [helpers.json.get(metas, 'overwrite.id', '')]:{
                                     value:{}
                                 }
                             }, details.id);
-                            updateMetas('overwirte', {});
+                            updateMetas('overwrite', {});
                             updateMetas('mapping', value);
                         }}
                     />
@@ -84,8 +86,8 @@ const Comp = (dprops) => {
 
     const onDataChange = (arg) => {
         arg = helpers.json.removeDuplicate(arg, rawData.current);
-        update(helpers.json.get(metas, 'overwirte.id', ''), 'value', arg);
-        updateMetas('overwirte', arg);
+        update(helpers.json.get(metas, 'overwrite.id', ''), 'value', arg);
+        updateMetas('overwrite', arg);
     }
 
     const onRawChange = (arg) => {
@@ -147,7 +149,7 @@ const Comp = (dprops) => {
             <Common {...props} />
             <div className='full bxs pd-rl16'>{asroot(metas.asroot)}</div>
             {compProps()}
-            {editor(onDataChange, helpers.json.get(metas, 'overwirte.value', {}))}
+            {editor(onDataChange, helpers.json.get(metas, 'overwrite.value', {}))}
         </div>
     );
 }

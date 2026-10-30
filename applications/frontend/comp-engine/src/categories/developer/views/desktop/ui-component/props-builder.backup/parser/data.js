@@ -180,7 +180,7 @@ const processCompPropsType = (rval, key, value, options) => {
         metas: [
             metaByKey(childs, 'from', ''),
             metaByKey(childs, 'mapping', ''),
-            metaByKey(childs, 'overwirte', {}) // Keeps consistent spelling schema with existing mappings
+            metaByKey(childs, 'overwrite', {}) // Keeps consistent spelling schema with existing mappings
         ]
     });
 
@@ -211,7 +211,7 @@ const processPredefinedType = (rval, key, value, options) => {
         metas: [
             metaByKey(childs, 'from', ''),
             metaByKey(childs, 'mapping', ''),
-            metaByKey(childs, 'overwirte', {})
+            metaByKey(childs, 'overwrite', {})
         ]
     });
 

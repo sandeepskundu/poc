@@ -17,7 +17,7 @@ const predefined = () => {
             predefined:{
                 from:'statics',
                 mapping:'ds.preset',
-                overwirte:{
+                overwrite:{
                    theme:null
                 }
             }
@@ -65,7 +65,7 @@ const inputPredefined = (arg) => {
     return helpers.json.merge({
         ___:{
             predefined:{
-                overwirte:{
+                overwrite:{
                     theme:{
                         ___:{
                             enum:{
@@ -86,7 +86,7 @@ const inputPreset = () => {
                 default:inputPredefined({
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 theme:{
                                     dvalue:'000'
                                 },

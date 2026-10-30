@@ -31,7 +31,7 @@ const itemProps = () => {
                             wrapper:{
                                 ___:{
                                     predefined:{
-                                        overwirte:{
+                                        overwrite:{
                                             ds:{
                                                 ___:{
                                                     nested:{
@@ -132,7 +132,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     markup:{
                         ___:{
                             nested:{

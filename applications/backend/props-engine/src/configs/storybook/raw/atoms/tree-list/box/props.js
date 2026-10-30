@@ -33,7 +33,7 @@ const headerProps = () => {
                                         config:{
                                             ___:{
                                                 predefined:{
-                                                    overwirte:{
+                                                    overwrite:{
                                                         svg:{
                                                             ___:{
                                                                 nested:{
@@ -68,7 +68,7 @@ const headerProps = () => {
                             start:{
                                 ___:{
                                     predefined:{
-                                        overwirte:{
+                                        overwrite:{
                                             ds:{
                                                 ___:{
                                                     nested:{
@@ -112,7 +112,7 @@ const headerProps = () => {
                             end:{
                                 ___:{
                                     predefined:{
-                                        overwirte:{
+                                        overwrite:{
                                             ds:{
                                                 ___:{
                                                     nested:{
@@ -168,7 +168,7 @@ const body = () => {
                 wrapper:{
                     ___:{
                         predefined:{ 
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{

@@ -15,7 +15,7 @@ const button = (elm) => {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     markup:{
                         ___:{
                             nested:{
@@ -31,7 +31,7 @@ const button = (elm) => {
                                 predefined:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 size:{
                                                     dvalue:''
                                                 },
@@ -134,11 +134,11 @@ module.exports = {
                         compProps:{
                             from:'statics',
                             mapping:'raw/atoms/icons',
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 icon:{
                                                     ___:{
                                                         nested:{
@@ -164,11 +164,11 @@ module.exports = {
                         compProps:{
                             from:'statics',
                             mapping:'raw/atoms/icons',
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 icon:{
                                                     ___:{
                                                         nested:{

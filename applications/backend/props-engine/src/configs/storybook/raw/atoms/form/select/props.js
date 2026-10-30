@@ -65,11 +65,11 @@ module.exports = {
                                         right:{
                                             ___:{
                                                 compProps:{
-                                                    overwirte:{
+                                                    overwrite:{
                                                         config:{
                                                             ___:{
                                                                 predefined:{
-                                                                    overwirte:{
+                                                                    overwrite:{
                                                                         icon:{
                                                                             ___:{
                                                                                 nested:{
@@ -120,7 +120,7 @@ module.exports = {
                                         wrapper:{
                                             ___:{
                                                 predefined:{
-                                                    overwirte:{
+                                                    overwrite:{
                                                         markup:{
                                                             ___:{
                                                                 nested:{
@@ -136,7 +136,7 @@ module.exports = {
                                                                     predefined:{
                                                                         ___:{
                                                                             predefined:{
-                                                                                overwirte:{
+                                                                                overwrite:{
                                                                                     color:{},
                                                                                     background:{},
                                                                                     size:{
@@ -204,7 +204,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 content:null,
                                 markup:{
                                     ___:{
@@ -221,7 +221,7 @@ module.exports = {
                                             predefined:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             color:{},
                                                             background:{}
                                                         }
@@ -344,7 +344,7 @@ module.exports = {
                             wrapper:{
                                 ___:{
                                     predefined:{
-                                        overwirte:{
+                                        overwrite:{
                                             ds:{
                                                 ___:{
                                                     nested:{
@@ -588,7 +588,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     content:null,
                     markup:{
                         ___:{
@@ -677,7 +677,7 @@ const icon = () => {
             compProps:{
                 from:'statics',
                 mapping:'raw/atoms/icons',
-                overwirte:{
+                overwrite:{
                     enabled:{
                         type:'boolean',
                         dvalue:true,
@@ -697,7 +697,7 @@ const icon = () => {
                     config:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     icon:{
                                         ___:{
                                             nested:{
@@ -726,7 +726,7 @@ const stateDs = () => {
     return {
         ___:{
             predefined:{
-                overwirte:{
+                overwrite:{
                     markup:null,
                     ds:{
                         ___:{
@@ -750,7 +750,7 @@ const stateListboxDs = () => {
             compProps:{
                 from:'statics',
                 mapping:'raw/atoms/list/box',
-                overwirte:{
+                overwrite:{
                     data:null,
                     mapping:null,
                     defaults:null,
@@ -924,7 +924,7 @@ module.exports = {
             compProps:{
                 from:'statics',
                 mapping:'raw/atoms/popover',
-                overwirte:{
+                overwrite:{
                     controls:{
                         ___:{
                             nested:{
@@ -955,7 +955,7 @@ module.exports = {
             compProps:{
                 from:'statics',
                 mapping:'raw/atoms/form/input',
-                overwirte:{}
+                overwrite:{}
             }
         }
     },
@@ -997,7 +997,7 @@ module.exports = {
                         compProps:{
                             from:'statics',
                             mapping:'raw/atoms/list/box',
-                            overwirte:{}
+                            overwrite:{}
                         }
                     }
                 },
@@ -1015,7 +1015,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     content:null,
                     markup:{
                         ___:{

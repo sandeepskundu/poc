@@ -11,7 +11,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.preset',
-                overwirte:{
+                overwrite:{
                     outer:{
                         type:'enum',
                         ___:{
@@ -38,7 +38,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 content:null,
                             }
                         }
@@ -54,11 +54,11 @@ module.exports = {
             compProps:{
                 from:'statics',
                 mapping:'raw/atoms/icons',
-                overwirte:{
+                overwrite:{
                     config:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     icon:{
                                         ___:{
                                             nested:{

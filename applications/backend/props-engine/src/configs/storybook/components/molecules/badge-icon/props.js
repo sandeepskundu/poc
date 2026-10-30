@@ -21,11 +21,11 @@ module.exports = helpers.json.merge(props || {}, {
             compProps:{
                 from:'statics',
                 mapping:'raw/atoms/icons',
-                overwirte:{
+                overwrite:{
                     config:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     svg:{
                                         ___:{
                                             nested:{

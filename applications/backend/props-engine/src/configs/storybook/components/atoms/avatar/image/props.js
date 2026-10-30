@@ -5,7 +5,7 @@ module.exports = helpers.json.merge(helpers.json.get(avatar, 'props', {}), {
     dsTheme:{
         ___:{
             predefined:{
-                overwirte:{
+                overwrite:{
                     radius:{
                         dvalue:'round'
                     }

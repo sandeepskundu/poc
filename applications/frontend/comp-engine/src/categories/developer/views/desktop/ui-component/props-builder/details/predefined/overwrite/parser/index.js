@@ -170,7 +170,7 @@ const predefined = (rval, key, value, options) => {
         predefinedProps.__.metas.push(metaByKey(childs, 'mapping', ''));
     }
 
-    predefinedProps.__.metas.push(metaByKey(childs, 'overwirte', {}));
+    predefinedProps.__.metas.push(metaByKey(childs, 'overwrite', {}));
 
     return setChilds(rval, [setChilds(header, [predefinedProps])]);
 }

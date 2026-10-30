@@ -8,14 +8,14 @@ module.exports = helpers.json.merge(itemProps, {
                 wrapper:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
                                             predefined:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             font__d__size:{
                                                                 dvalue:'md'
                                                             },

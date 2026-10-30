@@ -19,8 +19,8 @@ const compile = async (storybook, type, config, req, res, next) => {
     return req.helpers.json.merge(base, storybook);
 }
 
-const getPropsByTypeAndMap = async (map, type, overwirte, config, req, res, next) => {
-    return await compile(await utils.getConfigByTypeAndMap(map, type, overwirte, config, req, res, next), type, config, req, res, next);
+const getPropsByTypeAndMap = async (map, type, overwrite, config, req, res, next) => {
+    return await compile(await utils.getConfigByTypeAndMap(map, type, overwrite, config, req, res, next), type, config, req, res, next);
 }
 
 exports.getByMap = async (map, config, req, res, next) => {

@@ -31,7 +31,7 @@ const Comp = (dprops) => {
             dvalue:true,
             mapping:true,
             required:true,
-            overwirte:true,
+            overwrite:true,
             description:true
         };
         let list = helpers.json.get(node, '__.metas', []);
@@ -101,9 +101,9 @@ const Comp = (dprops) => {
             return (
                 <Overwrite 
                     {...props}
-                    data={helpers.json.get(metas, 'base.overwirte', {})}
+                    data={helpers.json.get(metas, 'base.overwrite', {})}
                     mapping={helpers.json.get(metas, 'base.mapping.value', '')}
-                    onChange={(value) => { update(helpers.json.get(metas, 'base.overwirte.id', ''), 'value', value)}}
+                    onChange={(value) => { update(helpers.json.get(metas, 'base.overwrite.id', ''), 'value', value)}}
                 />
             )
         }

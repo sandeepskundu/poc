@@ -17,11 +17,11 @@ const icon = () => {
     return {
         ___:{
             compProps:{
-                overwirte:{
+                overwrite:{
                     config:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     icon:{
                                         ___:{
                                             nested:{
@@ -66,18 +66,18 @@ const button = () => {
                         compProps:{
                             from:'statics',
                             mapping:'raw/atoms/form/button',
-                            overwirte:{
+                            overwrite:{
                                 button:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 ds:{
                                                     ___:{
                                                         nested:{
                                                             predefined:{
                                                                 ___:{
                                                                     predefined:{
-                                                                        overwirte:{
+                                                                        overwrite:{
                                                                             size:{
                                                                                 dvalue:'sm'
                                                                             },
@@ -129,7 +129,7 @@ const wrapper = (elm) => {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     markup:{
                         ___:{
                             nested:{
@@ -143,7 +143,7 @@ const wrapper = (elm) => {
                                 predefined:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 color:{},
                                                 background:{}
                                             }
@@ -202,19 +202,19 @@ module.exports = {
                                     compProps:{
                                         from:'statics',
                                         mapping:'raw/atoms/form/button',
-                                        overwirte:{
+                                        overwrite:{
                                             icons:icons(),
                                             button:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             ds:{
                                                                 ___:{
                                                                     nested:{
                                                                         predefined:{
                                                                             ___:{
                                                                                 predefined:{
-                                                                                    overwirte:{
+                                                                                    overwrite:{
                                                                                         size:{
                                                                                             dvalue:'sm'
                                                                                         },

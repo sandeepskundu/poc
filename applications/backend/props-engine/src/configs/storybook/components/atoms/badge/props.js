@@ -9,7 +9,7 @@ module.exports = helpers.json.merge(helpers.json.get(badge, 'props', {}), {
                     ___:{
                         asroot:false,
                         compProps:{
-                            overwirte:{
+                            overwrite:{
                                 enable:{
                                     dvalue:false
                                 }
@@ -20,7 +20,7 @@ module.exports = helpers.json.merge(helpers.json.get(badge, 'props', {}), {
                 left:{
                     ___:{
                         compProps:{
-                            overwirte:{
+                            overwrite:{
                                 enable:{
                                     dvalue:false
                                 }
@@ -38,11 +38,11 @@ module.exports = helpers.json.merge(helpers.json.get(badge, 'props', {}), {
                 left:{
                     ___:{
                         compProps:{
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 svg:{
                                                     ___:{
                                                         nested:{
@@ -75,11 +75,11 @@ module.exports = helpers.json.merge(helpers.json.get(badge, 'props', {}), {
                 right:{
                     ___:{
                         compProps:{
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 svg:{
                                                     ___:{
                                                         nested:{
@@ -118,14 +118,14 @@ module.exports = helpers.json.merge(helpers.json.get(badge, 'props', {}), {
                 content:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
                                             predefined:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             color:{},
                                                             background:{}
                                                         }
@@ -166,14 +166,14 @@ module.exports = helpers.json.merge(helpers.json.get(badge, 'props', {}), {
                 wrapper:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
                                             predefined:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             size:{
                                                                 dvalue:'lg'
                                                             }

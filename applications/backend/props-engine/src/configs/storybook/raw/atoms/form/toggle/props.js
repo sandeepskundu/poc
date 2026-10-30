@@ -15,7 +15,7 @@ module.exports = helpers.json.merge(helpers.json.get(choice, 'props', {}), {
                                         predefined:{
                                             ___:{
                                                 predefined:{
-                                                    overwirte:{
+                                                    overwrite:{
                                                         background:{
                                                             dvalue:'c00102'
                                                         },
@@ -45,7 +45,7 @@ module.exports = helpers.json.merge(helpers.json.get(choice, 'props', {}), {
                 ds:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
 
                                 //c00102
                                 ds:{
@@ -79,7 +79,7 @@ module.exports = helpers.json.merge(helpers.json.get(choice, 'props', {}), {
     holder:{
         ___:{
             compProps:{
-                overwirte:{
+                overwrite:{
                     layer:{
                         ___:{
                             nested:{

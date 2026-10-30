@@ -9,7 +9,7 @@ const excludeThemeAndPredefined = () => {
     return {
         ___:{
             predefined:{
-                overwirte:{
+                overwrite:{
                     ds:{
                         ___:{
                             nested:{
@@ -165,7 +165,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                             config:{
                                 ___:{
                                     predefined:{
-                                        overwirte:{
+                                        overwrite:{
                                             svg:{
                                                 ___:{
                                                     nested:{
@@ -208,7 +208,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                 end:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
@@ -254,7 +254,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                 wrapper:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{

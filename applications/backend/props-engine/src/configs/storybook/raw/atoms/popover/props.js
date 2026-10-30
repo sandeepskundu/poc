@@ -76,7 +76,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{
@@ -97,7 +97,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{
@@ -118,7 +118,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{
@@ -139,7 +139,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{

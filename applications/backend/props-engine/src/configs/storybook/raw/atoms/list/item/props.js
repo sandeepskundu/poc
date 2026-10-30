@@ -8,7 +8,7 @@ module.exports = helpers.json.merge(contentRow, {
             wrapper:{
                 ___:{
                     predefined:{
-                        overwirte:{
+                        overwrite:{
                             markup:{
                                 ___:{
                                     nested:{
@@ -24,7 +24,7 @@ module.exports = helpers.json.merge(contentRow, {
                                         predefined:{
                                             ___:{
                                                 predefined:{
-                                                    overwirte:{
+                                                    overwrite:{
                                                         font__d__size:{
                                                             dvalue:'sm'
                                                         },
@@ -87,7 +87,7 @@ module.exports = helpers.json.merge(contentRow, {
             start:{
                 ___:{
                     predefined:{
-                        overwirte:{
+                        overwrite:{
                             ds:{
                                 ___:{
                                     nested:{
@@ -131,7 +131,7 @@ module.exports = helpers.json.merge(contentRow, {
             before:{
                 ___:{
                     predefined:{
-                        overwirte:{
+                        overwrite:{
                             ds:{
                                 ___:{
                                     nested:{
@@ -175,7 +175,7 @@ module.exports = helpers.json.merge(contentRow, {
             after:{
                 ___:{
                     predefined:{
-                        overwirte:{
+                        overwrite:{
                             ds:{
                                 ___:{
                                     nested:{
@@ -219,7 +219,7 @@ module.exports = helpers.json.merge(contentRow, {
             end:{
                 ___:{
                     predefined:{
-                        overwirte:{
+                        overwrite:{
                             ds:{
                                 ___:{
                                     nested:{

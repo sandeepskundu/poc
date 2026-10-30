@@ -5,7 +5,7 @@ const predefined = (arg) => {
     return helpers.json.merge({
         from:'statics',
         mapping:'ds.configs',
-        overwirte:{
+        overwrite:{
             markup:null,
             ds:{
                 ___:{
@@ -13,7 +13,7 @@ const predefined = (arg) => {
                         predefined:{
                             ___:{
                                 predefined:{
-                                    overwirte:{
+                                    overwrite:{
                                         background:{}
                                     }
                                 }
@@ -121,7 +121,7 @@ module.exports = {
                 config:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 svg:{
                                     ___:{
                                         nested:{
@@ -156,7 +156,7 @@ module.exports = {
             nested:{
                 wrapper:dsConfig(),
                 contentWrapper:dsConfig({
-                    overwirte:{
+                    overwrite:{
                         markup:null,
                         ds:{
                             ___:{
@@ -164,7 +164,7 @@ module.exports = {
                                     predefined:{
                                         ___:{
                                             predefined:{
-                                                overwirte:{
+                                                overwrite:{
                                                     background:{
                                                         dvalue:'c00000'
                                                     }
@@ -178,7 +178,7 @@ module.exports = {
                     }
                 }),
                 titleWrapper:dsConfig({
-                    overwirte:{
+                    overwrite:{
                         markup:{
                             ___:{
                                 nested:{
@@ -194,7 +194,7 @@ module.exports = {
                                     predefined:{
                                         ___:{
                                             predefined:{
-                                                overwirte:{
+                                                overwrite:{
                                                     border:{
                                                         dvalue:''
                                                     },
@@ -262,7 +262,7 @@ module.exports = {
                     }
                 }),
                 bodyWrapper:dsConfig({
-                    overwirte:{
+                    overwrite:{
                         markup:{
                             ___:{
                                 nested:{
@@ -278,7 +278,7 @@ module.exports = {
                                     predefined:{
                                         ___:{
                                             predefined:{
-                                                overwirte:{
+                                                overwrite:{
                                                     background:{
                                                         dvalue:''
                                                     }
@@ -316,14 +316,14 @@ module.exports = {
                     }
                 }),
                 contentBody:dsConfig({
-                    overwirte:{
+                    overwrite:{
                         ds:{
                             ___:{
                                 nested:{
                                     predefined:{
                                         ___:{
                                             predefined:{
-                                                overwirte:{
+                                                overwrite:{
                                                     background:{
                                                         dvalue:''
                                                     }
@@ -337,14 +337,14 @@ module.exports = {
                     }
                 }),
                 closeIconWrapper:dsConfig({
-                    overwirte:{
+                    overwrite:{
                         ds:{
                             ___:{
                                 nested:{
                                     predefined:{
                                         ___:{
                                             predefined:{
-                                                overwirte:{
+                                                overwrite:{
                                                     color:{
                                                         dvalue:'c00000'
                                                     },

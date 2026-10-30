@@ -8,7 +8,7 @@ const predefined = (arg) => {
     return helpers.json.merge({
         ___:{
             predefined:{
-                overwirte:{
+                overwrite:{
                     ds:{
                         ___:{
                             nested:{
@@ -210,7 +210,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                 center:predefined({
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
@@ -256,7 +256,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                 end:predefined({
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
@@ -300,7 +300,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                 after:predefined({
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
@@ -344,7 +344,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                 wrapper:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{

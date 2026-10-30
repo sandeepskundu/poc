@@ -14,7 +14,7 @@ const getvalue = (arg, req, res, dval, fbval) => {
 const compProps = async (conf, type, config, req, res, next, fbval) => {
     let from = req.helpers.json.get(conf, '___.compProps.from', '');
     let map = req.helpers.json.get(conf, '___.compProps.mapping', '');
-    let ow = req.helpers.json.get(conf, '___.compProps.overwirte', {});
+    let ow = req.helpers.json.get(conf, '___.compProps.overwrite', {});
 
     if(from && map){
         if(from === 'statics'){
@@ -29,7 +29,7 @@ const predefined = async (conf, type, config, req, res, next, fbval) => {
     let detailed = req.helpers.json.get(config, 'detailed', false);
     let from = req.helpers.json.get(conf, '___.predefined.from', '');
     let map = req.helpers.json.get(conf, '___.predefined.mapping', '');
-    let ow = req.helpers.json.get(conf, '___.predefined.overwirte', {});
+    let ow = req.helpers.json.get(conf, '___.predefined.overwrite', {});
 
     if(from && map){
         if(from === 'statics'){

@@ -16,11 +16,11 @@ module.exports = helpers.json.merge(props || {}, {
     description:{
         ___:{
             compProps:{
-                overwirte:{
+                overwrite:{
                     text:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     content:null
                                 }
                             }

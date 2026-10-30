@@ -18,9 +18,9 @@ const Comp = (dprops) => {
     const fromval = helpers.json.get(metas, 'from.value', '');
     const mappingval = helpers.json.get(metas, 'mapping.value', '');
 
-    const updateMetas = (type, value) => {
+    console.log('metas', metas);
 
-        console.log(metas);
+    const updateMetas = (type, value) => {
         let m = helpers.json.copy(metas);
             m[type].value = value;
             setMetas(m);
@@ -64,11 +64,11 @@ const Comp = (dprops) => {
                                 [helpers.json.get(metas, 'mapping.id', '')]:{
                                     value:value 
                                 },
-                                [helpers.json.get(metas, 'overwirte.id', '')]:{
+                                [helpers.json.get(metas, 'overwrite.id', '')]:{
                                     value:{}
                                 }
                             }, details.id);
-                            updateMetas('overwirte', {});
+                            updateMetas('overwrite', {});
                             updateMetas('mapping', value)
                         }}
                     />
@@ -92,11 +92,11 @@ const Comp = (dprops) => {
                     <Overwrite 
                         {...props}
                         key={key()}
-                        data={helpers.json.get(metas, 'overwirte', {})}
+                        data={helpers.json.get(metas, 'overwrite', {})}
                         mapping={helpers.json.get(metas, 'mapping.value', '')}
                         onChange={(value) => {
-                            update(helpers.json.get(metas, 'overwirte.id', ''), 'value', value);
-                            updateMetas('overwirte', value);
+                            update(helpers.json.get(metas, 'overwrite.id', ''), 'value', value);
+                            updateMetas('overwrite', value);
                         }}
                     />
                 </div> 

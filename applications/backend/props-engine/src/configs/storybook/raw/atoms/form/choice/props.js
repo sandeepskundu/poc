@@ -21,7 +21,7 @@ const excludeTheme = (arg) => {
     return helpers.json.merge({
         ___:{
             predefined:{
-                overwirte:{
+                overwrite:{
                     ds:{
                         ___:{
                             nested:{
@@ -53,7 +53,7 @@ const theme = (arg) => {
                 }, {
                     ___:{
                         predefined:{
-                            overwirte:helpers.json.get(arg || {}, 'predefined', {})
+                            overwrite:helpers.json.get(arg || {}, 'predefined', {})
                         }
                     }
                 }),
@@ -104,7 +104,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                             overwirte:{
+                             overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
@@ -163,7 +163,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                             overwirte:{
+                             overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
@@ -233,7 +233,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                             overwirte:{
+                             overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
@@ -539,7 +539,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 markup:null,
                                 content:null,
                                 ds:{
@@ -589,7 +589,7 @@ module.exports = {
             compProps:{
                 from:'statics',
                 mapping:'raw/atoms/layer-holder',
-                overwirte:{
+                overwrite:{
                     content:null,
                     templates:null,
                     layer:{
@@ -611,7 +611,7 @@ module.exports = {
                                 content:excludeTheme({
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 spaceFromLayer:{
                                                     dvalue:12
                                                 }

@@ -64,7 +64,7 @@ const Comp = (dprops) => {
                         data={helpers.json.get(metas, 'mapping', {})} 
                         onChange={(value) => {
                             let mId = helpers.json.get(metas, 'mapping.id', '');
-                            let oId = helpers.json.get(metas, 'overwirte.id', '');
+                            let oId = helpers.json.get(metas, 'overwrite.id', '');
 
                             templates.item.meta.item.actions.updateMetaDetailsByKey({
                                 [mId]:{

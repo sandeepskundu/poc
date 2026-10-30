@@ -6,14 +6,14 @@ const avatar = (arg) => {
         ___:{
             asroot:false,
             compProps:{
-                overwirte:{
+                overwrite:{
                     icon:null,
                     enable:null,
                     initial:null,
                     dsTheme:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     outer:{
                                         dvalue:0,
                                     },
@@ -31,7 +31,7 @@ const avatar = (arg) => {
                                 wrapper:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 markup:{
                                                     ___:{
                                                         nested:{
@@ -62,14 +62,14 @@ module.exports = helpers.json.merge(props || {}, {
                 right:avatar({
                     ___:{
                         compProps:{
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         nested:{
                                             wrapper:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             ds:{
                                                                 ___:{
                                                                     nested:{
@@ -120,14 +120,14 @@ module.exports = helpers.json.merge(props || {}, {
                 left:avatar({
                     ___:{
                         compProps:{
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         nested:{
                                             wrapper:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             ds:{
                                                                 ___:{
                                                                     nested:{

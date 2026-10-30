@@ -11,7 +11,7 @@ module.exports = helpers.json.merge(helpers.json.get(baseItem, 'props', {}), {
                 wrapper:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{

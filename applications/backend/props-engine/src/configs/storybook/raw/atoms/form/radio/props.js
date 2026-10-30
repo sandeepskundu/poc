@@ -9,7 +9,7 @@ const theme = (arg) => {
                 predefined:helpers.json.merge({}, {
                     ___:{
                         predefined:{
-                            overwirte:helpers.json.get(arg || {}, 'predefined', {})
+                            overwrite:helpers.json.get(arg || {}, 'predefined', {})
                         }
                     }
                 }),

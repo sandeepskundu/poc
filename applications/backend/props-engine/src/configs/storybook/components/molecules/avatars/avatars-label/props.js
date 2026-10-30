@@ -27,11 +27,11 @@ module.exports = {
                 config:{
                     ___:{
                         compProps:{
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 content:null,
                                                 markup:{
                                                     ___:{
@@ -56,7 +56,7 @@ module.exports = {
     description:helpers.json.merge(descriptionProps.text, {
         ___:{
             predefined:{
-                overwirte:{
+                overwrite:{
                     content:null,
                     ds:{
                         ___:{
@@ -64,7 +64,7 @@ module.exports = {
                                 predefined:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 font__d__size:{
                                                     dvalue:'xs'
                                                 }
@@ -86,7 +86,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     content:null,
                     markup:{
                         type:'nested',

@@ -24,7 +24,7 @@ module.exports = {
                             image:{
                                 ___:{
                                     predefined:{
-                                        overwirte:{
+                                        overwrite:{
                                             ds:{
                                                 ___:{
                                                     nested:{
@@ -79,7 +79,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     content:null,
                     markup:{
                         type:'nested',

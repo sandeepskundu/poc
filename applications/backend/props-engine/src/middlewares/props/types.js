@@ -30,7 +30,7 @@ const enums = async (rval, arg, type, config, req, res, next, flag) => {
 
 const compProps = async (rval, arg, type, config, req, res, next, flag) => {
     let map = req.helpers.json.get(arg, '___.compProps.mapping', '');
-    let ow = req.helpers.json.get(arg, '___.compProps.overwirte', {});
+    let ow = req.helpers.json.get(arg, '___.compProps.overwrite', {});
 
     if(map){
         return req.helpers.json.set(rval, '___.nested', req.helpers.json.get(await getPropsByTypeAndMap(map, type, ow, config, req, res, next), 'data', {}));
@@ -51,7 +51,7 @@ const predefined = async (rval, arg, type, config, req, res, next, flag) => {
                 pd = req.helpers.json.copy(pd);
 
                 if(req.helpers.data.type.is(pd, 'object')){
-                    let ow = req.helpers.json.get(arg, '___.predefined.overwirte', {});
+                    let ow = req.helpers.json.get(arg, '___.predefined.overwrite', {});
                         pd = req.helpers.json.merge(pd, ow);
 
                         if(req.helpers.json.length(pd) > 0){
@@ -215,8 +215,8 @@ const getEnums = async (rval, respobj, map, type, config, req, res, next) => {
     return rval;
 }
 
-const getPropsByTypeAndMap = async (map, type, overwirte, config, req, res, next) => {
-    let rval = await compile({}, await utils.getConfigByTypeAndMap(map, type, overwirte, config, req, res, next), type, config, req, res, next);
+const getPropsByTypeAndMap = async (map, type, overwrite, config, req, res, next) => {
+    let rval = await compile({}, await utils.getConfigByTypeAndMap(map, type, overwrite, config, req, res, next), type, config, req, res, next);
 
     return {
         data:rval,

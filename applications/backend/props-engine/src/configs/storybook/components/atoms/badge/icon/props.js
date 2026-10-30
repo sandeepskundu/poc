@@ -9,11 +9,11 @@ module.exports = helpers.json.merge(props || {}, {
                 left:{
                     ___:{
                         compProps:{
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 icon:{
                                                     ___:{
                                                         nested:{
@@ -34,11 +34,11 @@ module.exports = helpers.json.merge(props || {}, {
                 right:{
                     ___:{
                         compProps:{
-                            overwirte:{
+                            overwrite:{
                                 config:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 icon:{
                                                     ___:{
                                                         nested:{

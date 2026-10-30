@@ -17,14 +17,14 @@ const headerProps = () => {
                     wrapper:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     ds:{
                                         ___:{
                                             nested:{
                                                  predefined:{
                                                     ___:{
                                                         predefined:{
-                                                            overwirte:{
+                                                            overwrite:{
                                                                 border:{
                                                                     dvalue:'c10104'
                                                                 },
@@ -90,14 +90,14 @@ const itemProps = () => {
                     wrapper:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     ds:{
                                         ___:{
                                             nested:{
                                                  predefined:{
                                                     ___:{
                                                         predefined:{
-                                                            overwirte:{
+                                                            overwrite:{
                                                                 border:{
                                                                     dvalue:'c10104'
                                                                 }
@@ -276,7 +276,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 content:null,
                                 markup:{
                                     ___:{
@@ -293,7 +293,7 @@ module.exports = {
                                             predefined:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             radius:{
                                                                 dvalue:'6'
                                                             },
@@ -345,7 +345,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 content:null,
                                 markup:{
                                     ___:{

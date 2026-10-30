@@ -7,11 +7,11 @@ module.exports = {
             compProps:{
                 from:'statics',
                 mapping:'raw/atoms/typography/heading',
-                overwirte:{
+                overwrite:{
                     config:{
                         ___:{
                             predefined:{
-                                overwirte:{
+                                overwrite:{
                                     markup:{
                                         ___:{
                                             nested:{

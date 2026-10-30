@@ -39,9 +39,9 @@ const Comp = (dprops) => {
     })();
 
     let predefined = helpers.json.get(props, `configs.predefined.${pdmap}`, {});
-    let overwirte = helpers.json.get(props, 'data.value', {});
-    let data = helpers.json.merge(predefined, overwirte);
-        data = parser.init(helpers.json.merge(predefined, overwirte), {
+    let overwrite = helpers.json.get(props, 'data.value', {});
+    let data = helpers.json.merge(predefined, overwrite);
+        data = parser.init(helpers.json.merge(predefined, overwrite), {
             sortPath:'__.type',
             uitls:props.configs,
             sortOrder:['boolean', 'nested',  'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx', 'predefined']

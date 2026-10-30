@@ -101,7 +101,7 @@ const predefined = (rval, key, value, options) => {
     const metas = {
         from: metaByKey(childs, 'from', ''),
         mapping: metaByKey(childs, 'mapping', ''),
-        overwirte: metaByKey(childs, 'overwirte', {})
+        overwrite: metaByKey(childs, 'overwrite', {})
     }
 
     const base = {
@@ -111,7 +111,7 @@ const predefined = (rval, key, value, options) => {
     };
 
     let props = blank('predefined', false, 'asEditorObject', options, { ...base, metaMap: metas });
-    props.__.metas = [metas.from, metas.mapping, metas.overwirte];
+    props.__.metas = [metas.from, metas.mapping, metas.overwrite];
     rval.__.details = props;
 
     return setChilds(rval, [setChilds(blank('___', false, 'asEditorObject', options, base), [props])]);
@@ -170,7 +170,7 @@ const compProps = (rval, key, value, options) => {
     const metas = {
         from:metaByKey(map, 'from', ''),
         mapping:metaByKey(map, 'mapping', ''),
-        overwirte:metaByKey(map, 'overwirte', {})
+        overwrite:metaByKey(map, 'overwrite', {})
     }
     const base = {
         editing: true,
@@ -188,7 +188,7 @@ const compProps = (rval, key, value, options) => {
 
 
     header.__.metas = [asRootMeta];
-    props.__.metas = [metas.from, metas.mapping, metas.overwirte];
+    props.__.metas = [metas.from, metas.mapping, metas.overwrite];
     rval.__.root = header;
     rval.__.details = props;
 

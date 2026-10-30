@@ -17,7 +17,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     svg:null,
                     type:null,
                     markup:{

@@ -63,7 +63,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                             config:{
                                 ___:{
                                     predefined:{
-                                        overwirte:{
+                                        overwrite:{
                                             svg:{
                                                 ___:{
                                                     nested:{
@@ -98,7 +98,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                 start:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{
@@ -112,7 +112,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                                             predefined:{
                                                 ___:{
                                                     predefined:{
-                                                        overwirte:{
+                                                        overwrite:{
                                                             color:{},
                                                             background:{}
                                                         }
@@ -159,7 +159,7 @@ module.exports = helpers.json.merge(helpers.json.get(row, 'props', {}), {
                 wrapper:{
                     ___:{
                         predefined:{
-                            overwirte:{
+                            overwrite:{
                                 markup:{
                                     ___:{
                                         nested:{

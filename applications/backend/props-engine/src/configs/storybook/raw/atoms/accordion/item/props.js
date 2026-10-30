@@ -89,7 +89,7 @@ const ds = (desc, elm, arg) => {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     markup:{
                         ___:{
                             nested:{
@@ -155,7 +155,7 @@ const bodyProps = () => {
                 wrapper:ds('', '', {
                     ___:{
                         predefined:{ 
-                            overwirte:{
+                            overwrite:{
                                 ds:{
                                     ___:{
                                         nested:{
@@ -217,7 +217,7 @@ module.exports = {
     wrapper:ds('', 'li', {
         ___:{
             predefined:{ 
-                overwirte:{
+                overwrite:{
                     ds:{
                         ___:{
                             nested:{

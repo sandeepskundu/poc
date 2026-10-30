@@ -18,7 +18,7 @@ module.exports = {
             predefined:{
                 from:'statics',
                 mapping:'ds.configs',
-                overwirte:{
+                overwrite:{
                     markup:null,
                     content:null,
                     tooltip:null,
@@ -28,7 +28,7 @@ module.exports = {
                                 predefined:{
                                     ___:{
                                         predefined:{
-                                            overwirte:{
+                                            overwrite:{
                                                 color:{
                                                     dvalue:'c00000'
                                                 },
@@ -102,7 +102,7 @@ module.exports = {
                         predefined:{
                             from:'statics',
                             mapping:'ds.configs',
-                            overwirte:{
+                            overwrite:{
                                 content:null,
                                 markup:{
                                     type:'nested',
