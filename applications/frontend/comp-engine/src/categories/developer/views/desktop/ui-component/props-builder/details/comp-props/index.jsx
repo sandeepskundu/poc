@@ -35,6 +35,8 @@ const Comp = (dprops) => {
     const rootNode = helpers.json.get(node, '__.children.0.__', helpers.json.get(node, '__.root.__', {}));
     const details = helpers.json.get(node, '__.children.0.__.children.0.__', helpers.json.get(node, '__.details.__', {}));
     const [metas, setMetas] = useState(() => getLiveMetaMap(details));
+
+    const mapping = helpers.json.get(metas, 'mapping.value', '');
     const isroot = helpers.json.get(props, 'editorProps.editorConfigs.utils.isRoot');
 
     useEffect(() => {
@@ -130,34 +132,36 @@ const Comp = (dprops) => {
     }
 
     const editor = (onChange, overwrite) => {
-        let ov = helpers.json.merge(helpers.json.copy(props.editorProps || {}), {
-            editorConfigs:{
-                utils:{
-                    isRoot:false
-                },
-                builder: {
-                    id:helpers.random.key()
-                },
-                callbacks:{
-                    onChange:(arg) => {
-                        onChange(arg);
-                    }
-                },
-                layoutConfig:{
-                    json:{
-                        editor:{
-                            wrapper:{
-                                ds:{
-                                    theme:null,
-                                    css:{
-                                        class:{
-                                            border:null,
-                                            radius:null,
-                                            padding:null,
-                                            margin:{
-                                                1:0,
-                                                2:0,
-                                                3:0
+        if(mapping){
+            let ov = helpers.json.merge(helpers.json.copy(props.editorProps || {}), {
+                editorConfigs:{
+                    utils:{
+                        isRoot:false
+                    },
+                    builder: {
+                        id:helpers.random.key()
+                    },
+                    callbacks:{
+                        onChange:(arg) => {
+                            onChange(arg);
+                        }
+                    },
+                    layoutConfig:{
+                        json:{
+                            editor:{
+                                wrapper:{
+                                    ds:{
+                                        theme:null,
+                                        css:{
+                                            class:{
+                                                border:null,
+                                                radius:null,
+                                                padding:null,
+                                                margin:{
+                                                    1:0,
+                                                    2:0,
+                                                    3:0
+                                                }
                                             }
                                         }
                                     }
@@ -165,15 +169,15 @@ const Comp = (dprops) => {
                             }
                         }
                     }
+                },
+                editorDetails:{
+                    overwrite:overwrite || {},
+                    componentMap:helpers.json.get(metas, 'mapping.value', '')
                 }
-            },
-            editorDetails:{
-                overwrite:overwrite || {},
-                componentMap:helpers.json.get(metas, 'mapping.value', '')
-            }
-        });
+            });
 
-        return <Editor {...ov} key={helpers.json.get(metas, 'mapping.value', '')} />
+            return <Editor {...ov} key={helpers.json.get(metas, 'mapping.value', '')} />
+        }
     }
 
     return (

@@ -132,5 +132,4 @@ const Comp = (dprops) => {
     )
 }
 
-
 export default Comp;

@@ -96,6 +96,7 @@ const Comp = (dprops) => {
 
 
     const onOutputChange = (arg) => {
+        arg = helpers.json.deleteAllNestedKeyByVal(helpers.json.copy(arg), 'type', 'asEditorObject');
         if (onChangeCb) {
             if(utils.isRoot){
                 onChangeCb(arg);
