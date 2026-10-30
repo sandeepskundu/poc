@@ -8,14 +8,8 @@ const Comp = (dprops) => {
     const asHeader = helpers.json.get(props, 'node.__.asHeader', false);
 
     const isRoot = helpers.json.get(props, 'utils.isRoot', false);
-    const details = helpers.json.get(props, 'node.__.details.__', {});
-
-
-    const configs = props.configs || {};
-    const builder = props.builder || {};
     const templates = props.templates || {};
     const raw = node.__ || {};
-    const excludeActions = helpers.json.get(raw, 'excludeActions', {});
 
     const error = () => {
         return templates.label.error.ui();
@@ -47,7 +41,9 @@ const Comp = (dprops) => {
     }
 
     const remove = () => {
-        
+        if(isRoot){
+            return templates.actions.remove.ui();
+        }
     }
 
     const ui = () => {
