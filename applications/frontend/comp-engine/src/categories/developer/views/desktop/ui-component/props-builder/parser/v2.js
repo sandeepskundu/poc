@@ -269,7 +269,7 @@ const onUpdate = (arg, prev, options) => {
                 return nested(arg, arg.__.key, arg.__, options);
                 break;
             case 'compProps':
-                // return processCompPropsType(rval, key, value, options);
+                return compProps(arg, arg.__.key, arg.__, options);
                 break;
             case 'predefined':
                 return predefined(arg, arg.__.key, arg.__, options);

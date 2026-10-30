@@ -101,25 +101,15 @@ const blankHeader = (key, value, type = 'string', options = {}, overrides = {}) 
 };
 
 const setChilds = (rval, childs) => {
-    const currentMeta = rval.__ || {};
-
-    return {...rval, __:{...currentMeta, children:childs} };
+    return {...rval, __:{...(rval.__ || {}), children:childs} };
 };
 
 const nested = (rval, key, value, options) => {
     let base = {...blankBase};
-    // Extract nested child items safely using utility helper
     let childs = helpers.json.get(value, '___.nested', {});
     let hasChilds = helpers.data.type.is(childs, 'object') && helpers.json.length(childs) > 0;
-
-    // Generate blank header wrappers
-    let h = blankHeader('___', false, 'asEditorObject', options, {
-        ...base
-    });
-
-    let ns = blankHeader('nested', false, 'asEditorObject', options, {
-        ...base
-    });
+    let h = blankHeader('___', false, 'asEditorObject', options, {...base});
+    let ns = blankHeader('nested', false, 'asEditorObject', options, {...base});
 
     return setChilds(rval, [setChilds(h, [setChilds(ns, (hasChilds?start(childs, options):[]))])]);
 };

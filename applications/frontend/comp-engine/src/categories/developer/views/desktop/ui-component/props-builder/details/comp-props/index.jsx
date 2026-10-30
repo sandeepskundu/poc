@@ -3,8 +3,28 @@ import Mapping from './mapping';
 import helpers from 'ui-helpers';
 import Common from './../common';
 import Editor from './../../editor';
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import Toggle from 'aio-global-raw-ui/atoms/form/toggle';
+
+const getLiveMetaMap = (details) => {
+    const metaList = helpers.json.get(details, 'metas', []);
+
+    if (Array.isArray(metaList) && metaList.length > 0) {
+        const map = {};
+
+        for (let i = 0; i < metaList.length; i++) {
+            const item = metaList[i];
+
+            if (item && item.key) {
+                map[item.key] = item;
+            }
+        }
+
+        return map;
+    }
+
+    return helpers.json.copy(helpers.json.get(details, 'metaMap', {}));
+};
 
 const Comp = (dprops) => { 
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
@@ -12,17 +32,29 @@ const Comp = (dprops) => {
     const rawData = useRef(null);
     const node = props.node || {};
     const templates = props.templates || {};
-    const rootNode = helpers.json.get(node, '__.root.__', {});
-    const details = helpers.json.get(node, '__.details.__', {});
-    const [metas, setMetas] = useState(helpers.json.get(details, 'metaMap', {}));
+    const rootNode = helpers.json.get(node, '__.children.0.__', helpers.json.get(node, '__.root.__', {}));
+    const details = helpers.json.get(node, '__.children.0.__.children.0.__', helpers.json.get(node, '__.details.__', {}));
+    const [metas, setMetas] = useState(() => getLiveMetaMap(details));
     const isroot = helpers.json.get(props, 'editorProps.editorConfigs.utils.isRoot');
 
-    console.log('metas', metas);
+    useEffect(() => {
+        setMetas(getLiveMetaMap(details));
+    }, [details.metas]);
+
+    const asRootMeta = (() => {
+        const rootMetas = helpers.json.get(rootNode, 'metas', []);
+        const found = Array.isArray(rootMetas) ? rootMetas.find((item) => item && item.key === 'asroot') : null;
+        return found || helpers.json.get(rootNode, 'asRootMeta', {});
+    })();
 
     const updateMetas = (type, value) => {
-        let m = helpers.json.copy(metas);
-            m[type].value = value;
-            setMetas(m);
+        setMetas((prev) => {
+            let m = helpers.json.copy(prev);
+            if (m[type]) {
+                m[type].value = value;
+            }
+            return m;
+        });
     }
     
     const update = (id, field, value) => {
@@ -41,7 +73,7 @@ const Comp = (dprops) => {
                 callback={{
                     input: {
                         onChange: (checked, b, c) => {
-                            templates.item.meta.item.actions.updateByKey(rootNode.asRootMeta.id, 'value', checked, rootNode.id);
+                            templates.item.meta.item.actions.updateByKey(asRootMeta.id, 'value', checked, rootNode.id);
                         }
                     }
                 }}
@@ -53,7 +85,10 @@ const Comp = (dprops) => {
         return (
             <From
                 selected={helpers.json.get(metas, 'from.value', '')}
-                onChange={(value) => {update(helpers.json.get(metas, 'from.id', ''), 'value', value)}}
+                onChange={(value) => {
+                    update(helpers.json.get(metas, 'from.id', ''), 'value', value);
+                    updateMetas('from', value);
+                }}
             />
         )
     }
@@ -85,17 +120,17 @@ const Comp = (dprops) => {
     }
 
     const onDataChange = (arg) => {
-        arg = helpers.json.removeDuplicate(arg, rawData.current);
+        arg = helpers.json.removeDuplicate(helpers.json.copy(arg), helpers.json.copy(rawData.current || {}));
         update(helpers.json.get(metas, 'overwrite.id', ''), 'value', arg);
         updateMetas('overwrite', arg);
     }
 
     const onRawChange = (arg) => {
-        rawData.current = arg;
+        rawData.current = helpers.json.copy(arg);
     }
 
     const editor = (onChange, overwrite) => {
-        let ov = helpers.json.merge(props.editorProps, {
+        let ov = helpers.json.merge(helpers.json.copy(props.editorProps || {}), {
             editorConfigs:{
                 utils:{
                     isRoot:false
@@ -147,7 +182,7 @@ const Comp = (dprops) => {
                 {editor(onRawChange)}
             </div>
             <Common {...props} />
-            <div className='full bxs pd-rl16'>{asroot(metas.asroot)}</div>
+            <div className='full bxs pd-rl16'>{asroot(asRootMeta)}</div>
             {compProps()}
             {editor(onDataChange, helpers.json.get(metas, 'overwrite.value', {}))}
         </div>

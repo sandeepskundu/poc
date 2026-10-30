@@ -12,7 +12,6 @@ const Comp = (dprops) => {
     const keyval = helpers.json.get(node, '__.key', '');
     const dtype = helpers.json.get(node, '__.type', '');
     const editable = !helpers.json.get(node, '__.nonEditable', false);
-    const desc = helpers.json.get(metas, 'base.description.value', '')
     const isroot = helpers.json.get(props, 'editorProps.editorConfigs.utils.isRoot');
     const metas = (() => {
         let rval = {
@@ -40,6 +39,7 @@ const Comp = (dprops) => {
 
         return rval;
     })();
+    const desc = helpers.json.get(metas, 'base.description.value', '');
 
     const key = () => {
         let show = helpers.json.get(templates, 'item.key.show', false);

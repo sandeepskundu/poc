@@ -94,28 +94,34 @@ const Comp = (props) => {
     const handleUpdateMetaItem = (id, field, value, nodeId) => {
         if ((id || nodeId) && field) {
             onUpdate((nodeId || node.__.id), (prev) => {
+                const nextMetaMap = prev?.__?.metaMap ? { ...prev.__.metaMap } : undefined;
+                const updatedMetas = (prev?.__?.metas || []).map((item) => {
+                    if (item.id !== id) {
+                        return item;
+                    }
+
+                    if (field === 'key' && !validateKey(value)) {
+                        return item;
+                    }
+
+                    const updatedItem = {
+                        ...item,
+                        [field]: value
+                    };
+
+                    if (nextMetaMap && updatedItem.key) {
+                        nextMetaMap[updatedItem.key] = updatedItem;
+                    }
+
+                    return updatedItem;
+                });
+
                 return {
                     ...prev,
                     __: {
                         ...prev?.__,
-                        metas: (prev?.__?.metas || []).map((item) => {
-
-                            debugger;
-                            if (item.id !== id) {
-                                return item;
-                            }
-
-                            if (field === 'key' && !validateKey(value)) {
-                                return item;
-                            }
-
-                            debugger;
-
-                            return {
-                                ...item,
-                                [field]: value
-                            };
-                        })
+                        metas: updatedMetas,
+                        ...(nextMetaMap ? { metaMap: nextMetaMap } : {})
                     }
                 }
             })
@@ -141,6 +147,7 @@ const Comp = (props) => {
 
         onUpdate((nodeId || node.__.id), (prevNode) => {
             const currentMetas = prevNode?.__?.metas || [];
+            const nextMetaMap = prevNode?.__?.metaMap ? { ...prevNode.__.metaMap } : undefined;
 
             // Map over all metas in a single state-modifier loop
             const updatedMetas = currentMetas.map((item) => {
@@ -166,14 +173,21 @@ const Comp = (props) => {
                     }
                 });
 
-                return isValid ? nextItem : item;
+                const resolvedItem = isValid ? nextItem : item;
+
+                if (nextMetaMap && resolvedItem.key) {
+                    nextMetaMap[resolvedItem.key] = resolvedItem;
+                }
+
+                return resolvedItem;
             });
 
             return {
                 ...prevNode,
                 __: {
                     ...prevNode?.__,
-                    metas: updatedMetas
+                    metas: updatedMetas,
+                    ...(nextMetaMap ? { metaMap: nextMetaMap } : {})
                 }
             };
         });

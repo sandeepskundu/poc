@@ -4,3 +4,4 @@
 **/scrap/
 **/node_modules/
 **/package-lock.json
+configs/envs

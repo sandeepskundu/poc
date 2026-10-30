@@ -1,15 +1,17 @@
+import {useMemo} from 'react';
 import parser from './parser';
 import Header from './header';
 import Details from './details';
 import helpers from 'ui-helpers';
 import JsonBuilder from './../../../../json-builder';
 
-const Comp = (dprops) => { 
+const types = ['any', 'string', 'number', 'boolean', 'object', 'function', 'enum', 'jsx', 'nested', 'predefined'];
+const sortOrder = ['boolean', 'nested', 'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx', 'predefined'];
 
-    const id = helpers.json.get(data, 'id', helpers.random.key());
+const Comp = (dprops) => { 
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
-    const types = ['any', 'string', 'number', 'boolean', 'object', 'function', 'enum', 'jsx', 'nested', 'predefined'];
-    const builder = helpers.json.schema.builder.init(id, {
+    const id = useMemo(() => helpers.random.key(), []);
+    const builder = useMemo(() => helpers.json.schema.builder.init(id, {
         id:id,
         utils:{
             keyRegex:null,
@@ -28,7 +30,7 @@ const Comp = (dprops) => {
                 return arg;
             }
         }
-    });
+    }), [id]);
 
     const pdmap = (() => {
         let map = helpers.json.get(props, 'mapping', '');
@@ -38,16 +40,21 @@ const Comp = (dprops) => {
         return map.join('.');          
     })();
 
-    let predefined = helpers.json.get(props, `configs.predefined.${pdmap}`, {});
-    let overwrite = helpers.json.get(props, 'data.value', {});
-    let data = helpers.json.merge(predefined, overwrite);
-        data = parser.init(helpers.json.merge(predefined, overwrite), {
+    const predefined = useMemo(() => {
+        return helpers.json.copy(helpers.json.get(props, `configs.predefined.${pdmap}`, {}));
+    }, [props.configs, pdmap]);
+
+    const data = useMemo(() => {
+        let baseCopy = helpers.json.copy(predefined);
+        let overwriteCopy = helpers.json.copy(helpers.json.get(props, 'data.value', {}));
+        let merged = helpers.json.merge(baseCopy, overwriteCopy);
+
+        return parser.init(merged, {
             sortPath:'__.type',
             uitls:props.configs,
-            sortOrder:['boolean', 'nested',  'object', 'any', 'enum', 'boolean', 'string', 'number', 'function', 'jsx', 'predefined']
+            sortOrder:sortOrder
         });
-
-    console.log(data);
+    }, [predefined]);
 
     const getConfigs = () => {
         return {
@@ -113,10 +120,13 @@ const Comp = (dprops) => {
             }}
             callbacks={{
                 onJsonTreeChange:(json, valid) => {
-                    let d = helpers.json.deleteAllNestedKeyByVal(json, 'type', 'asEditorObject');
+                    let basePredefined = helpers.json.copy(predefined);
+                    let d = helpers.json.deleteAllNestedKeyByVal(helpers.json.copy(json), 'type', 'asEditorObject');
                         d = helpers.json.removeWrapperKeys(d, {stripKeys:'___blank___', removePrimitive:true});
-                        helpers.json.removeDuplicate(d.___, predefined.___);
-                        props.onChange(helpers.json.removeDuplicate(d, predefined));
+                        if (d && d.___ && basePredefined && basePredefined.___) {
+                            helpers.json.removeDuplicate(d.___, basePredefined.___);
+                        }
+                        props.onChange(helpers.json.removeDuplicate(d, basePredefined));
                 }
             }}
             configs={{

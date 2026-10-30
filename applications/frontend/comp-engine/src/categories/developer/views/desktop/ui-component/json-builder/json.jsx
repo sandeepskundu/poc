@@ -43,6 +43,14 @@ const Comp = (props) => {
     }, [activeTree]);
 
     useEffect(() => {
+        const trimmedQuery = (query || '').trim();
+
+        if (!trimmedQuery) {
+            setSearchResults(null);
+            setSearching(false);
+            return;
+        }
+
         setSearching(true);
 
         if (qEngine.current?.filterTree) {
@@ -51,7 +59,7 @@ const Comp = (props) => {
                     '__.key':{
                         highlight:true,
                         operator:'startswith',
-                        value:(query.trim() || '')
+                        value:trimmedQuery
                     }
                 }]
             }, {

@@ -1,17 +1,42 @@
 
 import From from './from';
-import {useState} from 'react';
 import Mapping from './mapping';
 import helpers from 'ui-helpers';
 import Common from './../common';
+import {useState, useEffect} from 'react';
+
+const getLiveMetaMap = (details) => {
+    const metaList = helpers.json.get(details, 'metas', []);
+
+    if (helpers.data.type.is(metaList, 'list') && metaList.length > 0) {
+        const map = {};
+
+        for (let i = 0; i < metaList.length; i++) {
+            const item = metaList[i];
+
+            if (item && item.key) {
+                map[item.key] = item;
+            }
+        }
+
+        return map;
+    }
+
+    return helpers.json.copy(helpers.json.get(details, 'metaMap', {}));
+};
 
 const Comp = (dprops) => {
     const props = helpers.element.jsx.props.define({}, dprops, helpers);
 
     const node = props.node || {};
     const templates = props.templates || {};
-    const details = helpers.json.get(node, '__.details.__', {});
-    const [metas, setMetas] = useState(helpers.json.get(details, 'metaMap', {}));
+    const details = helpers.json.get(node, '__.children.0.__.children.0.__', helpers.json.get(node, '__.details.__', {}));
+    const [metas, setMetas] = useState(() => getLiveMetaMap(details));
+
+    useEffect(() => {
+        setMetas(getLiveMetaMap(details));
+    }, [details.metas]);
+
     const fromval = helpers.json.get(metas, 'from.value', '');
 
     const baseMetas = (() => {
@@ -42,9 +67,13 @@ const Comp = (dprops) => {
     })();
 
     const updateMetas = (type, value) => {
-        let m = helpers.json.copy(metas);
-            m[type].value = value;
-            setMetas(m);
+        setMetas((prev) => {
+            let m = helpers.json.copy(prev);
+            if (m[type]) {
+                m[type].value = value;
+            }
+            return m;
+        });
     }
 
     const update = (id, field, value) => {

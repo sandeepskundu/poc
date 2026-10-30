@@ -60,20 +60,17 @@ const Comp = (dprops) => {
     }), [props.editorDetails.enums, props.editorDetails.compTree, props.editorDetails.predefined]);
 
     const onPropResponse = useCallback((resp) => {
-        if(!utils.isRoot){
-                debugger;
-            }
-        let data = helpers.json.get(resp, 'propsDetails.props', {});
-            data = helpers.json.merge(data, overwrite);
+        let rawDetails = helpers.json.copy(helpers.json.get(resp, 'propsDetails', {}));
+        let data = helpers.json.copy(helpers.json.get(rawDetails, 'props', {}));
+            data = helpers.json.merge(data, helpers.json.copy(overwrite));
             data = parser.data.init(data, PARSER_CONFIGS);
 
-            
             setDetails((prev) => ({
                 ...prev,
                 blank:false,
                 data:data,
                 cache:helpers.random.key(),
-                raw:helpers.json.get(resp, 'propsDetails', {}),
+                raw:rawDetails,
             }));
     }, []);
 
@@ -93,35 +90,19 @@ const Comp = (dprops) => {
 
     const onChange = useCallback((json, valid) => {
         if (!valid) {
-            return
+            return;
         }
-
-        setDetails((prev) => {
-            if (helpers.json.is.same(helpers.json.get(prev, 'raw.props', {}), json)) {
-                return prev;
-            }
-
-            if(utils.isRoot){
-                console.log('root-on-changed', helpers.json.deleteAllNestedKeyByVal(json, 'type', 'asEditorObject'));
-            }
-
-            return {
-                ...prev,
-                data:parser.data.init(helpers.json.deleteAllNestedKeyByVal(json, 'type', 'asEditorObject'), PARSER_CONFIGS)
-            };
-        });
     }, []);
 
 
     const onOutputChange = (arg) => {
         if (onChangeCb) {
             if(utils.isRoot){
-                console.log('root--output-changed', arg);
                 onChangeCb(arg);
             }else{
-                let or = helpers.json.get(dRef, 'current.raw.props', {});
-                let rv = helpers.json.deleteAllNestedKeyByVal(arg, 'type', 'asEditorObject');
-                    rv = helpers.json.removeDuplicate(arg, or);
+                let or = helpers.json.copy(helpers.json.get(dRef, 'current.raw.props', {}));
+                let rv = helpers.json.deleteAllNestedKeyByVal(helpers.json.copy(arg), 'type', 'asEditorObject');
+                    rv = helpers.json.removeDuplicate(rv, or);
                     onChangeCb(rv);
             }
         }
