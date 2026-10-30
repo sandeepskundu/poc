@@ -35,7 +35,7 @@ const Comp = (dprops) => {
     const rootNode = helpers.json.get(node, '__.children.0.__', helpers.json.get(node, '__.root.__', {}));
     const details = helpers.json.get(node, '__.children.0.__.children.0.__', helpers.json.get(node, '__.details.__', {}));
     const [metas, setMetas] = useState(() => getLiveMetaMap(details));
-
+    const fromval = helpers.json.get(metas, 'from.value', '');
     const mapping = helpers.json.get(metas, 'mapping.value', '');
     const isroot = helpers.json.get(props, 'editorProps.editorConfigs.utils.isRoot');
 
@@ -100,7 +100,7 @@ const Comp = (dprops) => {
             <div className='full bxs pd-16'>
                 <div className='full bxs pd-t8'>
                     {from()}
-                    <Mapping
+                    {fromval && <Mapping
                         configs={props.configs}
                         data={helpers.json.get(metas, 'mapping', {})} 
                         onChange={(value) => {
@@ -115,7 +115,7 @@ const Comp = (dprops) => {
                             updateMetas('overwrite', {});
                             updateMetas('mapping', value);
                         }}
-                    />
+                    />}
                 </div> 
             </div>
         )
@@ -132,7 +132,7 @@ const Comp = (dprops) => {
     }
 
     const editor = (onChange, overwrite) => {
-        if(mapping){
+        if(mapping && fromval){
             let ov = helpers.json.merge(helpers.json.copy(props.editorProps || {}), {
                 editorConfigs:{
                     utils:{

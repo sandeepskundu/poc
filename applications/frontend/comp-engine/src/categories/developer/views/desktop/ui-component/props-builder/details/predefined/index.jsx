@@ -80,7 +80,7 @@ const Comp = (dprops) => {
     }
 
     const mapping = () => {
-        if(isroot){
+        if(isroot && fromval){
             return (
                 <div className='full bxs pd-t8'>
                     <Mapping
@@ -102,7 +102,7 @@ const Comp = (dprops) => {
                 </div>
             )
         }else{
-            if(mappingval){
+            if(mappingval && fromval){
                 return <li className='full bxs txt-xs mr-t6'><span className='fm-sb txt-sm'>Mapping:</span> {mappingval}</li>
             }
         }
@@ -116,7 +116,7 @@ const Comp = (dprops) => {
                         {from()}
                         {mapping()}
                     </div>
-                    <Overwrite 
+                    {(fromval && mappingval) && <Overwrite 
                         {...props}
                         key={key()}
                         data={helpers.json.get(metas, 'overwrite', {})}
@@ -125,7 +125,7 @@ const Comp = (dprops) => {
                             update(helpers.json.get(metas, 'overwrite.id', ''), 'value', value);
                             updateMetas('overwrite', value);
                         }}
-                    />
+                    />}
                 </div> 
             </div>
         )

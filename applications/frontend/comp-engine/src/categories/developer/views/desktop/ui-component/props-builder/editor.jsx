@@ -119,10 +119,10 @@ const Comp = (dprops) => {
         if(utils.isRoot){
             return (
                 <div className='full bxs grid-wrapper grid-layout-2 pd-20'>
-                    <div className='grid pd-r10 bxs' key={details.cache}>
+                    <div className='grid pd-r8 bxs' key={details.cache}>
                         {arg.jsonTree()}
                     </div>
-                    <div className='grid pd-l10 bxs oa'>
+                    <div className='grid pd-l8 bxs oa'>
                         {arg.jsonOutput(details.cache)}
                     </div>
                 </div>

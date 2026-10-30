@@ -88,14 +88,13 @@ const node = (key, value, options = {}, overrides = {}) => {
 const blankHeader = (key, value, type = 'string', options = {}, overrides = {}) => {
     let rval = node(key, value, options);
         rval.__ = rval.__ || {};
-    
-        Object.assign(rval.__, {type:type, nonEditable:true});
+        rval.__ = helpers.json.merge(rval.__, {type:type, nonEditable:true});
 
         if (rval.__?.metas) {
             delete rval.__.metas;
         }
 
-        Object.assign(rval.__, {...overrides});
+        rval.__ = helpers.json.merge(rval.__, {...overrides});
 
     return rval;
 };

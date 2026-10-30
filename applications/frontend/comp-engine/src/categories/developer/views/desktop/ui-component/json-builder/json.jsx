@@ -214,7 +214,7 @@ const Comp = (props) => {
                     <div className="full flx-full flx-sb">
                         {title && <h3 className="bxs txt-sm fm-md flx-full">{title}</h3>}
                         <ul className="flx flx-vc gap-8">
-                            <li className="fl">
+                            <li className="fl mr-r16">
                                 {addRootNode()}
                             </li>
                             <li className="fl">
