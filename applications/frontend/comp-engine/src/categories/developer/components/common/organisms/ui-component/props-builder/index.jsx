@@ -30,7 +30,9 @@ const Comp = (dprops) => {
                     },
                     callbacks: {
                         onChange: (arg) => {
-                            console.log(arg);
+                            if (typeof props.onChange === 'function'){
+                                props.onChange(arg);
+                            }
                         }
                     },
                     builder: {

@@ -1,6 +1,7 @@
 import helpers from 'ui-helpers';
 import Input from 'aio-global-raw-ui/atoms/form/input';
 import Select from 'aio-global-raw-ui/atoms/form/select';
+import Button from 'aio-global-raw-ui/atoms/form/button';
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 
 const ATOMIC_LAYERS = {
@@ -58,8 +59,14 @@ const Comp = (dprops) => {
 
     const [name, setName] = useState({
         value:'',
-        valid:false
+        error:true
     });
+
+    const [details, setDetails] = useState({
+        component:{},
+        storybook:{}
+    });
+
     const [cache, setCache] = useState(() => helpers.random.key());
     const [mapping, setMapping] = useState(() => parseMapping(rawCompMap));
 
@@ -86,7 +93,28 @@ const Comp = (dprops) => {
         return helpers.array.toIndexJson(items, {});
     }, [getNode]);
 
+    const onChange = () => {
+        if (typeof props.onChange === 'function' && name.value && !name.error) {
+            props.onChange({
+                valid:!name.error,
+                path:[...mapping, name.value]
+            });
+        }
+    }
+
+    const bindEvent = (name, cb) => {
+        helpers.react.hooks.event.off(name, cb);
+        helpers.react.hooks.event.on(name, cb);
+    }
+
+    bindEvent('show-save-component', (arg) => {
+        setDetails(arg);
+
+        console.log(arg);
+    });
+
     const handleSelect = useCallback((parentPath, selectedData) => {
+        const d = helpers.json.copy(name);
         const selectedId = helpers.json.get(selectedData, '0.id', '');
 
         if(selectedId != 'index'){
@@ -95,9 +123,13 @@ const Comp = (dprops) => {
             setMapping(nextMapping);
             setCache(helpers.random.key());
 
-            if (typeof props.onChange === 'function') {
-                props.onChange(nextMapping.join('/'));
-            }
+            
+            
+            d.value = '';
+            d.error = true;
+
+            setName(d);
+            onChange()
         }
     }, [props]);
 
@@ -139,7 +171,7 @@ const Comp = (dprops) => {
             index:true
         }
 
-        d.error = false;
+        d.error = val?false:true;
         val = `${val}`.toLowerCase();
 
         if(ivmap[val]){
@@ -153,6 +185,7 @@ const Comp = (dprops) => {
         }
 
         setName(d);
+        onChange()
     }
 
     const showShowCreate = (pathArray, dIndex) => {
@@ -197,7 +230,20 @@ const Comp = (dprops) => {
     };
 
     const submit = () => {
+        let valid = !helpers.json.get(name, 'error', false);
+        let sp = helpers.json.get(details, 'storybook.props', {});
 
+        if(valid && helpers.json.length(sp) > 0){
+            return (
+                <li className="bxs pd-r20 pd-t20 grid fl">
+                    <Button 
+                        button={{
+                            "content": "Save"
+                        }}
+                    />
+                </li>
+            );
+        }
     }
 
     const renderCascadingSelects = () => {
@@ -222,7 +268,6 @@ const Comp = (dprops) => {
                         {renderSelectBox(currentPath, segment)}
                     </li>
                     {isLast && renderTrailingSelect(traversedPath)}
-                    {submit()}
                 </React.Fragment>
             );
         });
@@ -231,6 +276,7 @@ const Comp = (dprops) => {
     return (
         <ul className="bxs full grid-wrapper grid-layout-7 pd-l20 pd-b10">
             {renderCascadingSelects()}
+            {submit()}
         </ul>
     );
 };
