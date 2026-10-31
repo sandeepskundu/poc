@@ -13,7 +13,7 @@ const base = {
         uicomponent:{
             view:'ui-component',
             name:'uicomponent',
-            path:'uicomponent/:hash',
+            path:'uicomponent/:action/:hash?',
         }
     }
 };

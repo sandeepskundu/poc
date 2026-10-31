@@ -3,7 +3,7 @@ import parser from './parser';
 import Details from './details';
 import helpers from 'ui-helpers';
 import appHelpers from 'app-helpers';
-import JsonBuilder from './../json-builder';
+import JsonBuilder from 'aio-global-ui/molecules/json-builder';
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 
 const Comp = (dprops) => {
@@ -69,8 +69,8 @@ const Comp = (dprops) => {
                 ...prev,
                 blank:false,
                 data:data,
-                cache:helpers.random.key(),
                 raw:rawDetails,
+                cache:helpers.random.key()
             }));
     }, []);
 
@@ -81,7 +81,7 @@ const Comp = (dprops) => {
                 options: {},
                 request: {
                     data: {
-                        map:(componentMap).toLowerCase()
+                        map:componentMap.toLowerCase()
                     }
                 }
             }
@@ -184,10 +184,7 @@ const Comp = (dprops) => {
         <JsonBuilder
             builder={builder}
             data={details.data}
-            callbacks={{
-                onChange,
-                outputParser
-            }}
+            callbacks={{onChange, outputParser}}
             configs={helpers.json.get(props, 'editorConfigs.layoutConfig', {})}
             filters={filterConfigs}
             templates={{

@@ -1,6 +1,5 @@
 const Comp = (props) => { 
     const details = props.props;
-
     const node = details.node;
     const editor = props.__ || {};
     const metas = helpers.json.get(node, '__.metas', []);
