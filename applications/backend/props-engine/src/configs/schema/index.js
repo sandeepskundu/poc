@@ -1,0 +1,9 @@
+const devOpsScriptRun = require('./devops-script-run');
+const devOpsScriptRunBucket = require('./devops-script-run-bucket');
+
+exports.compiler = async (private, appConfig, req, res, next) => {
+    return [
+        await devOpsScriptRun.get(private, appConfig, req),
+        await devOpsScriptRunBucket.get(private, appConfig, req)
+    ]
+}

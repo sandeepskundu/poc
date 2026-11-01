@@ -4,6 +4,7 @@ let map = {
     enums:require('./enums'),
     blood:require('./blood'),
     india:require('./india'),
+    devops:require('./devops'),
     family:require('./family'),
     gender:require('./gender'),
     access:require('./access'),
