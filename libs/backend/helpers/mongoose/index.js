@@ -14,11 +14,11 @@ exports.docHelpers = dHelpers;
 exports.connection = connection;
 
 exports.initialize = async (appConfig, helpers) => {
-    //let mdb = await connection.init(appConfig, helpers);
-    //let models = await model.compile(appConfig, helpers);
+    let mdb = await connection.init(appConfig, helpers);
+    let models = await model.compile(appConfig, helpers);
 
     return {
-        //db:mdb,
-        //models:mdb?models:false
+        db:mdb,
+        models:mdb?models:false
     }
 }
