@@ -1,6 +1,7 @@
 const helpers = require('ui-helpers');
 
 const map = {
+    devOps:require('./devOps'),
     storybook:require('./storybook'),
 }
 
@@ -15,5 +16,15 @@ const get = (config, onResp) => {
         onRespCb(resp, onResp, config);
     }, map);
 }
+
+
+
+const stream = (config, onResp) => {
+    debugger;
+    return helpers.store.stream(config, (resp) => {
+        onRespCb(resp, onResp, config);
+    }, map);
+}
  
 exports.get = get;
+exports.stream = stream;

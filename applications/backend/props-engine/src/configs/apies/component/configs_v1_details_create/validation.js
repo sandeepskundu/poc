@@ -11,7 +11,7 @@ module.exports = async (req) => {
             "body":{
                 "app.name":await validation.build(req, 'universal.require'),
                 "component.path":await validation.build(req, 'universal.require'),
-                "storybook.props":await validation.build(req, 'universal.require')
+                //"storybook.props":await validation.build(req, 'universal.require')
             }
         }
     }

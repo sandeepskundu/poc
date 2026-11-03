@@ -2,13 +2,15 @@ module.exports = {
     isac:require('./isac'),
     text:require('./text'),
     hash:require('./hash'),
+    list:require('./list'),
     idmap:require('./idmap'),
     number:require('./number'),
     string:require('./string'),
     object:require('./object'),
     hashId:require('./hashId'),
+    nested:require('./nested'),
     boolean:require('./boolean'),
     mongoId:require('./mongoId'),
     exposed:require('./exposed'),
-    hashmap:require('./hashmap')
+    hashmap:require('./hashmap'),
 }

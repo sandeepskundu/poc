@@ -13,6 +13,22 @@ const doRequire = (url, noRequire) => {
     }
 }
 
+const list = async (rval, config, name, schemaData, appConfig, req, res, next) => {
+    let childs = req.helpers.json.copy(config);
+        childs.schema = req.helpers.json.val(config, 'childs', {});
+
+    let crv = await compile(childs, appConfig, req, res, next);
+    let cnodes = await req.helpers.json.val(crv, 'nodes', {});
+    let node = chelpers.getName(name, config, req, res, next);
+
+    if(node){
+        rval.nodes = rval.nodes || {};
+        rval.nodes[name] = [cnodes];
+    }
+
+    return rval;
+}
+
 const nested = async (rval, config, name, schemaData, appConfig, req, res, next) => {
     let childs = req.helpers.json.copy(config);
         childs.schema = req.helpers.json.val(config, 'childs', {});
@@ -38,6 +54,9 @@ const compile = async (data, config, req, res, next) => {
         let type = req.helpers.json.val(item, 'type');
 
         switch (type) {
+            case 'list':
+                rval = await list(rval, item, a, data, config, req, res, next)
+            break;
             case 'nested':
                 rval = await nested(rval, item, a, data, config, req, res, next)
             break;

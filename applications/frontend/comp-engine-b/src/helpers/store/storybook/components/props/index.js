@@ -1,0 +1,1 @@
+exports.detailsByMap = require('./details-by-map');

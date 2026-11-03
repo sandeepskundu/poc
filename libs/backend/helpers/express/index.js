@@ -1,5 +1,6 @@
 exports.docs = require('./docs');
 exports.server = require('./server');
+exports.stream = require('./stream');
 exports.response = require('./response');
 exports.htmlHooks = require('./html-hooks');
 exports.appConfig = require('./app-config');

@@ -1,0 +1,1 @@
+exports.script = require('./script')

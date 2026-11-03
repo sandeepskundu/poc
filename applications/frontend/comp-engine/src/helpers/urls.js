@@ -10,11 +10,21 @@ module.exports = {
             },
             props:{
                 detailsByMap:'http://localhost:5000/api/props-engine/props/configs/v1/byMap/fetch'
+            },
+            configs:{
+                createDetails:'http://localhost:5000/api/props-engine/component/configs/v1/details/create'   
             }
         },
         ds:{
             enums:'http://localhost:5000/api/props-engine/ds/enums/v1/data/fetch',
             predefined:'http://localhost:5000/api/props-engine/ds/predefined/v1/data/fetch'
+        }
+    },
+    devOps:{
+        builds:{
+            scripts:{
+                run:"http://localhost:5000/api/props-engine/devOps/script/v1/run/create"
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ const dt = require('./../data');
 const urlh = require('./../url');
 const queue = require('./queue');
 const cache = require('./cache');
+const stream = require('./stream');
 const json  = require('./../json');
 const byType = require('./by-type');
 const rnadom = require('./../random');
@@ -96,7 +97,8 @@ const headers = (conf) => {
 }
 
 const getConfig = (conf) => {
-    return {
+    let type = json.get(conf, 'request.type', '');
+    let rval = {
         url:getUrl(conf),
         data:data(conf),
         params:params(conf),
@@ -109,6 +111,12 @@ const getConfig = (conf) => {
         timeout:json.val(conf, 'options.timeout', 10000)
         //baseURL:'https://some-domain.com/api/'
     }
+
+    if(type === 'stream'){
+        rval.type = type;
+    }
+
+    return rval;
 }
 
 const hasDataMaker = (resp, configs, error) => {
@@ -350,15 +358,19 @@ const init = (conf, onresp) => {
         const stored = cache.stored(rconfig);
         const reqconf = getConfig(rconfig);
 
-        if(queued && !stored){
-            axios.default(reqconf).then((resp) => {
-                onResp(resp, rconfig)
-            }).catch((error) => {
-                onResp(error.response, rconfig, true);
-            });
+        if(reqconf && reqconf.type === 'stream'){
+            return stream.init(reqconf, onresp, conf);
         }else{
-            if(!stored){
-                queue.add(rconfig, onQueResp, onresp);  
+            if(queued && !stored){
+                axios.default(reqconf).then((resp) => {
+                    onResp(resp, rconfig)
+                }).catch((error) => {
+                    onResp(error.response, rconfig, true);
+                });
+            }else{
+                if(!stored){
+                    queue.add(rconfig, onQueResp, onresp);  
+                }
             }
         }
     }

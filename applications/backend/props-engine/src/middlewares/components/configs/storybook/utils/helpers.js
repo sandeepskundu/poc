@@ -1,7 +1,7 @@
 const path = require('path');
 
 const storybookPath =  async (req, res, next) => {
-    return path.join(process.cwd(), './src/configs/storybook-kundu');
+    return path.join(process.cwd(), './src/configs/storybook');
 }
 
 const compPath = async (req, res, next) => {

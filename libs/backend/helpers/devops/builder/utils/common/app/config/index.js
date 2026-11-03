@@ -17,6 +17,7 @@ const preBuildApps = {
     insiderCdn:require('./insider-cdn'),
     propsEngine:require('./props-engine'),
     tdcFrontend:require('./tdc-frontend'),
+    compEngineB:require('./comp-engine-b'),
     tdcDesignSystem:require('./tdc-design-system'),
 }
 

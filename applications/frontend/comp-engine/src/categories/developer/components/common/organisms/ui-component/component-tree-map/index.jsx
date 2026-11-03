@@ -1,4 +1,6 @@
 import helpers from 'ui-helpers';
+import ViewLog from './log-view';
+import appHelpers from 'app-helpers';
 import Input from 'aio-global-raw-ui/atoms/form/input';
 import Select from 'aio-global-raw-ui/atoms/form/select';
 import Button from 'aio-global-raw-ui/atoms/form/button';
@@ -13,8 +15,8 @@ const ATOMIC_LAYERS = {
 };
 
 const TREE_SCHEMA = {
-    raw:ATOMIC_LAYERS,
-    components:ATOMIC_LAYERS,
+    raw: ATOMIC_LAYERS,
+    components: ATOMIC_LAYERS,
     categories: {
         abc: ATOMIC_LAYERS
     }
@@ -58,13 +60,13 @@ const Comp = (dprops) => {
     const rawCompMap = helpers.json.get(props, 'details.componentMap', '');
 
     const [name, setName] = useState({
-        value:'',
-        error:true
+        value: '',
+        error: true
     });
 
     const [details, setDetails] = useState({
-        component:{},
-        storybook:{}
+        component: {},
+        storybook: {}
     });
 
     const [cache, setCache] = useState(() => helpers.random.key());
@@ -96,8 +98,8 @@ const Comp = (dprops) => {
     const onChange = () => {
         if (typeof props.onChange === 'function' && name.value && !name.error) {
             props.onChange({
-                valid:!name.error,
-                path:[...mapping, name.value]
+                valid: !name.error,
+                path: [...mapping, name.value]
             });
         }
     }
@@ -109,22 +111,18 @@ const Comp = (dprops) => {
 
     bindEvent('show-save-component', (arg) => {
         setDetails(arg);
-
-        console.log(arg);
     });
 
     const handleSelect = useCallback((parentPath, selectedData) => {
         const d = helpers.json.copy(name);
         const selectedId = helpers.json.get(selectedData, '0.id', '');
 
-        if(selectedId != 'index'){
+        if (selectedId != 'index') {
             const nextMapping = selectedId ? [...parentPath, selectedId] : [...parentPath];
 
             setMapping(nextMapping);
             setCache(helpers.random.key());
 
-            
-            
             d.value = '';
             d.error = true;
 
@@ -166,20 +164,20 @@ const Comp = (dprops) => {
         let d = helpers.json.copy(name);
         let parents = getNode(mapping);
         let ivmap = {
-            root:true,
-            base:true,
-            index:true
+            root: true,
+            base: true,
+            index: true
         }
 
-        d.error = val?false:true;
+        d.error = val ? false : true;
         val = `${val}`.toLowerCase();
 
-        if(ivmap[val]){
+        if (ivmap[val]) {
             d.error = 'This is a reserved keyword and cannot be used as a component name.'
-        }else{
-            if(parents[val]){
+        } else {
+            if (parents[val]) {
                 d.error = 'A component with this name already exists. Please choose a different name.'
-            }else{
+            } else {
                 d.value = val;
             }
         }
@@ -193,17 +191,17 @@ const Comp = (dprops) => {
     }
 
     const createInput = (pathArray, dIndex) => {
-        if(action === 'create' && showShowCreate(pathArray, dIndex)){
+        if (action === 'create' && showShowCreate(pathArray, dIndex)) {
             return (
                 <li className="bxs pd-r20 pd-t20 grid fl">
                     <Input
                         label='Name'
                         value={name.value}
                         error={name.error}
-                        invalid={name.error?true:false}
+                        invalid={name.error ? true : false}
                         placeholder='Enter name'
                         callback={{
-                            onChange:onNameChange
+                            onChange: onNameChange
                         }}
                     />
                 </li>
@@ -218,27 +216,106 @@ const Comp = (dprops) => {
         if (node && helpers.json.length(node) > 0) {
             return (
                 <>
-                    <li className="bxs pd-r20 pd-t20 grid fl">
+                    <li className="bxs pd-r20 pd-t20 grid fl hide">
                         {renderSelectBox(pathArray, dIndex)}
                     </li>
                     {createInput(pathArray, dIndex)}
                 </>
             );
         }
-        
+
         return createInput(pathArray, dIndex);
     };
+
+
+
+    const onPropResponse = (resp) => {
+        debugger;
+    };
+
+    const save = () => {
+        appHelpers.store.get([{
+            name: 'storybook.components.configs.createDetails',
+            request: {
+                options: {},
+                request: {
+                    data: {
+                        "app":{
+                            "name":"comp-engine"
+                        },
+                        "component":{
+                            "path":details.component.path.join('/')
+                        },
+                        "storybook":{
+                            "props":helpers.json.get(details, 'storybook.props', {})
+                        }
+                    }
+                }
+            }
+        }], onPropResponse)
+    };
+
+    const build = () => {
+        let dv = appHelpers.store.stream({
+            name: 'devOps.builds.scripts.run',
+            request: {
+                options: {},
+                request: {
+                    data: {
+                        "mode":"queue",
+                        "stream":"raw/atoms/dot/sandeep",
+                        "commands":"sklsl"
+                    }
+                },
+                callbacks:{
+                    onOpen:(resp, ajaxConfig, onResp, raw)=>{
+                        console.log('onOpen');
+                        console.log(resp.data);
+                    },
+                    onEvent:(resp, ajaxConfig, onResp, raw) => {
+                        console.log('onEvent');
+                        console.log(resp.data);
+                        console.log(resp.data.data.msg);
+                    },
+                    onError:(resp, ajaxConfig, onResp, raw)=>{
+                        console.log('onError');
+                        console.log(resp);
+                    },
+                    onComplete:(resp, ajaxConfig, onResp, raw)=>{
+                        console.log('onComplete');
+                        console.log(resp);
+                    }
+                }
+            },
+        }, onPropResponse);
+
+        debugger;
+
+        console.log(dv);
+    };
+
+
+    const buildBtn = () => {
+        return (
+            <li className="bxs pd-r20 pd-t20 grid fl">
+               <span className='pd-10' onClick={() => {build()}}> Start</span>
+            </li>
+        );
+    }
 
     const submit = () => {
         let valid = !helpers.json.get(name, 'error', false);
         let sp = helpers.json.get(details, 'storybook.props', {});
 
-        if(valid && helpers.json.length(sp) > 0){
+        if (valid && helpers.json.length(sp) > 0) {
             return (
                 <li className="bxs pd-r20 pd-t20 grid fl">
-                    <Button 
+                    <Button
                         button={{
-                            "content": "Save"
+                            content: "Save"
+                        }}
+                        callback={{
+                            onClick:save
                         }}
                     />
                 </li>
@@ -249,7 +326,7 @@ const Comp = (dprops) => {
     const renderCascadingSelects = () => {
         if (mapping.length === 0) {
             return (
-                <li className="bxs pd-r20 pd-t20 grid fl">
+                <li className="bxs pd-r20 pd-t20 grid fl hide">
                     {renderSelectBox([], '')}
                 </li>
             );
@@ -260,7 +337,7 @@ const Comp = (dprops) => {
         return mapping.map((segment, index) => {
             const currentPath = [...traversedPath];
             const isLast = index === mapping.length - 1;
-                traversedPath.push(segment);
+            traversedPath.push(segment);
 
             return (
                 <React.Fragment key={`${cache}-${index}-${segment}`}>
@@ -273,10 +350,20 @@ const Comp = (dprops) => {
         });
     };
 
+
     return (
+        <ViewLog runId="sakkak" />
+    )
+
+    return (
+
+
+
+
         <ul className="bxs full grid-wrapper grid-layout-7 pd-l20 pd-b10">
             {renderCascadingSelects()}
             {submit()}
+            {buildBtn()}
         </ul>
     );
 };

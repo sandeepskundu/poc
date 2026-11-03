@@ -1,0 +1,1 @@
+exports.createDetails = require('./create-details');

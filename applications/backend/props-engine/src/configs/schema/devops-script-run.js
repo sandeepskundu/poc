@@ -25,9 +25,34 @@ exports.get = async (private, appConfig, req) => {
             "name":'devOpsScriptRun'
         },
         "schema":{
+            ud:await schema.universal.nested(req, {
+                "childs":{
+                    "uId":await schema.universal.mongoId(req, {
+                        "configs":{
+                            "mongodb":{
+                                "unique":false,
+                                "required": {
+                                    "enable":false
+                                }
+                            }
+                        }
+                    }),
+                    "aId":await schema.universal.mongoId(req, {
+                        "configs":{
+                            "mongodb":{
+                                "unique":false,
+                                "required": {
+                                    "enable":false
+                                }
+                            }
+                        }
+                    })
+                },
+            }),
             batchId:await schema.universal.mongoId(req, {
                 "configs":{
                     "mongodb":{
+                        "unique":false,
                         "required": {
                             "enable":true
                         }
@@ -40,6 +65,9 @@ exports.get = async (private, appConfig, req) => {
                         "default":{
                             "enable":true,
                             "value":null,
+                        },
+                        "required": {
+                            "enable":false
                         }
                     }
                 }
@@ -59,6 +87,9 @@ exports.get = async (private, appConfig, req) => {
                         "default":{
                             "enable":true,
                             "value":null,
+                        },
+                        "required": {
+                            "enable":false
                         }
                     }
                 }
@@ -74,7 +105,16 @@ exports.get = async (private, appConfig, req) => {
                 }
             }),
             env:await schema.universal.object(req, {}),
-            cwd:await schema.universal.text.title(req, {}),
+            cwd:await schema.universal.text.title(req, {
+                "configs":{
+                    "mongodb":{
+                        "required": {
+                            "enable":false
+                        },
+                        "minLength":null
+                    }
+                }
+            }),
             mode:await enums(req,  ['devops.script.run.mode'], 'queue'),
             status:await enums(req,  ['devops.script.run.status'], 'queued')
         }

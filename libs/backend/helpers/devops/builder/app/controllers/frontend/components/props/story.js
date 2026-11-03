@@ -109,6 +109,8 @@ const getImportBreakup = (storybook, filsProps, alias, req) => {
         dir = (`${dir}/${f}`)
     }
 
+    console.log(dir);
+
     return {
         name:c,
         alias:dir,
