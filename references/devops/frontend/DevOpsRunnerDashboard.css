@@ -1,0 +1,772 @@
+/* ==========================================================================
+   DevOpsRunnerDashboard.css
+   Pure Plain CSS Stylesheet for Express Hierarchical Script Runner Frontend
+   Covers all 23+ Use Cases, 3-Tier Tree, Live SSE Terminal, and Controls
+   ========================================================================== */
+
+:root {
+  --bg-app: #0b0f17;
+  --bg-panel: #111827;
+  --bg-card: #1a2333;
+  --bg-card-hover: #212d42;
+  --bg-input: #0d131f;
+  --bg-terminal: #070a10;
+  --border-color: #28354a;
+  --border-highlight: #3b82f6;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+
+  --accent-blue: #3b82f6;
+  --accent-blue-hover: #2563eb;
+  --accent-green: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-purple: #8b5cf6;
+  --accent-cyan: #06b6d4;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.devops-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   Top Header Bar
+   ========================================================================== */
+.devops-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background-color: var(--bg-panel);
+  border-bottom: 1px solid var(--border-color);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.devops-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.devops-brand-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.devops-brand-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.devops-brand-subtitle {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.devops-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.devops-inline-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+
+.devops-inline-field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.devops-inline-field input,
+.devops-inline-field select {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 12.5px;
+  font-family: var(--font-mono);
+  outline: none;
+  min-width: 140px;
+}
+
+/* ==========================================================================
+   Main Layout: Left Use-Case Sidebar + Right Workspace
+   ========================================================================== */
+.devops-body {
+  display: grid;
+  grid-template-columns: 295px 1fr;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 1024px) {
+  .devops-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Sidebar: All 23 Use Cases Catalog
+   ========================================================================== */
+.devops-sidebar {
+  background-color: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: calc(100vh - 61px);
+}
+
+.devops-sidebar-header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.devops-sidebar-header h3 {
+  margin: 0 0 4px 0;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-secondary);
+}
+
+.devops-sidebar-search {
+  width: 100%;
+  padding: 7px 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 12.5px;
+  margin-top: 6px;
+}
+
+.devops-uc-group {
+  padding: 10px 12px 4px;
+}
+
+.devops-uc-group-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--accent-cyan);
+  margin: 4px 4px 6px;
+}
+
+.devops-uc-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--text-primary);
+  cursor: pointer;
+  margin-bottom: 4px;
+  transition: all 0.15s ease;
+}
+
+.devops-uc-item:hover {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+.devops-uc-item.active {
+  background: rgba(59, 130, 246, 0.14);
+  border-color: var(--accent-blue);
+}
+
+.devops-uc-item-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+}
+
+.devops-uc-item-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Main Workspace & Navigation Tabs
+   ========================================================================== */
+.devops-main {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: calc(100vh - 61px);
+  padding: 16px 22px 40px;
+  gap: 16px;
+}
+
+.devops-active-uc-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.14), rgba(139, 92, 246, 0.08));
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 8px;
+  padding: 12px 16px;
+  flex-wrap: wrap;
+}
+
+.devops-active-uc-info h2 {
+  margin: 0 0 4px 0;
+  font-size: 15px;
+  color: #fff;
+}
+
+.devops-active-uc-info p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+.devops-active-uc-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.devops-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.devops-tab-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 7px 13px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.devops-tab-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+.devops-tab-btn.active {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: #fff;
+}
+
+.devops-tab-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   Cards, Grids, Forms & Buttons
+   ========================================================================== */
+.devops-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 16px;
+}
+
+.devops-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+}
+
+.devops-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.devops-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.devops-card-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.devops-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.devops-field label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.devops-input,
+.devops-select,
+.devops-textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+.devops-textarea.mono,
+.devops-input.mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.devops-input:focus,
+.devops-select:focus,
+.devops-textarea:focus {
+  border-color: var(--accent-blue);
+}
+
+.devops-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.devops-btn:hover:not(:disabled) {
+  background: var(--bg-card-hover);
+}
+
+.devops-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.devops-btn-sm {
+  padding: 4px 9px;
+  font-size: 11.5px;
+}
+
+.devops-btn-primary {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: #fff;
+}
+
+.devops-btn-primary:hover:not(:disabled) {
+  background: var(--accent-blue-hover);
+}
+
+.devops-btn-success {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: var(--accent-green);
+  color: #34d399;
+}
+
+.devops-btn-warning {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: var(--accent-amber);
+  color: #fbbf24;
+}
+
+.devops-btn-danger {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: var(--accent-red);
+  color: #f87171;
+}
+
+.devops-btn-purple {
+  background: rgba(139, 92, 246, 0.18);
+  border-color: var(--accent-purple);
+  color: #c4b5fd;
+}
+
+/* ==========================================================================
+   Status Badges & Pills
+   ========================================================================== */
+.devops-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.devops-badge.status-completed,
+.devops-badge.status-done,
+.devops-badge.status-batch-done,
+.devops-badge.status-approved {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.devops-badge.status-running,
+.devops-badge.status-started,
+.devops-badge.status-triggered {
+  background: rgba(59, 130, 246, 0.18);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.45);
+}
+
+.devops-badge.status-paused,
+.devops-badge.status-pending,
+.devops-badge.status-waiting_approval,
+.devops-badge.status-awaiting-approval,
+.devops-badge.status-scheduled {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+.devops-badge.status-failed,
+.devops-badge.status-timeout,
+.devops-badge.status-rejected,
+.devops-badge.status-expired {
+  background: rgba(239, 68, 68, 0.18);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.45);
+}
+
+.devops-badge.status-stopped,
+.devops-badge.status-skipped,
+.devops-badge.status-cancelled,
+.devops-badge.status-queued {
+  background: rgba(156, 163, 175, 0.14);
+  color: #9ca3af;
+  border-color: rgba(156, 163, 175, 0.3);
+}
+
+/* ==========================================================================
+   3-Tier Hierarchy Tree (Runner -> Batch -> Task)
+   ========================================================================== */
+.devops-tree-batch {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.devops-tree-batch.waiting-gate {
+  border-color: var(--accent-amber);
+  box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.25);
+}
+
+.devops-tree-batch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.devops-tree-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 12px;
+  border-left: 2px solid var(--border-color);
+}
+
+.devops-tree-task {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.devops-tree-task.selected {
+  border-color: var(--accent-blue);
+}
+
+.devops-tree-task-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.devops-progress-track {
+  width: 100%;
+  height: 6px;
+  background: #1f2937;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.devops-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  transition: width 0.25s ease;
+}
+
+/* ==========================================================================
+   Real-Time Structured CI/CD Terminal
+   ========================================================================== */
+.devops-terminal {
+  background: var(--bg-terminal);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 490px;
+}
+
+.devops-terminal-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #0d131f;
+  border-bottom: 1px solid var(--border-color);
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.devops-terminal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.devops-log-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  word-break: break-all;
+}
+
+.devops-log-line:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.devops-log-ts {
+  color: var(--text-muted);
+  font-size: 11px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.devops-log-type {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  min-width: 68px;
+  text-align: center;
+}
+
+.devops-log-line.type-error,
+.devops-log-line.type-stderr,
+.devops-log-line.type-step-fail {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+}
+
+.devops-log-line.type-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fcd34d;
+}
+
+.devops-log-line.type-step-start,
+.devops-log-line.type-section-start {
+  background: rgba(59, 130, 246, 0.12);
+  color: #93c5fd;
+  font-weight: 600;
+}
+
+.devops-log-line.type-step-ok {
+  background: rgba(16, 185, 129, 0.12);
+  color: #6ee7b7;
+}
+
+.devops-log-line.type-output {
+  background: rgba(139, 92, 246, 0.14);
+  color: #ddd6fe;
+}
+
+.devops-log-line.type-progress {
+  color: #67e8f9;
+}
+
+/* ==========================================================================
+   Tables, Telemetry Waterfall & Utility Classes
+   ========================================================================== */
+.devops-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.devops-table th,
+.devops-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.devops-table th {
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.devops-waterfall-bar-wrap {
+  width: 160px;
+  height: 8px;
+  background: #1f2937;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.devops-waterfall-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+}
+
+.devops-alert {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.devops-alert-error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid var(--accent-red);
+  color: #fecaca;
+}
+
+.devops-alert-success {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid var(--accent-green);
+  color: #a7f3d0;
+}
+
+.devops-alert-warning {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid var(--accent-amber);
+  color: #fde68a;
+}
+
+.devops-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.devops-kv-pill {
+  background: rgba(139, 92, 246, 0.16);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #ddd6fe;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}

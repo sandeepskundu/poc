@@ -4,6 +4,7 @@ module.exports = {
     hash:require('./hash'),
     list:require('./list'),
     idmap:require('./idmap'),
+    mixed:require('./mixed'),
     number:require('./number'),
     string:require('./string'),
     object:require('./object'),

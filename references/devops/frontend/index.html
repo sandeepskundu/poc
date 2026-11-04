@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Express 3-Tier Script Runner — Plain React JS & CSS Dashboard</title>
+  <link rel="stylesheet" href="./DevOpsRunnerDashboard.css" />
+  <!-- React 18 & Babel Standalone for Zero-Build Preview -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body style="margin: 0; background: #0b0f17;">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+    // ========================================================================
+    // Full In-Browser Simulator + Live REST API Switcher
+    // Allows testing all 23+ Use Cases immediately even without a running DB!
+    // ========================================================================
+    const createInBrowserSimulatorApi = () => {
+      let seq = 1000;
+      const nextId = (prefix) => `${prefix}_${++seq}`;
+      const runners = [];
+      const batches = [];
+      const tasks = [];
+      const logs = [];
+      const timers = new Map();
+      const sseListeners = new Set();
+      let clusterConfig = {
+        useRedis: false,
+        clusterMode: 'mongo',
+        clusterPollIntervalMs: 400
+      };
+
+      const emitSse = (event, data) => {
+        sseListeners.forEach((h) => {
+          if (!h.runnerId || String(h.runnerId) === String(data.runnerId)) {
+            if (event === 'log' && h.onLog) h.onLog(data);
+            if (event === 'progress' && h.onProgress) h.onProgress(data);
+            if (event === 'status' && h.onStatusChange) h.onStatusChange(event, data);
+          }
+        });
+      };
+
+      const pushLog = (taskDoc, type, msg, progress = undefined) => {
+        const maskedMsg = String(msg).replace(
+          /wJalrXUtnFEMI\/K7MDENG\/bPxRfiCYEXAMPLEKEY|super-secret-prod-db-password-2026|internal-vault-cipher-98765|raw-inline-bearer-token-xyz-999/g,
+          '***REDACTED***'
+        );
+        const entry = {
+          mapId: taskDoc.mapId,
+          runnerId: taskDoc.runnerId,
+          batchId: taskDoc.batchId,
+          taskId: taskDoc.taskId,
+          type,
+          msg: maskedMsg,
+          progress,
+          ts: Date.now()
+        };
+        logs.push(entry);
+        emitSse('log', entry);
+        if (typeof progress === 'number') {
+          taskDoc.progress = progress;
+          emitSse('progress', { taskId: taskDoc.taskId, progress, runnerId: taskDoc.runnerId });
+        }
+      };
+
+      const syncHierarchy = (runnerId) => {
+        const r = runners.find((x) => x.runnerId === runnerId);
+        if (!r) return;
+        const rBatches = batches.filter((b) => b.runnerId === runnerId);
+        rBatches.forEach((b) => {
+          const bTasks = tasks.filter((t) => t.batchId === b.batchId);
+          if (bTasks.every((t) => t.status === 'done' || t.status === 'skipped')) {
+            b.status = 'batch-done';
+            b.durationMs = bTasks.reduce((acc, t) => acc + (t.durationMs || 180), 0);
+          } else if (bTasks.some((t) => t.status === 'failed')) {
+            b.status = 'failed';
+          }
+        });
+        if (rBatches.every((b) => b.status === 'batch-done' || b.status === 'skipped')) {
+          r.status = 'completed';
+          r.durationMs = rBatches.reduce((acc, b) => acc + (b.durationMs || 250), 0);
+        } else if (rBatches.some((b) => b.status === 'failed')) {
+          r.status = 'failed';
+        }
+        emitSse('status', { runnerId });
+      };
+
+      const runSingleTaskSim = async (taskDoc) => {
+        const r = runners.find((x) => x.runnerId === taskDoc.runnerId);
+        if (!r || r.status === 'stopped' || taskDoc.status === 'skipped') return;
+
+        taskDoc.status = 'running';
+        taskDoc.pid = 40000 + Math.floor(Math.random() * 9000);
+        taskDoc.startedAt = Date.now();
+        emitSse('status', { runnerId: r.runnerId });
+
+        const rawText = taskDoc.script || taskDoc.cmd || 'echo "Task OK"';
+        pushLog(taskDoc, 'step-start', `Starting Task: ${taskDoc.name} (PID: ${taskDoc.pid})`);
+
+        if (rawText.includes('section-start')) {
+          pushLog(taskDoc, 'section-start', 'Layer Caching & Dependencies');
+          pushLog(taskDoc, 'stdout', 'Pulling base layer node:22-alpine...');
+          pushLog(taskDoc, 'section-end', 'Layer Caching & Dependencies');
+        }
+
+        const steps = [25, 65, 100];
+        for (let i = 0; i < steps.length; i += 1) {
+          await new Promise((res) => setTimeout(res, 350));
+          while (taskDoc.status === 'paused' || r.status === 'paused') {
+            await new Promise((res) => setTimeout(res, 250));
+          }
+          if (taskDoc.status === 'stopped' || taskDoc.status === 'skipped' || r.status === 'stopped') {
+            return;
+          }
+          pushLog(taskDoc, 'progress', `${taskDoc.name} progress ${steps[i]}%`, steps[i]);
+        }
+
+        const outMatches = rawText.match(/##\[set-output\s+([A-Za-z0-9_]+)=([^\]]+)\]/g) || [];
+        outMatches.forEach((m) => {
+          const kv = m.replace('##[set-output', '').replace(']', '').trim().split('=');
+          if (kv[0]) {
+            r.outputs = r.outputs || {};
+            r.outputs[kv[0]] = kv[1] || '';
+            pushLog(taskDoc, 'output', `Captured output ${kv[0]}=${kv[1]}`);
+          }
+        });
+
+        if (rawText.includes('##[warning]')) {
+          pushLog(taskDoc, 'warning', 'Warning notification emitted by task');
+        }
+
+        if (rawText.includes('exit 1') && !taskDoc._replayedSuccess) {
+          taskDoc.status = 'failed';
+          taskDoc.exitCode = 1;
+          taskDoc.pid = null;
+          taskDoc.durationMs = Date.now() - taskDoc.startedAt;
+          pushLog(taskDoc, 'error', `Task "${taskDoc.name}" exited with code 1`);
+          emitSse('status', { runnerId: r.runnerId });
+          return;
+        }
+
+        pushLog(taskDoc, 'stdout', rawText.split('\n')[0]);
+        pushLog(taskDoc, 'step-ok', `Task "${taskDoc.name}" completed (exitCode=0)`);
+        taskDoc.status = 'done';
+        taskDoc.exitCode = 0;
+        taskDoc.pid = null;
+        taskDoc.durationMs = Date.now() - taskDoc.startedAt;
+        emitSse('status', { runnerId: r.runnerId });
+      };
+
+      const executeRunnerSim = async (runnerId) => {
+        const r = runners.find((x) => x.runnerId === runnerId);
+        if (!r || r.status === 'stopped') return;
+        r.status = 'running';
+        r.startedAt = r.startedAt || Date.now();
+        emitSse('status', { runnerId });
+
+        const rBatches = batches.filter((b) => b.runnerId === runnerId);
+        for (let i = 0; i < rBatches.length; i += 1) {
+          const b = rBatches[i];
+          if (b.status === 'batch-done' || b.status === 'skipped') continue;
+          if (r.status === 'stopped' || r.status === 'paused') return;
+
+          if (b.requiresApproval && b.approvalStatus !== 'approved') {
+            b.status = 'waiting_approval';
+            b.approvalStatus = 'pending';
+            r.status = 'waiting_approval';
+            emitSse('status', { runnerId });
+            return;
+          }
+
+          const hasUpstreamFailure = rBatches.slice(0, i).some((x) => x.status === 'failed');
+          if (b.when === 'on-failure' && !hasUpstreamFailure) {
+            b.status = 'skipped';
+            tasks.filter((t) => t.batchId === b.batchId).forEach((t) => {
+              t.status = 'skipped';
+            });
+            emitSse('status', { runnerId });
+            continue;
+          }
+          if (
+            b.when &&
+            typeof b.when === 'object' &&
+            b.when.output &&
+            Object.entries(b.when.output).some(([k, v]) => (r.outputs || {})[k] !== v)
+          ) {
+            b.status = 'skipped';
+            tasks.filter((t) => t.batchId === b.batchId).forEach((t) => {
+              t.status = 'skipped';
+            });
+            emitSse('status', { runnerId });
+            continue;
+          }
+
+          b.status = 'running';
+          b.startedAt = Date.now();
+          emitSse('status', { runnerId });
+
+          const bTasks = tasks.filter(
+            (t) => t.batchId === b.batchId && t.status !== 'done' && t.status !== 'skipped'
+          );
+          if (b.mode === 'parallel') {
+            await Promise.all(bTasks.map((t) => runSingleTaskSim(t)));
+          } else {
+            for (let j = 0; j < bTasks.length; j += 1) {
+              await runSingleTaskSim(bTasks[j]);
+              if (bTasks[j].status === 'failed' && !b.continueOnError) break;
+            }
+          }
+
+          const allBTasks = tasks.filter((t) => t.batchId === b.batchId);
+          b.durationMs = Date.now() - b.startedAt;
+          b.status = allBTasks.some((t) => t.status === 'failed') ? 'failed' : 'batch-done';
+          emitSse('status', { runnerId });
+        }
+
+        syncHierarchy(runnerId);
+      };
+
+      return {
+        triggerRunner: async (payload) => {
+          const mapId = payload.mapId || 'demo-app';
+          const activeOnMap = runners.filter(
+            (r) =>
+              r.mapId === mapId &&
+              ['scheduled', 'triggered', 'running', 'paused', 'waiting_approval'].includes(r.status)
+          );
+          if (payload.concurrencyPolicy === 'reject' && activeOnMap.length > 0) {
+            const err = new Error(`Active runner already exists for mapId "${mapId}"`);
+            err.status = 409;
+            err.code = 'RUNNER_CONFLICT';
+            err.activeRunnerIds = activeOnMap.map((r) => r.runnerId);
+            throw err;
+          }
+          if (payload.concurrencyPolicy === 'cancel-previous') {
+            activeOnMap.forEach((r) => {
+              r.status = 'stopped';
+            });
+          }
+
+          const runnerId = nextId('runner');
+          const delay = Number(payload.delayMs || 0);
+          const runnerDoc = {
+            _id: runnerId,
+            runnerId,
+            mapId,
+            hostId: 'macbook-node-01:58210',
+            status: delay > 0 ? 'scheduled' : 'triggered',
+            scheduledAt: delay > 0 ? new Date(Date.now() + delay).toISOString() : null,
+            hasActiveTimer: delay > 0,
+            outputs: {},
+            durationMs: null,
+            createdAt: new Date().toISOString()
+          };
+          runners.unshift(runnerDoc);
+
+          const rawBatches = Array.isArray(payload.batches)
+            ? payload.batches
+            : [{ name: 'Default Batch', mode: 'queue', tasks: payload.tasks || [] }];
+
+          rawBatches.forEach((bDef, bIdx) => {
+            const batchId = nextId('batch');
+            batches.push({
+              _id: batchId,
+              batchId,
+              runnerId,
+              mapId,
+              name: bDef.name || `Batch ${bIdx + 1}`,
+              mode: bDef.mode || 'queue',
+              maxQueueConcurrency: bDef.maxQueueConcurrency || 1,
+              requiresApproval: Boolean(bDef.requiresApproval),
+              approvalStatus: bDef.requiresApproval ? 'pending' : null,
+              when: bDef.when || 'on-success',
+              status: 'queued',
+              durationMs: null
+            });
+
+            let expandedTaskDefs = bDef.tasks || [];
+            if (bDef.matrix && typeof bDef.matrix === 'object') {
+              const axes = Object.keys(bDef.matrix);
+              let combos = [{}];
+              axes.forEach((ax) => {
+                const next = [];
+                combos.forEach((p) => {
+                  (bDef.matrix[ax] || []).forEach((v) => next.push({ ...p, [ax]: v }));
+                });
+                combos = next;
+              });
+              const resultTasks = [];
+              expandedTaskDefs.forEach((tDef) => {
+                combos.forEach((c) => {
+                  const label = Object.entries(c)
+                    .map(([k, v]) => `${k}=${v}`)
+                    .join(', ');
+                  resultTasks.push({
+                    ...(typeof tDef === 'string' ? { cmd: tDef } : tDef),
+                    name: `${(typeof tDef === 'object' && tDef.name) || 'Matrix Task'} [${label}]`
+                  });
+                });
+              });
+              expandedTaskDefs = resultTasks;
+            }
+
+            expandedTaskDefs.forEach((tDef, tIdx) => {
+              const taskId = nextId('task');
+              const isStr = typeof tDef === 'string';
+              tasks.push({
+                _id: taskId,
+                taskId,
+                batchId,
+                runnerId,
+                mapId,
+                name: isStr ? `Task ${tIdx + 1}: ${tDef.slice(0, 34)}` : tDef.name || `Task ${tIdx + 1}`,
+                cmd: isStr ? tDef : tDef.cmd,
+                script: !isStr ? tDef.script : null,
+                status: 'queued',
+                progress: 0,
+                retryCount: 0,
+                maxRetries: (!isStr && tDef.maxRetries) || 0,
+                durationMs: null
+              });
+            });
+          });
+
+          if (delay > 0) {
+            const timer = setTimeout(() => {
+              timers.delete(runnerId);
+              runnerDoc.hasActiveTimer = false;
+              executeRunnerSim(runnerId);
+            }, delay);
+            timers.set(runnerId, timer);
+          } else {
+            executeRunnerSim(runnerId);
+          }
+          return { runnerId, runner: runnerDoc };
+        },
+
+        getRunner: async (rId) => ({
+          runner: runners.find((r) => r.runnerId === rId),
+          batches: batches.filter((b) => b.runnerId === rId),
+          tasks: tasks.filter((t) => t.runnerId === rId)
+        }),
+
+        listRunners: async () => ({ total: runners.length, runners: [...runners] }),
+        getScheduledRunners: async () => ({
+          runners: runners.filter((r) => r.status === 'scheduled')
+        }),
+        getPausedRunners: async () => ({
+          runners: runners.filter((r) => r.status === 'paused')
+        }),
+        getFailedRunners: async () => ({
+          runners: runners.filter((r) => ['failed', 'stopped', 'timeout'].includes(r.status))
+        }),
+        getRunningTasks: async () => ({
+          tasks: tasks.filter((t) => ['running', 'started'].includes(t.status))
+        }),
+        getPausedTasks: async () => ({
+          tasks: tasks.filter((t) => t.status === 'paused')
+        }),
+        getFailedTasks: async () => ({
+          tasks: tasks.filter((t) => ['failed', 'stopped', 'timeout'].includes(t.status))
+        }),
+        getSkippableBatches: async () => ({
+          batches: batches.filter((b) =>
+            ['queued', 'paused', 'waiting_approval'].includes(b.status)
+          )
+        }),
+        getFailedBatches: async () => ({
+          batches: batches.filter((b) => ['failed', 'stopped', 'timeout'].includes(b.status))
+        }),
+
+        stopRunner: async (rId) => {
+          if (timers.has(rId)) {
+            clearTimeout(timers.get(rId));
+            timers.delete(rId);
+          }
+          const r = runners.find((x) => x.runnerId === rId);
+          if (r) {
+            r.status = 'stopped';
+            r.hasActiveTimer = false;
+          }
+          batches
+            .filter((b) => b.runnerId === rId && b.status !== 'batch-done')
+            .forEach((b) => {
+              b.status = 'stopped';
+            });
+          tasks
+            .filter((t) => t.runnerId === rId && t.status !== 'done')
+            .forEach((t) => {
+              t.status = 'stopped';
+              t.pid = null;
+            });
+          emitSse('status', { runnerId: rId });
+          return { stopped: true, runnerId: rId };
+        },
+
+        stopRunners: async ({ mapId } = {}) => {
+          const targets = runners.filter(
+            (r) =>
+              (!mapId || r.mapId === mapId) &&
+              ['scheduled', 'triggered', 'running', 'paused', 'waiting_approval'].includes(r.status)
+          );
+          targets.forEach((r) => {
+            r.status = 'stopped';
+          });
+          return { stoppedCount: targets.length };
+        },
+
+        cancelScheduledRunners: async () => {
+          const sched = runners.filter((r) => r.status === 'scheduled');
+          sched.forEach((r) => {
+            if (timers.has(r.runnerId)) clearTimeout(timers.get(r.runnerId));
+            r.status = 'stopped';
+            r.hasActiveTimer = false;
+          });
+          return { cancelledCount: sched.length };
+        },
+
+        pauseRunner: async (rId) => {
+          const r = runners.find((x) => x.runnerId === rId);
+          if (r) r.status = 'paused';
+          return { paused: true };
+        },
+
+        resumeRunner: async (rId) => {
+          const r = runners.find((x) => x.runnerId === rId);
+          if (r) {
+            r.status = 'running';
+            executeRunnerSim(rId);
+          }
+          return { resumed: true };
+        },
+
+        pauseTask: async (tId) => {
+          const t = tasks.find((x) => x.taskId === tId);
+          if (t && t.status === 'running') {
+            t.status = 'paused';
+            pushLog(t, 'system', `Sent SIGSTOP to process group -${t.pid} (Task frozen)`);
+          }
+          return { paused: true };
+        },
+
+        resumeTask: async (tId) => {
+          const t = tasks.find((x) => x.taskId === tId);
+          if (t && t.status === 'paused') {
+            t.status = 'running';
+            pushLog(t, 'system', `Sent SIGCONT to process group -${t.pid} (Task resumed)`);
+          }
+          return { resumed: true };
+        },
+
+        pauseTasks: async () => {
+          const list = tasks.filter((t) => t.status === 'running');
+          list.forEach((t) => {
+            t.status = 'paused';
+          });
+          return { pausedCount: list.length };
+        },
+
+        resumeTasks: async () => {
+          const list = tasks.filter((t) => t.status === 'paused');
+          list.forEach((t) => {
+            t.status = 'running';
+          });
+          return { resumedCount: list.length };
+        },
+
+        skipTask: async (tId) => {
+          const t = tasks.find((x) => x.taskId === tId);
+          if (t && t.status === 'queued') t.status = 'skipped';
+          return { skipped: true };
+        },
+
+        stopTask: async (tId) => {
+          const t = tasks.find((x) => x.taskId === tId);
+          if (t) {
+            t.status = 'stopped';
+            t.pid = null;
+          }
+          return { stopped: true };
+        },
+
+        skipBatch: async (bId) => {
+          const b = batches.find((x) => x.batchId === bId);
+          if (b) {
+            const wasGate = b.status === 'waiting_approval';
+            b.status = 'skipped';
+            tasks
+              .filter((t) => t.batchId === bId && t.status !== 'done')
+              .forEach((t) => {
+                t.status = 'skipped';
+              });
+            if (wasGate) {
+              executeRunnerSim(b.runnerId);
+            }
+          }
+          return { skipped: true };
+        },
+
+        skipBatches: async () => {
+          const list = batches.filter((b) =>
+            ['queued', 'paused', 'waiting_approval'].includes(b.status)
+          );
+          list.forEach((b) => {
+            b.status = 'skipped';
+          });
+          return { skippedCount: list.length };
+        },
+
+        stopBatch: async (bId) => {
+          const b = batches.find((x) => x.batchId === bId);
+          if (b) b.status = 'stopped';
+          return { stopped: true };
+        },
+
+        approveBatch: async (bId) => {
+          const b = batches.find((x) => x.batchId === bId);
+          if (b) {
+            b.approvalStatus = 'approved';
+            b.status = 'queued';
+            executeRunnerSim(b.runnerId);
+          }
+          return { approved: true };
+        },
+
+        rejectBatch: async (bId) => {
+          const b = batches.find((x) => x.batchId === bId);
+          if (b) {
+            b.approvalStatus = 'rejected';
+            b.status = 'stopped';
+            const r = runners.find((x) => x.runnerId === b.runnerId);
+            if (r) r.status = 'stopped';
+          }
+          return { rejected: true };
+        },
+
+        replayTask: async (tId) => {
+          const t = tasks.find((x) => x.taskId === tId);
+          if (t) {
+            t._replayedSuccess = true;
+            t.retryCount = 0;
+            t.status = 'queued';
+            await runSingleTaskSim(t);
+            syncHierarchy(t.runnerId);
+          }
+          return { replayed: true };
+        },
+
+        replayBatch: async (bId, { fromFailed } = {}) => {
+          const b = batches.find((x) => x.batchId === bId);
+          if (b) {
+            const bTasks = tasks.filter((t) => t.batchId === bId);
+            bTasks.forEach((t) => {
+              t._replayedSuccess = true;
+              if (!fromFailed || t.status !== 'done') {
+                t.status = 'queued';
+                t.retryCount = 0;
+              }
+            });
+            for (let i = 0; i < bTasks.length; i += 1) {
+              if (bTasks[i].status !== 'done') {
+                await runSingleTaskSim(bTasks[i]);
+              }
+            }
+            syncHierarchy(b.runnerId);
+          }
+          return { replayed: true };
+        },
+
+        replayRunner: async (rId, { fromFailed } = {}) => {
+          const rBatches = batches.filter((b) => b.runnerId === rId);
+          rBatches.forEach((b) => {
+            if (!fromFailed || b.status !== 'batch-done') {
+              b.status = 'queued';
+            }
+          });
+          tasks
+            .filter((t) => t.runnerId === rId)
+            .forEach((t) => {
+              t._replayedSuccess = true;
+              if (!fromFailed || t.status !== 'done') {
+                t.status = 'queued';
+                t.retryCount = 0;
+              }
+            });
+          executeRunnerSim(rId);
+          return { replayed: true };
+        },
+
+        connectStream: (filters, handlers) => {
+          const sub = { runnerId: filters.runnerId, ...handlers };
+          sseListeners.add(sub);
+          setTimeout(() => {
+            if (handlers.onOpen) handlers.onOpen();
+            const past = logs.filter(
+              (l) => !filters.runnerId || l.runnerId === filters.runnerId
+            );
+            past.forEach((l) => handlers.onLog && handlers.onLog(l));
+          }, 30);
+          return {
+            close: () => sseListeners.delete(sub)
+          };
+        },
+
+        queryLogs: async ({ runnerId, type, search, limit = 50, offset = 0 } = {}) => {
+          let filtered = logs.filter((l) => !runnerId || l.runnerId === runnerId);
+          if (type) {
+            const types = type.split(',');
+            filtered = filtered.filter((l) => types.includes(l.type));
+          }
+          if (search) {
+            const q = search.toLowerCase();
+            filtered = filtered.filter((l) => (l.msg || '').toLowerCase().includes(q));
+          }
+          return {
+            totalLogs: filtered.length,
+            hasMore: offset + limit < filtered.length,
+            logs: filtered.slice(offset, offset + limit)
+          };
+        },
+
+        exportRunnerLogsText: async (rId, format = 'txt') => {
+          const rLogs = logs.filter((l) => !rId || l.runnerId === rId);
+          if (format === 'json') return JSON.stringify(rLogs, null, 2);
+          if (format === 'ndjson') return rLogs.map((l) => JSON.stringify(l)).join('\n');
+          return rLogs
+            .map(
+              (l) =>
+                `[${new Date(l.ts).toISOString()}] [${(l.type || 'STDOUT').toUpperCase()}] [task:${l.taskId}] ${l.msg}`
+            )
+            .join('\n');
+        },
+
+        getRunnerMetrics: async (rId) => {
+          const r = runners.find((x) => x.runnerId === rId);
+          const rBatches = batches.filter((b) => b.runnerId === rId);
+          const rTasks = tasks.filter((t) => t.runnerId === rId);
+          const totalDur = (r && r.durationMs) || 1200;
+          const bBreakdown = rBatches.map((b) => ({
+            batchId: b.batchId,
+            name: b.name,
+            mode: b.mode,
+            status: b.status,
+            durationMs: b.durationMs || 500,
+            percentageOfRunner: Math.min(100, Math.round(((b.durationMs || 500) / totalDur) * 100))
+          }));
+          return {
+            runnerId: rId,
+            durationMs: totalDur,
+            totalTaskExecutionMs: rTasks.reduce((a, t) => a + (t.durationMs || 350), 0),
+            slowestBatch: bBreakdown.sort((a, b) => b.durationMs - a.durationMs)[0] || null,
+            slowestTask:
+              [...rTasks].sort((a, b) => (b.durationMs || 0) - (a.durationMs || 0))[0] || null,
+            batchBreakdown: bBreakdown
+          };
+        },
+
+        cleanupRunnerFiles: async (rId) => ({ runnerId: rId, deletedFilesCount: 2 }),
+        cleanupStaleTempFiles: async (maxAgeMs) => ({ maxAgeMs, sweptFilesCount: 0 }),
+        getClusterConfig: async () => clusterConfig,
+        configureCluster: async (cfg) => {
+          clusterConfig = { ...clusterConfig, ...cfg };
+          return clusterConfig;
+        }
+      };
+    };
+
+    const simApi = createInBrowserSimulatorApi();
+
+    const StandaloneZeroBuildApp = () => {
+      const [mode, setMode] = useState('simulator');
+      const [apiUrl, setApiUrl] = useState('/api/devops');
+      const [runnersList, setRunnersList] = useState([]);
+      const [activeRunner, setActiveRunner] = useState(null);
+      const [batches, setBatches] = useState([]);
+      const [tasks, setTasks] = useState([]);
+      const [logs, setLogs] = useState([]);
+
+      const refreshSim = useCallback(async (rId) => {
+        const list = await simApi.listRunners();
+        setRunnersList(list.runners || []);
+        const targetId = rId || (activeRunner && activeRunner.runnerId) || (list.runners[0] && list.runners[0].runnerId);
+        if (targetId) {
+          const det = await simApi.getRunner(targetId);
+          setActiveRunner(det.runner);
+          setBatches([...(det.batches || [])]);
+          setTasks([...(det.tasks || [])]);
+        }
+      }, [activeRunner]);
+
+      useEffect(() => {
+        const conn = simApi.connectStream({}, {
+          onLog: (entry) => setLogs((prev) => [...prev, entry]),
+          onStatusChange: (ev, data) => refreshSim(data && data.runnerId)
+        });
+        return () => conn.close();
+      }, [refreshSim]);
+
+      return (
+        <div className="devops-app">
+          <header className="devops-header">
+            <div className="devops-brand">
+              <div className="devops-brand-logo">3T</div>
+              <div>
+                <h1 className="devops-brand-title">
+                  Express 3-Tier Script Runner — Zero-Build Interactive Preview
+                </h1>
+                <p className="devops-brand-subtitle">
+                  For full 9-tab React integration, import <code>frontend/DevOpsRunnerDashboard.jsx</code> + <code>frontend/DevOpsRunnerDashboard.css</code>
+                </p>
+              </div>
+            </div>
+            <div className="devops-header-controls">
+              <span className="devops-badge status-completed">Plain React JS + Plain CSS</span>
+              <span className="devops-badge status-triggered">Mode: {mode.toUpperCase()}</span>
+            </div>
+          </header>
+
+          <main className="devops-main">
+            <div className="devops-card">
+              <div className="devops-card-header">
+                <h3 className="devops-card-title">Quick Interactive Demo Triggers (In-Browser Simulator)</h3>
+              </div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <button
+                  className="devops-btn devops-btn-primary"
+                  onClick={async () => {
+                    setLogs([]);
+                    const res = await simApi.triggerRunner({
+                      mapId: 'multi-stage-demo',
+                      batches: [
+                        { name: 'Stage 1: Build (Queue)', mode: 'queue', tasks: ['echo "##[set-output BUILD_ID=b901]" && echo "Compile OK"'] },
+                        { name: 'Stage 2: Parallel Tests', mode: 'parallel', tasks: ['echo "Unit Tests OK"', 'echo "Lint OK"'] }
+                      ]
+                    });
+                    refreshSim(res.runnerId);
+                  }}
+                >
+                  ▶ Run Queue + Parallel + Output Vars (UC 2 & 5)
+                </button>
+                <button
+                  className="devops-btn devops-btn-warning"
+                  onClick={async () => {
+                    setLogs([]);
+                    const res = await simApi.triggerRunner({
+                      mapId: 'approval-gate-demo',
+                      batches: [
+                        { name: 'Stage 1: Staging Smoke', mode: 'queue', tasks: ['echo "Staging verified"'] },
+                        { name: 'Stage 2: Prod Approval Gate', mode: 'queue', requiresApproval: true, tasks: ['echo "Prod Cutover Complete"'] }
+                      ]
+                    });
+                    refreshSim(res.runnerId);
+                  }}
+                >
+                  🔒 Run Manual Approval Gate (UC 9)
+                </button>
+                <button
+                  className="devops-btn devops-btn-purple"
+                  onClick={async () => {
+                    setLogs([]);
+                    const res = await simApi.triggerRunner({
+                      mapId: 'matrix-demo',
+                      batches: [
+                        {
+                          name: 'Matrix Rollout (2x2)',
+                          mode: 'parallel',
+                          matrix: { REGION: ['us-east-1', 'ap-south-1'], SVC: ['api', 'worker'] },
+                          tasks: [{ name: 'Deploy', cmd: 'echo "Deploying $SVC to $REGION"' }]
+                        }
+                      ]
+                    });
+                    refreshSim(res.runnerId);
+                  }}
+                >
+                  ⊞ Run Matrix Expansion (UC 10)
+                </button>
+                <button
+                  className="devops-btn devops-btn-danger"
+                  onClick={async () => {
+                    setLogs([]);
+                    const res = await simApi.triggerRunner({
+                      mapId: 'replay-from-failed-demo',
+                      batches: [
+                        { name: 'Stage 1: Build (Passes)', mode: 'queue', tasks: ['echo "Build passed"'] },
+                        { name: 'Stage 2: Fails Then Replays', mode: 'queue', tasks: ['echo "Seed OK"', 'echo "Fail step" && exit 1'] }
+                      ]
+                    });
+                    refreshSim(res.runnerId);
+                  }}
+                >
+                  ↻ Run Failure & Replay fromFailed (UC 14)
+                </button>
+              </div>
+            </div>
+
+            <div className="devops-grid-2">
+              <div className="devops-card">
+                <div className="devops-card-header">
+                  <h3 className="devops-card-title">
+                    3-Tier Hierarchy {activeRunner ? `(${activeRunner.mapId} — ${activeRunner.status})` : ''}
+                  </h3>
+                  {activeRunner && (
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button
+                        className="devops-btn devops-btn-sm devops-btn-purple"
+                        onClick={async () => {
+                          await simApi.replayRunner(activeRunner.runnerId, { fromFailed: true });
+                          refreshSim(activeRunner.runnerId);
+                        }}
+                      >
+                        ↻ Replay Runner (fromFailed: true)
+                      </button>
+                      <button
+                        className="devops-btn devops-btn-sm devops-btn-danger"
+                        onClick={async () => {
+                          await simApi.stopRunner(activeRunner.runnerId);
+                          refreshSim(activeRunner.runnerId);
+                        }}
+                      >
+                        ⏹ Stop Runner
+                      </button>
+                    </div>
+                  )}
+                </div>
+                {batches.map((b) => (
+                  <div key={b.batchId} className="devops-tree-batch">
+                    <div className="devops-tree-batch-header">
+                      <div>
+                        <span className={`devops-badge status-${b.status}`}>{b.status}</span>{' '}
+                        <strong>{b.name}</strong>
+                      </div>
+                      <div style={{ display: 'flex', gap: 6 }}>
+                        {b.status === 'waiting_approval' && (
+                          <>
+                            <button
+                              className="devops-btn devops-btn-sm devops-btn-success"
+                              onClick={async () => {
+                                await simApi.approveBatch(b.batchId);
+                                refreshSim(activeRunner.runnerId);
+                              }}
+                            >
+                              ✓ Approve Gate
+                            </button>
+                            <button
+                              className="devops-btn devops-btn-sm devops-btn-warning"
+                              onClick={async () => {
+                                await simApi.skipBatch(b.batchId);
+                                refreshSim(activeRunner.runnerId);
+                              }}
+                            >
+                              ⏭ Skip Gate
+                            </button>
+                          </>
+                        )}
+                        <button
+                          className="devops-btn devops-btn-sm devops-btn-purple"
+                          onClick={async () => {
+                            await simApi.replayBatch(b.batchId, { fromFailed: true });
+                            refreshSim(activeRunner.runnerId);
+                          }}
+                        >
+                          ↻ Replay Batch (fromFailed)
+                        </button>
+                      </div>
+                    </div>
+                    <div className="devops-tree-task-list">
+                      {tasks.filter((t) => t.batchId === b.batchId).map((t) => (
+                        <div key={t.taskId} className="devops-tree-task">
+                          <div className="devops-tree-task-row">
+                            <div>
+                              <span className={`devops-badge status-${t.status}`}>{t.status}</span>{' '}
+                              <span>{t.name}</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: 4 }}>
+                              {t.status === 'running' && (
+                                <button
+                                  className="devops-btn devops-btn-sm devops-btn-warning"
+                                  onClick={async () => {
+                                    await simApi.pauseTask(t.taskId);
+                                    refreshSim(activeRunner.runnerId);
+                                  }}
+                                >
+                                  ⏸ Pause
+                                </button>
+                              )}
+                              {t.status === 'paused' && (
+                                <button
+                                  className="devops-btn devops-btn-sm devops-btn-success"
+                                  onClick={async () => {
+                                    await simApi.resumeTask(t.taskId);
+                                    refreshSim(activeRunner.runnerId);
+                                  }}
+                                >
+                                  ▶ Resume
+                                </button>
+                              )}
+                              <button
+                                className="devops-btn devops-btn-sm devops-btn-purple"
+                                onClick={async () => {
+                                  await simApi.replayTask(t.taskId);
+                                  refreshSim(activeRunner.runnerId);
+                                }}
+                              >
+                                ↻ Replay Task
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="devops-terminal">
+                <div className="devops-terminal-toolbar">
+                  <span className="devops-badge status-completed">● LIVE SSE TERMINAL</span>
+                  <button className="devops-btn devops-btn-sm" onClick={() => setLogs([])}>
+                    Clear
+                  </button>
+                </div>
+                <div className="devops-terminal-body">
+                  {logs.map((l, i) => (
+                    <div key={i} className={`devops-log-line type-${l.type}`}>
+                      <span className="devops-log-type">{l.type}</span>
+                      <span>{l.msg}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<StandaloneZeroBuildApp />);
+  </script>
+</body>
+</html>

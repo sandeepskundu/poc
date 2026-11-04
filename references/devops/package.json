@@ -1,0 +1,19 @@
+{
+  "name": "express-hierarchical-script-runner",
+  "version": "1.0.0",
+  "description": "3-Tier Hierarchical Shell Script Runner & Real-Time SSE Log Streamer backed by MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "express",
+    "mongodb",
+    "sse",
+    "script-runner",
+    "pipeline",
+    "orchestrator",
+    "process-tree"
+  ],
+  "license": "MIT"
+}

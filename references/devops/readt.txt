@@ -1,0 +1,111 @@
+The 4 MongoDB collections defined in COLLECTIONS (runner, batch, task, log) form a 3-Tier Execution Hierarchy + 1 Denormalized Bucketed Log Store.
+
+High-Level Relationship Architecture
+text
+External App / Project (mapId)
+ │
+ └──► 1. runner (Tier 1: Pipeline Instance)
+       │   _id: runnerId, mapId, status, controlState, currentBatchIndex
+       │
+       ├──► 2. batch (Tier 2: Stage 0 - e.g. "Build", mode: "queue")
+       │     │   _id: batchId, runnerId, mapId, order: 0, status
+       │     │
+       │     ├──► 3. task (Tier 3: Step 0 - "npm ci")
+       │     │     │   _id: taskId, batchId, runnerId, mapId, pid, byteOffset
+       │     │     └──► 4. log (Buckets of 500 lines: { mapId, runnerId, batchId, taskId, count, logs[] })
+       │     │
+       │     └──► 3. task (Tier 3: Step 1 - "npm run build")
+       │           └──► 4. log (Buckets of 500 lines)
+       │
+       └──► 2. batch (Tier 2: Stage 1 - e.g. "Test Suite", mode: "parallel")
+             ├──► 3. task (Tier 3: "npm run test:unit")      ──► 4. log
+             └──► 3. task (Tier 3: "npm run test:e2e")       ──► 4. log
+1. 'runner' Collection — Tier 1: Pipeline Orchestrator
+
+Defined in RunnerSchema and managed by triggerRunner / executeRunner.
+
+Role: Represents a single end-to-end pipeline execution triggered by a user or automation. It owns the top-level state machine and coordinates sequential execution across its child batches.
+Key Fields:
+_id (runnerId): Unique identifier for this pipeline run.
+mapId: External correlation ID (e.g., Application ID, Deployment ID, or Project ID). Multiple runner documents can share the same mapId to track deployment history over time.
+status: Current pipeline state ('triggered' | 'running' | 'paused' | 'completed' | 'failed' | 'stopped' | 'timeout').
+controlState: Interactive orchestration signal ('normal' | 'pause-requested' | 'stop-requested').
+ud: { uId, aId } captured via logger.user(req) from session.details(req) for multi-tenant auditability.
+totalBatches: Total number of stages in this pipeline.
+currentBatchIndex: Zero-based pointer to the batch currently executing (or next to execute).
+Why status and controlState are separate:
+When a user calls pauseRunner while a task is mid-execution, the runner cannot immediately become 'paused' until the active child process finishes its current step. Setting controlState: 'pause-requested' while status remains 'running' tells the scheduler: "Let the currently running task finish, do not pull the next task or batch from the queue, and then transition status to 'paused'."
+When resumeRunner is called, the scheduler reads currentBatchIndex and resumes right where it left off.
+2. 'batch' Collection — Tier 2: Stage & Concurrency Controller
+
+Defined in BatchSchema and executed by runBatch.
+
+Role: Groups related shell commands into a logical stage (e.g., "Install Dependencies", "Run Migrations", "Parallel Integration Tests") and dictates how those tasks are scheduled.
+Key Fields:
+_id (batchId): Unique stage identifier.
+runnerId & mapId: Foreign keys linking the batch to its parent pipeline and application.
+name: Human-readable stage title.
+mode:
+'queue': Executes tasks in strict FIFO order (order: 0, 1, 2...) up to maxQueueConcurrency workers at a time (default 1 = sequential one-by-one).
+'parallel': Launches all 'queued' tasks in the batch simultaneously via Promise.all.
+maxQueueConcurrency: Concurrency bound when mode === 'queue' (e.g., run at most 2 tasks at a time out of 10 queued tasks).
+continueOnError: Boolean flag controlling whether a task failure halts the remaining queued tasks in the batch.
+order: Determines the sequence in which batches run inside executeRunner.
+status: 'queued' | 'running' | 'paused' | 'skipped' | 'batch-done' | 'failed' | 'stopped'.
+Interactive Operations:
+skipBatch marks an unstarted batch and all its nested tasks as 'skipped', causing the runner to jump directly to currentBatchIndex + 1.
+stopBatch kills all active processes in the stage simultaneously and bypasses any remaining queued tasks in that batch.
+replayBatch resets only the tasks belonging to this stage, clears their log files, and re-executes the stage cleanly.
+3. 'task' Collection — Tier 3: OS Child Process & File Cursor Tracker
+
+Defined in TaskSchema and managed by executeTask and watcher.js.
+
+Role: Represents a single shell command spawned in a detached OS process group ({ shell: true, detached: true }), tracking its live OS pid, exit code, and exact byte cursor in /tmp/express-script-logs/<taskId>.log.
+Key Fields:
+_id (taskId): Unique command step identifier; also names the physical temp log file (/tmp/express-script-logs/<taskId>.log).
+batchId, runnerId, mapId: Full lineage pointers up the hierarchy.
+cmd, cwd, env: The shell command string, working directory, and environment variables passed to child_process.spawn.
+pid: OS Process ID of the detached process group leader. Used by process.js to send signals to the entire process tree (-pid):
+SIGSTOP on pauseTask (freezes the process tree in RAM without killing it).
+SIGCONT on resumeTask (wakes the process tree back up).
+SIGTERM -> SIGKILL on stopTask or timeout.
+byteOffset: Tracks the exact number of bytes already read from /tmp/express-script-logs/<taskId>.log and persisted into the log collection.
+exitCode: OS exit code (0 = 'done', non-zero = 'failed').
+timeoutMs: Optional per-task execution watchdog timer (automatically paused while a task is SIGSTOP-paused).
+status: 'queued' | 'started' | 'running' | 'paused' | 'skipped' | 'done' | 'failed' | 'stopped' | 'timeout'.
+Why pid and byteOffset are critical for Crash Recovery:
+Because child processes run with { detached: true } and write directly to /tmp/express-script-logs/<taskId>.log, a Node.js/Express server restart does not kill the running shell script or lose its output.
+On reboot, resumeRunningJobsOnBoot queries tasks in ['started', 'running', 'paused'], checks isPidAlive(task.pid), and re-attaches ensureTaskWatcher starting right at task.byteOffset without duplicating or dropping a single log line.
+4. 'log' Collection — Bucketed Multi-Tier Time-Series Store
+
+Defined in LogBucketSchema and written by appendLogsToDb.
+
+Role: High-throughput, bounded-size storage for parsed stdout/stderr lines and system lifecycle events across all tiers.
+Key Fields:
+mapId, runnerId, batchId, taskId: Denormalized tier identifiers stamped on every bucket.
+count: Number of log entries currently in this bucket document (0 to 500).
+ud: { uId, aId } user/account metadata.
+logs: Array of up to BUCKET_SIZE = 500 structured log objects:
+js
+{
+  type: 'stdout' | 'stderr' | 'step-start' | 'progress' | 'error' | 'warning' | 'lifecycle' | 'status' | 'done' | 'timeout',
+  msg: 'Compiling modules...',
+  ts: 1762173005200,
+  progress: 50 // Present when ##[progress] 50% is parsed
+}
+Why the 500-Entry Bucket Design is Used:
+Prevents the 16MB MongoDB Document Limit: Long-running shell scripts (e.g., verbose docker build or webpack logs) can emit hundreds of thousands of lines. Pushing all lines into a single document array would crash when the document hits 16MB and cause expensive document reallocations on disk.
+Avoids 1-Document-Per-Line Index Bloat: Conversely, inserting 100,000 individual documents for 100,000 log lines creates massive index overhead. Bucketing 500 lines per document reduces collection document count and index size by 500x.
+Atomic Rolling Upsert: appendLogsToDb uses:
+js
+logCollection.findOneAndUpdate(
+  { mapId, runnerId, batchId, taskId, count: { $lt: 500 } },
+  {
+    $push: { logs: { $each: slice } },
+    $inc: { count: slice.length },
+    $setOnInsert: { mapId, runnerId, batchId, taskId, ud, createdAt: Date.now() }
+  },
+  { upsert: true, sort: { _id: -1 }, returnDocument: 'after' }
+);
+As soon as the latest bucket hits count: 500, the filter count: { $lt: 500 } no longer matches it, and MongoDB automatically upserts the next bucket document.
+Zero-Join Queries at Any Tier: Because mapId, runnerId, batchId, and taskId are stored on every bucket, queryLogs(req, filters) can fetch logs for an entire application ({ mapId }), a single pipeline ({ runnerId }), a single stage ({ batchId }), or a single step ({ taskId }) with a single indexed query and zero $lookup joins.

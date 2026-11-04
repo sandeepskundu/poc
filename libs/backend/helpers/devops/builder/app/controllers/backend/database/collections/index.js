@@ -76,8 +76,13 @@ const compile = async (data, config, req, res, next) => {
 }
 
 const write = async (arg, modelConfig, appConfig, req, res, next) => {
-    let rv = req.helpers.json.prepairApiSchema(``, arg, 0);
     let name = req.helpers.json.val(modelConfig, 'collection.name', '');
+
+    if(name === ''){
+        
+    }
+    let rv = req.helpers.json.prepairApiSchema(``, arg, 0);
+    
     let appDir = req.helpers.json.val(appConfig, 'dirs.app');
     let sp = req.helpers.json.val(appConfig, 'appConfig.paths.schema');
     let colSchema = await schemaJson.start(arg, appConfig, req, res, next);
