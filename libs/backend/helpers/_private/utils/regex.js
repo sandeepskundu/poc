@@ -48,6 +48,9 @@ module.exports = {
         encoded:{
             value:'^(?=.{10,}$)(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$',
             message:messages.regex.string.encoded
+        },
+        key:{
+            value:'^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$'
         }
     },
     token:{

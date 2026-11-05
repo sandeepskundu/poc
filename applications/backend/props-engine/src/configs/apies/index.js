@@ -1,10 +1,12 @@
 const ds = require('./ds');
+const db = require('./db');
 const props = require('./props');
 const devOps = require('./devOps');
 const component = require('./component');
 
 
 const buildInternal = async (rval, appConfig, req) => {
+    rval = await db.get(rval, appConfig, req);
     rval = await ds.get(rval, appConfig, req);
     rval = await props.get(rval, appConfig, req);
     rval = await devOps.get(rval, appConfig, req);

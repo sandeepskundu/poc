@@ -16,9 +16,6 @@ const addDirPaths = async (appConfig, req, res, next) => {
     let docDir = `${val(appConfig, 'appConfig.buildDir')}/${val(appConfig, 'appConfig.docsDir')}`;
     let appDir = req.helpers.devops.builder.utils.common.path.getApplicationDirPath(appConfig.category, appConfig.appName);
     let bDir = `${req.helpers.devops.builder.utils.common.path.getApplicationDirPath(appConfig.category, appConfig.appName)}/${val(appConfig, 'appConfig.buildDir', 'build')}`;
-
-    debugger;
-
         appConfig.dirs = {
             build:bDir,
             app:appDir,
