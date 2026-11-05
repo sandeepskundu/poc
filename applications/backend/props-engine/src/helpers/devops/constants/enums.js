@@ -24,8 +24,6 @@ const get = (arg, list) => {
         }
     }
 
-    console.log(rval);
-
     return rval;
 }
 

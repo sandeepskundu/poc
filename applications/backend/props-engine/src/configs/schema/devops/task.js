@@ -322,12 +322,12 @@ exports.get = async (private, appConfig, req, dH) => {
                     }
                 }
             }),
-            hostId:await schema.universal.string.value(req, {
+            heartbeatAt:await schema.universal.number.value(req, {
                 "configs":{
                     "mongodb":{
-                        //index:true,
+                        //"index":true,
                         "required": {
-                            "enable":true
+                            "enable":false
                         }
                     }
                 }

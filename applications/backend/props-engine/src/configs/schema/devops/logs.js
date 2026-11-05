@@ -55,16 +55,6 @@ exports.get = async (private, appConfig, req, dH) => {
                     }
                 }
             }),
-            hostId: await schema.universal.string.value(req, {
-                "configs": {
-                    "mongodb": {
-                        //index:true,
-                        "required": {
-                            "enable": true
-                        }
-                    }
-                }
-            }),
             count: await schema.universal.number.value(req, {
                 "configs": {
                     "mongodb": {

@@ -1,8 +1,10 @@
 let count = 0;
+const os = require('node:os');
 const appMap = require('./map');
 const envVars = require('./env-vars');
 const firewall = require('./firewall');
 const runtimeAppConfig = require('./app-config/runtime');
+const hostId = `${os.hostname()}:${process.pid}`;
 
 module.exports = async (config) => {
     const init = async (appConfig) => {
@@ -21,6 +23,7 @@ module.exports = async (config) => {
         const hygiene = await process.aioBeLibs('helpers/_private/hygiene');
         const session = await process.aioBeLibs('helpers/_private/session');
         const token = process.aioBeLibs('helpers/_private/token/internal-api');
+        const appHelpers = process.aioAppHelpers();
 
         const corsOpts = {
             origin:true,
@@ -55,12 +58,14 @@ module.exports = async (config) => {
                 //console.log(count, req.socket.localPort);
 
                 req.mdb = mdb;
-                req.runtime = {};
+                req.runtime = {
+
+                };
                 req.helpers = helpers;
                 req.enums = helpers.enums;
+                req.appHelpers = appHelpers;
                 req.appConfig = app.appConfig;
                 req.appConfig = await runtimeAppConfig.parse(req, res, next);
-
                 req.appConfig.appConfig.appEnv = 'local'
 
                 req.getEnum = (arg, map) => {

@@ -15,6 +15,8 @@ exports.DEFAULT_REDIS_ENABLED = false;
 
 exports.DEFAULT_REDIS_CHANNEL = 'express-script-runner:events';
 
+exports.DEFAULT_CLUSTER_CONFIG_CACHE_TTL_MS = 2000;
+
 exports.DEFAULT_CLUSTER_POLL_MS = 150;
 
 exports.BUCKET_SIZE = 500;
@@ -54,7 +56,8 @@ exports.COLLECTIONS = {
     RUNNER: 'devOpsRunners',
     BATCH: 'devOpsBatch',
     TASK: 'devOpsTask',
-    LOG: 'devOpsLog'
+    LOG: 'devOpsLog',
+    CLUSTER: 'devOpsCluster'
 };
 
 exports.EVENT_TYPES = {

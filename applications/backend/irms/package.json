@@ -6,9 +6,7 @@
     "description": "IRM backend application",
     "scripts": {
         "start": "node build/scripts/server.js",
-        "start-watch": "nodemon build/scripts/server.js",
-        "start-dev": "nodemon --inspect=4021 build/scripts/server.js",
-        "init-app": "node scripts/index.js"
+        "start-dev": "nodemon --inspect=4021 build/scripts/server.js"
     },
     "_moduleAliases": {
         "node-modules": "./node_modules/",
@@ -47,6 +45,7 @@
         "image-size": "^2.0.2",
         "swagger-ui-express": "^5.0.0",
         "json-schema-compare": "^0.2.2",
+        "svgtofont": "^6.5.1",
         "mongoose-paginate-v2": "^1.8.5"
     }
 }

@@ -205,6 +205,7 @@ const ui = async (item, appConfig, req, res, next) => {
 
 const api = async (item, appConfig, req, res, next) => {
     return {
+        collection:req.helpers.json.val(item, 'model.name', {}),
         request:req.helpers.json.val(item, 'validation.request', {}),
         validation:await validation(item, appConfig, req, res, next, 'api')
     }

@@ -48,6 +48,17 @@ exports.get = async (private, appConfig, req, dH) => {
                     }
                 }
             }),
+            mapId:await schema.universal.mongoId(req, {
+                "configs":{
+                    "mongodb":{
+                        //index: true,
+                        "unique":false,
+                        "required": {
+                            "enable":true
+                        }
+                    }
+                }
+            }),
             name:await schema.universal.string.value(req, {
                 "configs":{
                     "mongodb":{
@@ -193,11 +204,16 @@ exports.get = async (private, appConfig, req, dH) => {
                     }
                 }
             }),
-            hostId:await schema.universal.string.value(req, {
+            heartbeatAt:await schema.universal.number.value(req, {
                 "configs":{
                     "mongodb":{
-                        "required": {
+                        //"index":true,
+                        "default": {
+                            "value":`Date.now()`,
                             "enable":true
+                        },
+                        "required": {
+                            "enable":false
                         }
                     }
                 }

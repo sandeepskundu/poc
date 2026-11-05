@@ -49,15 +49,6 @@ const userDetails = async (req) => {
 
 const logSchema = async (req, dH) => {
     return {
-        hostId:await schema.universal.string.value(req, {
-            "configs":{
-                "mongodb":{
-                    "required": {
-                        "enable":false
-                    }
-                }
-            }
-        }),
         type:await enums(req,  ['EVENT_TYPES'], dH.devops.constants.MAP.EVENT_TYPES.STDOUT, dH.devops.constants.ENUMS, {
             "configs": {
                 "mongodb": {
