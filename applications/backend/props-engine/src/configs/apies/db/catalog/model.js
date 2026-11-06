@@ -12,6 +12,7 @@ const update = () => {
 }
 
 module.exports = {
+    name:'db_catalog',
     response:{
         exclude:{
             enable:true,
