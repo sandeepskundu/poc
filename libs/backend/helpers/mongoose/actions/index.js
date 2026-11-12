@@ -45,7 +45,10 @@ const start = async (model, req, res, next) => {
 exports.types = actions;
 
 const getModel = async (req, res, next, controller) => {
-    const get = (name) => {return req.helpers.json.val(req, `mdb.models.${name.toLowerCase()}`)}
+
+    const get = (name) => {
+        return req.helpers.json.val(req, `mdb.models.${name.toLowerCase()}`)
+    }
 
     let model = get(controller);
 

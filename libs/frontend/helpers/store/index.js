@@ -174,6 +174,45 @@ const getDetailsById = (config, onResp, skipParams) => {
     }
 }
 
+const stream = (config, onResp, storemap) => {
+    let list = [];
+    let isObj = data.type.is(config, 'object');
+    let isList = data.type.is(config, 'array');
+
+    if(isObj && !isList){
+        return request.ui.init(getConfig(config, storemap), (resp, config, isque) => {
+            onRespCb(resp, onResp, config, storemap, isque);
+        })
+    }else{
+        if(isList){
+            if(config.length > 0){
+                for(const a in config){
+                    list.push(getConfig(config[a], storemap));
+                }
+            }
+        }
+
+        if(list.length > 0){
+            let rv = [];
+
+            for(let a in list){
+                rv.push(request.ui.init(list[a], (resp, config, isque) => {
+                    onRespCb(resp, onResp, config, storemap, isque);
+                }));
+            }
+
+            return rv;
+        }else{
+            if(onResp){
+                onResp({});
+            }
+
+            return null;
+        }
+    }
+};
+
 exports.get = get;
+exports.stream = stream;
 exports.getConstants = getConstants;
 exports.getDetailsById =getDetailsById;

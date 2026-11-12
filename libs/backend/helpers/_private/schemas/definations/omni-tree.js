@@ -9,7 +9,16 @@ const get = async (name, schemas, req, extra) => {
                 "name":name
             },
             "schema":{
-                "value":{},
+                "value":await schemas.universal.mixed(req, req.helpers.json.merge({
+                    "configs":{
+                        "mongodb":{
+                            "default": {
+                                "value":null,
+                                "enable":true
+                            }
+                        }
+                    }
+                }, val(extra, 'value', {}))),
                 "extend":await schemas.universal.object(req, req.helpers.json.merge({
                     "configs":{
                         "mongodb":{
@@ -23,6 +32,7 @@ const get = async (name, schemas, req, extra) => {
                 "mapId":await schemas.universal.mongoId(req, req.helpers.json.merge({
                     "configs":{
                         "mongodb":{
+                            "unique":false,
                             "default": {
                                 "value":null,
                                 "enable":true

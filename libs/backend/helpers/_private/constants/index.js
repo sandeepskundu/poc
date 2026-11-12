@@ -16,6 +16,6 @@ let map = {
     appConfigs:require('./app-configs'),
 }
 
-module.exports = async (req) => {
+module.exports = async (req, extend) => {
     return map;
 }

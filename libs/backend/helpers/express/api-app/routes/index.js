@@ -77,7 +77,11 @@ const validation = async (req, res, next) => {
 
 const controller = async (req, res, next) => {
     let resp = await req.helpers.express.controllers.starter.init(req, res, next);
+    let type = req.helpers.json.get(resp, 'type', '');
+
+    if(type != 'stream'){
         req.helpers.express.response.send('json', resp, req.helpers.json.get(resp, 'status.code'), req, res, next);
+    }
 }
 
 const getValidations = async (req, res, next) => {

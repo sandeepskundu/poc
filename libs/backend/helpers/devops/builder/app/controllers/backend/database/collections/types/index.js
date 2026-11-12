@@ -1,5 +1,6 @@
 exports.date = require('./date');
 exports.email = require('./email');
+exports.mixed = require('./mixed');
 exports.object = require('./object');
 exports.switch = require('./switch');
 exports.string = require('./string');
