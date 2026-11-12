@@ -19,7 +19,24 @@ const getMap = async (req, res, next) => {
     return rval.join('.')
 }
 
+const getModel = async (req, res, next, controller) => {
+
+    const get = (name) => {
+        return req.helpers.json.val(req, `mdb.models.${name.toLowerCase()}`)
+    }
+
+    let model = get(controller);
+
+    if(!model){
+        model = get(req.helpers.json.get(req, 'runtime.validationConfig.collection', req.helpers.random.key()))
+    }
+
+    return model;
+}
+
 const init = async (req, res, next) => {
+        req.runtime = req.runtime || {};
+        
     let rval = {
         data:{},
         valid:true,
@@ -33,6 +50,10 @@ const init = async (req, res, next) => {
     let map = await getMap(req, res, next);
     let controllers = req.helpers.express.controllers;
     let action = req.helpers.json.val(appControllers, map);
+        req.runtime.model = {
+            config:await req.helpers.express.docs.json.get('model', req, res, next),
+            instance:await getModel(req, res, next, req.helpers.json.get(req, 'params.appController')),
+        }
 
     if(action && typeof action === 'function'){
         rval = await action(req, res, next);

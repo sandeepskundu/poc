@@ -18,7 +18,7 @@ const get = async (name, schemas, req, extra) => {
                             }
                         }
                     }
-                }, val(extra, 'value', {}))),
+                }, val(extra, 'schema.value', {}))),
                 "details":await schemas.universal.object(req, req.helpers.json.merge({
                     "configs":{
                         "mongodb":{
@@ -28,7 +28,7 @@ const get = async (name, schemas, req, extra) => {
                             }
                         }
                     }
-                }, val(extra, 'extend', {}))),
+                }, val(extra, 'schema.details', {}))),
                 "mapId":await schemas.universal.mongoId(req, req.helpers.json.merge({
                     "configs":{
                         "mongodb":{
@@ -42,7 +42,7 @@ const get = async (name, schemas, req, extra) => {
                             }
                         }
                     }
-                }, val(extra, 'mapId', {}))),
+                }, val(extra, 'schema.mapId', {}))),
                 "key":await schemas.universal.string.key(req, req.helpers.json.merge({
                     "configs":{
                         "mongodb":{
@@ -55,7 +55,7 @@ const get = async (name, schemas, req, extra) => {
                             }
                         }
                     }
-                }, val(extra, 'key', {}))),
+                }, val(extra, 'schema.key', {}))),
                 "name":await schemas.universal.text.title(req, req.helpers.json.merge({
                     "configs":{
                         "mongodb":{
@@ -68,7 +68,7 @@ const get = async (name, schemas, req, extra) => {
                             }
                         }
                     }
-                }, val(extra, 'name', {}))),
+                }, val(extra, 'schema.name', {}))),
                 "summary":await schemas.universal.text.title(req, req.helpers.json.merge({
                     "configs":{
                         "mongodb":{
@@ -81,7 +81,7 @@ const get = async (name, schemas, req, extra) => {
                             }
                         }
                     }
-                }, val(extra, 'summary', {}))),
+                }, val(extra, 'schema.summary', {}))),
                 "description":await schemas.universal.text.title(req, req.helpers.json.merge({
                     "configs":{
                         "mongodb":{
@@ -94,9 +94,9 @@ const get = async (name, schemas, req, extra) => {
                             }
                         }
                     }
-                }, val(extra, 'description', {}))),
-                "keyHash":await schemas.universal.hashId(req, val(extra, 'keyHash', {})),
-                "nameHash":await schemas.universal.hashId(req, val(extra, 'nameHash', {})),
+                }, val(extra, 'schema.description', {}))),
+                "keyHash":await schemas.universal.hashId(req, val(extra, 'schema.keyHash', {})),
+                "nameHash":await schemas.universal.hashId(req, val(extra, 'schema.nameHash', {})),
             }
         };
 

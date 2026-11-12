@@ -33,8 +33,11 @@ const getvalue = (data, config, node, valmap, req) => {
             if(val && val != vmc){
                 values.push(val)
             }else{
-                invalid = true;
-                break;
+                if(vm[a] && vm[a].ignoreValueCheck === true){
+                }else{
+                    invalid = true;
+                    break;
+                }
             }
         }
     }
@@ -54,6 +57,7 @@ const mapvalues = (data, config, req, res, next) => {
                 "0":{
                     "map":"id",
                     "from":"body",
+                    "ignoreValueCheck":true,
                     "fallback":{
                         "map":"",
                         "from":"env"

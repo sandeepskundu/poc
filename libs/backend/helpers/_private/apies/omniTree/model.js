@@ -28,7 +28,6 @@ const get = async (req, extend) => {
             },
         },
         valuemap: {},
-
         md5Hash: {
             keyHash: {
                 nodes: {
@@ -38,7 +37,8 @@ const get = async (req, extend) => {
                     },
                     1: {
                         map: "mapId",
-                        from: "body-item"
+                        from: "body-item",
+                        ignoreValueCheck:true
                     },
                     2: {
                         map: "key",
@@ -54,7 +54,8 @@ const get = async (req, extend) => {
                     },
                     1: {
                         map: "mapId",
-                        from: "body-item"
+                        from: "body-item",
+                        ignoreValueCheck:true
                     },
                     2: {
                         map: "name",

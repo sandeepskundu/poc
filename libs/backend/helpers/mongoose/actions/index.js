@@ -43,24 +43,8 @@ const start = async (model, req, res, next) => {
 }
 
 exports.types = actions;
-
-const getModel = async (req, res, next, controller) => {
-
-    const get = (name) => {
-        return req.helpers.json.val(req, `mdb.models.${name.toLowerCase()}`)
-    }
-
-    let model = get(controller);
-
-    if(!model){
-        model = get(req.helpers.json.get(req, 'runtime.validationConfig.collection', req.helpers.random.key()))
-    }
-
-    return model;
-}
-
 exports.initialize = async (req, res, next) => {
-    let model = await getModel(req, res, next, req.helpers.json.val(req, 'params.appController', req.helpers.random.key()));
+    let model = req.helpers.json.get(req, 'runtime.model.instance', false);
 
     if(model){
         return await start(model, req, res, next);

@@ -24,7 +24,10 @@ const buildPrefdefined = async (rval, appConfig, req) =>  {
         omniTree:{
             name:'kundu',
             model:{
-                name:'sandeep'
+                name:'kundu',
+                audit:{
+                    enable:true
+                }
             }
         },
         /*--masterData:'orgMasterData'--*/
