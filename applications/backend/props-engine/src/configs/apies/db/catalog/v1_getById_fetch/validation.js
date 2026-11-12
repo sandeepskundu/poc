@@ -8,8 +8,8 @@ module.exports = async (req) => {
             }
         },
         "validation":{
-            "body":{
-                //"map":await validation.build(req, 'universal.require')
+            "params":{
+                id:await validation.build(req, 'universal.mongoId')
             }
         }
     }

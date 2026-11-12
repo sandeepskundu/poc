@@ -8,7 +8,7 @@ const schema = {
 }
 
 const update = () => {
-    return {...schema, ...{mapId:false}}
+    return {...schema, ...{mapId:false, name:false}}
 }
 
 module.exports = {
@@ -68,6 +68,12 @@ module.exports = {
     },
 
     query:{
+        byMerchantHash:{
+            runtime:{},
+            otherConfigs:{
+                doNotCheckQueryLength:true
+            }
+        },
         byId:{
             runtime:{
                 enable:true,
@@ -78,6 +84,41 @@ module.exports = {
                             value:{
                                 map:"id",
                                 from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        byIdAndMapId:{
+            runtime:{
+                enable:true,
+                configs:{
+                    query:{
+                        0:{
+                            cloumn:"_id",
+                            value:{
+                                map:"id",
+                                from:"params"
+                            },
+                            operation:{
+                                eq:{
+                                    enable:true,
+                                    opType:"eq"
+                                }
+                            }
+                        },
+                        1:{
+                            cloumn:"mapId",
+                            value:{
+                                map:"mapId",
+                                from:"body"
                             },
                             operation:{
                                 eq:{
