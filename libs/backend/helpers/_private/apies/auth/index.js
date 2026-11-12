@@ -16,4 +16,6 @@ const map = {
     '/account/v1/dummay/create':require('./account_v1_dummay_create'),
 };
 
-exports.get = async (name, req, extend, list) => { return await helpers.build(name, map, req, extend, list) };
+exports.get = async (name, req, extend, list) => {
+    return await helpers.build(name, map, req, extend, list)
+};

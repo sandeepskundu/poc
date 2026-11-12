@@ -19,7 +19,7 @@ const get = async (name, schemas, req, extra) => {
                         }
                     }
                 }, val(extra, 'value', {}))),
-                "extend":await schemas.universal.object(req, req.helpers.json.merge({
+                "details":await schemas.universal.object(req, req.helpers.json.merge({
                     "configs":{
                         "mongodb":{
                             "default": {

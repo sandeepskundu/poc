@@ -8,6 +8,7 @@ module.exports = {
     random:require('./random'),
     hashId:require('./hashId'),
     number:require('./number'),
+    object:require('./object'),
     mongoId:require('./mongoId'),
     require:require('./require'),
     boolean:require('./boolean'),
