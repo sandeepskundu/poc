@@ -52,8 +52,15 @@ const getParents = async (req, res, mapId, mode = 'write',  options = { checkPer
         };
 
 
-        return {
-            valid:true
+        if(chain && chain.length > 0){
+            return {
+                valid:true,
+                data:chain
+            }
+        }else{
+            return {
+                valid:false
+            }
         }
     }
 }
