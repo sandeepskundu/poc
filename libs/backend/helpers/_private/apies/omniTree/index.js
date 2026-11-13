@@ -2,8 +2,9 @@ const helpers = require('./../helpers');
 
 
 const map = {
-    'root/v1/list/fetch':require('./root_v1_list_fetch'),
-    'details/v1/node/create':require('./details_v1_node_create'), // router.post('/nodes', treeController.createNode);
+    'root/v1/list/fetch':require('./root_v1_list_fetch'), // router.get('/nodes/roots', treeController.getRoots);
+    'details/v1/byId/fetch':require('./details_v1_byId_fetch'), // router.get('/nodes/:id', treeController.getNodeById);
+    'details/v1/node/create':require('./details_v1_node_create'), //router.post('/nodes', treeController.createNode);
 };
 
 
