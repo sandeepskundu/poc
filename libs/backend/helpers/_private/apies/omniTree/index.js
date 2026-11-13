@@ -2,6 +2,7 @@ const helpers = require('./../helpers');
 
 
 const map = {
+    'root/v1/list/fetch':require('./root_v1_list_fetch'),
     'details/v1/node/create':require('./details_v1_node_create'), // router.post('/nodes', treeController.createNode);
 };
 
