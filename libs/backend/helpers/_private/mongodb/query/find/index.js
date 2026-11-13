@@ -28,12 +28,7 @@ const addRuntime = async (docs, config, model, req, res, next) => {
 }
 
 const notFound = async (req, res, next) => {
-    return await req.helpers.express.response.getRespByCode(404, req, res, next, {
-        error:{
-            code:'RESULT_NOT_FOUND',
-            description:'Results not found'
-        } 
-    });
+    return await req.helpers.express.response.noResult(req, res, next, {});
 }
 
 const lean = (req, obj) => {

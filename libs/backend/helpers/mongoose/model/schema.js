@@ -7,9 +7,16 @@ const transform = (rval, doc, virtuls, appConfig) => {
     if(doc && doc.runtime && doc.runtime.req && doc.runtime.req.helpers){
         rval = doc.runtime.req.helpers.mongoose.docHelpers.transform.init(rval, doc, virtuls, appConfig)
     }else{
-        for(const a in rval){
-            if(a.indexOf('_') === 0){
-                delete rval[a];
+
+        if(rval && rval.runtime && rval.runtime.req && rval.runtime.req.helpers){
+            let rv = rval.runtime.req.helpers.json.copy(rval);
+                delete rv.runtime;
+                rval = rval.runtime.req.helpers.mongoose.docHelpers.transform.init(rv, rval, virtuls, appConfig)
+        }else{
+            for(const a in rval){
+                if(a.indexOf('_') === 0){
+                    delete rval[a];
+                }
             }
         }
     }
@@ -32,9 +39,9 @@ const options = async (name, arg, appConfig, helpers) => {
         toJSON: {
             virtuals:true,
             transform (doc, rval) {
-                rval = transform(rval, doc, vopts, appConfig);
+                return transform(rval, doc, vopts, appConfig);
             }
-        },
+        }
     }
 }
 

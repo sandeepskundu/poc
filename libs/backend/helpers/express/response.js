@@ -105,6 +105,11 @@ const r500 = (req, res, next) => {respByCode(500, req, res, next)};
 
 const r404 = (req, res, next) => {respByCode(404, req, res, next)};
 
+const r200 =  (req, res, next, resp) => {
+    let d = getRespByCode(200, req, res, next, {});
+    return req.helpers.json.merge(d, (resp || {}));
+}
+
 const noResult = (req, res, next, resp) => {
     let d = getRespByCode(404, req, res, next, {
         error:{
@@ -135,6 +140,7 @@ exports.send = send;
 exports.exit = r404;
 exports.r500 = r500;
 exports.r404 = r404;
+exports.r200 = r200;
 
 exports.noFound = noFound;
 exports.noResult = noResult;
