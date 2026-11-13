@@ -8,6 +8,7 @@ module.exports = async (req, routeConf, globalConf) => {
         response:req.helpers.json.val(mconf, 'response'),
         signature:req.helpers.json.val(mconf, 'signature'),
         schema:req.helpers.json.val(mconf, 'schema.default'),
-        query:req.helpers.json.val(mconf, 'query.byMerchantHash'),
+        pagination:req.helpers.json.val(mconf, 'pagination', {}),
+        query:req.helpers.json.val(mconf, 'query.byMerchantHash')
     }
 }

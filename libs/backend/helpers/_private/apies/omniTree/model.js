@@ -17,6 +17,9 @@ const update = () => {
 const get = async (req, extend) => {
     return req.helpers.json.merge({
         name:'',
+        pagination:{
+            enable:true
+        },
         response: {
             exclude: {
                 enable: true,

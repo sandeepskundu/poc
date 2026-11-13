@@ -66,24 +66,40 @@ const getDocByQuery = async (query, config, model, req, res, next) => {
     let data = null;
 
     try {
+        let pagi = await req.helpers.json.val(config, 'pagination.enable');
             query = lean(req, query);
-        let docs = await model.find(query);
 
-        if(docs && docs.length > 0){
-            data = {
-                valid:true,
-                data:{
-                    result:await addRuntime(docs, config, model, req, res, next)
+        if(pagi){
+            let pagiConf = await req.helpers.mongoose.actions.types.find.pagination.options.get(config, model, req, res, next);
+            let rdata = await model.paginate(query, pagiConf);
+            let docs = req.helpers.json.val(rdata, 'docs', []);
+
+            if(docs && docs.length > 0){
+                data = {
+                    valid:true,
+                    data:{
+                        result:await addRuntime(docs, config, model, req, res, next),
+                        pagination:await req.helpers.mongoose.actions.types.find.pagination.meta.get(rdata, config, model, req, res, next)
+                    }
                 }
-            };
+            }
         }else{
-            data = await notFound(req, res, next);
+            let docs = await model.find(query);
+
+            if(docs && docs.length > 0){
+                data = {
+                    valid:true,
+                    data:{
+                        result:await addRuntime(docs, config, model, req, res, next)
+                    }
+                }
+            }
         }
     }catch(err) {
         console.log(err);
     }
 
-    return data;
+    return (data || await notFound(req, res, next));
 }
 
 const init = async (collname, query, conf, req, res, next) => {
