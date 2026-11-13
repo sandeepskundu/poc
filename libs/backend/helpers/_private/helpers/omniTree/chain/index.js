@@ -70,13 +70,13 @@ const getChilds = async (req, res, mapId) => {
 
     if (!cache[mapId]) {
         const [result] = await model.aggregate([{
-            $match:{
-                _id:new req.mdb.db.Types.ObjectId(mapId)
+            $match: {
+                _id: new req.mdb.db.Types.ObjectId(mapId)
             }
         }, {
             $graphLookup: {
                 as: 'childs',
-                maxDepth:25,
+                maxDepth: 25,
                 startWith: '$_id',
                 from: `${modelName}s`,
                 connectFromField: '_id',
