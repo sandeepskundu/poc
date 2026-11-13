@@ -9,5 +9,14 @@ exports.compiler = async (private, appConfig, req, res, next) => {
         await devOpsScriptRunBucket.get(private, appConfig, req),
         await private.builder.start('auth', 'emps', req, {schema:{}}),
         await private.builder.start('omni-tree', 'kundu', req, {schema:{}}),
+        await private.builder.start('omni-tree-audit', 'kunduAudit', req, {schema:{
+            "nodeId":{
+                "configs":{
+                    "mongodb":{
+                        "ref":`'kundu'`
+                    }
+                }
+            }
+        }}),
     ]
 }
