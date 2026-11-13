@@ -25,7 +25,7 @@ const getParents = async (req, res, mapId, mode = 'write', options = { checkPerm
                 startWith: '$mapId',
                 from: `${modelName}s`,
                 connectToField: '_id',
-                //depthField: 'stepsUp',
+                depthField: 'stepsUp',
                 connectFromField: 'mapId'
             }
         }, {
