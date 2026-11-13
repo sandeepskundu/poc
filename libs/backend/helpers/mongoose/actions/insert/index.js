@@ -1,4 +1,5 @@
 const documents = require('./../docs');
+const omniTreeAudit = process.aioBeLibs('helpers/_private/middlewares/omniTreeAudit');
 const permission = process.aioBeLibs('helpers/_private/permission/validation');
 
 const validate = async (details, config, model, req, res, next, messages, validation, list, index) => {
@@ -100,6 +101,15 @@ const error = async (rval, error, doc, arg, config, model, list, req, res, next)
     return await req.helpers.mongoose.docHelpers.error.set(rval, error, doc, config, model, list, req, res, next);
 }
 
+const auditLogs = async (doc, action, req, res, next) => {
+    let d = doc.toObject();
+    try {
+        omniTreeAudit.log.create.init(d._id, action, null, d, req, res)
+    }catch(err) {
+        console.log(err);
+    }
+}
+
 const save = async (arg, config, model, list, req, res, next) => {
     let docs = await req.helpers.json.val(arg, 'docs');
     let rval = await req.helpers.express.response.getRespByCode(200, req, res, next);
@@ -113,6 +123,7 @@ const save = async (arg, config, model, list, req, res, next) => {
                     await item.save();
                     rval.data.push(item);
                     rval = await error(rval, false, item, arg, config, model, list, req, res, next);
+                    auditLogs(item, 'BATCH_CREATE', req, res, next);
                 }catch(err) {
                     rval = await error(rval, err, item, arg, config, model, list, req, res, next);
                 }
@@ -123,6 +134,7 @@ const save = async (arg, config, model, list, req, res, next) => {
                 await docs.save();
                 rval.data = docs;
                 rval = await error(rval, false, docs, arg, config, model, list, req, res, next);
+                auditLogs(docs, 'CREATE', req, res, next);
             }catch(err) {
                 rval = await error(rval, err, docs, arg, config, model, list, req, res, next);
             }

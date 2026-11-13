@@ -40,8 +40,8 @@ const error = (req) => {
     return {
         "default":req.helpers.json.val(messages, 'default.required'),
         "checks":{
-            minLength:req.helpers.json.val(messages, 'default.length.min', "Min length is not valid"),
-            maxLength:req.helpers.json.val(messages, 'default.length.max', "Max length is not valid")
+            minlength:req.helpers.json.val(messages, 'default.length.min', "Min length is not valid"),
+            maxlength:req.helpers.json.val(messages, 'default.length.max', "Max length is not valid")
         }
     }
 }
@@ -53,8 +53,8 @@ const description = async (req) => {
         },
         "checks":{
             "required":required(req),
-            "minLength":await minmax(10),
-            "maxLength":await minmax(500)
+            "minlength":await minmax(10),
+            "maxlength":await minmax(500)
         }
     }
 }
@@ -66,8 +66,8 @@ const title = async (req) => {
         },
         "checks":{
             "required":required(req),
-            "minLength":await minmax(2),
-            "maxLength":await minmax(50)
+            "minlength":await minmax(2),
+            "maxlength":await minmax(50)
         }
     }
 }

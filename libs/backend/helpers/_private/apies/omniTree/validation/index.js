@@ -23,9 +23,6 @@ const name = async (req, extra) => {
             },
             "required":{
                 "value":"required"
-            },
-            "regex":{
-                "value":utils.regex.string.key.value
             }
         }
     }), (extra || {}))

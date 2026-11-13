@@ -26,14 +26,14 @@ const buildPrefdefined = async (rval, appConfig, req) =>  {
             model:{
                 name:'kundu',
                 audit:{
-                    enable:true
+                    enable:true,
+                    suffix:'',
+                    collection:''
                 }
             }
         },
         /*--masterData:'orgMasterData'--*/
     }, appConfig, req);
-
-    debugger;
 
     return req.helpers.json.merge(rval, rv);
 }

@@ -8,7 +8,6 @@ const byType = async (rval, type, req, routeConf, globalConf) => {
 }
 
 const body = async (rval, req, routeConf, globalConf) => {
-    debugger;
     return await byType(rval, 'body', req, routeConf, globalConf);
 }
 

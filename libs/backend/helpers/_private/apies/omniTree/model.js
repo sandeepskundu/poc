@@ -3,7 +3,7 @@ const schema = {
     "name": true,
     "mapId": true,
     "value": true,
-    "extend": true,
+    "details": true,
     "summary": true,
     "keyHash": true,
     "nameHash": true,

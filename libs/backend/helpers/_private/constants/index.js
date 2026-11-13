@@ -1,6 +1,7 @@
 let map = {
     data:require('./data'),
     name:require('./name'),
+    audit:require('./audit'),
     enums:require('./enums'),
     blood:require('./blood'),
     india:require('./india'),
