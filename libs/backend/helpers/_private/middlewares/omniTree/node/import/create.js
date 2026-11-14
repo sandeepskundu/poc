@@ -1,3 +1,4 @@
+const mw = process.aioBeLibs('helpers/_private/middlewares/omniTree');
 const helpers = process.aioBeLibs('helpers/_private/helpers/omniTree');
 
 const CONSTANTS = {
@@ -203,11 +204,7 @@ const compile = async (payload, req, res, next, validation) => {
     }
 
     if (rval.valid) {
-        return {
-            docs: docs,
-            valid: true,
-            rootId: rootId
-        }
+        return await mw.node.fetch.getTeeById(rootId, req, res, next)
     } else {
         return rval;
     }

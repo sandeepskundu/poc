@@ -10,8 +10,7 @@ const childById = async (req, res, next) => {
     return await byId(req, res, next)
 }
 
-const treeById = async (req, res, next) => {
-    let mapId = req.helpers.json.get(req, 'params.id', '');
+const getTeeById = async (mapId, req, res, next) => {
     let rval = {
         valid: true
     }
@@ -31,6 +30,11 @@ const treeById = async (req, res, next) => {
     }
 }
 
+const treeById = async (req, res, next) => {
+    return await getTeeById(req.helpers.json.get(req, 'params.id', ''), req, res, next)
+}
+
 exports.byId = byId;
 exports.treeById = treeById;
 exports.childById = childById;
+exports.getTeeById = getTeeById;
