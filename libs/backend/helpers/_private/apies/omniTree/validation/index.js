@@ -16,7 +16,7 @@ const name = async (req, extra) => {
     return req.helpers.json.merge(await validation.build(req, 'universal.text.title', {
         "checks":{
             "minlength":{
-                "value":4
+                "value":2
             },
             "maxlength":{
                 "value":50

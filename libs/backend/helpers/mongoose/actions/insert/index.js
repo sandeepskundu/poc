@@ -144,7 +144,7 @@ const save = async (arg, config, model, list, req, res, next) => {
 }
 
 const getModel = async (req, res, next) => {
-    const m = req.helpers.json.val(req, 'dbUtils.model');
+    const m = req.helpers.json.get(req, 'runtime.model.config', req.helpers.json.val(req, 'dbUtils.model'));
 
     return m || await req.helpers.express.docs.json.get('model', req, res, next);
 }

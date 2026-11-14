@@ -7,7 +7,8 @@ const map = {
     'details/v1/node/create':require('./details_v1_node_create'), //router.post('/nodes', treeController.createNode);
     'details/v1/treeById/fetch':require('./details_v1_treeById_fetch'), // router.get('/nodes/:id/tree', treeController.getFullTree);
     'details/v1/childById/fetch':require('./details_v1_childById_fetch'), //router.get('/nodes/:id/children', treeController.getDirectChildren);
-    'breadcrumb/v1/byId/fetch':require('./breadcrumb_v1_byId_fetch')
+    'breadcrumb/v1/byId/fetch':require('./breadcrumb_v1_byId_fetch'), // router.get('/nodes/:id/breadcrumbs', treeController.getBreadcrumbs);
+    'details/v1/import/create':require('./details_v1_import_create')
 };
 
 exports.get = async (name, req, extend, list, globalConf) => {

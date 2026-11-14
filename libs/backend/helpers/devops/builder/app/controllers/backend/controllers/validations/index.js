@@ -160,9 +160,14 @@ const compileChecks = async (options, appConfig, req, res, next, type) => {
     return rval;
 }
 
-const compile = async (validation, appConfig, req, res, next, type, from) => {
+const compile = async (validation, appConfig, req, res, next, type, from, ismeta) => {
     let rval = {};
+    let privatePrefix = '___.'
     let data = req.helpers.json.val(validation, from, {});
+
+    const isprivate = (k) => {
+        return (typeof k === "string" && k.startsWith(privatePrefix))
+    }
 
     for(const a in data){
         let valid = data[a];
@@ -176,24 +181,34 @@ const compile = async (validation, appConfig, req, res, next, type, from) => {
 
             let checks = req.helpers.json.val(valid, 'checks', {});
                 valid = req.helpers.json.copy(valid);
-                valid.checks = await compileChecks(checks, appConfig, req, res, next, type);
-                rval[a] = valid;
+
+            if (ismeta) {
+                if(isprivate(a)){
+                    let k = req.helpers.string.replace.word(a, privatePrefix, '');
+                        valid.checks = await compileChecks(checks, appConfig, req, res, next, type);
+                        rval[k] = valid;
+                }
+            }else{
+                if(!isprivate(a)){
+                    valid.checks = await compileChecks(checks, appConfig, req, res, next, type);
+                    rval[a] = valid;
+                }
+            }
         }
-        
     }
     
     return rval;
 }
 
-const validation = async (item, appConfig, req, res, next, type) => {
+const validation = async (item, appConfig, req, res, next, type, ismeta) => {
     const valid = req.helpers.json.val(item, 'validation.validation', {})
 
     return {
         headers:req.helpers.json.val(valid, 'headers', {}),
         cookies:req.helpers.json.val(valid, 'cookies', {}),
-        body:await compile(valid, appConfig, req, res, next, type, 'body'),
-        query:await compile(valid, appConfig, req, res, next, type, 'query'),
-        params:await compile(valid, appConfig, req, res, next, type, 'params')
+        body:await compile(valid, appConfig, req, res, next, type, 'body', ismeta),
+        query:await compile(valid, appConfig, req, res, next, type, 'query', ismeta),
+        params:await compile(valid, appConfig, req, res, next, type, 'params', ismeta)
     }
 }
 
@@ -209,6 +224,16 @@ const api = async (item, appConfig, req, res, next) => {
         request:req.helpers.json.val(item, 'validation.request', {}),
         validation:await validation(item, appConfig, req, res, next, 'api')
     }
+}
+
+const apiMeta = async (item, appConfig, req, res, next) => {
+    let rv = await validation(item, appConfig, req, res, next, 'api', true);
+        delete rv.headers;
+        delete rv.cookies;
+
+        return {
+            validation:rv
+        }
 }
 
 const model = async (item, appConfig, req, res, next) => {
@@ -244,7 +269,8 @@ const parse = async (item, appConfig, req, res, next) => {
     return {
         ui:await ui(item, appConfig, req, res, next),
         api:await api(item, appConfig, req, res, next),
-        model:await model(item, appConfig, req, res, next)
+        model:await model(item, appConfig, req, res, next),
+        apiMeta:await apiMeta(item, appConfig, req, res, next),
     }
 }
 
