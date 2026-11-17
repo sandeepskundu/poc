@@ -1,1 +1,2 @@
-exports.find = require('./find')
+exports.find = require('./find');
+exports.update = require('./update');

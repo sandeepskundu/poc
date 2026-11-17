@@ -3,3 +3,4 @@ exports.byId = require('./byId');
 exports.import = require('./import');
 exports.treeById = require('./treeById');
 exports.childById = require('./childById');
+exports.mergeTreeById = require('./mergeTreeById')

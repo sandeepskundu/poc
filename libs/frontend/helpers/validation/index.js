@@ -6,12 +6,12 @@ const dtHelpers = require('./../date');
 const DEFAULT_VALUE = '__DEFAULT__INPUT__VALUE';
 const PORT_DIVISABLE = 50;
 
-const invalid = (r, arg, type) => {
-    return message.invalid(r, arg, type);
+const invalid = (r, arg, type, fb) => {
+    return message.invalid(r, arg, type, fb);
 };
 
-const valid = (r, arg, type) => {
-    return message.valid(r, arg, type);
+const valid = (r, arg, type, fb) => {
+    return message.valid(r, arg, type, fb);
 }
 
 const required = (rval, value, valmap) => {
@@ -578,6 +578,13 @@ const body = (data, config, valmap, dateRanges) => {
 }
 
 exports.image = image;
+
+exports.helpers = {
+    mark:{
+        valid:valid,
+        invalid:invalid,
+    }
+}
 
 exports.query = (data, config, valmap, dateRanges) => {
     return start(data, config, valmap, null, dateRanges);
