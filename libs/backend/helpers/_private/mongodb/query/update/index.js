@@ -160,7 +160,8 @@ const bulkUpdate = async (docs, key, collname, req, res, next) => {
             docs.map(async (item) => {
                 const id = String(item._id);
                 const runtime = await req.helpers.mongoose.docHelpers.addRuntime([item], config, model, req, res, next);
-                let result = runtime[0].toObject ? runtime[0].toObject() : { ...runtime[0] };
+                let result = runtime[0].toJSON ? runtime[0].toJSON() : { ...runtime[0] };
+                    result = JSON.parse(JSON.stringify(result));
 
                 if (error[id]) {
                     for (const field of Object.keys(error[id])) {
@@ -174,6 +175,10 @@ const bulkUpdate = async (docs, key, collname, req, res, next) => {
 
         return req.helpers.express.response.getRespByCode(400, req, res, next, { data });
     }
+
+    debugger;
+
+    console.log(updatedIds);
 
     // Batch-fetch all updated documents in a single query and preserve update order
     const updatedDocs = await model.find({ _id: { $in: updatedIds } });
