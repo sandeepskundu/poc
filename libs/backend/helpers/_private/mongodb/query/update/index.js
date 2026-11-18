@@ -1,14 +1,11 @@
+const utils = require('./../utils');
+
 const getModel = (collname, req) => {
-    if (collname && typeof collname === 'string') {
-        return (req.helpers.json.val(req, `mdb.models.${collname.toLowerCase()}`) || req.helpers.json.get(req, 'runtime.model.instance'));
-    }
-    return req.helpers.json.get(req, 'runtime.model.instance');
+   return utils.getModel(collname, req)
 };
 
 const getModelConfig = async (req, res, next) => {
-    const m = req.helpers.json.get(req, 'runtime.model.config', req.helpers.json.val(req, 'dbUtils.model'));
-
-    return m || (await req.helpers.express.docs.json.get('model', req, res, next));
+    return await utils.getModelConfig(req, res, next);
 };
 
 const invalidList = (list, node, req, res, next) => {
@@ -54,24 +51,7 @@ const deduplicate = (list, node) => {
 };
 
 const errorMap = async (docs, req, config) => {
-    const entries = await Promise.all(
-        docs.map(async (item) => {
-            const id = req.helpers.json.get(item, 'doc._id');
-            const extracted = await req.helpers.mongoose.validate.error.extract(
-                item.error,
-                req,
-                config
-            );
-            return { [id]: extracted };
-        })
-    );
-
-    let rval = {};
-    for (const entry of entries) {
-        rval = req.helpers.json.merge(rval, entry);
-    }
-
-    return rval;
+    return await utils.errorMap(docs, req, config)
 };
 
 const invalidDbUpdate = async (list, invalidDoc, config, req, res, next) => {
@@ -94,20 +74,15 @@ const invalidDbUpdate = async (list, invalidDoc, config, req, res, next) => {
 };
 
 const updatedTs = (doc, req, res) => {
-    const auth = req.helpers.session.auth.authDetails(req, res);
-    doc._updated = new Date();
-    doc._updatedBy = req.helpers.json.get(auth, 'userId', req.helpers.json.get(auth, 'anonId'));
+    let auth = req.helpers.session.auth.authDetails(req, res);
+        doc._updated = new Date();
+        doc._updatedBy = req.helpers.json.get(auth, 'userId', req.helpers.json.get(auth, 'anonId'));
+
     return doc;
 };
 
-const revertBackById = async (snapshots, model) => {
-    const entries = Object.entries(snapshots);
-    await Promise.all(
-        entries.map(([id, snapshot]) => {
-            const plain = typeof snapshot.toObject === 'function' ? snapshot.toObject() : snapshot;
-            return model.replaceOne({ _id: id }, plain);
-        })
-    );
+const revertBackById = async (snapshots, model, req) => {
+    return await utils.revertBackById(snapshots, model, req);
 };
 
 const bulkUpdate = async (docs, key, collname, req, res, next) => {
@@ -132,20 +107,13 @@ const bulkUpdate = async (docs, key, collname, req, res, next) => {
         delete updatePayload.__v;
 
         try {
-            const old = await model.findByIdAndUpdate(
-                id,
-                { $set: updatePayload },
-                { new: false, runValidators: true }
-            );
+            const old = await model.findByIdAndUpdate(id, {$set:updatePayload}, {new:false, runValidators:true});
 
             if (old) {
                 snapshots[id] = old.toObject();
                 updatedIds.push(id);
             } else {
-                rejected.push({
-                    doc,
-                    error: new Error(`Document with ID ${id} not found.`)
-                });
+                rejected.push({doc, error:new Error(`Document with ID ${id} not found.`)});
             }
         } catch (error) {
             rejected.push({ doc, error });
@@ -154,7 +122,7 @@ const bulkUpdate = async (docs, key, collname, req, res, next) => {
 
     if (rejected.length > 0) {
         const error = await errorMap(rejected, req, config);
-        await revertBackById(snapshots, model);
+        await revertBackById(snapshots, model, req);
 
         const data = await Promise.all(
             docs.map(async (item) => {
@@ -176,10 +144,6 @@ const bulkUpdate = async (docs, key, collname, req, res, next) => {
         return req.helpers.express.response.getRespByCode(400, req, res, next, { data });
     }
 
-    debugger;
-
-    console.log(updatedIds);
-
     // Batch-fetch all updated documents in a single query and preserve update order
     const updatedDocs = await model.find({ _id: { $in: updatedIds } });
     const docsById = new Map(updatedDocs.map((d) => [String(d._id), d]));
@@ -197,10 +161,7 @@ const bulkUpdate = async (docs, key, collname, req, res, next) => {
         })
     );
 
-    return req.helpers.express.response.getRespByCode(200, req, res, next, {
-        data,
-        snapshots
-    });
+    return req.helpers.express.response.getRespByCode(200, req, res, next, {data, snapshots});
 };
 
 const byKeyName = async (docList, key, collname, req, res, next) => {
@@ -274,5 +235,5 @@ const byKeyName = async (docList, key, collname, req, res, next) => {
 };
 
 exports.byKeyName = byKeyName;
-exports.revertBackById = revertBackById;
+exports.bulkUpdate = bulkUpdate;
 exports.byId = (list, collname, req, res, next) => byKeyName(list, '_id', collname, req, res, next);

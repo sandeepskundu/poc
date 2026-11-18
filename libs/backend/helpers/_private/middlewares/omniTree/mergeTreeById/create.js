@@ -39,8 +39,6 @@ const init = async (req, res, next) => {
         rval = await helpers.chain.getParents(req, res, targetId, 'write', { checkPermission: true });
     }
 
-
-
     if (rval.valid) {
         let sourceData = await helpers.chain.getChilds(req, res, sourceId);
         let targetData = await helpers.chain.getChilds(req, res, targetId);
@@ -63,21 +61,11 @@ const init = async (req, res, next) => {
             const sorted = await sortPaths(sourceByPath, req, res, next);
             const targetRootOid = targetId;
 
-            console.log(mongodb);
-
             const docs = {
-                insert:[],
-                update:[]
+                insert: [],
+                update: []
             }
 
-
-
-
-
-
-
-            let createdCount = 0;
-            let updatedCount = 0;
             let skippedCount = 0;
 
             for (const relPath of sorted) {
@@ -87,72 +75,55 @@ const init = async (req, res, next) => {
                 if (!existingTarget) {
                     const segments = relPath.split('.');
                     const parentRelPath = segments.slice(0, -1).join('.');
-                    const targetParentId = parentRelPath?targetByPath.get(parentRelPath)?._id:targetRootOid;
+                    const targetParentId = parentRelPath ? targetByPath.get(parentRelPath)?._id : targetRootOid;
 
-                    /*--const created = await TreeNode.create({
-                        key:srcNode.key,
-                        name:srcNode.name,
-                        mapId:targetParentId,
-                        meta:srcNode.meta ?? {},
-                        value:srcNode.value ?? null,
-                        details:srcNode.details ?? {},
-                        summary:srcNode.summary ?? '',
-                        description:srcNode.description ?? '',
-                        _id:new req.mdb.db.Types.ObjectId()
+                    docs.insert.push({
+                        key: srcNode.key,
+                        name: srcNode.name,
+                        mapId: targetParentId,
+                        meta: srcNode.meta ?? {},
+                        value: srcNode.value ?? null,
+                        details: srcNode.details ?? {},
+                        summary: srcNode.summary ?? '',
+                        description: srcNode.description ?? '',
+                        _id: new req.mdb.db.Types.ObjectId()
                     });
-
-                    targetByPath.set(relPath, created.toObject());
-                    createdCount += 1;--*/
-                } else if (strategy === 'overwrite' || 1 == 1) {
-                    /*--docs.update.push({
-                        _id:`6af81b24055060fa34053ea8`,
-                        key:srcNode.key ?? existingTarget.value,
-                        meta:srcNode.meta ?? existingTarget.meta,
-                        name:srcNode.name ?? existingTarget.name,
-                        mapId:srcNode.mapId ?? existingTarget.mapId,
-                        value:srcNode.value ?? existingTarget.value,
-                        details:srcNode.extend ?? existingTarget.extend,
-                        summary:srcNode.summary ?? existingTarget.summary,
-                        description:srcNode.description ?? existingTarget.description,
-                    });--*/
-
+                } else if (strategy === 'overwrite') {
                     docs.update.push({
-                        _id:existingTarget._id,
-                        //_id:'6af81b24055060fa34053ea9',
-                        key:srcNode.key ?? existingTarget.value,
-                        meta:srcNode.meta ?? existingTarget.meta,
-                        name:srcNode.name ?? existingTarget.name,
-                        //mapId:srcNode.mapId ?? existingTarget.mapId,
-                        value:srcNode.value ?? existingTarget.value,
-                        details:srcNode.extend ?? existingTarget.extend,
-                        summary:srcNode.summary ?? existingTarget.summary,
-                        description:srcNode.description ?? existingTarget.description,
+                        _id: existingTarget._id,
+                        key: srcNode.key ?? existingTarget.value,
+                        meta: srcNode.meta ?? existingTarget.meta,
+                        name: srcNode.name ?? existingTarget.name,
+                        mapId: String(srcNode.mapId ?? existingTarget.mapId),
+                        value: srcNode.value ?? existingTarget.value,
+                        details: srcNode.extend ?? existingTarget.extend,
+                        summary: srcNode.summary ?? existingTarget.summary,
+                        description: srcNode.description ?? existingTarget.description,
                     });
-
-                    /*--
-
-                    docs.update.push({
-                        _id:existingTarget._id,
-                        //_id:'6af81b24055060fa34053ea9',
-                        key:srcNode.key ?? existingTarget.value,
-                        meta:srcNode.meta ?? existingTarget.meta,
-                        name:srcNode.name ?? existingTarget.name,
-                        //mapId:srcNode.mapId ?? existingTarget.mapId,
-                        value:srcNode.value ?? existingTarget.value,
-                        details:srcNode.extend ?? existingTarget.extend,
-                        summary:srcNode.summary ?? existingTarget.summary,
-                        description:srcNode.description ?? existingTarget.description,
-                    });--*/
                 } else {
                     skippedCount += 1;
                 }
             }
 
 
-            return await mongodb.query.update.byId(docs.update, false, req, req);
+            if (docs.insert.length > 0 || docs.update.length > 0) {
+                if (docs.insert && docs.insert.length > 0) {
+                    return await mongodb.query.upsert.updateAndInsertBoth(docs, '_id', false, req, res, next);
+                } else {
+                    return await mongodb.query.update.byId(docs.update, false, req, req);
+                }
+            } else {
+                return req.helpers.express.response.getRespByCode(200, req, res, next, {
+                    
+                    "status": {
+                        "rcode": "ALREADY_SYNCED",
+                        "description": "Your data is already synced"
+                    }
+                });
+            }
         }
     } else {
-        return rval;
+        return req.helpers.express.response.getRespByCode(400, req, res, next, { data: [] });;
     }
 }
 
