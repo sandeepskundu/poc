@@ -14,7 +14,7 @@ const deleteSaved = async (saved, model, req, res, next) => {
             if(id){
                 return String(id)
             }
-        }), model, req)
+        }), model, false, req, res)
     }
 }
 

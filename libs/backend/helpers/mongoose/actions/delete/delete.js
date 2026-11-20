@@ -40,9 +40,7 @@ const deleteDoc = async (arg, doc, model, docConfig, req, res, next) => {
                 
         await doc.save();
 
-    return {
-        signature:req.helpers.json.val(arg, 'apiData.signature')
-    };
+    return {};
 }
 
 const start = async (data, model, docConfig, messages, isList, req, res, next) => {
@@ -58,7 +56,7 @@ const start = async (data, model, docConfig, messages, isList, req, res, next) =
             dt.new.push(d.data[a]);
         }
     }else{
-        dt.new.push(d.data);
+        dt.new = d.data;
     }
 
     let docs = req.helpers.json.val(dt, 'new', rval);

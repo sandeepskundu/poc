@@ -10,7 +10,7 @@ const isvalidList = (docs, req) => {
 const treeAuditLogs = async (docs, action, req, res, next) => {
     if(docs && docs.length > 0){
         for(let doc of docs){
-            treeAudit.log.create.init(doc._id, action, null, doc, req, res)
+            treeAudit.log.create.init(doc._id, action, null, doc, req, res);
         }
     }
 }
@@ -20,9 +20,8 @@ const updateBulk = async (saved, updates, node, model, collname, req, res, next)
     let rval = await updateQ.byKeyName(updates, node, collname, req, true, req);
     let li = req.helpers.json.get(rval, 'data', []);
     let snapshots = req.helpers.json.get(rval, 'snapshots', {});
-        li = (li && req.helpers.data.type.is(li)) ? li : [];
+        li = (li && req.helpers.data.type.is(li, 'list')) ? li : [];
 
-        debugger;
         delete rval.snapshots;
         rval.data = [...slist, ...li];
 
@@ -43,7 +42,7 @@ const updateBulk = async (saved, updates, node, model, collname, req, res, next)
     });
 
     if (ids.length > 0) {
-        await utils.deleteById(ids, model, req);
+        await utils.deleteById(ids, model, false, req, res);
     }
 
     return req.helpers.express.response.getRespByCode(400, req, res, next, { data: rval.data });;

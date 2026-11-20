@@ -5,6 +5,7 @@ module.exports = async (req, routeConf, globalConf) => {
 
     return {
         name:req.helpers.json.val(mconf, 'name'),
+        audit:req.helpers.json.val(mconf, 'audit', {}),
         response:req.helpers.json.val(mconf, 'response'),
         signature:req.helpers.json.val(mconf, 'signature'),
         schema:req.helpers.json.val(mconf, 'schema.default'),

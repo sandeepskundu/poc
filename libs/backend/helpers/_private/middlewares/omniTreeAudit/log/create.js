@@ -9,7 +9,7 @@ const addRuntime = async (docs, model, req, res) => {
 }
 
 const init = async (id, actionName, previous, current, req, res) => {
-    let action = helpers.getAction(req, actionName, res);
+    let action = await helpers.getAction(req, actionName, res);
     let enable = req.helpers.json.get(req, 'runtime.model.config.audit.enable', false);
     let apiDisabled = req.helpers.json.get(req, 'runtime.validationConfig.audit.disable', false);
 

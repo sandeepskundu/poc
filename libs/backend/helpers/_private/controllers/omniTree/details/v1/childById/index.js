@@ -1,1 +1,2 @@
-exports.fetch = require('./fetch')
+exports.fetch = require('./fetch');
+exports.remove = require('./remove');
