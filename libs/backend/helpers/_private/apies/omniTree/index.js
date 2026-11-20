@@ -8,9 +8,8 @@ const map = {
     'details/v1/childById/fetch':require('./details_v1_childById_fetch'), //router.get('/nodes/:id/children', treeController.getDirectChildren);
     'breadcrumb/v1/byId/fetch':require('./breadcrumb_v1_byId_fetch'), // router.get('/nodes/:id/breadcrumbs', treeController.getBreadcrumbs);
     'details/v1/import/create':require('./details_v1_import_create'), // router.post('/nodes/import', treeController.importJson);
-
-
-    'details/v1/mergeTreeById/create':require('./details_v1_mergeTreeById_create')
+    'details/v1/mergeTreeById/create':require('./details_v1_mergeTreeById_create'),
+    'details/v1/byId/update':require('./details_v1_byId_update')
 };
 
 exports.get = async (name, req, extend, list, globalConf) => {

@@ -24,6 +24,14 @@ const defaults = [
         label:"Merge",
         desc:"Changes from a source tree (e.g., UAT) were promoted/merged into a target tree (e.g., Prod)."
     }, {
+        id:"MERGE_CREATE",
+        label:"Merge",
+        desc:"Changes from a source tree (e.g., UAT) were promoted/merged into a target tree (e.g., Prod)."
+    }, {
+        id:"DELETE",
+        label:"Soft delete",
+        desc:"DELETE /api/nodes/:id	A node and its descendants were moved to the Trash (extend.lifecycle.isDeleted = true)."
+    }, {
         id:"SOFT_DELETE",
         label:"Soft delete",
         desc:"DELETE /api/nodes/:id	A node and its descendants were moved to the Trash (extend.lifecycle.isDeleted = true)."
@@ -47,6 +55,10 @@ const defaults = [
         id:"RELEASE_RESTORE",
         label:"Release restore",
         desc:"An entire tree was rolled back to a tagged release snapshot (e.g., v1.0.0)."
+    }, {
+        id:"ANONYMOUS",
+        label:"Anonymous",
+        desc:"An anonymous action."
     }
 ]
 

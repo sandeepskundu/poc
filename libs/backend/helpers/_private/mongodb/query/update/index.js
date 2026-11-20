@@ -1,4 +1,5 @@
 const utils = require('./../utils');
+const treeAudit = process.aioBeLibs('helpers/_private/middlewares/omniTreeAudit');
 
 const getModel = (collname, req) => {
    return utils.getModel(collname, req)
@@ -85,7 +86,11 @@ const revertBackById = async (snapshots, model, req) => {
     return await utils.revertBackById(snapshots, model, req);
 };
 
-const bulkUpdate = async (docs, key, collname, req, res, next) => {
+const treeAuditLogs = async (curr, prev, config, req, res, next) => {
+    treeAudit.log.create.init(curr._id, treeAudit.helpers.getAction(req, 'UPDATE', res), prev, curr, req, res)
+}
+
+const bulkUpdate = async (docs, key, collname, req, skipAudit, res, next) => {
     const model = getModel(collname, req);
     const config = await getModelConfig(req, res, next);
 
@@ -156,6 +161,10 @@ const bulkUpdate = async (docs, key, collname, req, res, next) => {
                 return null;
             }
 
+            if(!skipAudit){
+                await treeAuditLogs(doc, snapshots[id], config, req, res, next)
+            }
+
             const runtime = await req.helpers.mongoose.docHelpers.addRuntime([doc], config, model, req, res, next);
             return runtime[0].toObject ? runtime[0].toObject() : { ...runtime[0] };
         })
@@ -164,7 +173,7 @@ const bulkUpdate = async (docs, key, collname, req, res, next) => {
     return req.helpers.express.response.getRespByCode(200, req, res, next, {data, snapshots});
 };
 
-const byKeyName = async (docList, key, collname, req, res, next) => {
+const byKeyName = async (docList, key, collname, req, skipAudit, res, next) => {
     const model = getModel(collname, req);
     const config = await getModelConfig(req, res, next);
 
@@ -231,9 +240,9 @@ const byKeyName = async (docList, key, collname, req, res, next) => {
     }
 
     // Step 6: Persist all validated documents
-    return bulkUpdate(valid, node, collname, req, res, next);
+    return bulkUpdate(valid, node, collname, req, skipAudit, res, next);
 };
 
 exports.byKeyName = byKeyName;
 exports.bulkUpdate = bulkUpdate;
-exports.byId = (list, collname, req, res, next) => byKeyName(list, '_id', collname, req, res, next);
+exports.byId = (list, collname, req, skipAudit, res, next) => byKeyName(list, '_id', collname, req, skipAudit, res, next);

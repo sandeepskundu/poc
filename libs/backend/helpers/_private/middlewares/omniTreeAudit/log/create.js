@@ -8,30 +8,36 @@ const addRuntime = async (docs, model, req, res) => {
     return rval;
 }
 
-const init = async (id, action, previous, current, req, res) => {
-    let model = await helpers.getModel(req, res);
+const init = async (id, actionName, previous, current, req, res) => {
+    let action = helpers.getAction(req, actionName, res);
+    let enable = req.helpers.json.get(req, 'runtime.model.config.audit.enable', false);
+    let apiDisabled = req.helpers.json.get(req, 'runtime.validationConfig.audit.disable', false);
 
-    if(typeof id === 'object'){
-        id = id.toString();
-    }
+    if(enable && !apiDisabled){
+        let model = await helpers.getModel(req, res);
 
-    if(model){
-        let d = new model(await addRuntime({
-            "nodeId":id,
-            "action":action,
-            "current":current,
-            "previous":previous,
-            "changedBy":'system',
-        }, model, req, res), {});
-
-        let v = d.validateSync();
-        let errs = req.helpers.json.val(v, 'errors', {});
-        let elen = req.helpers.json.length(errs);
-
-        if(elen === 0){
-            d.save()
+        if(typeof id === 'object'){
+            id = id.toString();
         }
-    };
+
+        if(model){
+            let d = new model(await addRuntime({
+                "nodeId":id,
+                "current":current,
+                "previous":previous,
+                "changedBy":'system',
+                "action":action || 'ANONYMOUS',
+            }, model, req, res), {});
+
+            let v = d.validateSync();
+            let errs = req.helpers.json.val(v, 'errors', {});
+            let elen = req.helpers.json.length(errs);
+
+            if(elen === 0){
+                d.save()
+            }
+        };
+    }
 }
 
 exports.init = init;

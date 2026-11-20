@@ -88,16 +88,16 @@ const init = async (req, res, next) => {
                         description: srcNode.description ?? '',
                         _id: new req.mdb.db.Types.ObjectId()
                     });
-                } else if (strategy === 'overwrite') {
+                } else if (strategy === 'overwrite' || 1 === 1) {
                     docs.update.push({
                         _id: existingTarget._id,
                         key: srcNode.key ?? existingTarget.value,
                         meta: srcNode.meta ?? existingTarget.meta,
                         name: srcNode.name ?? existingTarget.name,
-                        mapId: String(srcNode.mapId ?? existingTarget.mapId),
                         value: srcNode.value ?? existingTarget.value,
                         details: srcNode.extend ?? existingTarget.extend,
                         summary: srcNode.summary ?? existingTarget.summary,
+                        mapId: String(srcNode.mapId ?? existingTarget.mapId),
                         description: srcNode.description ?? existingTarget.description,
                     });
                 } else {
@@ -105,16 +105,16 @@ const init = async (req, res, next) => {
                 }
             }
 
-
             if (docs.insert.length > 0 || docs.update.length > 0) {
+                return await mongodb.query.upsert.updateAndInsertBoth(docs, '_id', false, req, res, next);
+
                 if (docs.insert && docs.insert.length > 0) {
                     return await mongodb.query.upsert.updateAndInsertBoth(docs, '_id', false, req, res, next);
                 } else {
-                    return await mongodb.query.update.byId(docs.update, false, req, req);
+                    return await mongodb.query.update.byId(docs.update, false, req, false, req);
                 }
             } else {
                 return req.helpers.express.response.getRespByCode(200, req, res, next, {
-                    
                     "status": {
                         "rcode": "ALREADY_SYNCED",
                         "description": "Your data is already synced"
@@ -123,7 +123,7 @@ const init = async (req, res, next) => {
             }
         }
     } else {
-        return req.helpers.express.response.getRespByCode(400, req, res, next, { data: [] });;
+        return req.helpers.express.response.getRespByCode(400, req, res, next, {});;
     }
 }
 

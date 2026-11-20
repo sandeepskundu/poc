@@ -18,20 +18,15 @@ const deleteSaved = async (saved, model, req, res, next) => {
     }
 }
 
-const auditLogs = async (doc, action, req, res, next) => {
+const auditLogs = async (doc, req, res, next) => {
     if(doc && doc.length > 0){
-
         for(let a in doc){
-            try {
-                omniTreeAudit.log.create.init(d[a]._id, action, null, d, req, res)
-            }catch(err) {
-                console.log(err);
-            }
+            omniTreeAudit.log.create.init(doc[a]._id, false, null, doc[a], req, res)
         }
     }
 }
 
-const bulkInsert = async (docs, collname, req, res, next) => {
+const bulkInsert = async (docs, collname, req, skipAudit, res, next) => {
     const model = getModel(collname, req);
     const config = await getModelConfig(req, res, next);
 
@@ -51,13 +46,8 @@ const bulkInsert = async (docs, collname, req, res, next) => {
         let error = item.validateSync();
             item = await req.helpers.mongoose.docHelpers.addRuntime([item], config, model, req, res);
             item = item[0];
-
             docl.push(item);
 
-            accepted.push({
-                doc:item
-            })
-        
         if (error) {
             invalids.push({
                 doc:item,
@@ -126,7 +116,9 @@ const bulkInsert = async (docs, collname, req, res, next) => {
 
     if(saved.length > 0){
         const data = await Promise.all(saved.map(async (arg) => {return JSON.parse(JSON.stringify(arg.doc))}));
-        auditLogs(data, 'CREATE', req, res, next);
+
+        if(!skipAudit){auditLogs(data, req, res, next)}
+
         return req.helpers.express.response.getRespByCode(200, req, res, next, {data:data});
     }
 
