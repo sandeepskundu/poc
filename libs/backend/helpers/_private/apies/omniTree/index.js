@@ -3,14 +3,14 @@ const helpers = require('./../helpers');
 const map = {
     'root/v1/list/fetch':require('./root_v1_list_fetch'), // router.get('/nodes/roots', treeController.getRoots);
     'details/v1/byId/fetch':require('./details_v1_byId_fetch'), // router.get('/nodes/:id', treeController.getNodeById);
-    'details/v1/node/create':require('./details_v1_node_create'), //router.post('/nodes', treeController.createNode);
+    'details/v1/node/create':require('./details_v1_node_create'), // router.post('/nodes', treeController.createNode);
     'details/v1/treeById/fetch':require('./details_v1_treeById_fetch'), // router.get('/nodes/:id/tree', treeController.getFullTree);
-    'details/v1/childById/fetch':require('./details_v1_childById_fetch'), //router.get('/nodes/:id/children', treeController.getDirectChildren);
-    'details/v1/childById/remove':require('./details_v1_childById_remove'), //router.get('/nodes/:id/children', treeController.getDirectChildren);
+    'details/v1/childById/fetch':require('./details_v1_childById_fetch'), // router.get('/nodes/:id/children', treeController.getDirectChildren);
+    'details/v1/childById/remove':require('./details_v1_childById_remove'), // router.delete('/nodes/:id', treeController.deleteNode);
     'breadcrumb/v1/byId/fetch':require('./breadcrumb_v1_byId_fetch'), // router.get('/nodes/:id/breadcrumbs', treeController.getBreadcrumbs);
     'details/v1/import/create':require('./details_v1_import_create'), // router.post('/nodes/import', treeController.importJson);
-    'details/v1/mergeTreeById/create':require('./details_v1_mergeTreeById_create'),
-    'details/v1/byId/update':require('./details_v1_byId_update')
+    'details/v1/mergeTreeById/create':require('./details_v1_mergeTreeById_create'), // router.post('/nodes/merge', treeController.mergeTrees);
+    'details/v1/byId/update':require('./details_v1_byId_update') // router.patch('/nodes/:id', treeController.updateNode);
 };
 
 exports.get = async (name, req, extend, list, globalConf) => {
