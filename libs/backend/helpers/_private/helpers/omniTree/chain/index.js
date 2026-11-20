@@ -1,6 +1,6 @@
 const access = require('./../access');
 
-const getParents = async (req, res, mapId, mode = 'write', options = { checkPermission: false }) => {
+const getParents = async (req, res, mapId, mode = 'write', options = {checkPermission:false}, deleted) => {
     let cache = {};
     let chain = [];
     let model = req.helpers.json.get(req, 'runtime.model.instance', false)
@@ -16,12 +16,13 @@ const getParents = async (req, res, mapId, mode = 'write', options = { checkPerm
     if (!cache[mapId]) {
         const [result] = await model.aggregate([{
             $match: {
-                _id: new req.mdb.db.Types.ObjectId(mapId)
+                _deleted:deleted?1:0,
+                _id:new req.mdb.db.Types.ObjectId(mapId)
             }
         }, {
             $graphLookup: {
                 maxDepth: 25,
-                as: 'parents',
+                as:'parents',
                 startWith: '$mapId',
                 from: `${modelName}s`,
                 connectToField: '_id',
@@ -61,7 +62,7 @@ const getParents = async (req, res, mapId, mode = 'write', options = { checkPerm
     }
 }
 
-const getChilds = async (req, res, mapId) => {
+const getChilds = async (req, res, mapId, deleted) => {
     let cache = {};
     let chain = [];
     let config = req.helpers.json.get(req, 'runtime.model.config', {});
@@ -71,16 +72,17 @@ const getChilds = async (req, res, mapId) => {
     if (!cache[mapId]) {
         const [result] = await model.aggregate([{
             $match: {
-                _id: new req.mdb.db.Types.ObjectId(mapId)
+                _deleted:deleted?1:0,
+                _id:new req.mdb.db.Types.ObjectId(mapId)
             }
         }, {
             $graphLookup: {
-                as: 'childs',
-                maxDepth: 25,
-                startWith: '$_id',
-                from: `${modelName}s`,
-                connectFromField: '_id',
-                connectToField: 'mapId',
+                as:'childs',
+                maxDepth:25,
+                startWith:'$_id',
+                from:`${modelName}s`,
+                connectFromField:'_id',
+                connectToField:'mapId',
                 //depthField:'relativeDepth',
             }
         }]);
