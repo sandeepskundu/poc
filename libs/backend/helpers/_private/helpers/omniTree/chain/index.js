@@ -62,12 +62,25 @@ const getParents = async (req, res, mapId, mode = 'write', options = {checkPermi
     }
 }
 
-const getChilds = async (req, res, mapId, deleted) => {
+const getChilds = async (req, res, mapId, deleted, depthField) => {
     let cache = {};
     let chain = [];
     let config = req.helpers.json.get(req, 'runtime.model.config', {});
     let model = req.helpers.json.get(req, 'runtime.model.instance', false)
     let modelName = req.helpers.json.get(req, 'runtime.model.config.name', '');
+    let lookup =  {
+        as:'childs',
+        maxDepth:25,
+        startWith:'$_id',
+        from:`${modelName}s`,
+        connectFromField:'_id',
+        connectToField:'mapId',
+        
+    }
+
+    if(depthField){
+        lookup.depthField = (typeof depthField === 'string')?depthField:'relativeDepth';
+    }
 
     if (!cache[mapId]) {
         const [result] = await model.aggregate([{
@@ -76,15 +89,7 @@ const getChilds = async (req, res, mapId, deleted) => {
                 _id:new req.mdb.db.Types.ObjectId(mapId)
             }
         }, {
-            $graphLookup: {
-                as:'childs',
-                maxDepth:25,
-                startWith:'$_id',
-                from:`${modelName}s`,
-                connectFromField:'_id',
-                connectToField:'mapId',
-                //depthField:'relativeDepth',
-            }
+            $graphLookup:lookup
         }]);
 
         if (result) {

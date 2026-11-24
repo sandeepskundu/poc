@@ -75,7 +75,7 @@ const bulkInsert = async (docs, collname, req, skipAudit, res, next) => {
             return item;
         }));
 
-        //return req.helpers.express.response.getRespByCode(400, req, res, next, { data });
+        return req.helpers.express.response.getRespByCode(400, req, res, next, { data });
     }
 
     const saved = [];

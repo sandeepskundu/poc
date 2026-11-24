@@ -10,7 +10,7 @@ const CONSTANTS = {
 }
 
 const id = (req, val = null) => {
-    return String(val ? new req.mdb.db.Types.ObjectId(String(val)) : new req.mdb.db.Types.ObjectId());
+    return String(val ? new req.mdb.db.Types.ObjectId(String(val)) : String(new req.mdb.db.Types.ObjectId()));
 };
 
 const toSafeKey = (key) => {

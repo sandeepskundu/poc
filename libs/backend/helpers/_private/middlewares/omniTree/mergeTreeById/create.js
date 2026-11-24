@@ -86,7 +86,7 @@ const init = async (req, res, next) => {
                         details: srcNode.details ?? {},
                         summary: srcNode.summary ?? '',
                         description: srcNode.description ?? '',
-                        _id: new req.mdb.db.Types.ObjectId()
+                        _id:String(new req.mdb.db.Types.ObjectId())
                     });
                 } else if (strategy === 'overwrite' || 1 === 1) {
                     docs.update.push({
@@ -106,8 +106,6 @@ const init = async (req, res, next) => {
             }
 
             if (docs.insert.length > 0 || docs.update.length > 0) {
-                return await mongodb.query.upsert.updateAndInsertBoth(docs, '_id', false, req, res, next);
-
                 if (docs.insert && docs.insert.length > 0) {
                     return await mongodb.query.upsert.updateAndInsertBoth(docs, '_id', false, req, res, next);
                 } else {
