@@ -51,6 +51,7 @@ const getvalue = (data, config, node, valmap, req) => {
 }
 
 const mapvalues = (data, config, req, res, next) => {
+
     const dummy = {
         'name.middle':{
             "nodes":{
@@ -95,18 +96,19 @@ const mapvalues = (data, config, req, res, next) => {
         }
     };
 
+    let rval = {};
     const maps = req.helpers.json.val(config, 'md5Hash');
-    const valmap = req.helpers.express.validation.helpers.valuesmap(req, res, next);
+    const valmap = req.helpers.express.validation.helpers.valuesmap(req, res, next, data);
 
     for(const a in maps){
         let val = getvalue(data, maps[a], a, valmap, req);
 
         if(val != ENUMS.NOT_DFINED_VALUE){
-            data = req.helpers.json.set(data, a, val, false, true);
+            rval = req.helpers.json.set(rval, a, val, false, true);
         }
     };
 
-    return data;
+    return rval;
 }
 
 const parse = (rval, schema, data, config, req, res, next) => {

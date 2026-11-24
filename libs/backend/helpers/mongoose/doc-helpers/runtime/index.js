@@ -77,7 +77,7 @@ const getvalue = (data, config, node, valmap, req) => {
 
 const mapvalues = (data, config, req, res, next) => {
     let maps = req.helpers.json.val(config, 'valuemap', {});
-    let valmap = req.helpers.express.validation.helpers.valuesmap(req, res, next);
+    let valmap = req.helpers.express.validation.helpers.valuesmap(req, res, next, data);
 
     for(const a in maps){
         let val = getvalue(data, maps[a], a, valmap, req);

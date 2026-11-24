@@ -10,7 +10,8 @@ const map = {
     'breadcrumb/v1/byId/fetch':require('./breadcrumb_v1_byId_fetch'), // router.get('/nodes/:id/breadcrumbs', treeController.getBreadcrumbs);
     'details/v1/import/create':require('./details_v1_import_create'), // router.post('/nodes/import', treeController.importJson);
     'details/v1/mergeTreeById/create':require('./details_v1_mergeTreeById_create'), // router.post('/nodes/merge', treeController.mergeTrees);
-    'details/v1/byId/update':require('./details_v1_byId_update') // router.patch('/nodes/:id', treeController.updateNode);
+    'details/v1/byId/update':require('./details_v1_byId_update'), // router.patch('/nodes/:id', treeController.updateNode);
+    'details/v1/move/create':require('./details_v1_move_create') // router.patch('/nodes/:id', treeController.updateNode);
 };
 
 exports.get = async (name, req, extend, list, globalConf) => {

@@ -1,7 +1,8 @@
-const valuesmap = (req, res, next) => {
+const valuesmap = (req, res, next, doc) => {
     /*-- item|auth|body|query|params|headers|cookies|envs|merchant|appConfig|multer|utils|validation ---*/
 
     return {
+        doc:(doc || null),
         body:req.body || {},
         query:req.query || {},
         envs:process.env || {},

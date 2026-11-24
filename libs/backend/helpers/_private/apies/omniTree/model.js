@@ -68,6 +68,40 @@ const get = async (req, extend) => {
                         from: "body-item"
                     }
                 }
+            },
+            moveKeyHash: {
+                nodes: {
+                    0: {
+                        map: "runtimeUtils.merchantRootHash",
+                        from: "appConfig"
+                    },
+                    1: {
+                        map: "mapId",
+                        from: "body-item",
+                        ignoreValueCheck:true
+                    },
+                    2: {
+                        map: "key",
+                        from: "doc"
+                    }
+                }
+            },
+            moveNameHash: {
+                nodes: {
+                    0: {
+                        map: "runtimeUtils.merchantRootHash",
+                        from: "appConfig"
+                    },
+                    1: {
+                        map: "mapId",
+                        from: "body-item",
+                        ignoreValueCheck:true
+                    },
+                    2: {
+                        map: "name",
+                        from: "doc"
+                    }
+                }
             }
         },
 
